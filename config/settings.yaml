@@ -1,0 +1,41 @@
+# ARCHAEO-SCAN Global Configuration
+
+paths:
+  data_dir: ./data
+  cache_dir: ./cache
+  geopackage: ./data/archaeo_scan.gpkg
+  exports_dir: ./exports
+
+grid:
+  default_resolution: 8  # H3 resolution 8 ≈ 0.7km² cells
+  coarse_resolution: 7   # H3 resolution 7 ≈ 5km² cells for regional overview
+
+processing:
+  max_memory_mb: 4096          # Stay within 8GB system budget
+  tile_size_pixels: 2048       # Raster processing tile size
+  num_workers: 4               # Parallel processing threads
+  checkpoint_interval: 100     # Save progress every N tiles
+
+api_endpoints:
+  usgs_3dep: https://tnmaccess.nationalmap.gov/api/v1/products
+  usgs_nhd: https://hydro.nationalmap.gov/arcgis/rest/services
+  usda_ssurgo: https://SDMDataAccess.sc.egov.usda.gov/Tabular/SDMTabularService/post.rest
+  usgs_geology: https://mrdata.usgs.gov/services/sgmc
+  blm_sma: https://gis.blm.gov/arcgis/rest/services/lands
+  nrhp: https://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services
+  copernicus: https://dataspace.copernicus.eu/odata/v1
+  noaa_bathy: https://www.ngdc.noaa.gov/thredds
+  srtm: https://portal.opentopography.org/API/otCatalog
+
+coordinate_system:
+  internal_crs: EPSG:4326     # All internal storage in WGS84
+  display_crs: EPSG:4326
+  us_bounds:
+    min_lat: 24.396308
+    min_lon: -125.0
+    max_lat: 49.384358
+    max_lon: -66.93457
+
+obfuscation:
+  public_precision_km: 1       # Round public coordinates to nearest km
+  enable_by_default: true      # Default to obfuscated output

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCHAEO-SCAN Atlas</title>
+
+    <!-- MapLibre GL JS -->
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.13.0/dist/maplibre-gl.css">
+    <script src="https://unpkg.com/maplibre-gl@6.13.0/dist/maplibre-gl.js"></script>
+
+    <!-- H3 for hex grid -->
+    <script src="https://unpkg.com/h3-js@4.1.0/dist/h3-js.umd.js"></script>
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="styles/atlas.css">
+</head>
+<body>
+    <!-- ========== HEADER BAR ========== -->
+    <header id="header">
+        <div class="header-left">
+            <span class="header-logo">ARCHAEO-SCAN</span>
+            <span class="header-subtitle">Atlas</span>
+        </div>
+        <div class="header-center">
+            <span id="region-name">United States</span>
+        </div>
+        <div class="header-right">
+            <span id="preset-indicator" class="header-tag">Default Weights</span>
+            <span id="header-coords" class="header-coords">39.8283, -98.5795</span>
+        </div>
+    </header>
+
+    <!-- ========== MAIN LAYOUT ========== -->
+    <div id="app-layout">
+
+        <!-- ===== LEFT SIDEBAR: LAYERS ===== -->
+        <aside id="layer-panel" class="sidebar sidebar-left">
+            <div class="sidebar-header">
+                <h2>Layers</h2>
+                <button id="layer-panel-toggle" class="panel-toggle" title="Collapse (L)">&laquo;</button>
+            </div>
+            <div class="sidebar-content">
+
+                <!-- Base Map -->
+                <section class="layer-section">
+                    <h3 class="layer-section-title">Base Map</h3>
+                    <label class="layer-radio"><input type="radio" name="basemap" value="dark" checked><span>Dark</span></label>
+                    <label class="layer-radio"><input type="radio" name="basemap" value="satellite"><span>Satellite</span></label>
+                    <label class="layer-radio"><input type="radio" name="basemap" value="topo"><span>Topographic</span></label>
+                    <label class="layer-radio"><input type="radio" name="basemap" value="terrain"><span>Terrain</span></label>
+                </section>
+
+                <!-- Analysis -->
+                <section class="layer-section">
+                    <h3 class="layer-section-title">Analysis</h3>
+                    <div class="layer-item" data-layer="h3-grid">
+                        <label class="layer-check"><input type="checkbox" data-layer="h3-grid"><span>H3 Analysis Grid</span></label>
+                        <span class="layer-info" title="Hexagonal grid cells color-coded by convergence score. The primary analytical layer.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="h3-grid" min="0" max="100" value="80">
+                    </div>
+                    <div class="layer-item" data-layer="terrain-anomalies">
+                        <label class="layer-check"><input type="checkbox" data-layer="terrain-anomalies"><span>Terrain Anomalies</span></label>
+                        <span class="layer-info" title="Detected mounds, depressions, and linear features from terrain analysis.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="terrain-anomalies" min="0" max="100" value="80">
+                    </div>
+                    <div class="layer-item" data-layer="crop-marks">
+                        <label class="layer-check"><input type="checkbox" data-layer="crop-marks"><span>Crop Mark Anomalies</span></label>
+                        <span class="layer-info" title="NDVI anomaly zones where buried features cause differential vegetation growth.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="crop-marks" min="0" max="100" value="70">
+                    </div>
+                    <div class="layer-item" data-layer="soil-anomalies">
+                        <label class="layer-check"><input type="checkbox" data-layer="soil-anomalies"><span>Soil Anomaly Zones</span></label>
+                        <span class="layer-info" title="Areas with anomalous organic matter, anthropic soil, or phosphorus signatures.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="soil-anomalies" min="0" max="100" value="70">
+                    </div>
+                </section>
+
+                <!-- Environmental -->
+                <section class="layer-section">
+                    <h3 class="layer-section-title">Environmental</h3>
+                    <div class="layer-item" data-layer="hydrology">
+                        <label class="layer-check"><input type="checkbox" data-layer="hydrology"><span>Hydrology</span></label>
+                        <span class="layer-info" title="Rivers and waterways. Settlement patterns cluster along water.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="hydrology" min="0" max="100" value="70">
+                    </div>
+                    <div class="layer-item" data-layer="geology">
+                        <label class="layer-check"><input type="checkbox" data-layer="geology"><span>Geology (Shelter Zones)</span></label>
+                        <span class="layer-info" title="Karst, sandstone, and volcanic zones where caves and rockshelters are predicted.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="geology" min="0" max="100" value="60">
+                    </div>
+                    <div class="layer-item" data-layer="lidar-coverage">
+                        <label class="layer-check"><input type="checkbox" data-layer="lidar-coverage"><span>LiDAR Coverage</span></label>
+                        <span class="layer-info" title="Areas where 3DEP LiDAR data is available for high-resolution terrain analysis.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="lidar-coverage" min="0" max="100" value="40">
+                    </div>
+                </section>
+
+                <!-- Cultural -->
+                <section class="layer-section">
+                    <h3 class="layer-section-title">Cultural</h3>
+                    <div class="layer-item" data-layer="known-sites">
+                        <label class="layer-check"><input type="checkbox" data-layer="known-sites"><span>Known Archaeological Sites</span></label>
+                        <span class="layer-info" title="NRHP archaeological sites shown as gold diamond markers.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="known-sites" min="0" max="100" value="90">
+                    </div>
+                    <div class="layer-item" data-layer="cave-predictions">
+                        <label class="layer-check"><input type="checkbox" data-layer="cave-predictions"><span>Cave/Shelter Predictions</span></label>
+                        <span class="layer-info" title="Predicted cave and rockshelter locations, color-coded by type.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="cave-predictions" min="0" max="100" value="80">
+                    </div>
+                    <div class="layer-item" data-layer="historical-refs">
+                        <label class="layer-check"><input type="checkbox" data-layer="historical-refs"><span>Historical References</span></label>
+                        <span class="layer-info" title="Geocoded references from historical documents and expedition journals.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="historical-refs" min="0" max="100" value="80">
+                    </div>
+                    <div class="layer-item" data-layer="citizen-reports">
+                        <label class="layer-check"><input type="checkbox" data-layer="citizen-reports"><span>Citizen Reports</span></label>
+                        <span class="layer-info" title="Citizen science find locations, clustered and classified.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="citizen-reports" min="0" max="100" value="70">
+                    </div>
+                </section>
+
+                <!-- Temporal -->
+                <section class="layer-section">
+                    <h3 class="layer-section-title">Temporal</h3>
+                    <div class="layer-item" data-layer="paleo-coastlines">
+                        <label class="layer-check"><input type="checkbox" data-layer="paleo-coastlines"><span>Paleo-Coastlines</span></label>
+                        <span class="layer-info" title="Historical coastline positions driven by the TimeSlider.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="paleo-coastlines" min="0" max="100" value="60">
+                    </div>
+                    <div class="layer-item" data-layer="ice-sheets">
+                        <label class="layer-check"><input type="checkbox" data-layer="ice-sheets"><span>Ice Sheet Extent</span></label>
+                        <span class="layer-info" title="Ice coverage at the selected time period, driven by the TimeSlider.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="ice-sheets" min="0" max="100" value="50">
+                    </div>
+                </section>
+
+                <!-- Administrative -->
+                <section class="layer-section">
+                    <h3 class="layer-section-title">Administrative</h3>
+                    <div class="layer-item" data-layer="land-ownership">
+                        <label class="layer-check"><input type="checkbox" data-layer="land-ownership"><span>Land Ownership</span></label>
+                        <span class="layer-info" title="Federal, state, tribal, and private land boundaries.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="land-ownership" min="0" max="100" value="40">
+                    </div>
+                    <div class="layer-item" data-layer="survey-status">
+                        <label class="layer-check"><input type="checkbox" data-layer="survey-status"><span>Survey Status</span></label>
+                        <span class="layer-info" title="Areas that have been archaeologically surveyed vs. unsurveyed.">i</span>
+                        <input type="range" class="layer-opacity" data-layer="survey-status" min="0" max="100" value="30">
+                    </div>
+                </section>
+            </div>
+
+            <div class="sidebar-footer">
+                <span id="active-layer-count">0 layers active</span>
+                <button id="load-demo-btn" class="btn btn-accent" disabled title="Import rights-cleared local data before meaningful area review">Spatial demo omitted</button>
+            </div>
+        </aside>
+
+        <!-- ===== MAP CONTAINER ===== -->
+        <main id="map-wrap">
+            <!-- Search bar (floating) -->
+            <div id="search-bar" class="map-overlay-top hidden">
+                <div id="search-container">
+                    <input type="text" id="search-input" placeholder="Search places, coordinates, or queries..." autocomplete="off">
+                    <button id="search-close" class="search-close-btn">&times;</button>
+                </div>
+                <div id="search-results" class="search-dropdown hidden"></div>
+            </div>
+
+            <!-- Toolbar (top-right) -->
+            <div id="toolbar" class="map-overlay-tr">
+                <button class="toolbar-btn" id="btn-search" title="Search (S)">&#x1F50D;</button>
+                <button class="toolbar-btn" id="btn-measure-dist" title="Measure Distance">&#x1F4CF;</button>
+                <button class="toolbar-btn" id="btn-measure-area" title="Measure Area">&#x1F4D0;</button>
+                <button class="toolbar-btn" id="btn-screenshot" title="Screenshot">&#x1F4F7;</button>
+                <button class="toolbar-btn" id="btn-export" title="Export">&#x1F4E4;</button>
+                <button class="toolbar-btn" id="btn-settings" title="Settings">&#x2699;&#xFE0F;</button>
+                <button class="toolbar-btn" id="btn-about" title="About">&#x2139;&#xFE0F;</button>
+            </div>
+
+            <!-- Map -->
+            <div id="map"></div>
+
+            <!-- Coordinates display (bottom-left of map) -->
+            <div id="coords-display" class="map-overlay-bl">
+                <span id="cursor-coords">---, ---</span>
+                <span id="cursor-h3" class="coords-h3"></span>
+            </div>
+
+            <!-- Legend (bottom-right, above coords) -->
+            <div id="legend" class="map-overlay-legend hidden">
+                <div class="legend-header">
+                    <span>Legend</span>
+                    <button id="legend-close" class="legend-toggle">&times;</button>
+                </div>
+                <div class="legend-body">
+                    <div class="legend-row">
+                        <span class="legend-label">Score</span>
+                        <div class="legend-gradient"></div>
+                        <div class="legend-ticks">
+                            <span>0.0</span><span>0.5</span><span>1.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Minimap -->
+            <div id="minimap"></div>
+
+            <!-- TimeSlider (bottom) -->
+            <div id="timeslider">
+                <div class="timeslider-controls">
+                    <button id="time-play" class="time-btn" title="Play/Pause (Space)">&#9654;</button>
+                </div>
+                <div class="timeslider-track-wrap">
+                    <input type="range" id="time-range" min="0" max="25000" value="0" step="100">
+                    <div class="timeslider-ticks" id="time-ticks"></div>
+                </div>
+                <div class="timeslider-info" id="time-info">
+                    <span id="time-date">Present</span>
+                    <span id="time-sea-level">Sea level: 0m</span>
+                    <span id="time-culture">Modern</span>
+                    <span id="time-ice">No significant ice</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- ===== RIGHT SIDEBAR: INSPECTOR ===== -->
+        <aside id="inspector-panel" class="sidebar sidebar-right collapsed">
+            <div class="sidebar-header">
+                <button id="inspector-panel-toggle" class="panel-toggle" title="Expand (I)">&laquo;</button>
+                <h2>Site Inspector</h2>
+            </div>
+            <div class="sidebar-content">
+                <div id="inspector-empty" class="empty-state">
+                    <div class="empty-icon">&#x1F5FA;</div>
+                    <p>Click a scored cell or site marker to inspect</p>
+                    <p class="empty-hint">Hover over cells to see quick scores</p>
+                </div>
+                <div id="inspector-content" class="hidden">
+                    <!-- Score section -->
+                    <section id="inspector-score" class="inspector-section">
+                        <div class="score-hero">
+                            <span id="insp-score-value" class="score-big">--</span>
+                            <span id="insp-score-label" class="score-label">Composite Score</span>
+                        </div>
+                        <div class="confidence-row">
+                            <span>Confidence:</span>
+                            <div class="confidence-bar-wrap">
+                                <div id="insp-confidence-bar" class="confidence-bar"></div>
+                            </div>
+                            <span id="insp-confidence-text">--</span>
+                        </div>
+                        <h4>Layer Scores</h4>
+                        <div id="insp-layer-scores"></div>
+                        <h4>Contributing Factors</h4>
+                        <ul id="insp-factors"></ul>
+                    </section>
+
+                    <!-- Location section -->
+                    <section id="inspector-location" class="inspector-section">
+                        <h4>Location</h4>
+                        <table class="info-table">
+                            <tr><td>Coordinates</td><td id="insp-coords">--</td></tr>
+                            <tr><td>H3 Cell</td><td id="insp-h3" class="mono-cell">--</td></tr>
+                            <tr><td>Region</td><td id="insp-region">--</td></tr>
+                        </table>
+                    </section>
+
+                    <!-- Data layers present -->
+                    <section id="inspector-data" class="inspector-section">
+                        <h4>Data Layers Present</h4>
+                        <div id="insp-data-layers"></div>
+                        <span id="insp-layer-summary" class="layer-summary"></span>
+                    </section>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- ========== MODALS ========== -->
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="modal-close" data-modal="settings-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-row">
+                    <label for="setting-score-threshold">Score Threshold</label>
+                    <div class="setting-control">
+                        <input type="range" id="setting-score-threshold" min="0" max="100" value="0">
+                        <span id="setting-score-value">0.00</span>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <label for="setting-preset">Regional Preset</label>
+                    <select id="setting-preset">
+                        <option value="default">Default Weights</option>
+                        <option value="southeast_mississippian">Southeast Mississippian</option>
+                        <option value="great_basin_paleoindian">Great Basin Paleoindian</option>
+                        <option value="pacific_coast_pre_clovis">Pacific Coast Pre-Clovis</option>
+                        <option value="southwest_archaic">Southwest Archaic</option>
+                        <option value="northeast_woodland">Northeast Woodland</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label for="setting-resolution">Grid Resolution</label>
+                    <select id="setting-resolution">
+                        <option value="7">7 (Regional)</option>
+                        <option value="8" selected>8 (Survey)</option>
+                        <option value="9">9 (Detailed)</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label for="setting-anim-speed">Animation Speed</label>
+                    <select id="setting-anim-speed">
+                        <option value="10000">10 seconds</option>
+                        <option value="30000" selected>30 seconds</option>
+                        <option value="60000">60 seconds</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label for="setting-color-scheme">Color Scheme</label>
+                    <select id="setting-color-scheme">
+                        <option value="blue-yellow-red">Blue - Yellow - Red</option>
+                        <option value="green-yellow-red">Green - Yellow - Red</option>
+                        <option value="single-ramp">Single Color Ramp</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label class="setting-check"><input type="checkbox" id="setting-obfuscate" checked> Coordinate Obfuscation</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>About ARCHAEO-SCAN Atlas</h2>
+                <button class="modal-close" data-modal="about-modal">&times;</button>
+            </div>
+            <div class="modal-body about-body">
+                <p>ARCHAEO-SCAN is an archaeological site discovery toolkit that combines remote sensing, historical documents, terrain analysis, and citizen science into a convergence-scoring system for identifying high-potential survey areas across the United States.</p>
+                <h4>Data Sources</h4>
+                <ul>
+                    <li>3DEP LiDAR (USGS)</li>
+                    <li>SRTM Terrain (NASA)</li>
+                    <li>Sentinel-2 Imagery (ESA)</li>
+                    <li>SSURGO Soils (USDA)</li>
+                    <li>NHD Hydrology (USGS)</li>
+                    <li>NRHP Archaeological Sites</li>
+                    <li>Geologic Maps (USGS)</li>
+                </ul>
+                <h4>Map Tiles</h4>
+                <ul>
+                    <li>CartoDB Dark Matter</li>
+                    <li>ESRI World Imagery</li>
+                    <li>OpenTopoMap</li>
+                </ul>
+                <p class="about-version">v0.1.0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="export-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Export Data</h2>
+                <button class="modal-close" data-modal="export-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Export scored cells from the current map viewport.</p>
+                <div class="export-buttons">
+                    <button class="btn btn-accent" data-export="png">PNG Screenshot</button>
+                    <button class="btn btn-accent" data-export="geojson">GeoJSON</button>
+                    <button class="btn btn-accent" data-export="csv">CSV</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="context-menu" class="context-menu hidden">
+        <button class="ctx-item" data-action="whats-here">What's here?</button>
+        <button class="ctx-item" data-action="copy-coords">Copy coordinates</button>
+    </div>
+
+    <!-- Hover Tooltip -->
+    <div id="map-tooltip" class="map-tooltip hidden"></div>
+
+    <!-- App scripts -->
+    <script type="module" src="src/atlas.js"></script>
+</body>
+</html>

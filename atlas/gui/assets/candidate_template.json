@@ -1,0 +1,11 @@
+{
+  "candidates": [
+    {
+      "name": "My proposed study area",
+      "bbox": [34.0, -112.0, 35.0, -111.0],
+      "target_period": "unspecified",
+      "permission_status": "unknown",
+      "signals": []
+    }
+  ]
+}

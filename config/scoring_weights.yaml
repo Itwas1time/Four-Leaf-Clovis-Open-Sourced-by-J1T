@@ -1,0 +1,53 @@
+# Convergence Scoring Weights
+# Each weight is a 0.0-1.0 importance multiplier
+# These defaults reflect general North American archaeology
+
+weights:
+  hydro_proximity: 0.85        # Water access is the strongest universal predictor
+  terrain_anomaly: 0.75        # Anomalous terrain features are strong direct evidence
+  lidar_anomaly: 0.90          # LiDAR anomalies are the most reliable remote indicator
+  crop_mark: 0.70              # Proven technique but variable by soil/vegetation type
+  soil_anomaly: 0.80           # Anthropogenic soil modification is direct evidence
+  shelter_probability: 0.65    # Important for Paleoindian/Archaic, less for later periods
+  known_site_proximity: 0.50   # Sites cluster, but too much weight creates confirmation bias
+  oral_history_reference: 0.60 # Valuable but variable reliability
+  citizen_report_density: 0.40 # Noisy signal, useful in aggregate
+
+confidence_thresholds:
+  minimum_layers: 3            # Require at least 3 contributing layers for any score
+  high_confidence: 5           # 5+ layers = high confidence score
+
+regional_presets:
+  southeast_mississippian:
+    hydro_proximity: 0.90
+    terrain_anomaly: 0.85      # Mound detection priority
+    soil_anomaly: 0.85
+    shelter_probability: 0.40
+    known_site_proximity: 0.60
+
+  great_basin_paleoindian:
+    shelter_probability: 0.90
+    hydro_proximity: 0.80      # Paleo-lake shores critical
+    climate_habitability: 0.85
+    terrain_anomaly: 0.70
+    soil_anomaly: 0.60
+
+  pacific_coast_pre_clovis:
+    shelf_reconstruction: 0.95 # Submerged sites are the key question
+    hydro_proximity: 0.70
+    shelter_probability: 0.60
+    terrain_anomaly: 0.50
+
+  southwest_archaic:
+    shelter_probability: 0.85
+    hydro_proximity: 0.90
+    terrain_anomaly: 0.70
+    soil_anomaly: 0.75
+    known_site_proximity: 0.55
+
+  northeast_woodland:
+    hydro_proximity: 0.85
+    terrain_anomaly: 0.80
+    soil_anomaly: 0.85         # Anthropogenic soils well-documented
+    crop_mark: 0.75
+    lidar_anomaly: 0.90        # Dense canopy makes LiDAR critical
