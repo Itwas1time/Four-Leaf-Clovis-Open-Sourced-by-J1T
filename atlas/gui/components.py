@@ -4,6 +4,7 @@ from dash import dcc, html
 
 from atlas.gui.data.lead_catalog import GOALS, PERIODS, REGIONS, matching_leads
 from atlas.gui.data.public_catalog import SOURCE_NAMES, overview
+from atlas.gui.resident_ui import controls as resident_controls, report_panel as resident_report_panel
 from atlas.gui.styles import BG_PANEL, BORDER, PANEL_STYLE, SECTION_HEADER_STYLE, TEXT_DIM, TEXT_PRIMARY, TEXT_SECONDARY
 
 _CURRENT_LEADS = matching_leads()
@@ -22,8 +23,8 @@ def build_header() -> html.Header:
                     html.Span(" Discovery Planner", className="atlas-brand-title"),
                 ]
             ),
-            html.Div(id="header-region", children=f"{_INITIAL_LEAD['name']} · fieldwork lead" if _INITIAL_LEAD else "No current fieldwork leads"),
-            html.Div("Regional context · no dig coordinates", className="atlas-header-note"),
+            html.Div(id="header-region", children="Choose a town to explore"),
+            html.Div("Town context · published research · no discovery odds without evidence", className="atlas-header-note"),
         ],
         className="atlas-header",
     )
@@ -281,6 +282,15 @@ def build_layer_panel() -> html.Aside:
         lead_title, lead_section, map_sections[2], directory_title, directory_section,
         map_sections[0], map_sections[1], *map_sections[3:],
     ]
+    panel.children = [
+        html.Div("Choose your workflow", className="atlas-panel-title"),
+        dcc.RadioItems(id="workflow-mode", options=[
+            {"label": " What might be here?", "value": "resident"},
+            {"label": " Research projects and areas", "value": "research"},
+        ], value="resident", className="atlas-workflow-mode"),
+        resident_controls(),
+        html.Div(panel.children, id="research-controls", style={"display": "none"}),
+    ]
     return panel
 
 
@@ -332,7 +342,7 @@ def build_brief_panel() -> html.Section:
 
 
 def build_inspector_panel() -> html.Aside:
-    return html.Aside(
+    panel = html.Aside(
         id="inspector-panel",
         style={**PANEL_STYLE, "width": "430px", "flexShrink": "0", "borderLeft": f"1px solid {BORDER}"},
         children=[
@@ -359,6 +369,8 @@ def build_inspector_panel() -> html.Aside:
             )),
         ],
     )
+    panel.children = [resident_report_panel(), html.Div(panel.children, id="research-inspector", style={"display": "none"})]
+    return panel
 
 
 def build_stores() -> html.Div:
@@ -375,6 +387,8 @@ def build_stores() -> html.Div:
             dcc.Store(id="catalog-page-store", data=1),
             dcc.Store(id="catalog-selected-store", data=None),
             dcc.Download(id="brief-download"),
+            dcc.Store(id="resident-report-store", data=None),
+            dcc.Download(id="resident-download"),
         ],
         style={"display": "none"},
     )

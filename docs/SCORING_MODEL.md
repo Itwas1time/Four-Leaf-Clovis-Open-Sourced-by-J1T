@@ -1,4 +1,4 @@
-> **Source-only candidate:** no spatial datasets are bundled. See the package [README](../README.md); wider private-worktree data/setup claims below are background, not this artifact's inventory.
+> **Public edition:** public Census town points are bundled as spatial context; archaeological/fossil locations are not. See the [README](../README.md). Other datasets described below are optional and are not bundled.
 
 # Convergence Scoring Methodology
 

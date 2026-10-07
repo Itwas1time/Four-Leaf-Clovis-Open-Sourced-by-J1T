@@ -47,8 +47,8 @@ app = dash.Dash(
 server = app.server
 configure_local_flask(server)
 _initial_leads = matching_leads()
-_initial_center = _initial_leads[0]["center"] if _initial_leads else [39.8283, -98.5795]
-_initial_zoom = _initial_leads[0]["zoom"] if _initial_leads else 5
+_initial_center = [39.8283, -98.5795]
+_initial_zoom = 4
 
 
 def _build_map() -> html.Div:
@@ -125,6 +125,7 @@ app.layout = html.Div(
 
 
 import atlas.gui.callbacks  # noqa: E402,F401
+import atlas.gui.resident_callbacks  # noqa: E402,F401
 
 
 def _open_browser(url: str) -> None:

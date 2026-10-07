@@ -12,6 +12,14 @@ inside a server-approved photo directory, with a 5 MB image limit. Enabling it
 sends approved image bytes to the configured provider; obtain consent first.
 DOCX ingestion bounds XML size and rejects entity declarations.
 
+The resident workflow accepts a public Census place code and fixed history
+choices, with no address or arbitrary URL input. An explicit online option
+uses a fixed HTTPS Macrostrat endpoint, disables redirects, bounds response
+size and time, and prevents concurrent request queues. Reports and provider
+responses remain in bounded memory caches. Downloads use server-owned random
+tokens, expire after an hour, and must match current inputs. See
+[resident data provenance and privacy](docs/RESIDENT_CONTEXT.md).
+
 Public nearby queries use the rounded center. Longitude rounding uses the
 public latitude bucket. Rounded coordinates still do not guarantee anonymity
 or make sensitive heritage information safe to share. Use synthetic data for
@@ -19,7 +27,7 @@ public tests and omit personal information and sensitive locations.
 
 ## Publication gates
 
-This edition excludes credentials, personal account references and acquired spatial datasets. Keep local secrets, photos, logs and imported data outside Git. Review licensing and sensitivity before sharing any new dataset. The MIT license covers project code.
+This edition excludes credentials, personal account references and uncleared acquired spatial datasets. Keep local secrets, photos, logs and imported data outside Git. Review licensing and sensitivity before sharing any new dataset. The MIT license covers project code.
 
 Internet hosting needs authentication, authorization, per-user isolation,
 TLS, request/time/worker limits, retention rules, secret-free logs, provider
@@ -38,4 +46,5 @@ impact. Maintainers should triage, rotate compromised credentials, add a
 regression, and release the fix before disclosing exploit details.
 
 Passing tests and zero advisory findings describe the tested requests and
-versions. They do not guarantee the absence of vulnerabilities. Rerun CI and dependency audits on releases and dependency changes.
+versions. They do not guarantee the absence of vulnerabilities. Maintainers verify releases and dependency changes privately, including
+tests, installation checks, secret scans and dependency audits.

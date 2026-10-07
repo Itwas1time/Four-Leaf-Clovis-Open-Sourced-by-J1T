@@ -1,0 +1,2 @@
+# Keep the reviewed Census snapshot byte-identical on Windows and Linux.
+atlas/gui/data/us_places_2026.csv text eol=lf

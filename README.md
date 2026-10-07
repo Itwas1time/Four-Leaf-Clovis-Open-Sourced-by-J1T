@@ -1,11 +1,21 @@
-# four.leaf.clovis — archaeological research planner
+# four.leaf.clovis — explore places and plan research
 
-Clovis helps research teams review published archaeological projects, organize
-questions and partner/permit checks, and export research briefs. This public
-edition contains reviewed source code and a coordinate-free public directory.
+Clovis helps residents explore what historical objects, fossils and geological
+materials might be present around a U.S. town. It also helps research teams
+review published archaeological projects and export source-linked briefs.
+This public edition contains reviewed code, a public town lookup and a
+coordinate-free archaeological directory.
 
 ## What works here
 
+- **What might be here?** Choose a state, town and known land-use context.
+  Explore conditional historical object types, optionally request live regional
+  geology, and download a source-linked context report. No address is required.
+- Offline lookup of 32,363 public Census places across the 50 states, DC and Puerto Rico.
+- Optional Macrostrat map units with original references and CC BY 4.0 attribution.
+  Maps describe a public town point, not an individual yard or vertical soil profile.
+- Clear evidence gaps: **discovery likelihood cannot currently be estimated**.
+  There is no connected representative survey dataset; no percentages are invented.
 - Ten sourced project leads, their support routes, institutions, and jurisdiction starting links.
 - Coordinate-free public directory records from Wikidata and authored researched project pages.
 - Brief previews/downloads and input/security validation.
@@ -16,7 +26,7 @@ edition contains reviewed source code and a coordinate-free public directory.
   prior survey evidence. Strengths are unverified judgments; the index has no
   demonstrated predictive accuracy and is not a discovery probability.
 
-**No spatial source datasets are bundled.** Raw/processed archaeology and fossil
+**No archaeological or fossil location datasets are bundled.** Raw/processed archaeology and fossil
 records, Google geocodes, Native Land/boundary polygons, environmental data,
 embedded site datasets, and old QA traces/screenshots are excluded. The NRHP
 portion of the public directory is also excluded. The legacy frontend's demo
@@ -42,11 +52,23 @@ python -m pip install .
 python -m atlas.gui.app
 ```
 
-The Dash app binds to localhost at port 8050. Map tiles and external style
+The Dash app binds to localhost at port 8050. Start with **What might be here?**:
+select a state and town, choose known past land use, opt into regional geology
+if wanted, then select **Explore this town**. Read or download the report.
+Use **Research projects and areas** for the directory and research briefs.
+See the [resident workflow and data provenance](docs/RESIDENT_CONTEXT.md).
+An [actual demonstration report](docs/examples/cincinnati-town-context.md)
+uses Cincinnati's public town point and a hypothetical older-building history.
+
+Map tiles and external style
 assets need network access; public directory searches and brief generation
 use the bundled coordinate-free snapshot. Public hosting needs a separate
 deployment review; this package has no authentication or multi-user design.
 Optional API keys belong in private environment/config files, never Git.
+The town workflow needs no API key. Its online option sends only a public
+Census town point to Macrostrat. Reports and provider responses stay in bounded
+server memory; the app does not write them to disk. Input changes invalidate
+downloads, and server-owned report tokens expire after an hour.
 
 ## Sources and publication status
 
@@ -59,7 +81,8 @@ documentation retained under `docs/` has a scope banner where it describes
 optional datasets that are absent from this edition.
 
 This public edition contains runtime source, user documentation, installation
-manifests, and the reviewed directory. Keep acquired datasets, coordinates,
-credentials, raw responses, screenshots, and local environment files private.
-Software licensing is separate from third-party data rights. See
-[security](SECURITY.md) and [setup](docs/SETUP.md).
+metadata, public Census town points and a coordinate-free directory. Keep
+credentials, personal details, sensitive locations and acquired datasets out
+of Git. Software licensing is separate from third-party data rights.
+See [security](SECURITY.md) and
+[setup](docs/SETUP.md).

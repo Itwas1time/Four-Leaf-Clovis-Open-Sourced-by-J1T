@@ -21,4 +21,6 @@ See [sites, partners, and permits](SITES_PARTNERS_AND_PERMITS.md).
 
 Keep sensitive site locations and restricted source payloads private. This
 snapshot is separate from the application's local area-review inputs; empty
-area results mean missing local evidence. See [SECURITY.md](../SECURITY.md).
+area results mean missing local evidence. The [town lookup](RESIDENT_CONTEXT.md)
+is a separate public Census place dataset, not an archaeological inventory.
+See [security](../SECURITY.md).
