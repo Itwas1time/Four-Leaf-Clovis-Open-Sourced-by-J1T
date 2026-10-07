@@ -11,6 +11,9 @@ coordinate-free archaeological directory.
 - **Explore a town.** Choose a state, town and known land-use context.
   Explore conditional historical object types, optionally request live regional
   geology, and download a source-linked context report. No address is required.
+- **Start in any state.** Reviewed statewide mineral learning examples and
+  sources appear immediately for all 50 states, DC and Puerto Rico. These are
+  background, not claims about a deposit in a yard.
 - Offline lookup of 32,363 public Census places across the 50 states, DC and Puerto Rico.
 - Optional Macrostrat map units with original references and CC BY 4.0 attribution.
   Maps describe a public town point, not an individual yard or vertical soil profile.
@@ -53,9 +56,16 @@ python -m atlas.gui.app
 ```
 
 The Dash app binds to localhost at port 8050. Start with **Explore a town**:
-select a state and town, choose known past land use, opt into regional geology
-if wanted, then select **Explore this town**. Read or download the report.
+select a state and town, choose known past land use, then select
+**Explore this town**. Click the town box and type in its search field:
+`Santa Rosa`, `Santa Rosa, CA` and `Santa Rosa, California` all work.
+**Include local rock maps (online)** is selected by default; uncheck for an
+offline report. The lookup runs only when Explore is pressed. Read the
+**At a glance** summary, inspect the sources and download the report.
+**A little curiosity, Dig deeper.**
 Use **Research projects** for the directory and research briefs.
+Its **Move the research map** search accepts towns as well as regions and
+projects. It moves the map; use Explore a town for a resident report.
 
 The light workspace adapts to mobile screens. Switch between Terrain,
 Topographic and Satellite above the map. Background maps need internet access;

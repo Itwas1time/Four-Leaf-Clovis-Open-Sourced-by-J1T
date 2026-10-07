@@ -2,7 +2,8 @@
 
 The maintained interface is the Dash place-context and research planner.
 Python 3.11 or newer is required. The town lookup, directory and planner need
-no API keys. Regional geology is an optional online request.
+no API keys. Local rock maps are selected by default; the online request runs
+only when Explore is pressed. Uncheck the option for an offline report.
 
 ## Windows PowerShell
 
@@ -34,8 +35,11 @@ server local. See [security](../SECURITY.md).
 
 ## Explore a town
 
-Select a state, type a town name and choose a Census place. Choose the past
-land use you know, optionally enable regional geology, then select
+Select a state to see reviewed statewide learning examples and sources.
+Click the town box, type a town name in its search field and choose a Census
+place. `Santa Rosa, CA` or `Santa Rosa, California` also works. Choose the past
+land use you know, leave **Include local rock maps (online)** selected for map
+evidence or uncheck for an offline report, then select
 **Explore this town**. Read or download the report. No address is required.
 The report explains conditional historical object types, mapped rock context,
 limited formation-specific fossil examples and evidence still needed.
@@ -44,6 +48,8 @@ individual yard or a vertical soil profile. See [resident context and data
 rights](RESIDENT_CONTEXT.md) and the [Cincinnati example](examples/cincinnati-town-context.md).
 
 Choose **Research projects** for the directory and project briefs.
+Its **Move the research map** search accepts towns, regions and project areas;
+it moves the map and does not generate a resident report.
 Town searches, directory searches and report generation work locally; the
 geology option and map tiles/styles require internet access. Changing report
 inputs invalidates the previous download.

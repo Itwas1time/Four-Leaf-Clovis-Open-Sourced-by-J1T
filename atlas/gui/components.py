@@ -21,7 +21,7 @@ def build_header() -> html.Header:
                 [
                     html.Div([html.Span() for _ in range(4)], className="atlas-logo-mark", **{"aria-hidden": "true"}),
                     html.Div([html.Span("clovis", className="atlas-brand-title"),
-                              html.Span("A little curiosity. A clearer picture.", className="atlas-brand-tagline")]),
+                              html.Span("A little curiosity, Dig deeper.", className="atlas-brand-tagline")]),
                 ], className="atlas-brand"
             ),
             html.Div(id="header-region", children="Choose a town to explore"),
@@ -178,14 +178,14 @@ def build_layer_panel() -> html.Aside:
                 ],
             ),
             _section(
-                "Search",
+                "Move the research map",
                 [
                     html.Div(
                         [
                             dcc.Input(
                                 id="search-input",
                                 type="text",
-                                placeholder="Place name or coordinates",
+                                placeholder="Town, state; region; or coordinates",
                                 debounce=False,
                                 className="atlas-search-input",
                             ),
@@ -194,6 +194,7 @@ def build_layer_panel() -> html.Aside:
                         className="atlas-search-row",
                     ),
                     html.Div(id="search-results", className="atlas-search-results"),
+                    html.P("This search moves the map. Use Explore a town for a town's rocks, fossils and historical context.", className="atlas-help"),
                 ],
             ),
             _section(

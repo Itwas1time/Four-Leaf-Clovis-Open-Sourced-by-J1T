@@ -389,14 +389,20 @@ def render_catalog_record(record_id):
 
 
 def _lookup_search_matches(query: str) -> list[tuple[str, dict]]:
+    from core.us_places import search_towns
+    if not isinstance(query, str) or len(query) > 80:
+        return []
     q = (query or "").strip().lower()
     if not q:
         return []
     index = get_search_index()
     if q in index:
         return [(q, index[q])]
-    matches = [(name, info) for name, info in index.items() if q in name]
-    matches.sort(key=lambda row: (abs(len(row[0]) - len(q)), row[0]))
+    towns = search_towns(query)
+    matches = [(row['key'], {key: value for key, value in row.items() if key != 'key'}) for row in towns]
+    matches += [(name, info) for name, info in index.items() if q in name]
+    if not towns:
+        matches.sort(key=lambda row: (abs(len(row[0]) - len(q)), row[0]))
     return matches[:8]
 
 
@@ -597,7 +603,9 @@ def render_field_lead(selected_id):
     prevent_initial_call=True,
 )
 def submit_search(_clicks, _submit, query):
-    query = (query or "").strip()
+    if not isinstance(query, str) or len(query) > 80:
+        return no_update, "Enter a town and state, a region, or coordinates (up to 80 characters).", []
+    query = query.strip()
     if not query:
         return no_update, "Enter a place name or coordinates.", []
     parts = query.replace(",", " ").split()

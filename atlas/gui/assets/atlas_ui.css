@@ -142,6 +142,10 @@ button:focus-visible, summary:focus-visible, a:focus-visible {
 #resident-preview h1 { font-size: 21px; line-height: 1.3; }
 #resident-preview h2 { font-size: 16px; margin-top: 22px; }
 #resident-preview h3 { font-size: 13px; }
+.atlas-state-guide { margin-top: 20px; color: #425545; font-size: 12px; line-height: 1.7; }
+.atlas-state-guide:empty { display: none; }
+.atlas-state-guide h3 { color: #2d4e36; font-size: 19px; line-height: 1.3; }
+.atlas-state-guide a { color: #2c6c46; }
 .atlas-brief-preview a, .atlas-lead-links a, .atlas-institution-list a, .atlas-regulatory-links a, .atlas-regulatory-card a { color: #2c6c46; }
 .atlas-panel-title { color: #4f6a53; border-color: #e0e8db; font-size: 11px; padding: 16px 20px; }
 .atlas-panel-disclosure > summary { color: #4f6a53 !important; border-color: #e0e8db; }

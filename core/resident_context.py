@@ -13,6 +13,7 @@ import secrets
 from core.regional_geology import API, geology_for_place
 from core.fossil_guides import matching_guides
 from core.us_places import SOURCE, get_place
+from core.state_context import state_context
 
 CONTEXTS = {
     "unknown": "I do not know the land-use history",
@@ -24,6 +25,7 @@ ARTIFACT_SOURCE = "https://www.nps.gov/yose/learn/historyculture/facelift-pocket
 FOSSIL_SOURCE = "https://www.nps.gov/subjects/fossils/what-is-a-fossil.htm"
 GEOLOGY_SOURCE = "https://dev.macrostrat.org/docs/data-services"
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
+ROCK_WORDS_SOURCE = "https://water.usgs.gov/water-basics_glossary.html"
 _REPORTS = OrderedDict()
 _REPORT_LOCK = Lock()
 
@@ -59,9 +61,30 @@ def _history(context):
         return ("Imported fill may contain transported glass, ceramics, brick or rock fragments. "
                 "Their original location and age cannot be inferred from the present yard. "
                 "An object in fill would not by itself establish an undisturbed local site.")
-    return ("No historical find type can be supported for this property yet. Glass, ceramics and metal hardware are "
-            "general recognition examples, not evidence that objects occur here. Start with dated maps, building records "
-            "or a local archive to establish past use.")
+    return ("Recognition examples to investigate include glass, ceramics and metal hardware. "
+            "No historical find type is documented for this property; these examples are not evidence that objects occur here. "
+            "Start with dated maps, building records or a local archive to establish past use.")
+
+
+def _map_words(units):
+    """Explain selected map wording; do not infer specimens or occurrences."""
+    text = ' '.join(unit['name'] + ' ' + unit['lithology'] for unit in units).casefold()
+    definitions = []
+    if 'alluv' in text:
+        definitions.append("**Alluvium:** loose sand, gravel, silt or clay deposited by flowing water.")
+    if 'sedimentary' in text:
+        definitions.append("**Sedimentary rock:** material accumulated in layers and hardened into rock.")
+    if 'limestone' in text:
+        definitions.append("**Limestone:** sedimentary rock made mostly of calcium carbonate.")
+    if 'shale' in text:
+        definitions.append("**Shale:** fine-grained rock formed from hardened clay, silt or mud.")
+    if 'unconsolidated' in text:
+        definitions.append("**Unconsolidated:** loose material that has not hardened into solid rock.")
+    if not definitions:
+        return []
+    return ["### Map words in plain English", "", *['- ' + item for item in definitions], "",
+            f"[USGS glossary]({ROCK_WORDS_SOURCE}). These definitions explain map wording; "
+            "they do not identify a specimen or establish what is present in a yard.", ""]
 
 
 def build_context(state, geoid, context="unknown", online=None):
@@ -74,11 +97,16 @@ def build_context(state, geoid, context="unknown", online=None):
     lines = [f"# What might be here? — {_md(place['name'])}, {state}", "",
              "**Scale: town context, not a property assessment.** The map lookup uses the Census representative point "
              "for this place. It may describe a different deposit from your yard. No street address is collected.", "",
-             "## How likely is a find?", "",
-             "**Likelihood cannot be estimated from the available evidence.** No validated, comparable survey with "
-             "both finds and no-find outcomes, sampling method, searched area and depth is connected to this town. "
-             "A record nearby or a suitable rock type does not give the chance of finding an object in a backyard. "
-             "Unknown does not mean zero.", "",
+             "## At a glance", "",
+             ("**Town-point rock maps:** " + "; ".join(_md(unit['name']) for unit in units[:4]) + ". "
+              "Read the mapped materials and original references below." if units else geology['message']), "",
+             "**Historical clues:** " + {
+                 'unknown': "past land use is unknown; dated records are the next step.",
+                 'home': "your reported older building suggests glass, ceramics and hardware as recognition examples.",
+                 'farm': "your reported farm or garden history gives a starting point for land-use research.",
+                 'fill': "imported fill can contain transported objects; their original place and age remain unknown.",
+             }[context] + " "
+             "**Discovery odds:** not currently estimable.", "",
              "## Historical objects", "",
              f"Your land-use selection: **{_md(CONTEXTS[context])}**. This is user-reported and unverified.", "",
              _history(context), "",
@@ -89,6 +117,7 @@ def build_context(state, geoid, context="unknown", online=None):
         lines += [f"Macrostrat returned **{len(units)} overlapping map units** at the public town point. "
                   "These are maps at different scales, not a vertical sequence, separate discoveries or independent "
                   "confirmations. Their mapped materials are regional possibilities, not a yard soil profile.", ""]
+        lines += _map_words(units)
         for unit in units:
             lines += [f"### {_md(unit['name'])}", "",
                       f"- Mapped material: {_md(unit['lithology']) or 'Not specified'}.",
@@ -125,6 +154,12 @@ def build_context(state, geoid, context="unknown", online=None):
               "or sediment. Their presence depends on the formation and preservation conditions; rock age alone "
               "does not predict a taxon or a find. A patterned rock or mineral coating may resemble a fossil.", "",
               f"[NPS fossil identification background]({FOSSIL_SOURCE})", "",
+              "## Statewide learning context", "", state_context(state), "",
+              "## How likely is a find?", "",
+              "**Likelihood cannot be estimated from the available evidence.** No validated, comparable survey with "
+              "both finds and no-find outcomes, sampling method, searched area and depth is connected to this town. "
+              "A record nearby or a suitable rock type does not give the chance of finding an object in a backyard. "
+              "Unknown does not mean zero.", "",
               "## What would improve this answer?", "",
               "- A dated property or neighborhood land-use record, checked with a local archive.",
               "  [Library of Congress Sanborn maps](https://www.loc.gov/collections/sanborn-maps/about-this-collection/) "

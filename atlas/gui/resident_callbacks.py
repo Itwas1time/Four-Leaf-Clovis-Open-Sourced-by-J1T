@@ -4,6 +4,7 @@ from dash import Input, Output, State, callback, callback_context, no_update
 from atlas.gui.data.fieldwork_leads import LEADS_BY_ID
 from core.resident_context import build_context, current_report, input_key, remember_report
 from core.us_places import get_place, search_places, states
+from core.state_context import state_context
 
 
 @callback(Output("resident-place", "options"), Output("resident-place", "disabled"),
@@ -33,10 +34,15 @@ def workflow_sections(mode):
 
 
 @callback(Output("resident-empty-state", "style"), Output("map-workspace", "className"),
-          Input("resident-report-store", "data"), Input("workflow-mode", "value"))
-def display_context_state(token, mode):
-    return ({"display": "none"} if isinstance(token, str) and token else {"display": "block"},
+          Input("resident-report-store", "data"), Input("workflow-mode", "value"), Input("resident-state", "value"))
+def display_context_state(token, mode, state):
+    return ({"display": "none"} if (isinstance(token, str) and token) or state_context(state) else {"display": "block"},
             "atlas-map-frame atlas-map-research" if mode == "research" else "atlas-map-frame atlas-map-resident")
+
+
+@callback(Output("resident-state-guide", "children"), Input("resident-state", "value"), Input("resident-report-store", "data"))
+def show_state_context(state, token):
+    return "" if isinstance(token, str) and token else state_context(state)
 
 
 @callback(Output("main-map", "viewport", allow_duplicate=True),
@@ -55,7 +61,8 @@ def navigate_workflow(mode, geoid, state, lead_id):
           Output("resident-report-store", "data"), Output("resident-download-button", "disabled"),
           Input("resident-build", "n_clicks"), Input("resident-state", "value"),
           Input("resident-place", "value"), Input("resident-history", "value"),
-          Input("resident-online", "value"))
+          Input("resident-online", "value"),
+          running=[(Output("resident-loading", "style"), {"display": "block"}, {"display": "none"})])
 def render_resident_context(clicks, state, geoid, history, online):
     if callback_context.triggered_id != "resident-build" or not clicks:
         return "", "Choose a town to begin your field notes.", None, True

@@ -11,12 +11,26 @@ location, determine collection rights or estimate a discovery probability.
 
 1. Start the Dash app with `python -m atlas.gui.app`.
 2. Select **Explore a town**, a state and a town or Census place. Type a
-   town name to narrow the list; each search shows up to 30 results.
+   town name in the dropdown's search field to narrow the list; each search
+   shows up to 30 results. `Santa Rosa, CA` and `Santa Rosa, California` work too.
+   Selecting a state immediately shows reviewed statewide background and sources.
 3. Choose the land-use history you know. This selection remains explicitly
    user-reported; the app does not verify a building or former farm.
-4. Optionally request regional geology, then select **Explore this town**.
+4. **Include local rock maps (online)** is selected by default. Uncheck it for
+   an offline report, or leave it selected and press **Explore this town**.
+   No geology request runs until you press Explore.
 5. Read the report and download its Markdown copy. Changing an input clears
    the previous preview and disables its download until a new report is built.
+
+The report begins with **At a glance**, including the names of actual returned
+map units or a clear provider-status message. Every state, DC and Puerto Rico
+has reviewed statewide background, including sources for further learning.
+State mineral-industry examples are not a list of collectible rocks or an
+inference about deposits at the selected town. Broad fossil examples are
+learning topics, with missing reviewed coverage made explicit.
+Short definitions linked to the [USGS glossary](https://water.usgs.gov/water-basics_glossary.html)
+explain selected map wording such as alluvium, sedimentary rock and shale.
+They explain terms in map names and materials, without identifying specimens.
 
 The offline report explains conditional object types and research gaps. The
 online option adds original map-unit descriptions and references from
@@ -34,6 +48,9 @@ explicitly missing guide coverage; this is not a national fossil inventory.
 Choose **Research projects** for the directory, published projects,
 project briefs and study-area tools. Those tools remain separate from a
 resident's town report.
+**Move the research map** searches public towns, states, regions and project
+areas; choosing a result moves the map. Switch to Explore a town to build a
+resident report.
 
 ## Likelihood
 
@@ -47,6 +64,21 @@ shown as a predictive probability.
 
 ## Data rights and provenance
 
+- **USGS state mineral-industry overviews and NPS fossil learning guide.**
+  Authored selections in `core/state_context.py` cover all 50 states, DC and
+  Puerto Rico. Fifty-one linked [USGS state overviews](https://www.usgs.gov/centers/national-minerals-information-center/state-minerals-statistics-and-information)
+  supply mineral examples for the states and Puerto Rico; DC has research
+  starting links. Sources were reviewed 7 October 2026. The industry pages
+  describe different historical reporting periods; these are selected learning
+  examples, not current production statistics or a complete mineral inventory.
+  Delaware's overview describes crushed stone sold from out-of-state quarries,
+  so that commodity is deliberately excluded from its derived examples.
+  The [NPS fossil guide](https://www.nps.gov/subjects/fossils/official-state-fossils.htm),
+  updated 13 August 2024, supplies broad organism categories where covered.
+  Clovis does not assert current official state designations or a complete
+  fossil inventory. Each record stores its source, review date and optional
+  geological-survey organization link. No original page text, photographs,
+  personal contacts, specimen records or find coordinates are bundled.
 - **U.S. Census Bureau, 2026 National Places Gazetteer.**
   [Source and scope](https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html),
   [source ZIP](https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2026_Gazetteer/2026_Gaz_place_national.zip),

@@ -1,14 +1,14 @@
 > **Public edition:** public Census town points are bundled as spatial context; archaeological/fossil locations are not. See the [README](../../README.md). Other datasets described below are optional and are not bundled.
 
-> Demonstration from a live Clovis run on 7 October 2026: public Cincinnati town context and a hypothetical older-building history. This is not an assessment of a real property.
-
 # What might be here? — Cincinnati city, OH
 
 **Scale: town context, not a property assessment.** The map lookup uses the Census representative point for this place. It may describe a different deposit from your yard. No street address is collected.
 
-## How likely is a find?
+## At a glance
 
-**Likelihood cannot be estimated from the available evidence.** No validated, comparable survey with both finds and no-find outcomes, sampling method, searched area and depth is connected to this town. A record nearby or a suitable rock type does not give the chance of finding an object in a backyard. Unknown does not mean zero.
+**Town-point rock maps:** Late Ordovician sedimentary; Grant Lake and Fairview Formations, Miamitown Shale, Undivided; Paleozoic sedimentary rocks. Read the mapped materials and original references below.
+
+**Historical clues:** your reported older building suggests glass, ceramics and hardware as recognition examples. **Discovery odds:** not currently estimable.
 
 ## Historical objects
 
@@ -21,6 +21,14 @@ Conditional possibilities: fragments of bottle or window glass, ceramics, nails 
 ## Rocks and geological materials
 
 Macrostrat returned **3 overlapping map units** at the public town point. These are maps at different scales, not a vertical sequence, separate discoveries or independent confirmations. Their mapped materials are regional possibilities, not a yard soil profile.
+
+### Map words in plain English
+
+- **Sedimentary rock:** material accumulated in layers and hardened into rock.
+- **Limestone:** sedimentary rock made mostly of calcium carbonate.
+- **Shale:** fine-grained rock formed from hardened clay, silt or mud.
+
+[USGS glossary](https://water.usgs.gov/water-basics_glossary.html). These definitions explain map wording; they do not identify a specimen or establish what is present in a yard.
 
 ### Late Ordovician sedimentary
 
@@ -51,6 +59,25 @@ General recognition examples include preserved shells, bones, wood, impressions 
 
 [NPS fossil identification background](https://www.nps.gov/subjects/fossils/what-is-a-fossil.htm)
 
+## Statewide learning context
+
+### Ohio starting points
+
+Statewide background, not evidence of a find in your yard.
+
+**Mineral materials to learn about:** crushed stone, dimension stone, limestone, sandstone, gemstones, salt. [USGS state overview](https://www.usgs.gov/centers/national-minerals-information-center/mineral-industry-ohio) lists these in statewide industry context; production does not establish a local deposit or collectible specimen.
+
+**Fossil learning example:** Trilobites. [NPS state fossil learning guide](https://www.nps.gov/subjects/fossils/official-state-fossils.htm). A state example does not identify fossils at your town point.
+
+**Local maps and identification:** find your state's survey in the [state geological surveys directory](https://www.stategeologists.org/surveys).
+
+For historical objects, check dated building/land-use records or [Library of Congress Sanborn maps](https://www.loc.gov/collections/sanborn-maps/about-this-collection/). Choose a town and Explore for rock-map evidence at its public representative point.
+
+
+## How likely is a find?
+
+**Likelihood cannot be estimated from the available evidence.** No validated, comparable survey with both finds and no-find outcomes, sampling method, searched area and depth is connected to this town. A record nearby or a suitable rock type does not give the chance of finding an object in a backyard. Unknown does not mean zero.
+
 ## What would improve this answer?
 
 - A dated property or neighborhood land-use record, checked with a local archive.
@@ -66,7 +93,7 @@ Before ground disturbance, use [811 utility marking](https://www.transportation.
 ## Sources and privacy
 
 - U.S. Census Bureau, 2026 Places Gazetteer: [place names and representative points](https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html). The lookup is a public place catalogue, not archaeology or household data.
-- [Macrostrat data services](https://dev.macrostrat.org/docs/data-services); [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Provider status: **available**. Checked: 2026-10-07T19:56:36+00:00.
+- [Macrostrat data services](https://dev.macrostrat.org/docs/data-services); [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Provider status: **available**. Checked: 2026-10-07T22:23:02+00:00.
 - [Geology query for this public town point](https://macrostrat.org/api/v2/geologic_units/map?lat=39.140183&lng=-84.505829). Descriptions are excerpts; Clovis's interpretations are separate from the original map data.
 - Original map source 7: Garrity, C.P., and Soller, D.R.,. Database of the Geologic Map of North America: adapted from the map by J.C. Reed, Jr. and others \(2005\). U.S. Geological Survey Data Series 424 .
 - Original map source 133: Horton, J.D., C.A. San Juan, and D.B. Stoeser. The State Geologic Map Compilation \(SGMC\) geodatabase of the conterminous United States. doi: 10.3133/ds1052. U.S. Geological Survey Data Series 1052.
