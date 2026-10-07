@@ -1,5 +1,20 @@
 window.dash_clientside = window.dash_clientside || {};
 window.dash_clientside.atlas = window.dash_clientside.atlas || {};
+window.dash_clientside.atlas.tileLoading = function(event) {
+    event.target._clovisTileErrors = 0;
+    var notice = document.getElementById('map-network-status');
+    if (notice) notice.hidden = true;
+};
+window.dash_clientside.atlas.tileError = function(event) {
+    event.target._clovisTileErrors = (event.target._clovisTileErrors || 0) + 1;
+    if (event.tile) event.tile.style.visibility = 'hidden';
+    var notice = document.getElementById('map-network-status');
+    if (notice) notice.hidden = false;
+};
+window.dash_clientside.atlas.tilesLoaded = function(event) {
+    var notice = document.getElementById('map-network-status');
+    if (notice && !event.target._clovisTileErrors) notice.hidden = true;
+};
 window.dash_clientside.atlas.escapeHtml = function(value) {
     return String(value == null ? '' : value).replace(/[&<>"']/g, function(char) {
         return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[char];

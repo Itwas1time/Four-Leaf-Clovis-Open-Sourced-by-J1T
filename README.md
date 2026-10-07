@@ -8,7 +8,7 @@ coordinate-free archaeological directory.
 
 ## What works here
 
-- **What might be here?** Choose a state, town and known land-use context.
+- **Explore a town.** Choose a state, town and known land-use context.
   Explore conditional historical object types, optionally request live regional
   geology, and download a source-linked context report. No address is required.
 - Offline lookup of 32,363 public Census places across the 50 states, DC and Puerto Rico.
@@ -52,10 +52,16 @@ python -m pip install .
 python -m atlas.gui.app
 ```
 
-The Dash app binds to localhost at port 8050. Start with **What might be here?**:
+The Dash app binds to localhost at port 8050. Start with **Explore a town**:
 select a state and town, choose known past land use, opt into regional geology
 if wanted, then select **Explore this town**. Read or download the report.
-Use **Research projects and areas** for the directory and research briefs.
+Use **Research projects** for the directory and research briefs.
+
+The light workspace adapts to mobile screens. Switch between Terrain,
+Topographic and Satellite above the map. Background maps need internet access;
+local reports remain available during a tile outage. Map images send only the
+app origin as a referrer. Terrain uses Stadia's local development access;
+hosting requires provider authorization. See [setup](docs/SETUP.md).
 See the [resident workflow and data provenance](docs/RESIDENT_CONTEXT.md).
 An [actual demonstration report](docs/examples/cincinnati-town-context.md)
 uses Cincinnati's public town point and a hypothetical older-building history.

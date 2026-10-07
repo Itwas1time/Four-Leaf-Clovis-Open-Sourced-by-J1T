@@ -10,7 +10,7 @@ location, determine collection rights or estimate a discovery probability.
 ## Try it
 
 1. Start the Dash app with `python -m atlas.gui.app`.
-2. Select **What might be here?**, a state and a town or Census place. Type a
+2. Select **Explore a town**, a state and a town or Census place. Type a
    town name to narrow the list; each search shows up to 30 results.
 3. Choose the land-use history you know. This selection remains explicitly
    user-reported; the app does not verify a building or former farm.
@@ -31,7 +31,7 @@ returned map names Grant Lake (OH/KY), Green River (WY/CO/UT) or Morrison
 locations and do not confirm a fossil on a property. Other formations have
 explicitly missing guide coverage; this is not a national fossil inventory.
 
-Choose **Research projects and areas** for the directory, published projects,
+Choose **Research projects** for the directory, published projects,
 project briefs and study-area tools. Those tools remain separate from a
 resident's town report.
 
@@ -88,7 +88,11 @@ external data terms.
 The resident form has no address, personal name, free-text notes or arbitrary
 URL field. The online option sends a Census town point to a fixed HTTPS
 Macrostrat endpoint. Network metadata is visible to that provider. External
-map tiles and styles have their own providers. Search text is handled locally.
+map tiles and styles have their own providers. Tile images send only the
+application origin as a referrer, without a page path or query. Other outbound
+links retain the app's `no-referrer` policy. Search text is handled locally.
+The background map has a provider selector and an outage notice; town lookup
+and offline report generation remain available if tiles cannot load.
 
 No resident report or provider response is written to disk by the app. Memory
 caches hold at most 128 reports and 128 public town responses; downloads expire

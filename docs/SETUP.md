@@ -43,10 +43,20 @@ Discovery likelihood cannot currently be estimated. A town point is not an
 individual yard or a vertical soil profile. See [resident context and data
 rights](RESIDENT_CONTEXT.md) and the [Cincinnati example](examples/cincinnati-town-context.md).
 
-Choose **Research projects and areas** for the directory and project briefs.
+Choose **Research projects** for the directory and project briefs.
 Town searches, directory searches and report generation work locally; the
 geology option and map tiles/styles require internet access. Changing report
 inputs invalidates the previous download.
+
+## Background maps
+
+Use Terrain, Topographic or Satellite above the map. Terrain uses Stadia's
+localhost development access, with no key for `localhost` or `127.0.0.1`.
+Tile images send only the app origin as a referrer, without a page path or
+query, so the provider can recognize local access. The rest of the app keeps
+its `no-referrer` policy. If tiles fail, a notice appears and local reports
+remain usable. Hosted terrain maps require provider-authorized domain or
+API-key configuration; see [Stadia authentication](https://docs.stadiamaps.com/authentication/).
 
 ## Program limits
 

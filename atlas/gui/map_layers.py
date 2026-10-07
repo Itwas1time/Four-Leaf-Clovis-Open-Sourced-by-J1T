@@ -18,6 +18,11 @@ def make_tile_layer(layer_key: str = "terrain") -> dl.TileLayer:
         url=TILE_URLS.get(layer_key, TILE_URLS["terrain"]),
         attribution=TILE_ATTRIBUTIONS.get(layer_key, ""),
         maxZoom=19,
+        maxNativeZoom=19,
+        referrerPolicy="origin",
+        eventHandlers={"loading": _client_function("tileLoading"),
+                       "tileerror": _client_function("tileError"),
+                       "load": _client_function("tilesLoaded")},
     )
 
 

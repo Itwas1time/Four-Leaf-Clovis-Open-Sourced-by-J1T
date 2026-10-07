@@ -6,9 +6,8 @@ from pathlib import Path
 from threading import Timer
 
 import dash
-import dash_bootstrap_components as dbc
 import dash_leaflet as dl
-from dash import html
+from dash import dcc, html
 
 from atlas.gui.data.lead_catalog import matching_leads
 from core.web_security import configure_local_flask
@@ -35,7 +34,6 @@ from atlas.gui.styles import BG_PRIMARY, MAP_CONTAINER_STYLE
 app = dash.Dash(
     __name__,
     external_stylesheets=[
-        dbc.themes.DARKLY,
         "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
         "https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css",
     ],
@@ -53,10 +51,20 @@ _initial_zoom = 4
 
 def _build_map() -> html.Div:
     return html.Div(
+        id="map-workspace",
+        className="atlas-map-frame atlas-map-resident",
         style={"flex": "1", "position": "relative", "minHeight": "0"},
         children=[
+            html.Div(dcc.RadioItems(id="basemap-selector", options=[
+                {"label": "Terrain", "value": "terrain"},
+                {"label": "Topographic", "value": "topographic"},
+                {"label": "Satellite", "value": "satellite"},
+            ], value="terrain", className="atlas-map-switch", inline=True), className="atlas-map-switch-wrap"),
+            html.Div("The background map could not load. Try another map above; your town report still works.",
+                     id="map-network-status", className="atlas-map-network-status", hidden=True, role="status"),
             dl.Map(
                 id="main-map",
+                className="atlas-map",
                 center=_initial_center,
                 zoom=_initial_zoom,
                 maxZoom=18,

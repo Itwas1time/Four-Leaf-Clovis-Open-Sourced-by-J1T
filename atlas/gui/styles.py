@@ -35,19 +35,17 @@ LAYER_COLORS = {
     "citizen_report_density": "#6b7280",
 }
 
-# Tile provider URLs (free, no API key)
+# Local terrain access needs an origin referrer; hosted usage needs provider authorization.
 TILE_URLS = {
-    "dark": "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
     "satellite": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     "topographic": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
     "terrain": "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png",
 }
 
 TILE_ATTRIBUTIONS = {
-    "dark": "CartoDB",
-    "satellite": "Esri",
-    "topographic": "OpenTopoMap",
-    "terrain": "Stadia/Stamen",
+    "satellite": 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+    "topographic": 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, SRTM | Map style &copy; <a href="https://opentopomap.org/">OpenTopoMap</a> (CC-BY-SA)',
+    "terrain": '&copy; <a href="https://stadiamaps.com/attribution/">Stadia Maps</a> &copy; <a href="https://stamen.com/">Stamen Design</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }
 
 # Font stacks

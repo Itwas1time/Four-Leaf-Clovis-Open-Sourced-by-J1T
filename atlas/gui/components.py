@@ -19,12 +19,13 @@ def build_header() -> html.Header:
         [
             html.Div(
                 [
-                    html.Span("CLOVIS", className="atlas-brand-kicker"),
-                    html.Span(" Discovery Planner", className="atlas-brand-title"),
-                ]
+                    html.Div([html.Span() for _ in range(4)], className="atlas-logo-mark", **{"aria-hidden": "true"}),
+                    html.Div([html.Span("clovis", className="atlas-brand-title"),
+                              html.Span("A little curiosity. A clearer picture.", className="atlas-brand-tagline")]),
+                ], className="atlas-brand"
             ),
             html.Div(id="header-region", children="Choose a town to explore"),
-            html.Div("Town context · published research · no discovery odds without evidence", className="atlas-header-note"),
+            html.Div("Town context & research", className="atlas-header-note"),
         ],
         className="atlas-header",
     )
@@ -280,13 +281,13 @@ def build_layer_panel() -> html.Aside:
     panel.children = [
         html.Div("Start with a published project or draw a local U.S. study area.", className="atlas-workflow-hint"),
         lead_title, lead_section, map_sections[2], directory_title, directory_section,
-        map_sections[0], map_sections[1], *map_sections[3:],
+        *map_sections[3:],
     ]
     panel.children = [
-        html.Div("Choose your workflow", className="atlas-panel-title"),
+        html.Div("YOUR WORKSPACE", className="atlas-workspace-label"),
         dcc.RadioItems(id="workflow-mode", options=[
-            {"label": " What might be here?", "value": "resident"},
-            {"label": " Research projects and areas", "value": "research"},
+            {"label": " Explore a town", "value": "resident"},
+            {"label": " Research projects", "value": "research"},
         ], value="resident", className="atlas-workflow-mode"),
         resident_controls(),
         html.Div(panel.children, id="research-controls", style={"display": "none"}),

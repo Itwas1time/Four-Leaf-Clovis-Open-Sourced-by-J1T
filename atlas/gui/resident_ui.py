@@ -2,39 +2,52 @@
 from dash import dcc, html
 
 from core.resident_context import CONTEXTS
-from core.us_places import states
+from core.us_places import STATE_NAMES, states
 
 
 def controls():
     return html.Section([
-        html.Div("LOCAL CURIOSITY", className="atlas-lead-eyebrow"),
+        html.Div("LOOK A LITTLE CLOSER", className="atlas-lead-eyebrow"),
         html.H2("What might be here?", className="atlas-brief-heading"),
-        html.P("Explore historical objects, fossils and geology around a U.S. town. Start with public town context; no address needed.", className="atlas-help"),
+        html.P("Old objects, local rocks, traces of the past. Explore what your town's context can tell you.", className="atlas-resident-intro"),
+        html.Div("01  /  CHOOSE YOUR PLACE", className="atlas-step-label"),
         html.Label("State or territory", htmlFor="resident-state", className="atlas-small-label"),
-        dcc.Dropdown(id="resident-state", options=[{"label": value, "value": value} for value in states()],
+        dcc.Dropdown(id="resident-state", options=[{"label": f"{STATE_NAMES[value]} ({value})", "value": value} for value in sorted(states(), key=STATE_NAMES.get)],
                      placeholder="Choose state", className="atlas-filter-dropdown"),
         html.Label("Town or Census place", htmlFor="resident-place", className="atlas-small-label"),
         dcc.Dropdown(id="resident-place", options=[], placeholder="Type a town name after choosing state",
-                     className="atlas-filter-dropdown"),
-        html.P("Search returns up to 30 matches. Not every rural location is a Census place; a nearby town remains broad context.", className="atlas-help"),
+                     className="atlas-filter-dropdown", disabled=True),
+        html.P("No address needed. For rural areas, choose a nearby town.", className="atlas-help"),
+        html.Div("02  /  ADD SOME CONTEXT", className="atlas-step-label"),
         html.Label("What do you know about past land use?", htmlFor="resident-history", className="atlas-small-label"),
         dcc.Dropdown(id="resident-history", options=[{"label": label, "value": key} for key, label in CONTEXTS.items()],
                      value="unknown", clearable=False, className="atlas-filter-dropdown"),
-        dcc.Checklist(id="resident-online", options=[{"label": " Request regional geology from Macrostrat", "value": "geology"}],
-                      value=[], className="atlas-lead-support-filter"),
-        html.P("Optional online lookup sends only the public town point to Macrostrat. It receives network metadata. Its maps do not describe an individual yard.", className="atlas-help"),
-        html.Button("Explore this town", id="resident-build", n_clicks=0, className="atlas-primary-button"),
-        html.P("Discovery odds need representative survey outcomes. Clovis will show when a likelihood cannot be estimated.", className="atlas-help"),
+        html.Div([
+            dcc.Checklist(id="resident-online", options=[{"label": " Add regional geology", "value": "geology"}],
+                          value=[], className="atlas-lead-support-filter"),
+            html.P("Optional · live rock maps from Macrostrat", className="atlas-help"),
+            html.Details([html.Summary("What is shared?"), html.P("Only the public town point and standard network metadata go to Macrostrat. Its maps are regional context, not an assessment of your yard.")], className="atlas-privacy-note"),
+        ], className="atlas-geology-option"),
+        html.Button(["Explore this town", html.Span(" →", **{"aria-hidden": "true"})], id="resident-build", n_clicks=0, disabled=True, className="atlas-primary-button"),
+        html.Div([html.Strong("Context, not a prediction."), html.P("Clovis keeps sources and unknowns visible. Discovery odds need survey evidence we don't yet have.")], className="atlas-evidence-note"),
     ], id="resident-controls", className="atlas-resident-controls")
 
 
 def report_panel():
     return html.Section([
-        html.Div("YOUR LOCAL CONTEXT", className="atlas-lead-eyebrow"),
-        html.H2("A starting point for your curiosity", className="atlas-brief-heading"),
+        html.Div("YOUR FIELD NOTES", className="atlas-lead-eyebrow"),
+        html.H2("A place has a story.", className="atlas-brief-heading"),
         dcc.Loading(html.Div(id="resident-status", children="Choose a town and select Explore this town.",
-                             className="atlas-status-card"), type="dot", color="#fbbf24"),
-        html.Button("Download this context report", id="resident-download-button", n_clicks=0,
+                             className="atlas-status-card"), type="dot", color="#2d6a4f"),
+        html.Div([
+            html.Div([html.Span(className="atlas-landline"), html.Span(className="atlas-landline"), html.Span(className="atlas-landline")], className="atlas-empty-art", **{"aria-hidden": "true"}),
+            html.H3("Start with the place you know."),
+            html.P("Choose a town and explore. Your notes will connect local possibilities to their sources."),
+            html.Div([html.Span("01"), html.Div([html.Strong("Historical objects"), html.P("Clues from how land was used")])], className="atlas-empty-topic"),
+            html.Div([html.Span("02"), html.Div([html.Strong("Rocks & fossils"), html.P("Regional maps and formation guides")])], className="atlas-empty-topic"),
+            html.Div([html.Span("03"), html.Div([html.Strong("Evidence & unknowns"), html.P("Sources, limits, and what to check next")])], className="atlas-empty-topic"),
+        ], id="resident-empty-state", className="atlas-empty-state"),
+        html.Button("↓  Download field notes", id="resident-download-button", n_clicks=0,
                     disabled=True, className="atlas-primary-button atlas-brief-download"),
         dcc.Markdown(id="resident-preview", children="The report will explain plausible find types, source evidence and missing information.",
                      className="atlas-brief-preview", link_target="_blank", dangerously_allow_html=False),

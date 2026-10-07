@@ -744,13 +744,15 @@ def render_metrics(analysis):
 @callback(
     Output("base-tile-layer", "url"),
     Output("base-tile-layer", "attribution"),
+    Output("base-tile-layer", "maxNativeZoom"),
     Input("basemap-selector", "value"),
 )
 def switch_basemap(value):
     from atlas.gui.styles import TILE_ATTRIBUTIONS, TILE_URLS
 
     key = value or "terrain"
-    return TILE_URLS.get(key, TILE_URLS["terrain"]), TILE_ATTRIBUTIONS.get(key, "")
+    key = key if isinstance(key, str) and key in TILE_URLS else "terrain"
+    return TILE_URLS[key], TILE_ATTRIBUTIONS[key], 17 if key == "topographic" else 19
 
 
 @callback(
