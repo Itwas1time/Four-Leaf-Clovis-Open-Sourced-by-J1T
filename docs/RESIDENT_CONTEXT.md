@@ -19,7 +19,10 @@ location, determine collection rights or estimate a discovery probability.
 4. **Include local rock maps (online)** is selected by default. Uncheck it for
    an offline report, or leave it selected and press **Explore this town**.
    No geology request runs until you press Explore.
-5. Read the report and download its Markdown copy. Changing an input clears
+5. Read the short summary and **Try one small investigation** checklist. A
+   marker labels the public Census town point used for the map request.
+   Expand **Read map evidence and full field notes** for full descriptions,
+   references and limits, or download the complete Markdown report. Changing an input clears
    the previous preview and disables its download until a new report is built.
 
 The report begins with **At a glance**, including the names of actual returned
@@ -31,6 +34,16 @@ learning topics, with missing reviewed coverage made explicit.
 Short definitions linked to the [USGS glossary](https://water.usgs.gov/water-basics_glossary.html)
 explain selected map wording such as alluvium, sedimentary rock and shale.
 They explain terms in map names and materials, without identifying specimens.
+
+The checklist links to a Library of Congress Sanborn search using the bundled
+town name and state, and [USGS MapView](https://ngmdb.usgs.gov/mapview/) around
+the public town point. Search coverage has not been checked for each town;
+external sites may be unavailable or require browser verification. Start with
+an index and a dated sheet, compare recognizable streets and buildings, and
+record the year and sheet. For geology, compare the legend, date and scale.
+The observation checklist concerns objects already exposed; it is not a
+photograph classifier. It suggests identification through a survey or museum.
+Links contain only public catalogue values, with no user search text or address.
 
 The offline report explains conditional object types and research gaps. The
 online option adds original map-unit descriptions and references from

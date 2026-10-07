@@ -73,6 +73,7 @@ def _build_map() -> html.Div:
                 style={"width": "100%", "height": "100%", "background": BG_PRIMARY},
                 children=[
                     make_tile_layer("terrain"),
+                    dl.LayerGroup(id="resident-town-point"),
                     dl.ScaleControl(position="bottomleft"),
                     dl.FeatureGroup(
                         [

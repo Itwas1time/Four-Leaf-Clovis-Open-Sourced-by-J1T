@@ -40,7 +40,11 @@ Click the town box, type a town name in its search field and choose a Census
 place. `Santa Rosa, CA` or `Santa Rosa, California` also works. Choose the past
 land use you know, leave **Include local rock maps (online)** selected for map
 evidence or uncheck for an offline report, then select
-**Explore this town**. Read or download the report. No address is required.
+**Explore this town**. A marker shows the public Census town point. Read the
+short summary and **Try one small investigation** checklist, then expand
+**Read map evidence and full field notes** or download the complete report.
+Historical-map searches and USGS geological-map links are external starting
+points with variable coverage. No address is required.
 The report explains conditional historical object types, mapped rock context,
 limited formation-specific fossil examples and evidence still needed.
 Discovery likelihood cannot currently be estimated. A town point is not an

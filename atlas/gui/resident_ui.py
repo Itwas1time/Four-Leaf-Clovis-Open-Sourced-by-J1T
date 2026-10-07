@@ -51,6 +51,9 @@ def report_panel():
         ], id="resident-empty-state", className="atlas-empty-state"),
         html.Button("↓  Download field notes", id="resident-download-button", n_clicks=0,
                     disabled=True, className="atlas-primary-button atlas-brief-download"),
-        dcc.Markdown(id="resident-preview", children="The report will explain plausible find types, source evidence and missing information.",
-                     className="atlas-brief-preview", link_target="_blank", dangerously_allow_html=False),
+        dcc.Markdown(id="resident-summary", className="atlas-resident-summary", link_target="_blank", dangerously_allow_html=False),
+        html.Details([
+            html.Summary("Read map evidence and full field notes"),
+            dcc.Markdown(id="resident-preview", className="atlas-brief-preview", link_target="_blank", dangerously_allow_html=False),
+        ], id="resident-evidence", className="atlas-resident-evidence"),
     ], id="resident-inspector", className="atlas-brief-panel")

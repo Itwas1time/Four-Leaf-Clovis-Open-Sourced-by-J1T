@@ -14,6 +14,9 @@ coordinate-free archaeological directory.
 - **Start in any state.** Reviewed statewide mineral learning examples and
   sources appear immediately for all 50 states, DC and Puerto Rico. These are
   background, not claims about a deposit in a yard.
+- **Take a next step.** The dashboard marks the public town point and offers
+  town-specific historical-map searches, geological-map links and an observation
+  checklist. Expand the full field notes for map descriptions, sources and limits.
 - Offline lookup of 32,363 public Census places across the 50 states, DC and Puerto Rico.
 - Optional Macrostrat map units with original references and CC BY 4.0 attribution.
   Maps describe a public town point, not an individual yard or vertical soil profile.
@@ -61,7 +64,10 @@ select a state and town, choose known past land use, then select
 `Santa Rosa`, `Santa Rosa, CA` and `Santa Rosa, California` all work.
 **Include local rock maps (online)** is selected by default; uncheck for an
 offline report. The lookup runs only when Explore is pressed. Read the
-**At a glance** summary, inspect the sources and download the report.
+**At a glance** summary and **Try one small investigation** checklist. Expand
+**Read map evidence and full field notes** to inspect the sources, or download
+the complete report. External map coverage varies; a search link is not a
+confirmed match or permission to collect.
 **A little curiosity, Dig deeper.**
 Use **Research projects** for the directory and research briefs.
 Its **Move the research map** search accepts towns as well as regions and

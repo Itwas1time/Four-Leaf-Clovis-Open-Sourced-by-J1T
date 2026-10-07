@@ -137,6 +137,16 @@ button:focus-visible, summary:focus-visible, a:focus-visible {
 #resident-download-button:not(:disabled) { position: sticky; top: 0; z-index: 2; }
 .atlas-brief-preview { background: #fff; border-color: #e1e8dc; color: #425545; border-radius: 10px; font-size: 12px; max-height: none; }
 .atlas-brief-preview:empty { display: none; }
+.atlas-resident-summary { color: #425545; font-size: 12px; line-height: 1.7; }
+.atlas-resident-summary:empty { display: none; }
+.atlas-resident-summary h2 { color: #2d4e36; font-size: 16px; margin-top: 22px; }
+.atlas-resident-summary a { color: #2c6c46; }
+.atlas-resident-summary ol { padding-left: 20px; }
+.atlas-resident-summary li { margin-bottom: 16px; }
+.atlas-resident-evidence { margin-top: 18px; border-top: 1px solid #e1e8dc; padding-top: 16px; }
+.atlas-resident-evidence:has(#resident-preview:empty) { display: none; }
+.atlas-resident-evidence > summary { font-size: 13px; color: #285d45; font-weight: 600; cursor: pointer; }
+.atlas-town-tooltip { color: #253c31; background: #fff; border: 1px solid #cdd9cf; font-size: 11px; width: 200px; max-width: 220px; white-space: normal; text-align: center; }
 .atlas-brief-preview h1, .atlas-brief-preview h2, .atlas-brief-preview h3 { color: #2d4e36; }
 #resident-preview { margin-top: 18px; font-size: 12px; line-height: 1.7; }
 #resident-preview h1 { font-size: 21px; line-height: 1.3; }

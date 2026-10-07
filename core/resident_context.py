@@ -9,10 +9,12 @@ from collections import OrderedDict
 from threading import Lock
 from time import monotonic
 import secrets
+import re
+from urllib.parse import urlencode
 
 from core.regional_geology import API, geology_for_place
 from core.fossil_guides import matching_guides
-from core.us_places import SOURCE, get_place
+from core.us_places import SOURCE, STATE_NAMES, get_place
 from core.state_context import state_context
 
 CONTEXTS = {
@@ -87,6 +89,32 @@ def _map_words(units):
             "they do not identify a specimen or establish what is present in a yard.", ""]
 
 
+def _next_steps(place, context):
+    """Fixed official destinations built only from the validated public catalogue."""
+    town = re.sub(r" (?:city|town|village|borough|municipio|CDP)(?: \(balance\))?$", "", place['name'])
+    historical = "https://www.loc.gov/collections/sanborn-maps/?" + urlencode({
+        'q': town + ' ' + STATE_NAMES[place['state']]})
+    geology = "https://ngmdb.usgs.gov/mapview/?" + urlencode({
+        'center': f"{place['longitude']:.6f},{place['latitude']:.6f}", 'zoom': 9})
+    history_action = {
+        'home': 'Look for the reported building on a dated sheet; record the year and sheet number.',
+        'farm': 'Check whether a dated map covers the farm area; rural coverage may be missing. Ask a local archive about land-use records.',
+        'fill': 'Ask when soil or gravel was brought in and where it came from. A local map cannot establish the origin of fill.',
+        'unknown': 'Use the index to find familiar streets and buildings; record the year and sheet number.',
+    }[context]
+    return [
+        "## Try one small investigation", "",
+        f"1. **Past buildings:** [Search Sanborn maps for {_md(town)}]({historical}). {history_action} "
+        "Matching coverage has not been checked; try a local archive if missing or unavailable.", "",
+        f"2. **Rocks and fossils:** [Open USGS geological maps around this town]({geology}). "
+        "Compare its legend, date and scale with these unit names. "
+        "Coverage varies; mapped rock does not confirm an exposure or a fossil.", "",
+        "3. **Something already exposed?** Photograph it with a ruler; note its material and whether it was in fill or attached to rock. "
+        "Ask a survey or museum about identification; survey links are in the full notes. "
+        "Clovis cannot identify a specimen. No digging is needed to start.", "",
+    ]
+
+
 def build_context(state, geoid, context="unknown", online=None):
     key = input_key(state, geoid, context, [] if online is None else online)
     place = get_place(geoid, state)
@@ -106,8 +134,10 @@ def build_context(state, geoid, context="unknown", online=None):
                  'farm': "your reported farm or garden history gives a starting point for land-use research.",
                  'fill': "imported fill can contain transported objects; their original place and age remain unknown.",
              }[context] + " "
-             "**Discovery odds:** not currently estimable.", "",
-             "## Historical objects", "",
+             "**Discovery odds:** not currently estimable.", ""]
+    lines += _next_steps(place, context)
+    summary = f"**{_md(place['name'])}, {state} · Town context.** Maps use the public Census town point, not a yard assessment.\n\n" + "\n".join(lines[4:])
+    lines += ["## Historical objects", "",
              f"Your land-use selection: **{_md(CONTEXTS[context])}**. This is user-reported and unverified.", "",
              _history(context), "",
              f"[NPS artifact recognition examples]({ARTIFACT_SOURCE}) are drawn from a park guide. "
@@ -188,7 +218,7 @@ def build_context(state, geoid, context="unknown", online=None):
               "held in bounded server memory caches; restarting clears them. Clovis writes neither to disk. Downloads remain on your computer. "
               "Map tiles and styles use their own external providers. No personal address or private site record is "
               "required for this workflow.", ""]
-    return {"key": key, "markdown": "\n".join(lines), "geology_status": geology["status"],
+    return {"key": key, "markdown": "\n".join(lines), "summary": summary, "geology_status": geology["status"],
             "unit_count": len(units), "place": place}
 
 
