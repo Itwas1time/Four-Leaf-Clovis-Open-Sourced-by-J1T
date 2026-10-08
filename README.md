@@ -22,12 +22,12 @@ state fossil chapters, a public town lookup and a coordinate-free research direc
   town/state names across all 50 states and DC, with dated catalog citations,
   chronological pages and an in-app sheet viewer. Catalog searches work offline.
 - **Compare museum references.** Search 563,454 source objects from the Met and
-  Smithsonian in **Library**. Read materials, dates, cultures, labeled dimensions
+  Smithsonian in **Atlas**. Read materials, dates, cultures, labeled dimensions
   and catalog numbers where recorded. Request eligible Met reference photographs
   and save a sourced comparison to the fieldbook. State fossil chapters supply
   three cited facts for every state, DC and Puerto Rico.
 - **Read mineral properties.** Search 6,381 Wikidata mineral records with 43,922
-  source statements in **Library → Mineral properties**. Read formulas,
+  source statements in **Atlas → Specialist searches → Mineral properties**. Read formulas,
   hardness, density and crystal-system claims with original units, qualifiers
   and sources; save a reference to Fieldbook without attaching a town.
 - **Take a next step.** The dashboard marks the public town point. Open
@@ -85,9 +85,11 @@ bag identifiers, explicit context relationships and dated corrections. Download
 a project ZIP backup with its full history; restore checks links and refuses
 conflicting revisions. See [dig records](docs/DIG_RECORDS.md) for storage and bounds.
 
-**Library → Data collections** adds optional local downloads: **173,946
+**Atlas → Manage offline collections** adds optional local downloads: **173,946
 published radiocarbon determinations** (17.7 MB) and **37,852 dinosaur fossil
-occurrences linked to 14,371 collections** (27.8 MB). Search materials, methods,
+occurrences linked to 14,371 collections** (27.8 MB), and **96,115 UCL EUROEVOL
+source rows** (17.0 MB) linking sites and occupation phases to animal remains,
+plants, measurements, dating samples and recovery methods. Search materials, methods,
 uncertainty, taxonomy, sites and original references. Read source location
 precision and save attributed references. See [collections](docs/DATA_COLLECTIONS.md)
 for coverage, reuse rights, original units and offline installation.
@@ -102,7 +104,14 @@ python -m pip install .
 python -m atlas.gui.app
 ```
 
-The Dash app binds to localhost at port 8050. Start with **Explore**:
+The Dash app binds to localhost at port 8050. **Explore** opens on **Atlas**,
+with one search and a shared reader across **1,498,895 source records** when
+all three optional packs are installed. Search published places, cultures,
+materials or fossils and follow the original source. **Specialist searches**
+keeps detailed collection filters available. Counts mix different record types
+and can overlap between sources; they do not count unique excavated finds.
+
+For local map research, choose **Rocks & fossils** or **Choose town**:
 select a state and town, then select
 **Explore this town** directly below the town box. Selecting a town
 moves the map and enables Explore; press it to build the report. **Choose
@@ -112,7 +121,7 @@ Click the town box and type in its search field:
 Open **Options & land-use context** for known past land use and the online setting.
 **Include local rock maps (online)** is selected by default; uncheck for an
 offline report. The lookup runs only when Explore is pressed. The central
-workbench has **Rocks & fossils**, **Old maps**, **Investigation** and **Library**. The Rocks &
+workbench has **Rocks & fossils**, **Old maps**, **Investigation** and **Atlas**. The Rocks &
 fossils map fills the center. Open **Read rock evidence · materials, ages &
 sources** below it to read and select unit cards, source details and matched
 formation guides. This drawer starts closed and contains **Map overlay &

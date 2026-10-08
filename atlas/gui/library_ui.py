@@ -10,6 +10,7 @@ from atlas.gui.mineral_library_ui import library as mineral_library
 from atlas.gui.radiocarbon_library_ui import library as radiocarbon_library
 from atlas.gui.data_pack_ui import library as data_pack_library
 from atlas.gui.dinosaur_library_ui import library as dinosaur_library
+from atlas.gui.atlas_ui import library as atlas_library
 
 
 def reading_nav(query):
@@ -18,16 +19,22 @@ def reading_nav(query):
 
 def workspace():
     return html.Section([
-        html.P('Read source records: archaeological projects, object materials and dates, fossil taxonomy, historical newspapers and regional rock maps. Choose a record to read it here and save its source.', className='atlas-help'),
-        dcc.RadioItems(id='library-section', value='objects', inline=True,
-                      options=[{'label':'Object guides','value':'guides'},{'label':'Museum objects','value':'objects'}, {'label':'Fossil specimens','value':'fossils'},
+        html.P('Explore published places, objects, assemblages and fossils. Search once, read the evidence and follow its source.', className='atlas-help'),
+        html.Div([html.Button('Atlas search', id='atlas-return', n_clicks=0, className='atlas-secondary-button'),
+                  html.Button('Manage offline collections', id='atlas-manage-packs', n_clicks=0, className='atlas-secondary-button')],
+                 className='clovis-atlas-toolbar'),
+        html.Details([html.Summary('Specialist searches'),
+            dcc.Dropdown(id='library-section', value='atlas', clearable=False,
+                      options=[{'label':'Atlas search','value':'atlas'}, {'label':'Object guides','value':'guides'},{'label':'Museum objects','value':'objects'}, {'label':'Fossil specimens','value':'fossils'},
                                {'label':'Newspaper history','value':'newspapers'}, {'label':'Mapped geology','value':'units'},
                                {'label':'State fossil stories','value':'states'}, {'label':'Archaeological projects','value':'projects'},
                                {'label':'Mineral properties','value':'minerals'},
                                {'label':'Radiocarbon dates','value':'radiocarbon'},
                                {'label':'Dinosaur taxa & sites','value':'dinosaurs'},
                                {'label':'Data collections','value':'packs'}],
-                      className='clovis-library-tabs'),
+                      className='atlas-filter-dropdown'),
+        ], className='clovis-atlas-specialist'),
+        atlas_library(),
         html.Div([
             html.Div([html.Label('Collection',htmlFor='library-object-collection',className='atlas-small-label'),
                       dcc.Dropdown(id='library-object-collection',value='met',clearable=False,
@@ -61,7 +68,7 @@ def workspace():
             html.P(id='library-object-source', className='atlas-help'),
             dcc.Store(id='library-object-page', data=1),
             dcc.Store(id='library-object-selected'),
-        ], id='library-objects'),
+        ], id='library-objects', style={'display':'none'}),
         fossil_library(),
         newspaper_library(),
         unit_library(),

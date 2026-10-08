@@ -2,8 +2,9 @@ from dash import ALL, Input, Output, State, callback, callback_context, html, no
 from core.data_packs import PackStore
 from core import data_pack_jobs
 
-LIBRARIES = {'radiocarbon-world': ('radiocarbon', 'Open radiocarbon dates'),
-             'dinosaur-sites': ('dinosaurs', 'Open dinosaur taxa & sites')}
+LIBRARIES = {'radiocarbon-world': ('atlas', 'Explore in atlas'),
+             'dinosaur-sites': ('atlas', 'Explore in atlas'),
+             'neolithic-assemblages': ('atlas', 'Explore in atlas')}
 
 
 @callback(Output("data-pack-cards", "children"), Input("data-pack-refresh", "data"))

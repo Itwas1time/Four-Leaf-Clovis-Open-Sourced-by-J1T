@@ -1719,6 +1719,240 @@
           "records": 81
         }
       ]
+    },
+    {
+      "id": "neolithic-assemblages",
+      "version": "2015.07",
+      "title": "Neolithic food, farming and animal remains",
+      "description": "UCL EUROEVOL occupation phases with animal and plant evidence, bone measurements, dating samples and recovery methods.",
+      "records": 96115,
+      "record_type": "source rows across twelve linked tables",
+      "coverage": "4,757 sites; 2,807 occupation phases; 10,318 animal and 8,327 plant observations. Central and Northwest Europe; 72 phases have fauna, plants and dates together. Source rows are distinct from specimen counts.",
+      "source_release": "2015.07",
+      "license": "CC0 1.0; original attribution retained",
+      "source_url": "https://discovery.ucl.ac.uk/id/eprint/1469811/",
+      "citation_url": "https://discovery.ucl.ac.uk/id/eprint/1469811/",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-neolithic-2015.07/clovis-neolithic-assemblages-2015.07.zip",
+      "archive_bytes": 17037173,
+      "archive_sha256": "572158aaec9a62aa6dedd93c2619ed95bf954907e0187a0947d1d55d761ab9d4",
+      "installed_bytes": 103141762,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 1679,
+          "sha256": "2ba36c374ecf71ef2ca638ef21144a67a7018dc4ce3c56c648dd98084433a772"
+        },
+        {
+          "name": "Manning_ABotPhases_fields.csv",
+          "bytes": 495,
+          "sha256": "17629d630cbf9614714942c1cf4317cf72bfd896c7cabd59a8ec99c7ffbb45c0"
+        },
+        {
+          "name": "Manning_ABotSamples_fields.csv",
+          "bytes": 2138,
+          "sha256": "a042d25f3373b5717e3a25f5a4226443e8341986263c132403439752e08b4e4f"
+        },
+        {
+          "name": "Manning_ABotSites_fields.csv",
+          "bytes": 1394,
+          "sha256": "d07c53abb5e2324cde8049968585cc0e9e38e202201642a010ae19fc86cc296a"
+        },
+        {
+          "name": "Manning_ABotTaxaList_fields.csv",
+          "bytes": 644,
+          "sha256": "6676a89b80f5c1877973d27e7c633c385b61d26d1b9de0e803a67e95775704d1"
+        },
+        {
+          "name": "Manning_C14Samples_fields.csv",
+          "bytes": 1436,
+          "sha256": "e3c8e2929886937b4f1b1cccec11bb660900fa0d0dc0d93e5f74d669837bd93f"
+        },
+        {
+          "name": "Manning_CommonPhases_fields.csv",
+          "bytes": 1549,
+          "sha256": "5094560553cb531563837d1ceff2280e829078d25a8b87e1450b04feda1212e7"
+        },
+        {
+          "name": "Manning_CommonSites_fields.csv",
+          "bytes": 314,
+          "sha256": "f465f4eae91462c7d75d210d447a812bceff1263ad7cbb9def80f5d5007e49ca"
+        },
+        {
+          "name": "Manning_FaunalBiometrics_fields.csv",
+          "bytes": 1017,
+          "sha256": "e7dd156da58ff484471eda9e198201d3061f70fabb5e781b14f41a27613502ca"
+        },
+        {
+          "name": "Manning_FaunalBones_fields.csv",
+          "bytes": 979,
+          "sha256": "130bac9170962b67f41f4cccedb5b72ffe682bb1fd85fb491042e425c17d5371"
+        },
+        {
+          "name": "Manning_FaunalPhases_fields.csv",
+          "bytes": 960,
+          "sha256": "3e5893e5b280954b1627b31e7c9cd6861aad3041d77b2a4da280446f4051ee51"
+        },
+        {
+          "name": "Manning_FaunalSpecies_fields.csv",
+          "bytes": 2794,
+          "sha256": "0bc153361f9e2e5e82d5bfb9e4f890261ffc16f9b8534d29634e5096defc86fb"
+        },
+        {
+          "name": "Manning_FaunalTaxaList_fields.csv",
+          "bytes": 2251,
+          "sha256": "fafc0eb4d587d8cbe1a717e3ff50c936030c9aa551ff0b7bce3ab777b63ab760"
+        },
+        {
+          "name": "SOURCES.md",
+          "bytes": 3216,
+          "sha256": "39c2971479e11f55f3bb6d6dfe987e5e94b0772d0a192d64f000cad98cb730ce"
+        },
+        {
+          "name": "assemblages.sqlite",
+          "bytes": 103120896,
+          "sha256": "dbe76a7e78fe7d5c3a875b3f367544ae54bce79cf00030aa97bdd356905b2616",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "source_tables": [
+              "kind",
+              "citation_url",
+              "source_sha256",
+              "records"
+            ],
+            "source_records": [
+              "kind",
+              "source_id",
+              "source_json"
+            ],
+            "sites": [
+              "id",
+              "name",
+              "country"
+            ],
+            "phases": [
+              "id",
+              "site_id",
+              "culture",
+              "period",
+              "site_type"
+            ],
+            "phase_links": [
+              "phase_id",
+              "kind",
+              "source_id",
+              "relationship"
+            ],
+            "records": [
+              "rowid",
+              "id",
+              "view",
+              "source_kind",
+              "source_id",
+              "title",
+              "site_id",
+              "site_name",
+              "country",
+              "phase_id",
+              "bone_id",
+              "taxon_label",
+              "subtitle",
+              "animal_count",
+              "plant_count",
+              "date_count",
+              "extra_json",
+              "search_text"
+            ]
+          },
+          "record_table": "records",
+          "records": 96115,
+          "user_version": 1
+        }
+      ],
+      "countries": [
+        {
+          "label": "Andorra",
+          "value": "Andorra",
+          "records": 1
+        },
+        {
+          "label": "Austria",
+          "value": "Austria",
+          "records": 76
+        },
+        {
+          "label": "Belgium",
+          "value": "Belgium",
+          "records": 100
+        },
+        {
+          "label": "Czech Republic",
+          "value": "Czech Republic",
+          "records": 91
+        },
+        {
+          "label": "Denmark",
+          "value": "Denmark",
+          "records": 297
+        },
+        {
+          "label": "France",
+          "value": "France",
+          "records": 1036
+        },
+        {
+          "label": "Germany",
+          "value": "Germany",
+          "records": 655
+        },
+        {
+          "label": "Great Britain",
+          "value": "Great Britain",
+          "records": 956
+        },
+        {
+          "label": "Ireland",
+          "value": "Ireland",
+          "records": 566
+        },
+        {
+          "label": "Isle of Man",
+          "value": "Isle of Man",
+          "records": 7
+        },
+        {
+          "label": "Liechtenstein",
+          "value": "Liechtenstein",
+          "records": 2
+        },
+        {
+          "label": "Luxembourg",
+          "value": "Luxembourg",
+          "records": 5
+        },
+        {
+          "label": "Netherlands",
+          "value": "Netherlands",
+          "records": 241
+        },
+        {
+          "label": "Poland",
+          "value": "Poland",
+          "records": 263
+        },
+        {
+          "label": "Sweden",
+          "value": "Sweden",
+          "records": 319
+        },
+        {
+          "label": "Switzerland",
+          "value": "Switzerland",
+          "records": 142
+        }
+      ]
     }
   ]
 }

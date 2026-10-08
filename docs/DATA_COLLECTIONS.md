@@ -2,26 +2,27 @@
 
 # Downloadable local collections
 
-Open **Library → Data collections**. Each card shows its source, reuse rights,
+Open **Atlas → Manage offline collections**. Each card shows its source, reuse rights,
 snapshot, record coverage and download/storage sizes. Choose **Download
 collection**; progress remains available after a page reload. Open the installed
-collection to search and read it locally. Internet access is needed for the
+collection to explore it in the shared atlas search and reader. Internet access is needed for the
 initial download and external source pages.
 
 | Collection | Contents | Download | Installed |
 |---|---|---:|---:|
 | World archaeological radiocarbon results | 173,946 laboratory determinations; 144 recorded country labels | 17.7 MB | 63.2 MB |
 | Dinosaur taxa and fossil sites | 37,852 published occurrences; 14,371 collections; 12,996 original taxonomic names across ranks, including synonyms | 27.8 MB | 266.8 MB |
+| Neolithic food, farming and animal remains | 96,115 source rows in twelve linked UCL EUROEVOL tables; 4,757 sites and 2,807 occupation phases | 17.0 MB | 103.1 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
-bundled. These two additional collections are optional; the initial application
+bundled. These additional collections are optional; the initial application
 still includes those existing large catalogs.
 
 ## Radiocarbon results
 
 Search charcoal, shell, a laboratory identifier such as **A-0034**, a recorded
 site name, or a reference. Filter by recorded country and, if useful, integer
-laboratory ages. Read material, method, uncertainty, site labels and original
+laboratory ages using **Specialist searches → Radiocarbon dates**. Read material, method, uncertainty, site labels and original
 references before saving a dating reference to your fieldbook.
 
 The source ages are **uncalibrated radiocarbon years BP**. Errors are the original
@@ -38,7 +39,7 @@ collection. A source release is not the date of every laboratory result.
 
 ## Dinosaur taxonomy and fossil sites
 
-Choose **Published fossil occurrences** or **Taxonomic names & sites**. Search
+In **Specialist searches → Dinosaur taxa & sites**, choose **Published fossil occurrences** or **Taxonomic names & sites**. Search
 **Tyrannosaurus rex**, a formation such as **Morrison**, a collection name or a
 reference. Choose non-avian dinosaurs, fossil birds, or all Dinosauria; country
 codes retain the source's ISO labels. Read the published identification beside
@@ -68,6 +69,35 @@ declares CC0. Attribution, original references and the frozen source DOI are
 included. Contributor account fields and images are omitted. This published
 corpus does not cover every unreported find or absent museum specimen.
 
+## Neolithic assemblages
+
+Search **Arbon**, **barley**, **Bos taurus**, a culture or a source identifier.
+Use **Limit to a source → UCL · Neolithic assemblages** to focus on this pack.
+Read a site or occupation phase, then follow **Associated evidence** to its
+animal observations, plants or dating samples. Related lists use the same
+search, reader and pagination. Bone records link to their original phase and
+measurements; recovery methods and original source fields remain readable.
+
+The twelve tables contain 4,757 published site labels, 2,807 occupation phases,
+10,318 animal observations, 8,327 plant observations, 16,737 bone records,
+36,483 measurements and 14,053 dating samples, plus recovery and taxonomic
+tables. These counts describe different kinds of source rows. Presence-only
+observations stay separate from quantitative specimen or plant counts; source
+zeros and unknowns remain distinct. Ages remain uncalibrated BP, bone measurements
+remain in mm, and original method and mesh-size strings are retained. All twelve
+publisher field dictionaries accompany the pack.
+
+Coverage is Central and Northwest Europe with 16 source country labels. Only
+72 phases have animals, plants and linked dates together; 7,726 date rows have
+no recorded phase. An occupation phase association does not establish an
+individual deposit, a stratigraphic sequence or equal recovery effort.
+Coordinates are omitted. Dating samples overlap other compilations: 4,511
+laboratory-code strings also occur in the radiocarbon pack. Each source retains
+its attribution; the pack does not claim those are distinct new dates.
+
+Source: [UCL EUROEVOL](https://discovery.ucl.ac.uk/id/eprint/1469811/), supplied
+2015 tables, with the publisher's CC0 waiver and original attribution.
+
 ## Storage, updates and offline transfers
 
 Collections live in **`~/Clovis Local/packs`**, separately from the application,
@@ -85,6 +115,7 @@ Python environment:
 python -m core.data_packs list
 python -m core.data_packs install radiocarbon-world --archive clovis-radiocarbon-world-2025.07.zip
 python -m core.data_packs install dinosaur-sites --archive clovis-dinosaur-sites-2026.09.20.zip
+python -m core.data_packs install neolithic-assemblages --archive clovis-neolithic-assemblages-2015.07.zip
 ```
 
 Use the exact official archive; unpacked or edited databases are not accepted.

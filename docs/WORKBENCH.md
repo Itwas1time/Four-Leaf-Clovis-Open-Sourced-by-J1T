@@ -2,8 +2,10 @@
 
 # Investigate a place inside Clovis
 
-Clovis connects sources to observations. Start with a public town, inspect a
-map or exposed object, and save what you learned with its source and date.
+Clovis opens on **Atlas**: search published evidence, read a source record and
+save it to the fieldbook. A town selection is optional. For local map research,
+choose **Rocks & fossils** or **Choose town**, then inspect a public town or
+exposed object and save what you learned with its source and date.
 
 ## Choose a place
 
@@ -92,9 +94,22 @@ you already have a suitable map. Add its title, date and source yourself.
 Source-record links retain rights information: digitization does not establish
 reuse rights or permission to collect.
 
-## Read the reference library
+## Search the atlas
 
-Open **Library** beside Old maps. It works without selecting a town.
+**Atlas** uses one search across local source collections and one record reader.
+Type a place, culture, material, fossil or source identifier. Choose a broad
+evidence type when useful; **Limit to a source** is optional. Turn pages,
+read the source conventions, and **Save source to fieldbook**. **Search coverage**
+shows matching counts by source and collections that need downloading or repair.
+
+**Manage offline collections** adds substantial downloadable packs. Select an
+installed pack's **Explore in atlas** to search that source in the same reader.
+For UCL occupation phases, **Associated evidence** links to the published
+animal observations, plant observations and dating samples. Bone measurements,
+recovery and parent phase/site links remain available. Associations stay within
+their original dataset. See [collection coverage](DATA_COLLECTIONS.md).
+
+Open **Specialist searches → Museum objects** for collection-specific filters.
 Choose **Met · dated object references** or **Smithsonian · anthropology**,
 type a term and press Enter or leave the search field. The two collections
 contain 563,454 distinct source object records. Turn pages and select a record

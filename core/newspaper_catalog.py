@@ -279,7 +279,7 @@ def search_titles(state="", town="", query="", page=1):
             "(t.title LIKE ? COLLATE NOCASE OR "
             "t.summary LIKE ? COLLATE NOCASE OR "
             "t.languages LIKE ? COLLATE NOCASE OR "
-            "EXISTS (SELECT 1 FROM places px WHERE px.id=t.id AND "
+            "t.id IN (SELECT px.id FROM places px WHERE "
             "(px.town LIKE ? COLLATE NOCASE OR px.state_name LIKE ? COLLATE NOCASE)))"
         )
         where.append(search)

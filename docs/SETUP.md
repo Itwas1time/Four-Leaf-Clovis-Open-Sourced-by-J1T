@@ -42,7 +42,7 @@ this town** directly below the town box. **Options & land-use context** contains
 the optional past land use and online setting. Leave **Include local rock maps (online)** selected for map
 evidence or uncheck for an offline report, then select
 **Explore this town**. A marker shows the public Census town point. The central workbench has
-**Rocks & fossils**, **Old maps**, **Investigation** and **Library**. The Rocks & fossils map
+**Rocks & fossils**, **Old maps**, **Investigation** and **Atlas**. The Rocks & fossils map
 fills the center. Open **Read rock evidence · materials, ages & sources** below
 it to read and select unit cards, source details and matched formation guides.
 This drawer starts closed and contains **Map overlay & sources**. **Words in
@@ -80,7 +80,10 @@ Choose a date order, turn pages and read a record. **Load map sheets online**
 requests digitized sheets; **Search more maps online** retains live LOC search.
 Catalog-only records can supply a citation without claiming that a sheet was viewed.
 
-**Library** works without a town. Choose the Met or Smithsonian collection,
+**Atlas** opens on one search and a shared source reader without choosing a town.
+Search places, cultures, materials or fossils, and follow each source's evidence.
+Use optional evidence/source filters or expand **Specialist searches** for
+collection-specific readers. In its Museum objects reader, choose the Met or Smithsonian collection,
 search and select a record to read actual source fields. Met object groups and
 date ranges filter museum records; Smithsonian text tags are labeled separately
 from measured materials. Use **Load reference photograph** on an eligible Met
@@ -90,8 +93,8 @@ Puerto Rico. See [the workbench guide](WORKBENCH.md) and the individual source n
 
 ## Observe, save and return
 
-**Library → Data collections** offers the world radiocarbon and dinosaur
-taxa/site downloads. Read coverage, rights and storage sizes, then choose
+**Atlas → Manage offline collections** offers world radiocarbon, dinosaur
+taxa/site and UCL Neolithic assemblage downloads. Read coverage, rights and storage sizes, then choose
 **Download collection**. Downloads resume and verify before activation. Search
 installed records locally and save attributed references. See
 [downloadable collections](DATA_COLLECTIONS.md) for source conventions, storage,

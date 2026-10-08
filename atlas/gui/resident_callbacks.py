@@ -30,7 +30,7 @@ def place_actions(state, geoid, online, tool='map'):
     heading = f"{place['name']}, {place['state']}" if chosen else "Your field notes"
     note = ("Includes online rock maps at the public town point." if isinstance(online, list) and "geology" in online
             else "Offline report. Online rock maps are off.")
-    workbench='Reference library' if tool=='library' else heading if chosen else 'Explore a place.'
+    workbench='Atlas' if tool=='library' else heading if chosen else 'Explore a place.'
     return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, False, workbench, heading
 
 

@@ -1,4 +1,17 @@
 .clovis-library-workspace { flex: 1; min-height: 0; padding: 20px; overflow: auto; color: var(--clovis-ink); background: var(--clovis-card); }
+.clovis-atlas-toolbar { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+.clovis-atlas-specialist,.clovis-atlas-source-filter { margin:10px 0 16px; max-width:550px; }
+.clovis-atlas-specialist summary,.clovis-atlas-source-filter summary,.clovis-atlas-coverage summary { cursor:pointer; color:var(--clovis-muted); font-size:13px; }
+.clovis-atlas-specialist .atlas-filter-dropdown,.clovis-atlas-source-filter .atlas-filter-dropdown { margin-top:10px; }
+.clovis-atlas-filters { grid-template-columns:minmax(0,2fr) minmax(180px,1fr); }
+.clovis-atlas-count { font-size:14px; margin:16px 0; }
+.clovis-library-record .clovis-atlas-evidence,.clovis-atlas-evidence { color:var(--clovis-green); font-size:12px; font-weight:600; }
+.clovis-atlas-related { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 18px; }
+.clovis-atlas-related h4 { width:100%; margin:0 0 4px; }
+.clovis-atlas-related button { text-align:left; font-size:12px; }
+.clovis-atlas-coverage { margin:18px 0; font-size:13px; }
+#atlas-context-banner { border-left:3px solid var(--clovis-green); padding:10px 14px; margin:10px 0; background:var(--clovis-hover); }
+#atlas-context-banner .clovis-library-back { margin:8px 0 0; }
 .clovis-library-heading { font: 400 26px/1.2 Georgia,serif; margin: 7px 0 10px; }
 .clovis-library-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; border-bottom:1px solid var(--clovis-rule); }
 .clovis-library-tabs .dash-options-list-option { position:relative; padding:10px 12px !important; border-bottom:3px solid transparent; cursor:pointer; }
@@ -42,5 +55,8 @@
 .clovis-town-catalog strong { display:block; }
 .clovis-town-catalog button { margin-top:10px; width:100%; }
 .clovis-mode-resident.clovis-tool-library #inspector-panel { display:none !important; }
+.clovis-mode-resident.clovis-tool-library #layer-panel { display:none !important; }
+#library-atlas .clovis-library-facts { grid-template-columns:minmax(150px,38%) minmax(0,1fr); }
+@media(max-width:700px) { #library-atlas .clovis-library-facts { grid-template-columns:130px minmax(0,1fr); } }
 .clovis-tool-library #clovis-reading-path { display:none; }
 @media(max-width:700px) { .clovis-library-split,.clovis-library-filters { grid-template-columns:1fr; } .clovis-library-list { max-height:360px; } .clovis-library-workspace { padding:18px 14px; } .clovis-library-heading { font-size:23px; } .clovis-library-image { max-height:380px; } }

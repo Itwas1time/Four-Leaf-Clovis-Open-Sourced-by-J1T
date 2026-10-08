@@ -135,8 +135,8 @@ def _build_workbench():
                 {'label': 'Rocks & fossils', 'value': 'map'},
                 {'label': 'Old maps', 'value': 'archive'},
                 {'label': 'Investigation', 'value': 'missions'},
-                {'label': 'Library', 'value': 'library'},
-            ], value='map', className='clovis-workbench-tools', inline=True),
+                {'label': 'Atlas', 'value': 'library'},
+            ], value='library', className='clovis-workbench-tools', inline=True),
             example_panel(),
             dcc.Store(id='resident-example-store', storage_type='memory'),
             html.Div(id='clovis-reading-path', className='clovis-reading-path', role='status'),
@@ -166,7 +166,7 @@ app.layout = html.Div(
         "width": "100vw",
         "overflow": "hidden",
     },
-    id='clovis-app', className="atlas-app-shell clovis-mode-resident clovis-start",
+    id='clovis-app', className="atlas-app-shell clovis-mode-resident clovis-start clovis-tool-library",
 )
 
 
@@ -189,6 +189,7 @@ import atlas.gui.dig_records_callbacks  # noqa: E402,F401
 import atlas.gui.data_pack_callbacks  # noqa: E402,F401
 import atlas.gui.radiocarbon_library_callbacks  # noqa: E402,F401
 import atlas.gui.dinosaur_library_callbacks  # noqa: E402,F401
+import atlas.gui.atlas_callbacks  # noqa: E402,F401
 
 
 def _open_browser(url: str) -> None:

@@ -156,7 +156,7 @@ def search_units(state: str = "", query: str = "", page: int = 1) -> dict[str, A
             "u.description LIKE ? ESCAPE '\\' COLLATE NOCASE OR "
             "u.geomaterial LIKE ? ESCAPE '\\' COLLATE NOCASE OR "
             "u.source_citations_json LIKE ? ESCAPE '\\' COLLATE NOCASE OR "
-            "EXISTS (SELECT 1 FROM unit_source_units s WHERE s.unit_id = u.id AND "
+            "u.id IN (SELECT s.unit_id FROM unit_source_units s WHERE "
             "(s.source_name LIKE ? ESCAPE '\\' COLLATE NOCASE OR "
             "s.source_full_name LIKE ? ESCAPE '\\' COLLATE NOCASE OR "
             "s.source_age LIKE ? ESCAPE '\\' COLLATE NOCASE OR "
@@ -178,8 +178,9 @@ def search_units(state: str = "", query: str = "", page: int = 1) -> dict[str, A
         current_page = min(requested_page, pages)
         rows = [
             _public_unit(row) for row in connection.execute(
-                f"SELECT u.*, (SELECT COUNT(DISTINCT p.geoid) FROM place_units p "  # nosec B608 # Fixed SQL clauses and placeholders; values use bound parameters.
-                f"WHERE p.unit_id = u.id) AS mapped_places FROM units u{where} "
+                "SELECT u.*,COALESCE(m.mapped_places,0) AS mapped_places FROM units u "  # nosec B608 # Fixed SQL clauses and placeholders; values use bound parameters.
+                "LEFT JOIN (SELECT unit_id,COUNT(DISTINCT geoid) AS mapped_places FROM place_units GROUP BY unit_id) m "
+                f"ON m.unit_id=u.id{where} "
                 "ORDER BY u.layer_order, u.name COLLATE NOCASE, u.map_unit "
                 "LIMIT ? OFFSET ?",
                 [*params, PAGE_SIZE, (current_page - 1) * PAGE_SIZE],
