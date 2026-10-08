@@ -47,6 +47,17 @@ map units can overlap; they are separate map sources, not independent finds or
 layers under your yard. Reviewed formation guides show fossil learning examples
 only for matched named formations, with their own source and limits.
 
+**Words in this source** explains the material and age vocabulary beside a
+selected unit. Open a word for its meaning, an observation question and sources.
+Age cards place periods or epochs in relative older-to-younger order; the
+labels date the mapped unit, not a loose stone or historical object. Original
+qualifiers and untranslated wording remain visible.
+
+Open **Rock words & geological time · works offline** to search 28 material
+concepts and 28 age labels even when rock maps are off or unavailable. Try
+`loess`, `sedimentary`, `Ordovician` or `Lutetian`. Missing vocabulary is a
+review gap. See the [reference sources](GEOLOGY_LEARNING_SOURCES.md).
+
 Inside the rock evidence drawer, open **Map overlay & sources** for
 **Show regional geology overlay**, which is
 optional and off initially. It requires a
@@ -94,6 +105,14 @@ date/interval to 120 and observations to 1,500.
 
 **Inspect a find** has more detailed material comparisons and a browser-local
 photo pad. Document what is already exposed; the workflow is not a dig plan.
+Its comparison guide and feature-specific questions use the center. Select
+**Read the questions for these features** to reach it directly, then **Edit
+your observations** to return. Save and download actions are above the guide;
+photo instructions expand when needed. Public town context is optional: check
+**Include [town]** only when that town belongs with the observation. Changing
+town clears the choice and preserves your written notes. The saved record
+keeps the included town without exact coordinates or a claim about provenance.
+Possible-bone guidance appears next to the material selector immediately.
 
 ## Return to your work
 

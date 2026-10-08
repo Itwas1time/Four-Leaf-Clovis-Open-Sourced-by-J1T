@@ -5,7 +5,7 @@ from dash import dcc, html
 from atlas.gui.data.lead_catalog import GOALS, PERIODS, REGIONS, matching_leads
 from atlas.gui.data.public_catalog import SOURCE_NAMES, overview
 from atlas.gui.resident_ui import controls as resident_controls, report_panel as resident_report_panel
-from atlas.gui.inspection_ui import controls as inspection_controls, report_panel as inspection_report_panel
+from atlas.gui.inspection_ui import controls as inspection_controls
 from atlas.gui.fieldbook_ui import controls as fieldbook_controls, inspector as fieldbook_inspector
 from atlas.gui.theme_ui import theme_toggle
 from atlas.gui.styles import BG_PANEL, BORDER, PANEL_STYLE, SECTION_HEADER_STYLE, TEXT_DIM, TEXT_PRIMARY, TEXT_SECONDARY
@@ -387,7 +387,7 @@ def build_inspector_panel() -> html.Aside:
             )),
         ],
     )
-    panel.children = [resident_report_panel(), inspection_report_panel(), fieldbook_inspector(), html.Div(panel.children, id="research-inspector", style={"display": "none"})]
+    panel.children = [resident_report_panel(), fieldbook_inspector(), html.Div(panel.children, id="research-inspector", style={"display": "none"})]
     return panel
 
 

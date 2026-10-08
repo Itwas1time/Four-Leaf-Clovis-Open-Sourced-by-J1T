@@ -1,5 +1,6 @@
 """Observation-led comparisons, with no inferred dates, values or probabilities."""
 from core.resident_context import _md
+from core.us_places import get_place
 
 MATERIALS = {
     'unknown': 'I am not sure yet', 'glass': 'Glass or glass-like',
@@ -17,6 +18,20 @@ FEATURES = {
     'layers': 'Layers or bands', 'shell': 'Shell-like ribs or spiral',
     'branch': 'A flat branching pattern', 'holes': 'Regular holes or worked edges',
     'rust': 'Rust or other corrosion', 'porous': 'Pores or a hollow interior',
+}
+FEATURE_QUESTIONS = {
+    'transparent': 'Where does light pass through it: the whole object or only a thin edge?',
+    'curved': 'Which part can you describe: wall, rim, base or an incomplete curved edge?',
+    'seam': 'Where does the raised seam run and end? Record it beside a scale.',
+    'mark': 'What letters or numbers can you read exactly? Mark unreadable characters as unknown.',
+    'glaze': 'Where can you already see the coating and the body beneath it? Compare both surfaces.',
+    'grain': 'Are visible grains loose, joined together or interlocking? Describe their size and arrangement.',
+    'layers': 'Do the bands continue through an existing edge or sit only on the surface?',
+    'shell': 'What repeated ribs, spiral or outline can you see? Record shape without naming an organism.',
+    'branch': 'Is the branching pattern a flat surface coating, an impression or a raised structure?',
+    'holes': 'Are openings regular and repeated? Describe their edges without testing or cleaning them.',
+    'rust': 'What outline remains visible through the corrosion? Photograph it without scraping.',
+    'porous': 'Are the openings similar or varied? Show an existing surface without breaking the object.',
 }
 GUIDES = {
     'unknown': {
@@ -77,7 +92,14 @@ GUIDES = {
 }
 
 
-def inspect_find(material, features, setting, size, notes):
+def inspect_find(material, features, setting, size, notes, *, town_context=None, state=None, geoid=None):
+    if town_context is None:
+        town_context = []
+    if not isinstance(town_context, list) or town_context not in ([], ['town']):
+        raise ValueError('Choose whether to include public town context.')
+    place = get_place(geoid, state) if town_context else None
+    if town_context and place is None:
+        raise ValueError('Choose a matching public town before including town context.')
     if not isinstance(material, str) or material not in MATERIALS or not isinstance(setting, str) or setting not in SETTINGS:
         raise ValueError('Choose a material and where it was observed.')
     if not isinstance(features, list) or len(features) > 12 or any(not isinstance(f,str) or f not in GUIDES[material]['features'] for f in features):
@@ -91,9 +113,15 @@ def inspect_find(material, features, setting, size, notes):
              '## Your observations', '', f"- Material as described: {_md(MATERIALS[material])}.",
              f"- Setting: {_md(SETTINGS[setting])}.", f"- Size: {_md(size) if size.strip() else 'Not recorded'}.",
              '- Visible features: ' + (', '.join(_md(FEATURES[f]) for f in selected) if selected else 'None recorded yet') + '.', '']
+    if place:
+        lines += [f"Public town context: **{_md(place['name'])}, {_md(place['state'])}**. "
+                  'Included by you as broad context; this is not an exact find location or verified provenance.', '']
     if notes.strip(): lines += ['**Notes:** ' + _md(notes), '']
     if material == 'bone':
         lines += ['**Leave it in place.** If human remains are possible, stop disturbing the area and contact local authorities. This guide cannot distinguish human from animal remains.', '']
+    if selected:
+        lines += ['## Questions for the features you noticed', '',
+                  *['- ' + FEATURE_QUESTIONS[feature] for feature in selected], '']
     lines += ['## Compare these possibilities', '', *['- ' + item for item in guide['comparisons']], '',
               '## Look for these details next', '', *['- ' + item for item in guide['questions']], '']
     if 'branch' in selected:
@@ -107,4 +135,6 @@ def inspect_find(material, features, setting, size, notes):
               f"[{guide['source'][0]}]({guide['source'][1]}). Use the guide to compare features and prepare questions for a museum or geological survey. "
               "The NPS examples come from a park context; its collecting rules are not a permission determination for another location.", '',
               '**Still unknown:** exact identity, age, provenance, ownership and collection rights. Record an expert opinion separately from these observations.', '']
-    return {'material':material,'features':selected,'setting':setting,'size':size,'notes':notes,'markdown':'\n'.join(lines),'title':guide['title']}
+    return {'material':material,'features':selected,'setting':setting,'size':size,'notes':notes,
+            'place': f"{place['name']}, {place['state']}" if place else '',
+            'markdown':'\n'.join(lines),'title':guide['title']}

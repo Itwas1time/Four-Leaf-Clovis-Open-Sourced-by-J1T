@@ -1,6 +1,7 @@
 ﻿"""Literal Dash evidence cards and an explicitly opt-in geology layer."""
 from dash import dcc, html
 import dash_leaflet as dl
+from atlas.gui.learning_ui import glossary, unit_words
 
 TILE_URL = 'https://tiles.macrostrat.org/carto/{z}/{x}/{y}.png'
 
@@ -28,6 +29,7 @@ def make_geology_board():
                 html.Span(' · '), html.A('CC BY 4.0', href='https://creativecommons.org/licenses/by/4.0/', target='_blank', rel='noopener noreferrer')]),
         ]),
         html.P(id='resident-evidence-status', role='status'),
+        glossary(),
         html.Div(id='resident-evidence-cards', className='evidence-grid'),
         html.Div(id='resident-evidence-detail', className='evidence-detail', **{'aria-live': 'polite'}),
         dcc.Store(id='geology-note-context', data=None, storage_type='memory'),
@@ -48,7 +50,7 @@ def evidence_detail(card):
         return html.P('Select an evidence card to read its description and source.', className='evidence-empty')
     children = [html.Span(card['kind'], className='evidence-meta'), html.H3(card['title']),
                 html.H4('Materials / documented examples'), html.P(card['materials']), html.H4('Mapped age'),
-                html.P(card['age']), html.H4('Description'), html.P(card['description'])]
+                html.P(card['age']), unit_words(card), html.H4('Description'), html.P(card['description'])]
     if card.get('comments'):
         children += [html.H4('Original map comments'), html.P(card['comments'])]
     children += [html.H4('Source'), html.P(card['reference'])]

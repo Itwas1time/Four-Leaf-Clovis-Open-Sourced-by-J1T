@@ -49,6 +49,9 @@ def new_entry(kind,report):
         summary={'material':MATERIALS[report['material']],'setting':SETTINGS[report['setting']],
                  'features':', '.join(FEATURES[f] for f in report['features']) or 'Not recorded',
                  'size':report['size'] or 'Not recorded'}
+        if report.get('place'):
+            summary['place'] = report['place']
+            title += ' · ' + report['place']
     text=report['markdown']
     row={'id':hashlib.sha256((kind+text).encode()).hexdigest()[:24], 'kind':kind,
          'title':title.encode('utf-8')[:120].decode('utf-8','ignore'), 'created':datetime.now(timezone.utc).replace(microsecond=0).isoformat(),

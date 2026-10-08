@@ -87,7 +87,10 @@ workbench has **Rocks & fossils**, **Old maps** and **Investigation**. The Rocks
 fossils map fills the center. Open **Read rock evidence · materials, ages &
 sources** below it to read and select unit cards, source details and matched
 formation guides. This drawer starts closed and contains **Map overlay &
-sources**. Read a unit's source, then use its investigation action to carry the
+sources**. **Words in this source** explains reviewed materials and ages beside
+the selected unit. Open **Rock words & geological time** to search definitions
+and relative age order without an online lookup. Definitions do not identify a
+loose object or predict a find. Read a unit's source, then use its investigation action to carry the
 source and interval into written notes. Inspect Library of Congress map sheets
 with built-in zoom/drag/rotation, then record a sourced,
 dated investigation and save it to **Fieldbook**. The compact **Try an example**
@@ -99,8 +102,11 @@ The header **Dark / Light** toggle remembers this browser's preference while
 images retain their colours and printed notes remain light. Local map images stay
 in the browser. Source links support attribution and further research.
 See the [workbench guide](docs/WORKBENCH.md) for a practical walkthrough.
-Use **Inspect a find** for an already exposed object and **Fieldbook** to
-return to written notes. Saved entries stay in this browser; export a backup.
+Use **Inspect a find** for an already exposed object. Selected features produce
+specific observation questions in the center, with save/download actions above
+the guide and jump links for small screens. Including the selected public town
+is optional; changing town clears that choice. Use **Fieldbook** to return to
+written notes. Saved entries stay in this browser; export a backup.
 Print or save selected notes as PDF using the browser's print dialog.
 See [observations and fieldbook](docs/OBSERVATIONS.md) for a practical walkthrough
 and privacy details. Photos stay in the browser and are not saved or analyzed.

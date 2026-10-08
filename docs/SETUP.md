@@ -45,8 +45,11 @@ evidence or uncheck for an offline report, then select
 **Rocks & fossils**, **Old maps** and **Investigation**. The Rocks & fossils map
 fills the center. Open **Read rock evidence · materials, ages & sources** below
 it to read and select unit cards, source details and matched formation guides.
-This drawer starts closed and contains **Map overlay & sources**. Read a unit's
-source, then use its investigation action to carry the source and interval into
+This drawer starts closed and contains **Map overlay & sources**. **Words in
+this source** explains reviewed material and age terms beside the selected unit.
+Open **Rock words & geological time** to search the offline guide, including
+relative age order. These definitions do not identify a loose object or predict
+a find. Read a unit's source, then use its investigation action to carry the source and interval into
 written notes. Inspect Library of Congress map sheets inside Clovis, then save
 sourced observations to the fieldbook. The
 compact **Try an example** action randomly picks one of 100 town questions,
@@ -72,9 +75,12 @@ inputs invalidates the previous download.
 ## Observe, save and return
 
 Choose **Inspect a find** to describe an already exposed object. Select visible
-features, record size and context, and read comparison questions. An optional
-photo stays in the browser; it is not sent to the server, analyzed or saved.
-Save the written notes, or save a report from **Explore a town**.
+features, record size and context, and read the feature-specific questions in the
+center. The links beside the form and guide let you jump between them on a small
+screen. Save or download actions sit above the guide. You can explicitly include
+the selected public town as broad context; changing town clears that choice.
+An optional photo stays in the browser; it is not sent to the server, analyzed or
+saved. Save the written notes, or save a report from **Explore a town**.
 
 In **Fieldbook**, open a card and choose another investigation to compare.
 Add a follow-up after checking a map: record its title, date, sheet and source,

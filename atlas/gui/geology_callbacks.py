@@ -4,6 +4,12 @@ import dash_leaflet as dl
 from core.evidence_board import evidence_board, note_context
 from core.resident_context import current_report
 from atlas.gui.geology_ui import TILE_URL, evidence_card, evidence_detail
+from atlas.gui.learning_ui import glossary_results
+
+
+@callback(Output('geology-word-results','children'), Input('geology-word-search','value'))
+def explain_geology_word(query):
+    return glossary_results(query)
 
 
 @callback(Output('resident-evidence-cards', 'children'), Output('resident-evidence-status', 'children'),

@@ -17,10 +17,19 @@ you describe it and keep track of the next question.
 2. Select visible features and record size and context. An object in imported
    fill may have come from elsewhere; a branching mineral coating can resemble
    a plant fossil. The guide keeps these competing explanations visible.
+   Selected features produce specific questions in the center, such as
+   transcribing a mark exactly or recording where a seam ends. Select **Read
+   the questions for these features** to jump to the guide and **Edit your
+   observations** to return. Public town context defaults off. Check **Include
+   [town]** only when that town belongs with the object. Changing town clears
+   the choice without erasing your observations. Included context survives
+   downloads and backups; it is not an exact location or verified provenance.
 3. Optionally add a JPEG, PNG or WebP photo under 5 MB. Study both sides, an
    existing edge and a ruler. The image stays in the browser, is not sent to
    the server and is not analyzed, saved in the fieldbook or exported.
 4. Read the comparison questions, then save or download your written notes.
+   Record actions are above the guide. Photo instructions remain closed until
+   requested so they do not push the useful comparison out of view.
    Take them to a qualified survey, museum or archaeologist for identification.
 
 These guides do not establish identity, age, value or discovery odds. Bottle

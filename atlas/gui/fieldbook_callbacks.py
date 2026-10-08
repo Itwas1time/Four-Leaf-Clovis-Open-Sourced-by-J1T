@@ -25,9 +25,9 @@ def summary_text(key, value):
           State('fieldbook-store','data'),State('resident-report-store','data'),State('resident-state','value'),
           State('resident-place','value'),State('resident-history','value'),State('resident-online','value'),
           State('find-material','value'),State('find-features','value'),State('find-setting','value'),State('find-size','value'),State('find-notes','value'),
-          State('fieldbook-selected','value'),State('fieldbook-followup','value'),
+          State('fieldbook-selected','value'),State('fieldbook-followup','value'),State('find-town','value'),
           prevent_initial_call=True)
-def save_notes(resident_clicks,find_clicks,imported,followup_clicks,book,token,state,geoid,history,online,material,features,setting,size,notes,selected,followup):
+def save_notes(resident_clicks,find_clicks,imported,followup_clicks,book,token,state,geoid,history,online,material,features,setting,size,notes,selected,followup,town_context):
     try:
         book=validate_book(book or EMPTY_BOOK)
         trigger=callback_context.triggered_id
@@ -36,7 +36,8 @@ def save_notes(resident_clicks,find_clicks,imported,followup_clicks,book,token,s
             if report is None: raise ValueError('Explore this town again before saving a current report.')
             rows=[new_entry('town',report)]
         elif trigger=='find-save':
-            report=inspect_find(material,features,setting,size or '',notes or '')
+            report=inspect_find(material,features,setting,size or '',notes or '',
+                                town_context=town_context, state=state, geoid=geoid)
             if not report['features'] and not report['size'].strip() and not report['notes'].strip() and report['setting']=='unknown':
                 raise ValueError('Record at least one observation before saving.')
             rows=[new_entry('find',report)]
