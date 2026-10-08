@@ -90,6 +90,13 @@ Puerto Rico. See [the workbench guide](WORKBENCH.md) and the individual source n
 
 ## Observe, save and return
 
+**Library → Data collections** offers the world radiocarbon and dinosaur
+taxa/site downloads. Read coverage, rights and storage sizes, then choose
+**Download collection**. Downloads resume and verify before activation. Search
+installed records locally and save attributed references. See
+[downloadable collections](DATA_COLLECTIONS.md) for source conventions, storage,
+updates and offline ZIP installation.
+
 Choose **Inspect a find** to describe an already exposed object. Select visible
 features, record size and context, and read the feature-specific question cards
 first in the center. **Record this detail** focuses your notes without changing

@@ -31,10 +31,10 @@ def collection_filters(collection):
     return [{'label':label,'value':key} for key,label in groups.items()],'all',si,'Source text tags' if si else 'Object group'
 
 
-@callback(Output('library-objects','style'),Output('library-states','style'),Output('library-fossils','style'),Output('library-newspapers','style'),Output('library-units','style'),Output('library-guides','style'),Output('library-projects','style'),Output('library-minerals','style'),Input('library-section','value'))
+@callback(Output('library-objects','style'),Output('library-states','style'),Output('library-fossils','style'),Output('library-newspapers','style'),Output('library-units','style'),Output('library-guides','style'),Output('library-projects','style'),Output('library-minerals','style'),Output('library-radiocarbon','style'),Output('library-data-packs','style'),Output('library-dinosaurs','style'),Input('library-section','value'))
 def library_section(section):
     show,hide={}, {'display':'none'}
-    keys = ('objects','states','fossils','newspapers','units','guides','projects','minerals')
+    keys = ('objects','states','fossils','newspapers','units','guides','projects','minerals','radiocarbon','packs','dinosaurs')
     section = section if section in keys else 'objects'
     return tuple(show if section == key else hide for key in keys)
 

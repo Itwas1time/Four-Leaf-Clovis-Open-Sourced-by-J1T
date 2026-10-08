@@ -211,9 +211,11 @@ def search_objects(
     if not expression and safe_material.casefold() == "all":
         total = sum(int(meta.get("record_count", "0") or 0) for meta in inventory.values())
     else:
-        total = sum(count for _, count in _matching_counts(
+        matches = _matching_counts(
             directory, expression or "", safe_material.casefold()
-        ))
+        )
+        total = sum(count for _, count in matches)
+        paths = [Path(directory) / filename for filename, count in matches if count > 0]
 
     try:
         requested_page = max(1, int(page or 1))

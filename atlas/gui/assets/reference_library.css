@@ -41,6 +41,6 @@
 .clovis-town-catalog { margin:12px 0; padding:12px; border:1px solid var(--clovis-rule); border-radius:8px; background:var(--clovis-paper-deep); font-size:13px; line-height:1.6; }
 .clovis-town-catalog strong { display:block; }
 .clovis-town-catalog button { margin-top:10px; width:100%; }
-.clovis-tool-library #inspector-panel { display:none !important; }
+.clovis-mode-resident.clovis-tool-library #inspector-panel { display:none !important; }
 .clovis-tool-library #clovis-reading-path { display:none; }
 @media(max-width:700px) { .clovis-library-split,.clovis-library-filters { grid-template-columns:1fr; } .clovis-library-list { max-height:360px; } .clovis-library-workspace { padding:18px 14px; } .clovis-library-heading { font-size:23px; } .clovis-library-image { max-height:380px; } }

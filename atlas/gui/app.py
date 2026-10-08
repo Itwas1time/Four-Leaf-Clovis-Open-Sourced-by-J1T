@@ -186,6 +186,9 @@ import atlas.gui.object_guide_callbacks  # noqa: E402,F401
 import atlas.gui.archaeology_library_callbacks  # noqa: E402,F401
 import atlas.gui.mineral_library_callbacks  # noqa: E402,F401
 import atlas.gui.dig_records_callbacks  # noqa: E402,F401
+import atlas.gui.data_pack_callbacks  # noqa: E402,F401
+import atlas.gui.radiocarbon_library_callbacks  # noqa: E402,F401
+import atlas.gui.dinosaur_library_callbacks  # noqa: E402,F401
 
 
 def _open_browser(url: str) -> None:

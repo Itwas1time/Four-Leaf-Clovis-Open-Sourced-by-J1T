@@ -7,6 +7,9 @@ from atlas.gui.unit_library_ui import library as unit_library
 from atlas.gui.object_guide_ui import library as object_guides
 from atlas.gui.archaeology_library_ui import library as archaeology_library
 from atlas.gui.mineral_library_ui import library as mineral_library
+from atlas.gui.radiocarbon_library_ui import library as radiocarbon_library
+from atlas.gui.data_pack_ui import library as data_pack_library
+from atlas.gui.dinosaur_library_ui import library as dinosaur_library
 
 
 def reading_nav(query):
@@ -20,7 +23,10 @@ def workspace():
                       options=[{'label':'Object guides','value':'guides'},{'label':'Museum objects','value':'objects'}, {'label':'Fossil specimens','value':'fossils'},
                                {'label':'Newspaper history','value':'newspapers'}, {'label':'Mapped geology','value':'units'},
                                {'label':'State fossil stories','value':'states'}, {'label':'Archaeological projects','value':'projects'},
-                               {'label':'Mineral properties','value':'minerals'}],
+                               {'label':'Mineral properties','value':'minerals'},
+                               {'label':'Radiocarbon dates','value':'radiocarbon'},
+                               {'label':'Dinosaur taxa & sites','value':'dinosaurs'},
+                               {'label':'Data collections','value':'packs'}],
                       className='clovis-library-tabs'),
         html.Div([
             html.Div([html.Label('Collection',htmlFor='library-object-collection',className='atlas-small-label'),
@@ -62,6 +68,9 @@ def workspace():
         object_guides(),
         archaeology_library(),
         mineral_library(),
+        radiocarbon_library(),
+        dinosaur_library(),
+        data_pack_library(),
         html.Div([
             html.Label('Read a state or territory', htmlFor='library-state', className='atlas-small-label'),
             dcc.Dropdown(id='library-state', value=None, clearable=False, placeholder='Choose a state to read',

@@ -85,6 +85,13 @@ bag identifiers, explicit context relationships and dated corrections. Download
 a project ZIP backup with its full history; restore checks links and refuses
 conflicting revisions. See [dig records](docs/DIG_RECORDS.md) for storage and bounds.
 
+**Library → Data collections** adds optional local downloads: **173,946
+published radiocarbon determinations** (17.7 MB) and **37,852 dinosaur fossil
+occurrences linked to 14,371 collections** (27.8 MB). Search materials, methods,
+uncertainty, taxonomy, sites and original references. Read source location
+precision and save attributed references. See [collections](docs/DATA_COLLECTIONS.md)
+for coverage, reuse rights, original units and offline installation.
+
 ```sh
 git clone https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T.git four.leaf.clovis
 cd four.leaf.clovis

@@ -1,0 +1,14 @@
+.clovis-pack-cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px;margin:18px 0;}
+.clovis-pack-card {padding:20px;border:1px solid var(--clovis-rule);border-radius:10px;background:var(--clovis-paper-deep);overflow-wrap:anywhere;}
+.clovis-pack-card h3 {margin-top:0;}
+.clovis-pack-actions {display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;}
+.clovis-pack-actions button {max-width:100%;white-space:normal;}
+.clovis-pack-progress:not(:empty) {padding:16px;border:1px solid var(--clovis-rule);border-radius:10px;}
+.clovis-pack-progress progress {display:block;width:100%;margin:12px 0;accent-color:var(--clovis-green);}
+#library-radiocarbon details {padding:12px;border:1px solid var(--clovis-rule);border-radius:8px;margin:16px 0;}
+#library-radiocarbon .atlas-search-input {width:100%;box-sizing:border-box;}
+#library-radiocarbon dd {overflow-wrap:anywhere;}
+#library-radiocarbon .clovis-library-filters input {max-width:100%;box-sizing:border-box;}
+#library-dinosaurs details {padding:12px;border:1px solid var(--clovis-rule);border-radius:8px;margin:16px 0;}
+#library-dinosaurs .atlas-search-input {width:100%;box-sizing:border-box;}
+#library-dinosaurs dd {overflow-wrap:anywhere;}
