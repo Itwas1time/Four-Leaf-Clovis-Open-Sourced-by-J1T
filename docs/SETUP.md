@@ -35,16 +35,20 @@ server local. See [security](../SECURITY.md).
 
 ## Explore a town
 
-Select a state to see reviewed statewide learning examples and sources.
+Select a state and expand **Statewide background and sources** for learning context.
 Click the town box, type a town name in its search field and choose a Census
-place. `Santa Rosa, CA` or `Santa Rosa, California` also works. Choose the past
-land use you know, leave **Include local rock maps (online)** selected for map
+place. `Santa Rosa, CA` or `Santa Rosa, California` also works. Select **Explore
+this town** directly below the town box. **Options & land-use context** contains
+the optional past land use and online setting. Leave **Include local rock maps (online)** selected for map
 evidence or uncheck for an offline report, then select
 **Explore this town**. A marker shows the public Census town point. The central workbench has
-**Local evidence**, **Historical maps** and **Investigations**. Open geological
-evidence cards and optional regional overlay, inspect Library of Congress map
+**Rocks & fossils**, **Old maps** and **Investigation**. Open geological
+evidence cards and **Map overlay & sources**, inspect Library of Congress map
 sheets inside Clovis, then save sourced observations to the fieldbook. The
-opening **Try Cincinnati** button supplies a worked starting point. Source
+compact **Try an example** action randomly picks one of 100 town questions,
+two distinct towns per state. Guidance appears only after that click; closing
+it preserves your town and report. The header **Dark / Light** toggle remembers
+your browser preference; images retain their colours and printing stays light. Source
 links support attribution and rights. No address is required. See the
 [workbench guide](WORKBENCH.md).
 The report explains conditional historical object types, mapped rock context,
@@ -67,7 +71,7 @@ features, record size and context, and read comparison questions. An optional
 photo stays in the browser; it is not sent to the server, analyzed or saved.
 Save the written notes, or save a report from **Explore a town**.
 
-In **My fieldbook**, open a card and choose another investigation to compare.
+In **Fieldbook**, open a card and choose another investigation to compare.
 Add a follow-up after checking a map: record its title, date, sheet and source,
 plus what you observed. A dated entry preserves the original. Print selected
 notes or use the browser's Save as PDF option. Download JSON to back up the

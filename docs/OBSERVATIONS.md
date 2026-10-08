@@ -37,8 +37,8 @@ source images, specimen locations or identification model are bundled here.
 
 ## Continue an investigation
 
-- In **Explore a town**, build a report and choose **Save to fieldbook**.
-- In **My fieldbook**, open a card. Choose a second saved investigation to
+- In **Explore**, build a report and choose **Save town context**.
+- In **Fieldbook**, open a card. Choose a second saved investigation to
   compare land-use context, mapped units or object features.
 - After checking a historical map, select the original town notes. Add a
   follow-up with the map title, date, sheet, source and visible building or use.

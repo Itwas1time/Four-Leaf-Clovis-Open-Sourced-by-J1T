@@ -6,19 +6,12 @@ def action(label, target, key, class_name='atlas-secondary-button'):
     return html.Button(label, id={'type': 'workbench-action', 'target': target, 'key': key}, n_clicks=0, className=class_name)
 
 
-def welcome():
+def example_panel():
     return html.Div([
-        html.Div('THE CLOVIS WORKBENCH', className='atlas-lead-eyebrow'),
-        html.H2('Turn a little curiosity into a trail of evidence.', className='clovis-hero-title'),
-        html.P('Explore a public town. Read its rock maps, inspect an old map, and keep what you learn in your fieldbook.', className='clovis-hero-copy'),
-        html.Div([
-            action('01 / Read local evidence', 'map', 'welcome-map'),
-            action('02 / Open historical maps', 'archive', 'welcome-archive'),
-            action('03 / Start an investigation', 'missions', 'welcome-missions'),
-        ], className='clovis-starter-grid'),
-        html.Button('Try the Cincinnati example →', id='resident-demo', n_clicks=0, className='atlas-primary-button'),
-        html.P('Uses a public town point. The online option loads regional geology; you can turn it off in place setup.', className='atlas-help'),
-    ], id='resident-welcome', className='clovis-workbench-welcome')
+        html.Div(id='resident-example-summary', role='status'),
+        html.Button('×', id='resident-example-dismiss', n_clicks=0,
+                    title='Close example guidance', **{'aria-label':'Close example guidance'}),
+    ], id='resident-example-panel', className='clovis-example-strip', style={'display':'none'})
 
 
 def workspace():

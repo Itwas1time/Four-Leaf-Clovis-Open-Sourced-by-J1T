@@ -1,0 +1,24 @@
+/* Dark mode changes semantic colors; map sheets and photographs retain their colors. */
+.clovis-theme-toggle { min-height: 40px; padding: 9px 11px; flex: 0 0 auto; border: 1px solid var(--clovis-control-rule); border-radius: 7px; color: var(--clovis-green); background: var(--clovis-card); font: inherit; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.clovis-theme-toggle:hover { background: var(--clovis-hover); }
+.clovis-theme-toggle:focus-visible { outline: 3px solid var(--clovis-focus); outline-offset: 3px; }
+@media screen {
+ body[data-clovis-theme='dark'], body[data-clovis-theme='dark'] .atlas-app-shell, body[data-clovis-theme='dark'] .dash-dropdown-content {
+  color-scheme: dark;
+  --clovis-paper: #17221d; --clovis-card: #222e28; --clovis-paper-deep: #2a382e;
+  --clovis-ink: #ecf0df; --clovis-muted: #bac8b6; --clovis-green: #b2d1a6;
+  --clovis-rule: #485a47; --clovis-control-rule: #80947a;
+  --clovis-ochre: #cfb880; --clovis-focus: #dfeb98; --clovis-accent: #d5e992;
+  --clovis-inverse: #18251d; --clovis-hover: #354835;
+  --Dash-Shading-Strong: #00000038; --Dash-Shading-Weak: #00000020;
+ }
+ body[data-clovis-theme='dark'] :is(input, textarea, select, .dash-dropdown-trigger, .Select-control, .Select-menu-outer, .Select-option) { background-color: var(--clovis-card); color: var(--clovis-ink); border-color: var(--clovis-control-rule); }
+ body[data-clovis-theme='dark'] input::placeholder, body[data-clovis-theme='dark'] textarea::placeholder { color: var(--clovis-muted); opacity: 1; }
+ body[data-clovis-theme='dark'] .clovis-workspace-intro img { opacity: .55; }
+ body[data-clovis-theme='dark'] .leaflet-container { background: var(--clovis-paper) !important; }
+ body[data-clovis-theme='dark'] :is(.leaflet-popup-content-wrapper, .leaflet-popup-tip) { background: var(--clovis-card); color: var(--clovis-ink); }
+ body[data-clovis-theme='dark'] .atlas-app-shell :is(.atlas-primary-button, .atlas-search-button, .archive-observations button):hover:not(:disabled) { background: #c7e0b8; color: #17221d; border-color: #c7e0b8; }
+ body[data-clovis-theme='dark'] :is(button:disabled, input:disabled, textarea:disabled) { color: var(--clovis-muted); }
+}
+@media (max-width: 380px) { .clovis-theme-toggle { padding: 9px; font-size: 11px; } }
+@media print { .clovis-theme-toggle { display: none !important; } body[data-clovis-theme='dark'] { color-scheme: light; background: white; color: #111; } }

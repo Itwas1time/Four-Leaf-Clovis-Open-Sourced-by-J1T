@@ -7,6 +7,7 @@ from atlas.gui.data.public_catalog import SOURCE_NAMES, overview
 from atlas.gui.resident_ui import controls as resident_controls, report_panel as resident_report_panel
 from atlas.gui.inspection_ui import controls as inspection_controls, report_panel as inspection_report_panel
 from atlas.gui.fieldbook_ui import controls as fieldbook_controls, inspector as fieldbook_inspector
+from atlas.gui.theme_ui import theme_toggle
 from atlas.gui.styles import BG_PANEL, BORDER, PANEL_STYLE, SECTION_HEADER_STYLE, TEXT_DIM, TEXT_PRIMARY, TEXT_SECONDARY
 
 _CURRENT_LEADS = matching_leads()
@@ -31,13 +32,19 @@ def build_header() -> html.Header:
                               html.Span("A little curiosity, Dig deeper.", className="atlas-brand-tagline")]),
                 ], className="atlas-brand"
             ),
+            dcc.RadioItems(id="workflow-mode", options=[
+                {"label": "Explore", "value": "resident"},
+                {"label": "Inspect a find", "value": "inspect"},
+                {"label": "Fieldbook", "value": "notebook"},
+                {"label": "Research", "value": "research"},
+            ], value="resident", className="atlas-workflow-mode atlas-primary-nav"),
             html.Div([
                 html.Span(id="header-region", children="No town selected"),
                 html.Button("Choose town ↗", id="header-place-button", n_clicks=0,
                             className="atlas-secondary-button atlas-header-place-button",
                             **{"aria-label": "Choose or change a town"}),
             ], className="atlas-header-location"),
-            html.Div("Town context & research", className="atlas-header-note"),
+            theme_toggle(),
         ],
         className="atlas-header",
     )
@@ -297,13 +304,6 @@ def build_layer_panel() -> html.Aside:
         *map_sections[3:],
     ]
     panel.children = [
-        html.Div("YOUR WORKSPACE", className="atlas-workspace-label"),
-        dcc.RadioItems(id="workflow-mode", options=[
-            {"label": " Explore a town", "value": "resident"},
-            {"label": " Inspect a find", "value": "inspect"},
-            {"label": " My fieldbook", "value": "notebook"},
-            {"label": " Research projects", "value": "research"},
-        ], value="resident", className="atlas-workflow-mode"),
         resident_controls(),
         inspection_controls(),
         fieldbook_controls(),

@@ -1,6 +1,6 @@
 [project]
 name = "archaeo-scan"
-version = "0.5.0"
+version = "0.7.0"
 description = "Local find context and archaeological research planning"
 readme = "README.md"
 requires-python = ">=3.11"

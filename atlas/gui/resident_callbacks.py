@@ -1,5 +1,5 @@
 """Resident callbacks keep browser values bounded and exports server-owned."""
-from dash import Input, Output, State, callback, callback_context, clientside_callback, no_update
+from dash import Input, Output, State, callback, callback_context, clientside_callback, html, no_update
 import dash_leaflet as dl
 
 from atlas.gui.data.fieldwork_leads import LEADS_BY_ID
@@ -27,10 +27,29 @@ def ready_to_explore(state, geoid):
 def place_actions(state, geoid, online):
     place = get_place(geoid, state)
     chosen = place is not None
-    heading = f"{place['name']}, {place['state']}" if chosen else "A place has a story."
+    heading = f"{place['name']}, {place['state']}" if chosen else "Your field notes"
     note = ("Includes online rock maps at the public town point." if isinstance(online, list) and "geology" in online
             else "Offline report. Online rock maps are off.")
-    return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, bool(state_context(state)) and not chosen, heading if chosen else 'Choose your starting point.'
+    return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, False, heading if chosen else 'Explore a place.'
+
+
+@callback(Output('clovis-app','className'), Output('clovis-workspace-intro','style'),
+          Output('resident-build','children'), Output('clovis-reading-path','children'),
+          Input('resident-report-store','data'), Input('resident-state','value'), Input('resident-place','value'),
+          Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'))
+def workspace_progress(token, state, geoid, history, online, mode):
+    place = get_place(geoid, state)
+    report = current_report(token, state, geoid, history, online)
+    mode = mode if mode in ('resident','inspect','notebook','research') else 'resident'
+    stage = 'clovis-has-report' if report else 'clovis-has-place' if place else 'clovis-start'
+    labels = ('Place selected' if place else 'Choose a place',
+              'Evidence ready' if report else 'Explore its evidence', 'Keep a field note')
+    path = [html.Span([html.Small(f'0{index+1}'), label],
+                      className='is-done' if (index==0 and place) or (index==1 and report) else
+                      'is-current' if index==(2 if report else 1 if place else 0) else '')
+            for index,label in enumerate(labels)]
+    return f'atlas-app-shell clovis-mode-{mode} {stage}', ({'display':'none'} if place else {}), \
+        ('Refresh town evidence ↻' if report else 'Explore this town →'), path
 
 
 clientside_callback(
@@ -66,13 +85,35 @@ clientside_callback(
 
 clientside_callback(
     """function(token, place, state, mode) {
+        const changed = window.dash_clientside.callback_context.triggered || [];
+        if (window.innerWidth <= 980 && changed.some(item => item.prop_id === 'workflow-mode.value')) {
+            return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => {
+                window.scrollTo({top:0,behavior:'auto'}); resolve(Date.now());
+            })));
+        }
         if (mode !== 'resident') return window.dash_clientside.no_update;
         const panel = document.getElementById('inspector-panel');
         if (panel) panel.scrollTop = 0;
+        if (typeof token === 'string' && token && window.innerWidth <= 980 &&
+            changed.some(item => item.prop_id === 'resident-report-store.data')) {
+            return new Promise(resolve => {
+                let attempts = 0;
+                const reveal = () => {
+                    const shell = document.getElementById('clovis-app');
+                    const workbench = document.getElementById('resident-workbench');
+                    if (shell?.classList.contains('clovis-has-report') && workbench?.getBoundingClientRect().height) {
+                        window.scrollTo({top:Math.max(0, workbench.getBoundingClientRect().top + window.scrollY - 12),behavior:'auto'});
+                        resolve(Date.now());
+                    } else if (++attempts < 120) requestAnimationFrame(reveal);
+                    else resolve(window.dash_clientside.no_update);
+                };
+                requestAnimationFrame(reveal);
+            });
+        }
         return Date.now();
     }""",
     Output('resident-panel-position','data'), Input('resident-report-store','data'),
-    Input('resident-place','value'), Input('resident-state','value'), State('workflow-mode','value'))
+    Input('resident-place','value'), Input('resident-state','value'), Input('workflow-mode','value'))
 
 
 def clear_mismatched_place(state, geoid):
@@ -114,7 +155,7 @@ def display_context_state(token, mode, state):
 
 @callback(Output("resident-state-guide", "children"), Input("resident-state", "value"), Input("resident-report-store", "data"))
 def show_state_context(state, token):
-    return "" if isinstance(token, str) and token else state_context(state)
+    return state_context(state)
 
 
 @callback(Output("main-map", "viewport", allow_duplicate=True),
@@ -161,7 +202,9 @@ def render_resident_context(clicks, state, geoid, history, online):
     except ValueError as exc:
         return "", str(exc), None, True, "", True
     token = remember_report(report)
-    status = f"Town context ready · geology {report['geology_status'].replace('_', ' ')} · likelihood not estimable."
+    geology_status = {'available':'Rock-map evidence is ready.', 'not_requested':'Rock maps are off.',
+                      'no_coverage':'No rock-map coverage returned.', 'unavailable':'Rock maps could not load.'}
+    status = 'Town context ready. ' + geology_status.get(report['geology_status'], 'Rock-map status is unknown.')
     return report["markdown"], status, token, False, report["summary"], False
 
 

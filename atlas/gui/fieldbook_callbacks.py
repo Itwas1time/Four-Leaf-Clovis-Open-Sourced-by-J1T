@@ -7,6 +7,18 @@ from core.resident_context import current_report
 from core.web_security import validate_json
 
 
+def summary_text(key, value):
+    """Present old and new stored snapshots without changing their contents."""
+    if key != 'maps':
+        return value
+    status, separator, units = value.partition(':')
+    labels = {'not_requested':'Rock maps were off', 'unavailable':'Rock maps unavailable',
+              'no_coverage':'No map coverage returned', 'available':'Mapped units'}
+    if status not in labels:
+        return value
+    return labels[status] + (': ' + units.strip() if separator and units.strip() else '')
+
+
 @callback(Output('fieldbook-store','data'),Output('fieldbook-status','children'),
           Output('resident-save-status','children'),Output('find-save-status','children'),
           Input('resident-save','n_clicks'),Input('find-save','n_clicks'),Input('fieldbook-import','contents'),Input('fieldbook-followup-save','n_clicks'),
@@ -42,7 +54,7 @@ def save_notes(resident_clicks,find_clicks,imported,followup_clicks,book,token,s
         else: return no_update,no_update,no_update,no_update
         merged=merge_entries(book,rows)
         count=len(merged['entries'])
-        message=f'Saved locally · {count} investigation(s). Open My fieldbook to read or compare.'
+        message=f'Saved locally · {count} record(s). Open Fieldbook to read or compare.'
         return merged,message,message if trigger=='resident-save' else no_update,message if trigger=='find-save' else no_update
     except (ValueError,TypeError,UnicodeError,RecursionError) as exc:
         return no_update,str(exc),str(exc) if callback_context.triggered_id=='resident-save' else no_update,str(exc) if callback_context.triggered_id=='find-save' else no_update
@@ -55,7 +67,7 @@ def list_notes(book):
     except ValueError: return [],[],html.P('This saved fieldbook could not be read. Restore a valid backup to a fresh browser profile.')
     options=[{'label':row['title'],'value':row['id']} for row in rows]
     cards=[html.Button([html.Strong(row['title']),html.P(row['created'][:10]+' · '+{'town':'Town context','find':'Object observations','investigation':'Guided investigation'}[row['kind']]),
-                         html.P(' · '.join(row['summary'].values())[:400])],id={'type':'fieldbook-open','index':row['id']},n_clicks=0,className='atlas-fieldbook-card') for row in rows]
+                         html.P(' · '.join(summary_text(key,value) for key,value in row['summary'].items() if key!='place')[:400])],id={'type':'fieldbook-open','index':row['id']},n_clicks=0,className='atlas-fieldbook-card') for row in rows]
     return options,options,cards or html.P('Explore a town or Inspect a find, then choose Save to fieldbook. Your investigations will appear here.',className='atlas-resident-intro')
 
 
@@ -86,7 +98,7 @@ def read_notes(book,selected,other):
         fields=dict.fromkeys([*row['summary'],*compare['summary']])
         table=html.Div([html.H3('What changed between these notes?'),
             html.Table([html.Thead(html.Tr([html.Th('Observation'),html.Th(row['title']),html.Th(compare['title'])])),
-                        html.Tbody([html.Tr([html.Th(key.capitalize()),html.Td(row['summary'].get(key,'Not recorded')),html.Td(compare['summary'].get(key,'Not recorded'))]) for key in fields])]),
+                        html.Tbody([html.Tr([html.Th(key.capitalize()),html.Td(summary_text(key,row['summary'].get(key,'Not recorded'))),html.Td(summary_text(key,compare['summary'].get(key,'Not recorded')))]) for key in fields])]),
             html.P('These are recorded observations and report snapshots, not verified identities or independent confirmations.',className='atlas-help')],className='atlas-fieldbook-compare')
     return row['title'],readable_text(row['markdown']),table,False,False
 

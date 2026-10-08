@@ -33,7 +33,7 @@ from atlas.gui.styles import BG_PRIMARY, MAP_CONTAINER_STYLE
 from atlas.gui.inspection_ui import workspace as inspection_workspace
 from atlas.gui.fieldbook_ui import workspace as fieldbook_workspace
 from atlas.gui.archive_ui import workspace as archive_workspace
-from atlas.gui.investigation_ui import workspace as mission_workspace, welcome
+from atlas.gui.investigation_ui import workspace as mission_workspace, example_panel
 from atlas.gui.geology_ui import make_geology_board, make_geology_layer
 
 app = dash.Dash(
@@ -62,7 +62,6 @@ def _build_map() -> html.Div:
         className="atlas-map-frame atlas-map-resident clovis-map-workspace",
         style={"flex": "1", "position": "relative", "minHeight": "0"},
         children=[
-            welcome(),
             html.Div([
             html.Div(dcc.RadioItems(id="basemap-selector", options=[
                 {"label": "Terrain", "value": "terrain"},
@@ -123,13 +122,25 @@ def _build_map() -> html.Div:
 def _build_workbench():
     return html.Div([
         html.Div([
-            html.Div('YOUR PLACE, IN LAYERS', className='atlas-lead-eyebrow'),
-            html.H2('Choose your starting point.', id='resident-workbench-title', className='clovis-place-title'),
+            html.Div([
+                html.Div([
+                    html.Div('02 / FOLLOW A CLUE', className='atlas-lead-eyebrow'),
+                    html.H2('Explore a place.', id='resident-workbench-title', className='clovis-place-title'),
+                ]),
+            ], className='clovis-workbench-heading'),
             dcc.RadioItems(id='resident-tool', options=[
-                {'label': 'Local evidence', 'value': 'map'},
-                {'label': 'Historical maps', 'value': 'archive'},
-                {'label': 'Investigations', 'value': 'missions'},
+                {'label': 'Rocks & fossils', 'value': 'map'},
+                {'label': 'Old maps', 'value': 'archive'},
+                {'label': 'Investigation', 'value': 'missions'},
             ], value='map', className='clovis-workbench-tools', inline=True),
+            example_panel(),
+            dcc.Store(id='resident-example-store', storage_type='memory'),
+            html.Div(id='clovis-reading-path', className='clovis-reading-path', role='status'),
+            html.Div([
+                html.Div([html.H3('Every place leaves clues.'),
+                          html.P('Read the rocks. Look through time. Keep what you notice.')]),
+                html.Img(src='/assets/clovis-landscape.svg', alt='', **{'aria-hidden':'true'}),
+            ], id='clovis-workspace-intro', className='clovis-workspace-intro'),
         ], id='resident-workbench-bar', className='clovis-workbench-bar'),
         html.Div([_build_map(), archive_workspace(), mission_workspace()], className='clovis-tool-body'),
     ], id='resident-workbench', className='clovis-workbench', style={'display': 'flex', 'flexDirection': 'column', 'height': '100%', 'minHeight': '0'})
@@ -156,7 +167,7 @@ app.layout = html.Div(
         "width": "100vw",
         "overflow": "hidden",
     },
-    className="atlas-app-shell",
+    id='clovis-app', className="atlas-app-shell clovis-mode-resident clovis-start",
 )
 
 

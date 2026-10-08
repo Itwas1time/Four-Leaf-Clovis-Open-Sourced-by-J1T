@@ -15,8 +15,8 @@ coordinate-free archaeological directory.
 - **Explore a town.** Choose a state, town and known land-use context.
   Explore conditional historical object types, optionally request live regional
   geology, and download a source-linked context report. No address is required.
-- **Start in any state.** Reviewed statewide mineral learning examples and
-  sources appear immediately for all 50 states, DC and Puerto Rico. These are
+- **Start in any state.** Expand Statewide background and sources for reviewed
+  mineral learning examples across all 50 states, DC and Puerto Rico. These are
   background, not claims about a deposit in a yard.
 - **Take a next step.** The dashboard marks the public town point and offers
   built-in geological evidence cards, historical-map viewing and guided
@@ -71,28 +71,32 @@ python -m pip install .
 python -m atlas.gui.app
 ```
 
-The Dash app binds to localhost at port 8050. Start with **Explore a town**:
-select a state and town, choose known past land use, then select
-**Explore this town** at the top of **Your field notes**. Selecting a town
+The Dash app binds to localhost at port 8050. Start with **Explore**:
+select a state and town, then select
+**Explore this town** directly below the town box. Selecting a town
 moves the map and enables Explore; press it to build the report. **Choose
 town** in the header or notes panel opens the same editable place selector.
 Click the town box and type in its search field:
 `Santa Rosa`, `Santa Rosa, CA` and `Santa Rosa, California` all work.
+Open **Options & land-use context** for known past land use and the online setting.
 **Include local rock maps (online)** is selected by default; uncheck for an
-offline report. The lookup runs only when Explore is pressed. The central workbench has **Local evidence**, **Historical maps** and
-**Investigations**. Select geological evidence cards, inspect Library of
+offline report. The lookup runs only when Explore is pressed. The central workbench has **Rocks & fossils**, **Old maps** and
+**Investigation**. Select geological evidence cards, inspect Library of
 Congress map sheets with built-in zoom/drag/rotation, then record a sourced,
-dated investigation and save it to **My fieldbook**. The opening **Try
-Cincinnati** button supplies a worked starting point. Local map images stay
+dated investigation and save it to **Fieldbook**. The compact **Try an example**
+action randomly picks one of 100 public-town questions across all 50 states.
+Its guidance appears only after a click; closing it keeps your town and report.
+The header **Dark / Light** toggle remembers this browser's preference while
+images retain their colours and printed notes remain light. Local map images stay
 in the browser. Source links support attribution and further research.
 See the [workbench guide](docs/WORKBENCH.md) for a practical walkthrough.
 **A little curiosity, Dig deeper.**
-Use **Inspect a find** for an already exposed object and **My fieldbook** to
+Use **Inspect a find** for an already exposed object and **Fieldbook** to
 return to written notes. Saved entries stay in this browser; export a backup.
 Print or save selected notes as PDF using the browser's print dialog.
 See [observations and fieldbook](docs/OBSERVATIONS.md) for a practical walkthrough
 and privacy details. Photos stay in the browser and are not saved or analyzed.
-Use **Research projects** for the directory and research briefs.
+Use **Research** for the directory and research briefs.
 Its **Move the research map** search accepts towns as well as regions and
 projects. It moves the map; use Explore a town for a resident report.
 

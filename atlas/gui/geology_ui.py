@@ -11,9 +11,10 @@ def make_geology_layer():
 
 def make_geology_board():
     return html.Section(className='evidence-board', children=[
-        html.Div(className='geology-controls', children=[
-            html.H3('Read the rocks'),
-            html.P('Optional map overlay: enabling it sends visible map tile requests and standard network metadata to Macrostrat. Panning requests more tiles. No browser location is needed.'),
+        html.H3('What the rock maps show', className='clovis-evidence-heading'),
+        html.Details(className='geology-controls', children=[
+            html.Summary('Map overlay & sources'),
+            html.P('Optional overlay: Macrostrat receives visible map tile requests and network metadata. Panning requests more tiles. No browser location is needed.'),
             dcc.Checklist(id='resident-geology-toggle', options=[{'label': 'Show regional geology overlay', 'value': 'geology'}], value=[]),
             html.Label('Overlay opacity', htmlFor='resident-geology-opacity'),
             dcc.Slider(id='resident-geology-opacity', min=0.15, max=0.85, step=0.05, value=0.5,

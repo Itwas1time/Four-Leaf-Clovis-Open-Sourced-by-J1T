@@ -10,21 +10,44 @@ map or exposed object, and save what you learned with its source and date.
 ## Choose a place
 
 Select a state, click the town box and type a name. Choose a returned Census
-place, then select **Explore this town** on the right. A name plus state, such
+place, then select **Explore this town** directly below the town box. A name plus state, such
 as `Santa Rosa, CA`, also works. For a rural location, use a nearby town.
 **Change town** in the header or notes panel opens the same editable selector.
-The opening **Try Cincinnati** example selects and explores a town for you.
+The compact **Try an example** action randomly selects and explores one of
+100 public-town research questions, two distinct towns per state. It avoids
+the immediately previous example. No example or sample observations load on
+startup. The question appears in a small strip only after you click; close it
+to retain the current map and report, or change your town to close it. The
+example resets land-use history to unknown and follows your online geology
+choice. It preserves saved notes. Historical maps still require **Find maps
+of this town**; the example does not assert a map, fossil or object exists.
 No address, browser location or sign-in is needed.
+
+The header has four destinations: **Explore**, **Inspect a find**, **Fieldbook**
+and **Research**. Explore follows a simple path: choose a place, follow a clue,
+keep a record. **Options & land-use context** reveals the optional history and
+online setting. **Statewide background and sources** offers every state's
+reviewed learning context. Result actions appear after you build current
+evidence; changing inputs clears that current-result state. **Refresh town
+evidence** reruns the lookup. Offline maps say **Not loaded**, never a false zero.
+
+## Choose an appearance
+
+Use **Dark / Light** in the header. The choice is kept locally in this browser
+and applies after reload; it is separate from the fieldbook. Map tiles,
+historical sheets, photographs and the logo retain their original colours.
+Printed notes remain light. Keyboard and touch controls work in both themes.
 
 ## Read local evidence
 
-The central **Local evidence** tab shows mapped rock units as selectable cards.
+The central **Rocks & fossils** tab shows mapped rock units as selectable cards.
 Open one for its material, interval, description and original source. Multiple
 map units can overlap; they are separate map sources, not independent finds or
 layers under your yard. Reviewed formation guides show fossil learning examples
 only for matched named formations, with their own source and limits.
 
-**Show regional geology overlay** is optional and off initially. It requires a
+Open **Map overlay & sources** for **Show regional geology overlay**, which is
+optional and off initially. It requires a
 current successful online town report. Adjust its opacity to compare it with
 the background map. Colours distinguish mapped units; a colour or blank tile
 does not identify a specimen or prove absence. The overlay pauses in other
@@ -33,7 +56,7 @@ interval into written notes.
 
 ## Read a historical map
 
-1. Open **Historical maps**, then **Find maps of this town**. Clovis queries the
+1. Open **Old maps**, then **Find maps of this town**. Clovis queries the
    Library of Congress maps collection for the selected town and state.
 2. Select a record card. Check the title, date and visible map extent. Search
    relevance does not guarantee it covers your chosen place.
@@ -52,7 +75,7 @@ reuse rights or permission to collect.
 
 ## Turn evidence into an investigation
 
-In **Investigations**, choose one of three guided tasks:
+In **Investigation**, choose one of three guided tasks:
 
 | Task | Useful result |
 | --- | --- |
@@ -71,7 +94,7 @@ photo pad. Document what is already exposed; the workflow is not a dig plan.
 
 ## Return to your work
 
-**My fieldbook** keeps town reports, guided investigations and object
+**Fieldbook** keeps town reports, guided investigations and object
 observations together. Open a card, compare another record or add a dated
 follow-up. The original remains intact. Print selected notes or export JSON to
 back them up or move devices. Restore merges valid entries. Limits remain 50
