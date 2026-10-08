@@ -51,6 +51,8 @@ def report_panel():
         ], id="resident-empty-state", className="atlas-empty-state"),
         html.Button("↓  Download field notes", id="resident-download-button", n_clicks=0,
                     disabled=True, className="atlas-primary-button atlas-brief-download"),
+        html.Button('Save to fieldbook',id='resident-save',n_clicks=0,className='atlas-secondary-button'),
+        html.Div(id='resident-save-status',role='status',className='atlas-help'),
         dcc.Markdown(id="resident-summary", className="atlas-resident-summary", link_target="_blank", dangerously_allow_html=False),
         html.Details([
             html.Summary("Read map evidence and full field notes"),

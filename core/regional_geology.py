@@ -56,6 +56,7 @@ def parse_geology(payload):
                       "name": _text(row.get("name"), 200) or "Unnamed map unit",
                       "lithology": _text(row.get("lith"), 400),
                       "description": _text(row.get("descrip"), 1_200),
+                      "comments": _text(row.get("comments"), 1_200),
                       "interval": _text(row.get("best_int_name"), 120),
                       "reference": reference})
     return units

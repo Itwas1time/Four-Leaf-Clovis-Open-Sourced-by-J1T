@@ -648,6 +648,8 @@ def click_search_result(_clicks, results):
 @callback(Output("header-region", "children"), Input("selected-lead-store", "data"),
           Input("workflow-mode", "value"), Input("resident-place", "value"), Input("resident-state", "value"))
 def show_selected_region(selected_id, mode="research", geoid=None, state=None):
+    if mode == 'inspect': return 'Inspect a find · your observations'
+    if mode == 'notebook': return 'Your saved investigations'
     if mode != "research":
         from core.us_places import get_place
         place = get_place(geoid, state)

@@ -1,5 +1,9 @@
 # four.leaf.clovis — explore places and plan research
 
+<img src="atlas/gui/assets/clovis-bone-clover.svg" alt="Clovis four-leaf clover formed from bones" width="72" height="72">
+
+**A little curiosity, Dig deeper.**
+
 Clovis helps residents explore what historical objects, fossils and geological
 materials might be present around a U.S. town. It also helps research teams
 review published archaeological projects and export source-linked briefs.
@@ -17,6 +21,15 @@ coordinate-free archaeological directory.
 - **Take a next step.** The dashboard marks the public town point and offers
   town-specific historical-map searches, geological-map links and an observation
   checklist. Expand the full field notes for map descriptions, sources and limits.
+- **Inspect a find.** Record visible features, size and context for glass,
+  ceramics, metal, rocks, possible fossils or bone. Get comparison questions
+  and a browser-local photo pad; no image analysis or automatic identification.
+- **Keep a fieldbook.** Save reports and observations, compare two investigations,
+  add dated follow-ups after checking maps, and print selected notes. Export or
+  restore JSON to move devices; restoring preserves saved work.
+- Eight sourced fossil guides match named units in reviewed states, including
+  Ohio Shale, Cedar Valley, Hell Creek, Lockport and Casselman. These are learning
+  examples in documented beds, not yard occurrences or collecting destinations.
 - Offline lookup of 32,363 public Census places across the 50 states, DC and Puerto Rico.
 - Optional Macrostrat map units with original references and CC BY 4.0 attribution.
   Maps describe a public town point, not an individual yard or vertical soil profile.
@@ -69,11 +82,18 @@ offline report. The lookup runs only when Explore is pressed. Read the
 the complete report. External map coverage varies; a search link is not a
 confirmed match or permission to collect.
 **A little curiosity, Dig deeper.**
+Use **Inspect a find** for an already exposed object and **My fieldbook** to
+return to written notes. Saved entries stay in this browser; export a backup.
+Print or save selected notes as PDF using the browser's print dialog.
+See [observations and fieldbook](docs/OBSERVATIONS.md) for a practical walkthrough
+and privacy details. Photos stay in the browser and are not saved or analyzed.
 Use **Research projects** for the directory and research briefs.
 Its **Move the research map** search accepts towns as well as regions and
 projects. It moves the map; use Explore a town for a resident report.
 
-The light workspace adapts to mobile screens. Switch between Terrain,
+The archaeology field-notebook theme uses warm paper, archival ink, olive
+controls and readable serif headings, with a bone-clover vector mark in the
+header and browser tab, and adapts to mobile screens. Switch between Terrain,
 Topographic and Satellite above the map. Background maps need internet access;
 local reports remain available during a tile outage. Map images send only the
 app origin as a referrer. Terrain uses Stadia's local development access;

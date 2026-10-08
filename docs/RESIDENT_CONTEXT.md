@@ -52,9 +52,10 @@ maps are not independent observations or a vertical soil profile. Even a
 correct town-scale map may differ from the soil or imported fill in a yard.
 Fossil mentions are presented as wording to inspect, not verified local finds.
 No fossil taxon is inferred from rock age alone.
-Three reviewed formation guides add published fossil examples only when a
-returned map names Grant Lake (OH/KY), Green River (WY/CO/UT) or Morrison
-(selected western states). They cite USGS Geolex or NPS, contain no specimen
+Eight reviewed guides add published fossil examples only when a returned map
+names Grant Lake (OH/KY), Green River (WY/CO/UT), Morrison (selected western
+states), Hell Creek (ND/SD), Cedar Valley (IA), Ohio Shale (OH), Lockport (NY)
+or Casselman (PA). They cite original USGS, NPS and state sources, contain no specimen
 locations and do not confirm a fossil on a property. Other formations have
 explicitly missing guide coverage; this is not a national fossil inventory.
 
@@ -113,6 +114,9 @@ shown as a predictive probability.
   Responses must declare that license and supply original map references.
   Clovis retains map/source IDs and references for each unit, labels shortened
   descriptions as excerpts and attributes Macrostrat and the original maps.
+  Original provider map comments are retained as bounded excerpts. Map labels
+  can be geographically surprising or reflect broad maps; check the original
+  legend and scope. A successful response is not a check of local map accuracy.
   Its interpretations are authored separately. Provider data is not bundled.
 - The NPS [artifact recognition guide](https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm)
   and [fossil background](https://www.nps.gov/subjects/fossils/what-is-a-fossil.htm)
@@ -123,6 +127,15 @@ shown as a predictive probability.
   [USGS Green River](https://ngmdb.usgs.gov/Geolex/UnitRefs/GreenRiverRefs_8483.html)
   and [NPS Morrison](https://www.nps.gov/subjects/fossils/the-morrison-formation.htm).
   Checked 7 October 2026. No underlying publication or specimen dataset is copied.
+- Added guides cite [USGS Hell Creek research](https://www.usgs.gov/publications/vertebrate-biostratigraphy-hell-creek-formation-southwestern-north-dakota-and),
+  [Iowa DNR Cedar Valley context](https://www.iowadnr.gov/places-go/state-preserves/merrill-s-stainbrook-state-preserve),
+  [USGS Ohio Shale paleontology](https://www.usgs.gov/geology-and-ecology-of-national-parks/geology-cuyahoga-valley-national-park),
+  [USGS Lockport coral research](https://pubs.usgs.gov/publication/pp414G)
+  and [Lockport stratigraphic scope](https://ngmdb.usgs.gov/Geolex/UnitRefs/EramosaRefs_1556.html),
+  and Pennsylvania Geology, Summer/Fall 1998, “Problematic Tracks in the
+  Casselman Formation of Cambria County.” Summaries retain bed variation and
+  unidentified track-maker limits. Source locations and collection directions
+  are not copied. Checked 7 October 2026.
 
 The lookup is a fixed, reviewed Census snapshot. Data updates require a
 fresh provenance review. The application's MIT license does not change

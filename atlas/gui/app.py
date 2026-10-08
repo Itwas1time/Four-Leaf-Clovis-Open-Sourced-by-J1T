@@ -30,6 +30,8 @@ from atlas.gui.map_layers import (
     make_tribal_boundaries_layer,
 )
 from atlas.gui.styles import BG_PRIMARY, MAP_CONTAINER_STYLE
+from atlas.gui.inspection_ui import workspace as inspection_workspace
+from atlas.gui.fieldbook_ui import workspace as fieldbook_workspace
 
 app = dash.Dash(
     __name__,
@@ -43,6 +45,8 @@ app = dash.Dash(
     assets_folder=str(Path(__file__).resolve().parent / "assets"),
 )
 server = app.server
+app.index_string = app.index_string.replace(
+    "{%favicon%}", '<link rel="icon" type="image/svg+xml" href="/assets/clovis-bone-clover.svg">')
 configure_local_flask(server)
 _initial_leads = matching_leads()
 _initial_center = [39.8283, -98.5795]
@@ -114,7 +118,7 @@ app.layout = html.Div(
         html.Div(
             [
                 build_layer_panel(),
-                html.Div([_build_map()], style=MAP_CONTAINER_STYLE, className="atlas-map-shell"),
+                html.Div([_build_map(), inspection_workspace(), fieldbook_workspace()], style=MAP_CONTAINER_STYLE, className="atlas-map-shell"),
                 build_inspector_panel(),
             ],
             style={"display": "flex", "flex": "1", "minHeight": "0", "overflow": "hidden"},
@@ -135,6 +139,8 @@ app.layout = html.Div(
 
 import atlas.gui.callbacks  # noqa: E402,F401
 import atlas.gui.resident_callbacks  # noqa: E402,F401
+import atlas.gui.inspection_callbacks  # noqa: E402,F401
+import atlas.gui.fieldbook_callbacks  # noqa: E402,F401
 
 
 def _open_browser(url: str) -> None:

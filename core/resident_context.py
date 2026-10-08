@@ -13,7 +13,7 @@ import re
 from urllib.parse import urlencode
 
 from core.regional_geology import API, geology_for_place
-from core.fossil_guides import matching_guides
+from core.fossil_guides import GUIDES, matching_guides
 from core.us_places import SOURCE, STATE_NAMES, get_place
 from core.state_context import state_context
 
@@ -82,6 +82,15 @@ def _map_words(units):
         definitions.append("**Shale:** fine-grained rock formed from hardened clay, silt or mud.")
     if 'unconsolidated' in text:
         definitions.append("**Unconsolidated:** loose material that has not hardened into solid rock.")
+    for word,definition,source in (
+        ('granite','a coarse-grained rock formed as molten rock cooled below the surface.','https://www.usgs.gov/faqs/what-are-igneous-rocks'),
+        ('basalt','a volcanic rock formed from cooled lava.','https://www.usgs.gov/faqs/what-are-igneous-rocks'),
+        ('arkose','sandstone rich in the mineral feldspar.','https://apps.usgs.gov/thesaurus/term-simple.php?code=2.1.3.2&thcode=4'),
+        ('gneiss','a metamorphic rock with alternating mineral bands.','https://apps.usgs.gov/thesaurus/term-simple.php?code=5.7&thcode=4'),
+        ('dolostone','rock made mostly of the mineral dolomite; some maps call the rock dolomite.','https://pubs.usgs.gov/sir/2017/5118/elements/Dolomite/Dlmt_txt.html'),
+    ):
+        if word in text or (word=='dolostone' and 'dolomite' in text):
+            definitions.append(f"**{word.capitalize()}:** {definition} [USGS explanation]({source})")
     if not definitions:
         return []
     return ["### Map words in plain English", "", *['- ' + item for item in definitions], "",
@@ -122,6 +131,7 @@ def build_context(state, geoid, context="unknown", online=None):
         "status": "not_requested", "units": [], "checked_at": "",
         "message": "Online geology was not requested. Historical context still works offline."}
     units = geology["units"]
+    guides = matching_guides(state, units)
     lines = [f"# What might be here? — {_md(place['name'])}, {state}", "",
              "**Scale: town context, not a property assessment.** The map lookup uses the Census representative point "
              "for this place. It may describe a different deposit from your yard. No street address is collected.", "",
@@ -135,6 +145,11 @@ def build_context(state, geoid, context="unknown", online=None):
                  'fill': "imported fill can contain transported objects; their original place and age remain unknown.",
              }[context] + " "
              "**Discovery odds:** not currently estimable.", ""]
+    if guides:
+        lines += ["**Fossil learning examples:** " + "; ".join(
+            f"{guide['name']} — {guide['examples']}" for guide in guides) + ". "
+            "These published records are a comparison starting point if the mapped unit is actually present and exposed; "
+            "they do not establish a find here. Sources are in the full field notes.", ""]
     lines += _next_steps(place, context)
     summary = f"**{_md(place['name'])}, {state} · Town context.** Maps use the public Census town point, not a yard assessment.\n\n" + "\n".join(lines[4:])
     lines += ["## Historical objects", "",
@@ -147,6 +162,8 @@ def build_context(state, geoid, context="unknown", online=None):
         lines += [f"Macrostrat returned **{len(units)} overlapping map units** at the public town point. "
                   "These are maps at different scales, not a vertical sequence, separate discoveries or independent "
                   "confirmations. Their mapped materials are regional possibilities, not a yard soil profile.", ""]
+        lines += ["Map labels are reproduced as returned by the provider. If a label seems inconsistent with this town, "
+                  "check the original map and its legend before using it. A successful lookup does not verify a map's local accuracy.", ""]
         lines += _map_words(units)
         for unit in units:
             lines += [f"### {_md(unit['name'])}", "",
@@ -155,20 +172,23 @@ def build_context(state, geoid, context="unknown", online=None):
                       f"- Map unit ID {unit['map_id']}; source ID {unit['source_id']}."]
             if unit["description"]:
                 lines += [f"- Source description excerpt: {_md(unit['description'])}"]
+            if unit.get("comments"):
+                lines += [f"- Original map notes excerpt: {_md(unit['comments'])}"]
             lines += [""]
     else:
         lines += [geology["message"], "", "No mapped material is inferred when the provider is disabled, unavailable "
                   "or has no coverage. Soil, gravel, landscaping stone and imported fill require local observations.", ""]
     lines += ["## Fossils", ""]
-    guides = matching_guides(state, units)
     for guide in guides:
         lines += [f"**Formation-specific examples — {guide['name']}:** Published formation records include "
                   f"{guide['examples']}. These are conditional possibilities if that formation is actually present "
                   "and exposed on a property; they are not confirmed yard finds or a forecast of frequency. "
                   f"[{guide['source_name']}]({guide['source']})", ""]
+        if guide.get('scope_source'):
+            lines += [f"[USGS stratigraphic scope and bed variation]({guide['scope_source']})", ""]
     if not guides:
         lines += ["No reviewed formation-specific fossil guide matched the returned map names. "
-                  "The current guide covers only Grant Lake, Green River and Morrison formations in selected states; "
+                  f"The current guide covers {len(GUIDES)} reviewed named units in selected states; "
                   "an unmatched formation is a coverage gap, not evidence that it has no fossils.", ""]
     mentions = [unit for unit in units if "fossil" in unit["description"].casefold()]
     if mentions:
@@ -219,7 +239,7 @@ def build_context(state, geoid, context="unknown", online=None):
               "Map tiles and styles use their own external providers. No personal address or private site record is "
               "required for this workflow.", ""]
     return {"key": key, "markdown": "\n".join(lines), "summary": summary, "geology_status": geology["status"],
-            "unit_count": len(units), "place": place}
+            "unit_count": len(units), "mapped_units": [unit['name'] for unit in units], "place": place}
 
 
 def remember_report(report):

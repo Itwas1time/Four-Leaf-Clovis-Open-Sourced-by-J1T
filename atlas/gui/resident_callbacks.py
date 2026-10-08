@@ -1,5 +1,5 @@
 """Resident callbacks keep browser values bounded and exports server-owned."""
-from dash import Input, Output, State, callback, callback_context, no_update
+from dash import Input, Output, State, callback, callback_context, clientside_callback, no_update
 import dash_leaflet as dl
 
 from atlas.gui.data.fieldwork_leads import LEADS_BY_ID
@@ -28,10 +28,24 @@ def clear_mismatched_place(state, geoid):
 
 @callback(Output("resident-controls", "style"), Output("resident-inspector", "style"),
           Output("research-controls", "style"), Output("research-inspector", "style"),
+          Output("inspection-controls", "style"), Output("inspection-inspector", "style"),
+          Output("inspection-workspace", "style"), Output("map-workspace", "style"),
+          Output('fieldbook-controls','style'), Output('fieldbook-inspector','style'), Output('fieldbook-workspace','style'),
           Input("workflow-mode", "value"))
 def workflow_sections(mode):
     show, hide = {"display": "block"}, {"display": "none"}
-    return (hide, hide, show, show) if mode == "research" else (show, show, hide, hide)
+    map_show={'display':'block','height':'100%','width':'100%','position':'relative','flex':'1','minHeight':'0'}
+    if mode == 'inspect': return hide, hide, hide, hide, show, show, show, hide, hide, hide, hide
+    if mode == 'notebook': return hide, hide, hide, hide, hide, hide, hide, hide, show, show, show
+    return (hide, hide, show, show, hide, hide, hide, map_show, hide, hide, hide) if mode == "research" else (show, show, hide, hide, hide, hide, hide, map_show, hide, hide, hide)
+
+
+clientside_callback(
+    """function(style) {
+        if (style && style.display === 'none') return window.dash_clientside.no_update;
+        return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(Date.now()))));
+    }""",
+    Output('main-map','invalidateSize'),Input('map-workspace','style'))
 
 
 @callback(Output("resident-empty-state", "style"), Output("map-workspace", "className"),
@@ -51,6 +65,7 @@ def show_state_context(state, token):
           Input("resident-state", "value"), State("selected-lead-store", "data"),
           prevent_initial_call=True)
 def navigate_workflow(mode, geoid, state, lead_id):
+    if mode in ('inspect','notebook'): return no_update
     if mode == "research":
         lead = LEADS_BY_ID.get(lead_id) if isinstance(lead_id, str) else None
         return {"center": lead["center"], "zoom": lead["zoom"], "transition": "setView"} if lead else no_update
@@ -74,6 +89,7 @@ def show_town_point(mode, geoid, state):
 @callback(Output("resident-preview", "children"), Output("resident-status", "children"),
           Output("resident-report-store", "data"), Output("resident-download-button", "disabled"),
           Output("resident-summary", "children"),
+          Output('resident-save','disabled'),
           Input("resident-build", "n_clicks"), Input("resident-state", "value"),
           Input("resident-place", "value"), Input("resident-history", "value"),
           Input("resident-online", "value"),
@@ -81,15 +97,15 @@ def show_town_point(mode, geoid, state):
 def render_resident_context(clicks, state, geoid, history, online):
     if callback_context.triggered_id != "resident-build" or not clicks:
         status = "Select Explore this town to build your field notes." if get_place(geoid, state) else "Choose a town to begin your field notes."
-        return "", status, None, True, ""
+        return "", status, None, True, "", True
     try:
         input_key(state, geoid, history, online)
         report = build_context(state, geoid, history, online)
     except ValueError as exc:
-        return "", str(exc), None, True, ""
+        return "", str(exc), None, True, "", True
     token = remember_report(report)
     status = f"Town context ready · geology {report['geology_status'].replace('_', ' ')} · likelihood not estimable."
-    return report["markdown"], status, token, False, report["summary"]
+    return report["markdown"], status, token, False, report["summary"], False
 
 
 @callback(Output("resident-download", "data"), Output("resident-status", "children", allow_duplicate=True),

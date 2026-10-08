@@ -5,6 +5,8 @@ from dash import dcc, html
 from atlas.gui.data.lead_catalog import GOALS, PERIODS, REGIONS, matching_leads
 from atlas.gui.data.public_catalog import SOURCE_NAMES, overview
 from atlas.gui.resident_ui import controls as resident_controls, report_panel as resident_report_panel
+from atlas.gui.inspection_ui import controls as inspection_controls, report_panel as inspection_report_panel
+from atlas.gui.fieldbook_ui import controls as fieldbook_controls, inspector as fieldbook_inspector
 from atlas.gui.styles import BG_PANEL, BORDER, PANEL_STYLE, SECTION_HEADER_STYLE, TEXT_DIM, TEXT_PRIMARY, TEXT_SECONDARY
 
 _CURRENT_LEADS = matching_leads()
@@ -19,7 +21,12 @@ def build_header() -> html.Header:
         [
             html.Div(
                 [
-                    html.Div([html.Span() for _ in range(4)], className="atlas-logo-mark", **{"aria-hidden": "true"}),
+                    html.Img(
+                        src="/assets/clovis-bone-clover.svg",
+                        className="atlas-logo-mark",
+                        alt="Clovis four-leaf clover formed from bones",
+                        style={"width": "40px", "height": "40px", "display": "block", "transform": "none", "flex": "0 0 auto"},
+                    ),
                     html.Div([html.Span("clovis", className="atlas-brand-title"),
                               html.Span("A little curiosity, Dig deeper.", className="atlas-brand-tagline")]),
                 ], className="atlas-brand"
@@ -288,9 +295,13 @@ def build_layer_panel() -> html.Aside:
         html.Div("YOUR WORKSPACE", className="atlas-workspace-label"),
         dcc.RadioItems(id="workflow-mode", options=[
             {"label": " Explore a town", "value": "resident"},
+            {"label": " Inspect a find", "value": "inspect"},
+            {"label": " My fieldbook", "value": "notebook"},
             {"label": " Research projects", "value": "research"},
         ], value="resident", className="atlas-workflow-mode"),
         resident_controls(),
+        inspection_controls(),
+        fieldbook_controls(),
         html.Div(panel.children, id="research-controls", style={"display": "none"}),
     ]
     return panel
@@ -371,7 +382,7 @@ def build_inspector_panel() -> html.Aside:
             )),
         ],
     )
-    panel.children = [resident_report_panel(), html.Div(panel.children, id="research-inspector", style={"display": "none"})]
+    panel.children = [resident_report_panel(), inspection_report_panel(), fieldbook_inspector(), html.Div(panel.children, id="research-inspector", style={"display": "none"})]
     return panel
 
 
@@ -390,6 +401,7 @@ def build_stores() -> html.Div:
             dcc.Store(id="catalog-selected-store", data=None),
             dcc.Download(id="brief-download"),
             dcc.Store(id="resident-report-store", data=None),
+            dcc.Store(id='fieldbook-store',storage_type='local',data={'version':1,'entries':[]}),
             dcc.Download(id="resident-download"),
         ],
         style={"display": "none"},

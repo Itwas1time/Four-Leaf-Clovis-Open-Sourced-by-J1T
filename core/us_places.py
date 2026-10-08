@@ -43,6 +43,13 @@ def states() -> list[str]:
     return sorted({row["state"] for row in _places().values()})
 
 
+def _name_rank(row, search):
+    base=re.sub(r' (?:city and borough|city|town|village|borough|municipio|CDP|zona urbana)(?: \(balance\))?$', '', row['name'], flags=re.I)
+    base=re.sub(r'[,.;]+',' ',_fold(base))
+    base=re.sub(r'\s+',' ',base).strip()
+    return (base != search, not _fold(row['name']).startswith(search), row['name'])
+
+
 def get_place(geoid, state):
     if not isinstance(geoid, str) or not re.fullmatch(r"\d{7}", geoid):
         return None
@@ -85,7 +92,7 @@ def search_places(state, query, selected=None):
     tokens = search.split()
     matches = [row for row in _places().values() if row["state"] == state
                and all(token in _fold(row["name"]) for token in tokens)]
-    matches.sort(key=lambda row: (not _fold(row["name"]).startswith(search), row["name"]))
+    matches.sort(key=lambda row: _name_rank(row,search))
     choices = matches[:30]
     current = get_place(selected, state)
     if current and all(row["geoid"] != selected for row in choices):
@@ -105,7 +112,7 @@ def search_towns(query, limit=8):
         return []
     matches = [row for row in _places().values() if (not state or row['state'] == state)
                and all(token in _fold(row['name']) for token in tokens)]
-    matches.sort(key=lambda row: (not _fold(row['name']).startswith(search), row['name'], row['state'], row['geoid']))
+    matches.sort(key=lambda row: (*_name_rank(row,search), row['state'], row['geoid']))
     return [{"key": 'town:' + row['geoid'], "label": row['name'] + ', ' + row['state'],
              "center": [row['latitude'], row['longitude']], "zoom": 9}
             for row in matches[:min(max(limit, 1), 30)]]

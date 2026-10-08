@@ -58,6 +58,21 @@ Town searches, directory searches and report generation work locally; the
 geology option and map tiles/styles require internet access. Changing report
 inputs invalidates the previous download.
 
+## Observe, save and return
+
+Choose **Inspect a find** to describe an already exposed object. Select visible
+features, record size and context, and read comparison questions. An optional
+photo stays in the browser; it is not sent to the server, analyzed or saved.
+Save the written notes, or save a report from **Explore a town**.
+
+In **My fieldbook**, open a card and choose another investigation to compare.
+Add a follow-up after checking a map: record its title, date, sheet and source,
+plus what you observed. A dated entry preserves the original. Print selected
+notes or use the browser's Save as PDF option. Download JSON to back up the
+fieldbook or move devices; Restore merges valid notes with existing work.
+Limits are 50 entries and 750 KB. Browser storage is specific to the device
+and app origin. See [observations and fieldbook](OBSERVATIONS.md).
+
 ## Background maps
 
 Use Terrain, Topographic or Satellite above the map. Terrain uses Stadia's
