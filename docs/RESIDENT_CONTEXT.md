@@ -2,6 +2,10 @@
 
 # What might be here?
 
+The integrated workbench adds selectable geological evidence, an in-app
+historical-map viewer and saved guided investigations. Start with the
+[workbench guide](WORKBENCH.md) for the current step-by-step workflow.
+
 Clovis helps residents explore historical objects, fossils and geological
 materials in a U.S. town's context. It is a starting point for local research
 and identification. It does not identify a deposit in a yard, choose a dig
@@ -23,11 +27,11 @@ location, determine collection rights or estimate a discovery probability.
    at the top of **Your field notes**. Selecting a town moves the map and
    enables Explore; it does not build the report automatically.
    No geology request runs until you press Explore.
-5. Read the short summary and **Try one small investigation** checklist. A
-   marker labels the public Census town point used for the map request.
-   Expand **Read map evidence and full field notes** for full descriptions,
-   references and limits, or download the complete Markdown report. Changing an input clears
-   the previous preview and disables its download until a new report is built.
+5. Open geological cards in **Local evidence**, search and inspect sheets in
+   **Historical maps**, or start a guided task in **Investigations**. Save your
+   sourced observations to the fieldbook. The right panel retains downloadable
+   full notes. Changing an input invalidates the previous report and download.
+
 
 The report begins with **At a glance**, including the names of actual returned
 map units or a clear provider-status message. **What the maps describe** shows
@@ -44,15 +48,13 @@ Short definitions linked to the [USGS glossary](https://water.usgs.gov/water-bas
 explain selected map wording such as alluvium, sedimentary rock and shale.
 They explain terms in map names and materials, without identifying specimens.
 
-The checklist links to a Library of Congress Sanborn search using the bundled
-town name and state, and [USGS MapView](https://ngmdb.usgs.gov/mapview/) around
-the public town point. Search coverage has not been checked for each town;
-external sites may be unavailable or require browser verification. Start with
-an index and a dated sheet, compare recognizable streets and buildings, and
-record the year and sheet. For geology, compare the legend, date and scale.
-The observation checklist concerns objects already exposed; it is not a
-photograph classifier. It suggests identification through a survey or museum.
-Links contain only public catalogue values, with no user search text or address.
+The built-in historical-map tool searches Library of Congress and displays
+record sheets inside Clovis. It has zoom, drag, rotation and browser-local
+image viewing. Search relevance and digitization do not establish coverage,
+rights or a property match. Source links retain provenance and rights details;
+the report also includes external USGS MapView for further map research.
+Record a source, date and visible clues in a guided investigation.
+
 
 The offline report explains conditional object types and research gaps. The
 online option adds original map-unit descriptions and references from

@@ -2,6 +2,10 @@
 
 # From curiosity to field notes
 
+The integrated workbench adds selectable geological evidence, an in-app
+historical-map viewer and saved guided investigations. Start with the
+[workbench guide](WORKBENCH.md) for the current step-by-step workflow.
+
 **A little curiosity, Dig deeper.**
 
 Start with something already exposed or a record you can check. Clovis helps

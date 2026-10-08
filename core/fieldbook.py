@@ -7,7 +7,7 @@ import re
 MAX_ENTRIES = 50
 MAX_BYTES = 750_000
 EMPTY_BOOK = {'version':1,'entries':[]}
-FIELDS = {'place','material','history','maps','setting','features','size','follow_up'}
+FIELDS = {'place','material','history','maps','setting','features','size','follow_up','mission','source','date','outcome','steps'}
 
 
 def validate_book(value):
@@ -20,7 +20,7 @@ def validate_book(value):
     for row in value['entries']:
         if not isinstance(row,dict) or set(row) != {'id','kind','title','created','summary','markdown'}:
             raise ValueError('A saved investigation has an unsupported format.')
-        if row['kind'] not in ('town','find') or not isinstance(row['id'],str) or not re.fullmatch(r'[a-f0-9]{24}',row['id']) or row['id'] in ids:
+        if row['kind'] not in ('town','find','investigation') or not isinstance(row['id'],str) or not re.fullmatch(r'[a-f0-9]{24}',row['id']) or row['id'] in ids:
             raise ValueError('A saved investigation has an invalid identifier.')
         ids.add(row['id'])
         for key,limit in (('title',120),('created',32),('markdown',100_000)):

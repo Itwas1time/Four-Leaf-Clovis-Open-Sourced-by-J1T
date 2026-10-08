@@ -8,8 +8,8 @@ from core.us_places import STATE_NAMES, states
 def controls():
     return html.Section([
         html.Div("LOOK A LITTLE CLOSER", className="atlas-lead-eyebrow"),
-        html.H2("What might be here?", className="atlas-brief-heading"),
-        html.P("Choose a state, search for your town, then select Explore. Get local rock maps, historical clues and sources to investigate next.", className="atlas-resident-intro"),
+        html.H2("Where are we looking?", className="atlas-brief-heading"),
+        html.P("Choose a public town. Explore its evidence, open old maps and build a record of what you learn.", className="atlas-resident-intro"),
         html.Div("01  /  CHOOSE YOUR PLACE", className="atlas-step-label"),
         html.Label("State or territory", htmlFor="resident-state", className="atlas-small-label"),
         dcc.Dropdown(id="resident-state", options=[{"label": f"{STATE_NAMES[value]} ({value})", "value": value} for value in sorted(states(), key=STATE_NAMES.get)],
@@ -17,7 +17,7 @@ def controls():
         html.Label("Town or Census place", htmlFor="resident-place", className="atlas-small-label"),
         dcc.Dropdown(id="resident-place", options=[], placeholder="Type a town name after choosing state",
                      className="atlas-filter-dropdown", disabled=True),
-        html.P("Click the town box, then type in its search field. A town name or ‘Santa Rosa, CA’ works. For rural areas, choose a nearby town. Then select Explore this town at the top of Your field notes.", className="atlas-help"),
+        html.P("Type to search the town list. For rural areas, choose a nearby town. Select Explore to load its evidence.", className="atlas-help"),
         html.Div("02  /  ADD SOME CONTEXT", className="atlas-step-label"),
         html.Label("What do you know about past land use?", htmlFor="resident-history", className="atlas-small-label"),
         dcc.Dropdown(id="resident-history", options=[{"label": label, "value": key} for key, label in CONTEXTS.items()],
@@ -54,11 +54,19 @@ def report_panel():
             html.Div([html.Span("02"), html.Div([html.Strong("Rocks & fossils"), html.P("Regional maps and formation guides")])], className="atlas-empty-topic"),
             html.Div([html.Span("03"), html.Div([html.Strong("Evidence & unknowns"), html.P("Sources, limits, and what to check next")])], className="atlas-empty-topic"),
         ], id="resident-empty-state", className="atlas-empty-state"),
-        dcc.Markdown(id="resident-summary", className="atlas-resident-summary", link_target="_blank", dangerously_allow_html=False),
+        html.Div(id='resident-evidence-overview', className='clovis-evidence-overview'),
+        html.Div([
+            html.Button('Start an investigation →', id={'type':'workbench-action','target':'missions','key':'inspector-mission'}, n_clicks=0, className='atlas-primary-button'),
+            html.Button('Open historical maps', id={'type':'workbench-action','target':'archive','key':'inspector-archive'}, n_clicks=0, className='atlas-secondary-button'),
+        ], className='clovis-inspector-tools'),
         html.Button("↓  Download field notes", id="resident-download-button", n_clicks=0,
                     disabled=True, className="atlas-primary-button atlas-brief-download"),
         html.Button('Save to fieldbook',id='resident-save',n_clicks=0,className='atlas-secondary-button'),
         html.Div(id='resident-save-status',role='status',className='atlas-help'),
+        html.Details([
+            html.Summary('Read the text summary'),
+            dcc.Markdown(id="resident-summary", className="atlas-resident-summary", link_target="_blank", dangerously_allow_html=False),
+        ], className='atlas-resident-evidence'),
         html.Details([
             html.Summary("Statewide background and sources"),
             dcc.Markdown(id="resident-state-guide", className="atlas-state-guide", link_target="_blank", dangerously_allow_html=False),

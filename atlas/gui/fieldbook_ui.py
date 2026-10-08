@@ -28,6 +28,7 @@ def workspace():
     return html.Section([
         html.Div('FOLLOW YOUR CURIOSITY',className='atlas-lead-eyebrow'),
         html.H2('Pick up where you left off.',className='atlas-brief-heading'),
+        html.Div(id='fieldbook-metrics', className='clovis-fieldbook-metrics'),
         html.Div(id='fieldbook-comparison'),
         html.Div(id='fieldbook-list',className='atlas-fieldbook-list'),
     ],id='fieldbook-workspace',className='atlas-inspection-workspace',style={'display':'none'})

@@ -255,7 +255,8 @@ def build_context(state, geoid, context="unknown", online=None):
               "Map tiles and styles use their own external providers. No personal address or private site record is "
               "required for this workflow.", ""]
     return {"key": key, "markdown": "\n".join(lines), "summary": summary, "geology_status": geology["status"],
-            "unit_count": len(units), "mapped_units": [unit['name'] for unit in units], "place": place}
+            "unit_count": len(units), "mapped_units": [unit['name'] for unit in units], "place": place,
+            "units": units, "guides": guides, "geology_checked_at": geology['checked_at']}
 
 
 def remember_report(report):

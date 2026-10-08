@@ -19,8 +19,8 @@ coordinate-free archaeological directory.
   sources appear immediately for all 50 states, DC and Puerto Rico. These are
   background, not claims about a deposit in a yard.
 - **Take a next step.** The dashboard marks the public town point and offers
-  town-specific historical-map searches, geological-map links and an observation
-  checklist. Expand the full field notes for map descriptions, sources and limits.
+  built-in geological evidence cards, historical-map viewing and guided
+  investigations. Expand the full field notes for map descriptions, sources and limits.
 - **Inspect a find.** Record visible features, size and context for glass,
   ceramics, metal, rocks, possible fossils or bone. Get comparison questions
   and a browser-local photo pad; no image analysis or automatic identification.
@@ -79,13 +79,13 @@ town** in the header or notes panel opens the same editable place selector.
 Click the town box and type in its search field:
 `Santa Rosa`, `Santa Rosa, CA` and `Santa Rosa, California` all work.
 **Include local rock maps (online)** is selected by default; uncheck for an
-offline report. The lookup runs only when Explore is pressed. Read the
-**At a glance** summary, actual mapped materials and description excerpts,
-and **Try one small investigation** checklist. Statewide background folds away
-after town selection. Expand
-**Read map evidence and full field notes** to inspect the sources, or download
-the complete report. External map coverage varies; a search link is not a
-confirmed match or permission to collect.
+offline report. The lookup runs only when Explore is pressed. The central workbench has **Local evidence**, **Historical maps** and
+**Investigations**. Select geological evidence cards, inspect Library of
+Congress map sheets with built-in zoom/drag/rotation, then record a sourced,
+dated investigation and save it to **My fieldbook**. The opening **Try
+Cincinnati** button supplies a worked starting point. Local map images stay
+in the browser. Source links support attribution and further research.
+See the [workbench guide](docs/WORKBENCH.md) for a practical walkthrough.
 **A little curiosity, Dig deeper.**
 Use **Inspect a find** for an already exposed object and **My fieldbook** to
 return to written notes. Saved entries stay in this browser; export a backup.

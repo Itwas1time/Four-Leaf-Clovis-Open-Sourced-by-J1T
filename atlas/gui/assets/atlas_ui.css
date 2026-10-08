@@ -407,3 +407,240 @@ button:focus-visible, summary:focus-visible, a:focus-visible,
     .atlas-header-place-button { padding: 8px; font-size: 11px; }
     .atlas-resident-actions { position: static; }
 }
+
+/* Clovis workbench: a place rail, an active workspace and a field-notes inspector. */
+@media screen {
+:root { --clovis-paper: #e9e6dc; --clovis-card: #fffdf6; --clovis-green: #2f5148; --clovis-ink: #253831; --clovis-rule: #d2d7c9; --clovis-muted: #57635a; }
+*, *::before, *::after { box-sizing: border-box; }
+body, .atlas-app-shell { background: #e9e6dc; color: #253831; }
+.atlas-header { display: flex; align-items: center; justify-content: space-between; flex: 0 0 82px; height: 82px; padding: 0 26px; background: #203d35; border-bottom: 3px solid #c7ae76; color: #faf8ed; }
+.atlas-brand { gap: 13px; }
+.atlas-brand-title { color: #fffdf3; font-size: 32px; letter-spacing: -.035em; }
+.atlas-brand-tagline { color: #e4e7d8; font-size: 11px; letter-spacing: .025em; }
+.atlas-logo-mark { background: #f4eddc; border-radius: 12px; padding: 3px; width: 48px !important; height: 48px !important; }
+.atlas-header-note { color: #c2d0c4; font-family: 'Courier New', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .14em; }
+#header-region { color: #e6eadf; font-size: 12px; }
+.atlas-header-place-button { color: #fffdf3; background: #355449; border: 1px solid #6f8974; border-radius: 6px; min-height: 38px; }
+.atlas-header-place-button:hover { background: #466454; }
+.atlas-main-row { padding: 16px; gap: 14px; }
+#layer-panel, #inspector-panel { border: 1px solid #cdd3c5 !important; border-radius: 10px; background: #f9f8f0 !important; box-shadow: 0 3px 12px #25383108; }
+#layer-panel { width: 280px !important; }
+#inspector-panel { width: 330px !important; }
+.atlas-workspace-label { padding: 19px 18px 10px; font-size: 10px; color: #657363; }
+.atlas-workflow-mode { margin: 0 14px 18px; padding: 3px; background: #e9ede2; border: 1px solid #d3dacb; gap: 3px; border-radius: 7px; }
+.atlas-workflow-mode .dash-options-list-option { padding: 9px 3px !important; font-size: 11px; border-radius: 5px; color: #42564a !important; }
+.atlas-workflow-mode .dash-options-list-option.selected { background: #2f5148 !important; color: #fffdf6 !important; box-shadow: none; }
+.atlas-resident-controls { padding: 0 18px 24px; }
+.atlas-lead-eyebrow { font-size: 10px; color: #826336; letter-spacing: .09em; }
+.atlas-brief-heading { color: #243f35; font-size: 27px; line-height: 1.12; margin-top: 10px; }
+.atlas-resident-intro { font-size: 12px; color: #536157; line-height: 1.65; margin-bottom: 20px; }
+.atlas-step-label { color: #4c6555; margin-top: 22px; font-size: 10px; border-bottom-color: #d6ddcf; }
+.atlas-small-label { color: #344b3e; font-weight: 600; font-size: 12px; }
+.atlas-help { color: #586459; font-size: 11px; line-height: 1.6; }
+.atlas-filter-dropdown { background: #fffef8 !important; border-color: #bcc7b7 !important; border-radius: 6px !important; margin-bottom: 12px; }
+.dash-dropdown-content { background: #fffef8 !important; border-color: #bcc7b7 !important; }
+.atlas-geology-option { background: #edf1e6; border-color: #d1dcc8; padding: 12px; border-radius: 7px; }
+.atlas-evidence-note { border-top-color: #d2dacb; padding-top: 15px; margin-top: 18px; }
+.atlas-primary-button, .atlas-search-button { background: #2f5148; border-color: #2f5148; border-radius: 6px; min-height: 42px; }
+.atlas-primary-button:hover:not(:disabled), .atlas-search-button:hover { background: #203d35; border-color: #203d35; }
+.atlas-secondary-button { border-radius: 6px; border: 1px solid #bfcbb8; background: #eef1e7; color: #2c4a3b; min-height: 38px; }
+.atlas-secondary-button:hover { background: #e0e7d8; }
+.atlas-map-shell { border: 1px solid #c1ccbb; border-radius: 10px; background: #fffdf6; box-shadow: 0 3px 12px #25383108; min-height: 0; }
+#resident-workbench { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; background: #fffdf6; }
+.clovis-workbench-bar { padding: 20px 22px 0; background: #fffdf6; border-bottom: 1px solid #d7ddce; flex-shrink: 0; }
+.clovis-place-title { margin: 5px 0 15px; color: #253e33; font: 700 28px/1.14 Georgia, serif; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.clovis-workbench-tools, #resident-tool { display: flex; gap: 5px; flex-wrap: wrap; }
+#resident-tool .dash-options-list-option { display: flex !important; align-items: center; position: relative; margin: 0; padding: 11px 15px !important; color: #536558 !important; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 5px 5px 0 0; border-bottom: 3px solid transparent; }
+#resident-tool .dash-options-list-option-wrapper { position: absolute; opacity: 0; width: 1px; }
+#resident-tool .dash-options-list-option.selected { background: #edf2e7 !important; color: #234c3a !important; border-bottom-color: #3e6d53; }
+#resident-tool .dash-options-list-option:hover { background: #f0f3eb; }
+#resident-tool .dash-options-list-option:focus-within { outline: 3px solid #a9783d; outline-offset: -3px; }
+#map-workspace { min-height: 300px !important; }
+.atlas-map-switch-wrap { top: 13px; right: 13px; border-color: #c1ccbb; background: #fffdf6f5; }
+.atlas-map-switch .dash-options-list-option.selected { background: #dfe8d7 !important; color: #234c3a !important; }
+.atlas-brief-panel { padding: 20px 19px; background: #f9f8f0; }
+.atlas-resident-actions { top: -20px; margin: -20px -19px 12px; padding: 20px 19px 14px; background: #f9f8f0; border-bottom: 1px solid #d6ddcf; }
+.atlas-resident-actions .atlas-brief-heading { font-size: 25px; }
+.atlas-empty-art { width: 92px; height: 92px; background: #e6ecdc; margin: 12px auto 22px; }
+.atlas-empty-state h3 { color: #284735; }
+.atlas-empty-topic { border-top-color: #d9dfd2; }
+.atlas-empty-topic > span { background: #e6eddd; color: #496447; border-radius: 4px; }
+.atlas-place-status, .atlas-resident-summary { color: #4d6051; }
+.clovis-evidence-grid, .clovis-mission-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 20px; }
+.clovis-evidence-card, .clovis-mission-card { position: relative; border: 1px solid #cbd6c3; border-radius: 8px; padding: 19px; background: #f5f7ee; color: #2e4a39; text-align: left; line-height: 1.55; overflow-wrap: anywhere; }
+.clovis-evidence-card:nth-child(2n), .clovis-mission-card:nth-child(2n) { background: #f5f0e2; border-color: #d9cba9; }
+.clovis-evidence-card h3, .clovis-mission-card h3, .clovis-evidence-detail h2, .clovis-mission-detail h2 { font: 700 22px/1.2 Georgia, serif; margin: 8px 0 12px; color: #2a4435; letter-spacing: -.025em; }
+.clovis-evidence-card p, .clovis-mission-card p { color: #576457; font-size: 12px; }
+button.clovis-evidence-card:hover, button.clovis-mission-card:hover { border-color: #6f916c; box-shadow: 0 3px 12px #2f514812; transform: translateY(-1px); }
+.clovis-evidence-detail, .clovis-mission-detail { padding: 22px; font-size: 13px; line-height: 1.75; color: #4d5d50; }
+.clovis-evidence-detail a, .clovis-mission-detail a { color: #2e6446; text-underline-offset: 3px; }
+.clovis-archive-workspace { padding: 20px; overflow: auto; }
+.clovis-archive-heading { font: 700 24px/1.2 Georgia, serif; color: #294333; }
+.clovis-archive-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; padding: 14px; border: 1px solid #d4dccb; border-radius: 7px; background: #eef2e7; margin: 16px 0; }
+.clovis-archive-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.clovis-archive-card { padding: 16px; border: 1px solid #d4dccb; border-radius: 7px; background: #fffdf6; color: #344d3b; }
+.clovis-archive-card h3 { font: 700 19px/1.3 Georgia, serif; margin: 0 0 10px; }
+.clovis-archive-status { padding: 10px 13px; background: #edf2e7; color: #4b614e; border-radius: 6px; font-size: 12px; line-height: 1.6; }
+.clovis-archive-image { display: block; width: 100%; max-height: 65vh; object-fit: contain; background: #e7e6da; border: 1px solid #cbd3c2; border-radius: 6px; }
+.atlas-inspection-workspace { background: #fffdf6; }
+.atlas-fieldbook-card { background: #f1f4e9; border-color: #cdd8c3; }
+@media (max-width: 1250px) and (min-width: 981px) { #layer-panel { width: 250px !important; } #inspector-panel { width: 292px !important; } .atlas-main-row { padding: 10px; gap: 10px; } .clovis-evidence-grid, .clovis-mission-grid { grid-template-columns: 1fr; } .clovis-workbench-bar { padding: 17px 16px 0; } #resident-tool .dash-options-list-option { padding: 10px 9px !important; font-size: 11px; } }
+@media (max-width: 980px) {
+ html, body { height: auto; overflow: auto !important; }
+ .atlas-app-shell { height: auto !important; width: 100% !important; min-height: 100vh; overflow: visible !important; }
+ .atlas-header { flex: 0 0 78px; padding: 12px 18px; gap: 14px; }
+ .atlas-header-note { display: none; }
+ .atlas-main-row { flex-direction: column !important; overflow: visible !important; gap: 14px; padding: 14px; }
+ #layer-panel, #inspector-panel { width: 100% !important; height: auto !important; overflow: visible !important; order: initial !important; }
+ #layer-panel { order: 0 !important; }
+ .atlas-map-shell { order: 1 !important; height: auto; min-height: 480px !important; flex: none !important; overflow: hidden; }
+ #inspector-panel { order: 2 !important; }
+ #resident-workbench { min-height: 460px; overflow: visible; }
+ #map-workspace { flex: none !important; height: 440px; min-height: 440px !important; }
+ .atlas-resident-controls { max-width: none; padding: 0 20px 20px; }
+ .atlas-resident-intro { max-width: 650px; margin-bottom: 15px; }
+ .atlas-resident-actions { position: static; }
+ .atlas-empty-state { max-width: 600px; }
+ .atlas-inspection-workspace { height: auto; min-height: 450px; }
+}
+@media (max-width: 560px) {
+ .atlas-header { height: 78px; padding: 11px 13px; gap: 8px; }
+ .atlas-brand { gap: 9px; } .atlas-brand-title { font-size: 28px; } .atlas-brand-tagline { font-size: 9px; }
+ .atlas-logo-mark { width: 42px !important; height: 42px !important; }
+ .atlas-header-place-button { font-size: 10px; padding: 8px; min-height: 35px; }
+ .atlas-main-row { padding: 10px; gap: 12px; }
+ .clovis-workbench-bar { padding: 18px 15px 0; }
+ .clovis-place-title { font-size: 26px; }
+ #resident-tool { gap: 0; width: 100%; } #resident-tool .dash-options-list-option { flex: 1; justify-content: center; padding: 11px 6px !important; font-size: 11px; }
+ .clovis-evidence-grid, .clovis-mission-grid, .clovis-archive-grid { grid-template-columns: 1fr; padding: 15px; }
+ .clovis-archive-grid { padding: 0; }
+ .clovis-evidence-detail, .clovis-mission-detail { padding: 17px; }
+ .atlas-map-switch-wrap { right: 8px; top: 10px; } .atlas-map-switch .dash-options-list-option { padding: 8px !important; }
+ .atlas-map-network-status { left: 10px; right: 10px; top: 65px; font-size: 11px; }
+ .atlas-workflow-mode .dash-options-list-option { min-height: 40px; }
+ .atlas-inspection-workspace { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+}
+
+/* Embedded evidence and historical archive modules. */
+@media screen {
+.clovis-tool-body { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+.clovis-map-workspace { display: flex; flex-direction: column; overflow: hidden; }
+.clovis-map-canvas { position: relative; flex: 1 0 52%; min-height: 230px; }
+.evidence-board { flex: 1 1 48%; min-height: 160px; max-height: 48%; overflow: auto; border-top: 1px solid #c7d1bd; background: #fcfdf6; padding: 17px 20px 20px; }
+.geology-controls { padding-bottom: 13px; margin-bottom: 13px; border-bottom: 1px solid #dce3d2; font-size: 12px; color: #465c48; line-height: 1.6; }
+.geology-controls h3 { font: 700 21px/1.2 Georgia,serif; color: #294735; margin: 0 0 7px; }
+.geology-controls summary { cursor: pointer; color: #365b44; font-weight: 600; }
+.evidence-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.evidence-card { display: flex; flex-direction: column; gap: 7px; background: #edf2e5; border: 1px solid #c9d5bf; border-top: 3px solid #718b60; border-radius: 6px; padding: 15px; color: #36533c; text-align: left; font-size: 12px; line-height: 1.5; }
+.evidence-card:nth-child(2n) { background: #f6f0df; border-color: #ddcfac; border-top-color: #ae8950; }
+.evidence-card strong { font: 700 18px/1.25 Georgia,serif; color: #2b4735; }
+.evidence-card small { font-size: 11px; color: #5a6956; }
+.evidence-card:hover { border-color: #678462; box-shadow: 0 3px 10px #2f514811; }
+.evidence-meta { font: 700 9px/1.5 'Courier New',monospace; text-transform: uppercase; letter-spacing: .075em; color: #687349; }
+.evidence-detail { margin-top: 14px; padding: 16px; background: #fffdf6; border: 1px solid #ccd7c3; border-radius: 6px; color: #495c4c; font-size: 12px; line-height: 1.7; }
+.evidence-detail:empty { display: none; }
+.evidence-detail h3 { font: 700 22px/1.25 Georgia,serif; color: #2d4735; margin: 0 0 12px; }
+.evidence-detail h4 { color: #344f3c; font-size: 12px; margin: 17px 0 6px; }
+.evidence-detail a { color: #2f6447; text-underline-offset: 3px; }
+.evidence-empty { border: 1px dashed #b9c8ae; background: #eff3e7; padding: 17px; border-radius: 7px; color: #53634e; font-size: 12px; line-height: 1.7; }
+.archive-workspace { padding: 20px; overflow: auto; color: #344e3b; background: #fffdf6; }
+.archive-heading h2 { font: 700 26px/1.15 Georgia,serif; color: #294333; margin: 0 0 9px; }
+.archive-heading p { font-size: 12px; color: #566750; line-height: 1.65; }
+.archive-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px; border: 1px solid #d3ddc8; background: #edf2e5; border-radius: 7px; margin: 16px 0; }
+.archive-toolbar button { background: #fffdf6; border: 1px solid #b8c7aa; border-radius: 5px; padding: 9px 12px; color: #2e4d37; font-size: 12px; min-height: 38px; }
+.archive-toolbar button:hover:not(:disabled) { background: #dfe9d4; }
+.archive-body { display: grid; grid-template-columns: minmax(150px,.8fr) minmax(0,2fr); gap: 14px; }
+.archive-catalog { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.archive-card { border: 1px solid #cfd9c4; border-radius: 6px; padding: 12px; background: #f5f7ec; color: #334f3a; text-align: left; line-height: 1.5; overflow-wrap: anywhere; }
+.archive-card:hover { background: #e9f0df; border-color: #8ba279; }
+.archive-card h3, .archive-card strong { font: 700 17px/1.3 Georgia,serif; }
+.archive-card p, .archive-card small { font-size: 11px; color: #586850; }
+.archive-viewer-panel { min-width: 0; border: 1px solid #ccd5c1; border-radius: 7px; overflow: hidden; background: #e8e6d8; }
+.archive-image-viewport { height: 50vh !important; min-height: 290px; overflow: auto; background: repeating-linear-gradient(0deg,transparent,transparent 23px,#b5b8a5 23px,#b5b8a5 24px),#e8e6d8; }
+.archive-observations { padding: 16px; margin-top: 15px; border: 1px solid #d1dbc5; background: #f4f7eb; border-radius: 7px; font-size: 12px; line-height: 1.6; }
+.archive-observations textarea { width: 100%; min-height: 95px; border: 1px solid #becbab; background: #fffdf6; border-radius: 5px; padding: 10px; color: #344d3a; }
+@media (max-width: 1250px) and (min-width: 981px) { .archive-body { grid-template-columns: 1fr; } .archive-catalog { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 980px) { .clovis-tool-body { overflow: visible; } #map-workspace.clovis-map-workspace { height: auto; min-height: 650px !important; } .clovis-map-canvas { height: 420px; flex: none; } .evidence-board { max-height: none; flex: none; overflow: visible; min-height: 180px; } }
+@media (max-width: 560px) { .evidence-board { padding: 17px 15px; } .evidence-grid { grid-template-columns: 1fr; } .archive-workspace { padding: 16px; } .archive-body { grid-template-columns: 1fr; } .archive-image-viewport { height: 420px !important; } .archive-toolbar { gap: 6px; padding: 9px; } }
+}
+
+@media screen {
+#archive-image-viewport { height: 50vh !important; min-height: 300px; overflow: auto; background: #e8e6d8 !important; }
+#archive-image-empty { max-width: 310px; margin: 70px auto; padding: 20px; font: 15px/1.7 Georgia,serif; color: #59644f; text-align: center; }
+.archive-catalog h3, .archive-observations h3 { font: 700 20px/1.25 Georgia,serif; color: #2e4b36; margin: 0 0 10px; }
+#archive-status, #archive-sheet-status { font-size: 11px; line-height: 1.65; color: #5d694f; }
+.archive-observations button { margin-top: 10px; padding: 10px 14px; background: #2f5148; color: #fffdf6; border: 1px solid #2f5148; border-radius: 5px; cursor: pointer; }
+#archive-local-title { min-height: 42px; padding: 10px; border: 1px solid #becbab; border-radius: 5px; background: #fffdf6; color: #344d3a; margin-bottom: 10px; font-size: 12px; }
+#archive-cards { display: flex; flex-direction: column; gap: 8px; }
+.geology-controls .dash-options-list-option { font-size: 12px; color: #35533e !important; }
+@media(max-width:560px) { #archive-image-viewport { height: 420px !important; } }
+}
+
+@media screen {
+.atlas-header .atlas-header-place-button { color: #fffdf3; background: #355449; border-color: #6f8974; }
+.atlas-workflow-mode .dash-options-list-option.selected .dash-options-list-option-text { color: #fffdf6 !important; }
+.clovis-workbench-welcome { padding: 21px 22px; flex: 0 0 auto; background: radial-gradient(ellipse at 100% 0%,#e4ecd9 0%,transparent 55%),#f5f6eb; border-bottom: 1px solid #ced8c1; }
+.clovis-hero-title { font: 700 30px/1.12 Georgia,serif; letter-spacing: -.035em; color: #294635; margin: 8px 0 10px; max-width: 630px; }
+.clovis-hero-copy { max-width: 600px; font-size: 12px; line-height: 1.65; color: #53654e; margin: 0 0 14px; }
+.clovis-starter-grid { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 12px; }
+.clovis-starter-grid button { font-size: 11px; min-height: 34px; padding: 8px 10px; background: #fffdf5; }
+.clovis-workbench-welcome .atlas-help { margin: 8px 0 0; font-size: 10px; }
+#resident-demo { font-size: 12px; min-height: 38px; padding: 9px 13px; }
+#map-workspace:has(#resident-welcome:not([style*="display: none"])) .clovis-map-canvas { flex: 1 1 230px; min-height: 200px; }
+#map-workspace:has(#resident-welcome:not([style*="display: none"])) .evidence-board { flex: 0 0 auto; max-height: 130px; min-height: 100px; }
+#map-workspace:has(#resident-welcome:not([style*="display: none"])) .geology-controls,
+#map-workspace:has(#resident-welcome:not([style*="display: none"])) .evidence-detail,
+#geology-record-note:disabled { display: none; }
+#resident-evidence-status { font-size: 12px; line-height: 1.65; color: #4d624b; margin: 0 0 8px; }
+.atlas-map-research .evidence-board { display: none; }
+.atlas-map-research .clovis-map-canvas { flex: 1 1 100%; min-height: 0; }
+.clovis-mission-workspace { padding: 21px; overflow: auto; background: #fffdf6; }
+.clovis-mission-grid { padding: 10px 0 20px; }
+.clovis-mission-number { color: #7c663d; font: 700 11px/1.5 'Courier New',monospace; }
+.clovis-mission-card > span:last-child { font-size: 11px; font-weight: 650; }
+.clovis-mission-detail { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); gap: 20px; padding: 20px 0 0; border-top: 1px solid #d3ddc6; }
+.clovis-mission-guide, .clovis-mission-form { min-width: 0; }
+.clovis-mission-guide button { padding: 9px 12px; font-size: 11px; margin: 0 4px 7px 0; }
+.clovis-mission-steps { margin-top: 12px; display: flex; flex-direction: column; gap: 11px; font-size: 12px; line-height: 1.6; }
+.clovis-mission-form input, .clovis-mission-form textarea { width: 100%; min-height: 42px; padding: 10px; border: 1px solid #bccbb0; background: #fffdf6; border-radius: 5px; font-size: 12px; color: #344b3a; margin: 4px 0 14px; }
+.clovis-mission-form label { display: block; }
+.clovis-mission-evidence { padding: 12px; border: 1px solid #d1dbc4; background: #edf2e4; border-radius: 6px; font-size: 12px; line-height: 1.6; }
+@media(max-width:980px) { #map-workspace:has(#resident-welcome:not([style*="display: none"])) .clovis-map-canvas { flex: none; height: 420px; } #map-workspace:has(#resident-welcome:not([style*="display: none"])) .evidence-board { max-height: none; } }
+@media(max-width:560px) { .clovis-workbench-welcome { padding: 20px 16px; } .clovis-hero-title { font-size: 28px; } .clovis-starter-grid { display: grid; grid-template-columns: 1fr; gap: 6px; } .clovis-starter-grid button { text-align: left; min-height: 40px; } .clovis-mission-workspace { padding: 18px 16px; } .clovis-mission-detail { grid-template-columns: 1fr; } }
+}
+@media screen {
+.clovis-mission-form .atlas-search-input { width: 100%; padding: 0; border: 0; background: transparent; margin: 4px 0 14px; }
+.clovis-mission-form .atlas-search-input input { margin: 0; }
+.archive-viewer-panel > .archive-toolbar { margin: 0; border: 0; border-bottom: 1px solid #ccd5c1; border-radius: 0; }
+@media (min-width:981px) { .clovis-mission-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 11px; } .clovis-mission-card { padding: 15px; } .clovis-mission-card h3 { font-size: 20px; } }
+}
+@media screen {
+#resident-tool .dash-options-list-option-wrapper, .atlas-workflow-mode .dash-options-list-option-wrapper, .atlas-map-switch .dash-options-list-option-wrapper { width: 1px; height: 1px; overflow: hidden; pointer-events: none; }
+}
+@media screen {
+.clovis-evidence-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 6px 0 17px; }
+.clovis-evidence-metric { padding: 13px; border: 1px solid #cfdac5; background: #edf2e5; border-radius: 6px; display: flex; flex-direction: column; gap: 5px; }
+.clovis-evidence-metric strong { font: 700 25px/1 Georgia,serif; color: #2d4d37; }
+.clovis-evidence-metric span { font-size: 10px; line-height: 1.4; color: #54664e; }
+.clovis-evidence-metric:last-child { grid-column: 1 / -1; background: #f4f0e4; border-color: #dccfac; flex-direction: row; align-items: center; gap: 12px; }
+.clovis-evidence-metric:last-child strong { font-size: 18px; color: #705d39; }
+@media(min-width:981px) {
+ .clovis-map-canvas { flex-basis: 46%; }
+ .evidence-board { flex-basis: 54%; max-height: 54%; }
+ .geology-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 16px; }
+ .geology-controls > h3, .geology-controls > p:nth-child(2), .geology-controls > details { grid-column: 1 / -1; }
+ .geology-controls > p:nth-child(2) { margin: 0 0 7px; font-size: 11px; line-height: 1.5; }
+ .geology-controls > .dash-checklist { grid-row: 3; grid-column: 1; }
+ .geology-controls > label { grid-row: 3; grid-column: 2; font-size: 11px; }
+ .geology-controls > .dash-slider { grid-row: 4; grid-column: 2; }
+ #resident-geology-status { grid-row: 4; grid-column: 1; margin: 0; font-size: 10px; }
+ .geology-controls > details { margin-top: 6px; font-size: 11px; }
+}
+}
+@media screen {
+/* Dash wraps text inputs in a 34px clipping container; observation fields are 42px. */
+.clovis-mission-form .dash-input-container.atlas-search-input { height: 42px; min-height: 42px; overflow: visible; }
+.clovis-mission-form .dash-input-container.atlas-search-input input { height: 42px; }
+}

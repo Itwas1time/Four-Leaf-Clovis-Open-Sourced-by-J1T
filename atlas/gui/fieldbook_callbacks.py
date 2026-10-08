@@ -54,7 +54,7 @@ def list_notes(book):
     try: rows=validate_book(book or EMPTY_BOOK)['entries']
     except ValueError: return [],[],html.P('This saved fieldbook could not be read. Restore a valid backup to a fresh browser profile.')
     options=[{'label':row['title'],'value':row['id']} for row in rows]
-    cards=[html.Button([html.Strong(row['title']),html.P(row['created'][:10]+' · '+('Town context' if row['kind']=='town' else 'Object observations')),
+    cards=[html.Button([html.Strong(row['title']),html.P(row['created'][:10]+' · '+{'town':'Town context','find':'Object observations','investigation':'Guided investigation'}[row['kind']]),
                          html.P(' · '.join(row['summary'].values())[:400])],id={'type':'fieldbook-open','index':row['id']},n_clicks=0,className='atlas-fieldbook-card') for row in rows]
     return options,options,cards or html.P('Explore a town or Inspect a find, then choose Save to fieldbook. Your investigations will appear here.',className='atlas-resident-intro')
 

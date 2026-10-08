@@ -22,7 +22,7 @@ def ready_to_explore(state, geoid):
 
 @callback(Output("resident-report-heading", "children"), Output("resident-choose-place", "children"),
           Output("header-place-button", "children"), Output("resident-lookup-note", "children"),
-          Output("resident-state-background", "open"),
+          Output("resident-state-background", "open"), Output('resident-workbench-title', 'children'),
           Input("resident-state", "value"), Input("resident-place", "value"), Input("resident-online", "value"))
 def place_actions(state, geoid, online):
     place = get_place(geoid, state)
@@ -30,7 +30,7 @@ def place_actions(state, geoid, online):
     heading = f"{place['name']}, {place['state']}" if chosen else "A place has a story."
     note = ("Includes online rock maps at the public town point." if isinstance(online, list) and "geology" in online
             else "Offline report. Online rock maps are off.")
-    return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, bool(state_context(state)) and not chosen
+    return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, bool(state_context(state)) and not chosen, heading if chosen else 'Choose your starting point.'
 
 
 clientside_callback(
@@ -75,8 +75,6 @@ clientside_callback(
     Input('resident-place','value'), Input('resident-state','value'), State('workflow-mode','value'))
 
 
-@callback(Output("resident-place", "value"), Input("resident-state", "value"),
-          State("resident-place", "value"), prevent_initial_call=True)
 def clear_mismatched_place(state, geoid):
     return geoid if get_place(geoid, state) else None
 
@@ -86,13 +84,17 @@ def clear_mismatched_place(state, geoid):
           Output("inspection-controls", "style"), Output("inspection-inspector", "style"),
           Output("inspection-workspace", "style"), Output("map-workspace", "style"),
           Output('fieldbook-controls','style'), Output('fieldbook-inspector','style'), Output('fieldbook-workspace','style'),
-          Input("workflow-mode", "value"))
-def workflow_sections(mode):
+          Output('archive-workspace','style'), Output('mission-workspace','style'),
+          Output('resident-workbench','style'), Output('resident-workbench-bar','style'),
+          Input("workflow-mode", "value"), Input('resident-tool','value'))
+def workflow_sections(mode, tool='map'):
     show, hide = {"display": "block"}, {"display": "none"}
-    map_show={'display':'block','height':'100%','width':'100%','position':'relative','flex':'1','minHeight':'0'}
-    if mode == 'inspect': return hide, hide, hide, hide, show, show, show, hide, hide, hide, hide
-    if mode == 'notebook': return hide, hide, hide, hide, hide, hide, hide, hide, show, show, show
-    return (hide, hide, show, show, hide, hide, hide, map_show, hide, hide, hide) if mode == "research" else (show, show, hide, hide, hide, hide, hide, map_show, hide, hide, hide)
+    map_show={'display':'flex','flexDirection':'column','height':'100%','width':'100%','position':'relative','flex':'1','minHeight':'0'}
+    workbench_show={'display':'flex','flexDirection':'column','height':'100%','minHeight':'0'}
+    if mode == 'inspect': return hide, hide, hide, hide, show, show, show, hide, hide, hide, hide, hide, hide, hide, hide
+    if mode == 'notebook': return hide, hide, hide, hide, hide, hide, hide, hide, show, show, show, hide, hide, hide, hide
+    if mode == 'research': return hide, hide, show, show, hide, hide, hide, map_show, hide, hide, hide, hide, hide, workbench_show, hide
+    return show, show, hide, hide, hide, hide, hide, map_show if tool not in ('archive','missions') else hide, hide, hide, hide, show if tool=='archive' else hide, show if tool=='missions' else hide, workbench_show, show
 
 
 clientside_callback(
@@ -107,7 +109,7 @@ clientside_callback(
           Input("resident-report-store", "data"), Input("workflow-mode", "value"), Input("resident-state", "value"))
 def display_context_state(token, mode, state):
     return ({"display": "none"} if (isinstance(token, str) and token) or state_context(state) else {"display": "block"},
-            "atlas-map-frame atlas-map-research" if mode == "research" else "atlas-map-frame atlas-map-resident")
+            "atlas-map-frame atlas-map-research clovis-map-workspace" if mode == "research" else "atlas-map-frame atlas-map-resident clovis-map-workspace")
 
 
 @callback(Output("resident-state-guide", "children"), Input("resident-state", "value"), Input("resident-report-store", "data"))
@@ -150,7 +152,7 @@ def show_town_point(mode, geoid, state):
           Input("resident-online", "value"),
           running=[(Output("resident-loading", "style"), {"display": "block"}, {"display": "none"})])
 def render_resident_context(clicks, state, geoid, history, online):
-    if callback_context.triggered_id != "resident-build" or not clicks:
+    if not any(item['prop_id']=='resident-build.n_clicks' for item in callback_context.triggered) or not clicks:
         status = "Select Explore this town to build your field notes." if get_place(geoid, state) else "Choose a town to begin your field notes."
         return "", status, None, True, "", True
     try:
