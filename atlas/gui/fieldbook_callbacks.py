@@ -3,6 +3,7 @@ import json
 from dash import ALL, Input, Output, State, callback, callback_context, clientside_callback, html, no_update
 from core.fieldbook import EMPTY_BOOK, validate_book, merge_entries, new_entry, follow_up_entry, readable_text
 from core.find_inspection import inspect_find
+from core.expert_questions import question_first_markdown
 from core.resident_context import current_report
 from core.web_security import validate_json
 
@@ -67,7 +68,7 @@ def list_notes(book):
     try: rows=validate_book(book or EMPTY_BOOK)['entries']
     except ValueError: return [],[],html.P('This saved fieldbook could not be read. Restore a valid backup to a fresh browser profile.')
     options=[{'label':row['title'],'value':row['id']} for row in rows]
-    cards=[html.Button([html.Strong(row['title']),html.P(row['created'][:10]+' · '+{'town':'Town context','find':'Object observations','investigation':'Guided investigation'}[row['kind']]),
+    cards=[html.Button([html.Strong(row['title']),html.P(row['created'][:10]+' · '+(row['summary'].get('mission') if row['summary'].get('mission') in ('Expert question','Expert response','Museum reference','Fossil reference','Newspaper reference','Geology reference','Object guide','Archaeology publication','Mineral reference') else {'town':'Town context','find':'Object observations','investigation':'Guided investigation'}[row['kind']])),
                          html.P(' · '.join(summary_text(key,value) for key,value in row['summary'].items() if key!='place')[:400])],id={'type':'fieldbook-open','index':row['id']},n_clicks=0,className='atlas-fieldbook-card') for row in rows]
     return options,options,cards or html.P('Explore a town or Inspect a find, then choose Save to fieldbook. Your investigations will appear here.',className='atlas-resident-intro')
 
@@ -76,7 +77,8 @@ def list_notes(book):
           State('fieldbook-store','data'), prevent_initial_call=True)
 def open_note(clicks,book):
     trigger=callback_context.triggered_id
-    if not isinstance(trigger,dict) or not any(clicks): return no_update
+    if (not isinstance(trigger,dict) or not isinstance(clicks,list) or len(clicks)>50
+            or any(type(value) is not int or value<0 for value in clicks) or not any(clicks)): return no_update
     try: row,_=selected_rows(book,trigger.get('index'))
     except ValueError: return no_update
     return row['id'] if row else no_update
@@ -101,7 +103,7 @@ def read_notes(book,selected,other):
             html.Table([html.Thead(html.Tr([html.Th('Observation'),html.Th(row['title']),html.Th(compare['title'])])),
                         html.Tbody([html.Tr([html.Th(key.capitalize()),html.Td(summary_text(key,row['summary'].get(key,'Not recorded'))),html.Td(summary_text(key,compare['summary'].get(key,'Not recorded')))]) for key in fields])]),
             html.P('These are recorded observations and report snapshots, not verified identities or independent confirmations.',className='atlas-help')],className='atlas-fieldbook-compare')
-    return row['title'],readable_text(row['markdown']),table,False,False
+    return row['title'],readable_text(question_first_markdown(row)),table,False,False
 
 
 @callback(Output('fieldbook-download','data'),Input('fieldbook-export','n_clicks'),Input('fieldbook-note-download','n_clicks'),
@@ -111,7 +113,7 @@ def export_notes(export_clicks,note_clicks,book,selected):
         book=validate_book(book or EMPTY_BOOK)
         if callback_context.triggered_id=='fieldbook-note-download':
             row,_=selected_rows(book,selected)
-            return {'content':row['markdown'],'filename':'clovis-saved-notes.md','type':'text/markdown'} if row else no_update
+            return {'content':question_first_markdown(row),'filename':'clovis-saved-notes.md','type':'text/markdown'} if row else no_update
         return {'content':json.dumps(book,ensure_ascii=False,indent=2),'filename':'clovis-fieldbook.json','type':'application/json'}
     except ValueError: return no_update
 

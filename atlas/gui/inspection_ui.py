@@ -1,6 +1,7 @@
 """A visual observation pad and a source-linked comparison guide."""
 from dash import dcc, html
 from core.find_inspection import MATERIALS, SETTINGS
+from atlas.gui.photo_ui import viewer
 
 
 def controls():
@@ -13,7 +14,7 @@ def controls():
         html.Div(id='find-care', role='status'),
         html.Label('Which features can you see?', className='atlas-small-label'),
         dcc.Checklist(id='find-features', value=[], options=[], className='atlas-find-features'),
-        html.A('Read the questions for these features ↓', href='#find-guide', className='clovis-find-jump'),
+        html.A('Read the questions for these features ↓', href='#find-next-questions', className='clovis-find-jump'),
         html.Label('Where was it observed?', htmlFor='find-setting', className='atlas-small-label'),
         dcc.Dropdown(id='find-setting', options=[{'label':v,'value':k} for k,v in SETTINGS.items()], value='unknown', clearable=False, className='atlas-filter-dropdown'),
         html.Label('Size, if known', htmlFor='find-size', className='atlas-small-label'),
@@ -32,10 +33,12 @@ def workspace():
         html.H2('Follow the details.', className='atlas-brief-heading'),
         html.P('Your selected features shape the questions below. A photo is optional.', className='atlas-resident-intro'),
         report_panel(),
+        html.Div(id='find-next-questions', className='clovis-find-questions', **{'aria-live':'polite'}),
+        html.Button('Read object guides →',id={'type':'workbench-action','target':'library','key':'object-guides'},n_clicks=0,className='atlas-secondary-button'),
         dcc.Upload(id='find-photo', accept='image/jpeg,image/png,image/webp', max_size=5_000_000,
                    children=html.Button('Add a photo',className='atlas-primary-button'), multiple=False),
         html.P('The photo stays in this browser. It is not sent to the app server or saved in the fieldbook.', id='find-photo-status', className='atlas-help', role='status'),
-        html.Img(id='find-photo-preview', alt='Your find for visual observation', className='atlas-find-photo', style={'display':'none'}),
+        viewer(),
         html.Details([
             html.Summary('How to make a useful photo record'),
             html.Div('01',className='atlas-photo-step'), html.H3('Show the whole object'), html.P('Include a ruler and both sides.'),
@@ -43,7 +46,10 @@ def workspace():
             html.Div('03',className='atlas-photo-step'), html.H3('Keep the context'), html.P('Record whether it was in loose fill, on the surface or attached to rock.'),
         ], id='find-photo-help', className='atlas-photo-help'),
         html.A('Edit your observations ↑', href='#inspection-controls', className='clovis-find-jump'),
-        dcc.Markdown(id='find-guide',className='clovis-find-guide',link_target='_blank',dangerously_allow_html=False),
+        html.Details([
+            html.Summary('Read the full comparison notes & sources'),
+            dcc.Markdown(id='find-guide',className='clovis-find-guide',link_target='_blank',dangerously_allow_html=False),
+        ], className='clovis-find-full-guide'),
     ], id='inspection-workspace', className='atlas-inspection-workspace', style={'display':'none'})
 
 

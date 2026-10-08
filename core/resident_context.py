@@ -113,8 +113,8 @@ def _next_steps(place, context):
     }[context]
     return [
         "## Try one small investigation", "",
-        f"1. **Past buildings:** [Search Sanborn maps for {_md(town)}]({historical}). {history_action} "
-        "Matching coverage has not been checked; try a local archive if missing or unavailable.", "",
+        f"1. **Past buildings:** Open **Old maps** for the bundled dated records, or [search more Sanborn maps for {_md(town)}]({historical}). {history_action} "
+        "Check the selected sheet's extent; catalog names alone do not prove property coverage.", "",
         f"2. **Rocks and fossils:** [Open USGS geological maps around this town]({geology}). "
         "Compare its legend, date and scale with these unit names. "
         "Coverage varies; mapped rock does not confirm an exposure or a fossil.", "",
@@ -125,6 +125,7 @@ def _next_steps(place, context):
 
 
 def build_context(state, geoid, context="unknown", online=None):
+    from core.town_knowledge import knowledge_markdown
     key = input_key(state, geoid, context, [] if online is None else online)
     place = get_place(geoid, state)
     geology = geology_for_place(place) if key[3] else {
@@ -132,19 +133,22 @@ def build_context(state, geoid, context="unknown", online=None):
         "message": "Online geology was not requested. Historical context still works offline."}
     units = geology["units"]
     guides = matching_guides(state, units)
+    knowledge, library_lines = knowledge_markdown(place)
     lines = [f"# What might be here? — {_md(place['name'])}, {state}", "",
              "**Scale: town context, not a property assessment.** The map lookup uses the Census representative point "
              "for this place. It may describe a different deposit from your yard. No street address is collected.", "",
              "## At a glance", "",
-             ("**Town-point rock maps:** " + "; ".join(_md(unit['name']) for unit in units[:4]) + ". "
+             ("**Offline USGS geology:** " + "; ".join(_md(unit['name']) for unit in knowledge.get('usgs_units',[])[:4]) + ". Read the source-map descriptions in Mapped geology."
+              if knowledge.get('usgs_units') else
+              "**Town-point rock maps:** " + "; ".join(_md(unit['name']) for unit in units[:4]) + ". "
               "Read the mapped materials and original references below." if units else geology['message']), "",
-             "**Historical clues:** " + {
-                 'unknown': "past land use is unknown; dated records are the next step.",
-                 'home': "your reported older building suggests glass, ceramics and hardware as recognition examples.",
-                 'farm': "your reported farm or garden history gives a starting point for land-use research.",
-                 'fill': "imported fill can contain transported objects; their original place and age remain unknown.",
-             }[context] + " "
-             "**Discovery odds:** not currently estimable.", ""]
+             (f"**Historical records:** {knowledge['maps']['maps']:,} Sanborn editions indexed to this town, "
+              f"{_md(knowledge['maps'].get('earliest',''))} to {_md(knowledge['maps'].get('latest',''))}. Open Old maps to compare their buildings and land use."
+              if knowledge['maps']['maps'] else
+              f"**Historical records:** {knowledge['regional_maps']['maps']:,} Sanborn editions from this state. Old maps shows the statewide catalog when an exact town match is absent."), ""]
+    chapter=knowledge.get('chapter')
+    if isinstance(chapter,dict) and chapter.get('facts'):
+        lines += ["**State fossil story:** " + _md(chapter['facts'][0]['text']), ""]
     if guides:
         lines += ["**Fossil learning examples:** " + "; ".join(
             f"{guide['name']} — {guide['examples']}" for guide in guides) + ". "
@@ -166,6 +170,7 @@ def build_context(state, geoid, context="unknown", online=None):
         if len(units) > 3:
             lines += [f"Showing 3 of {len(units)} returned map units. All units and references are in the full field notes.", ""]
         lines += _map_words(units)
+    lines += library_lines
     lines += _next_steps(place, context)
     summary = f"**{_md(place['name'])}, {state} · Town context.** Maps use the public Census town point, not a yard assessment.\n\n" + "\n".join(lines[4:])
     lines += ["## Historical objects", "",
@@ -254,7 +259,7 @@ def build_context(state, geoid, context="unknown", online=None):
               "held in bounded server memory caches; restarting clears them. Clovis writes neither to disk. Downloads remain on your computer. "
               "Map tiles and styles use their own external providers. No personal address or private site record is "
               "required for this workflow.", ""]
-    return {"key": key, "markdown": "\n".join(lines), "summary": summary, "geology_status": geology["status"],
+    return {"key": key, "markdown": "\n".join(lines), "summary": summary, "geology_status": geology["status"], "knowledge": knowledge,
             "unit_count": len(units), "mapped_units": [unit['name'] for unit in units], "place": place,
             "units": units, "guides": guides, "geology_checked_at": geology['checked_at']}
 

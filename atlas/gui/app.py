@@ -35,6 +35,7 @@ from atlas.gui.fieldbook_ui import workspace as fieldbook_workspace
 from atlas.gui.archive_ui import workspace as archive_workspace
 from atlas.gui.investigation_ui import workspace as mission_workspace, example_panel
 from atlas.gui.geology_ui import make_geology_board, make_geology_layer
+from atlas.gui.library_ui import workspace as library_workspace
 
 app = dash.Dash(
     __name__,
@@ -51,6 +52,8 @@ server = app.server
 app.index_string = app.index_string.replace(
     "{%favicon%}", '<link rel="icon" type="image/svg+xml" href="/assets/clovis-bone-clover.svg">')
 configure_local_flask(server)
+from core.reference_media import register_image_routes
+register_image_routes(server)
 _initial_leads = matching_leads()
 _initial_center = [39.8283, -98.5795]
 _initial_zoom = 4
@@ -132,12 +135,13 @@ def _build_workbench():
                 {'label': 'Rocks & fossils', 'value': 'map'},
                 {'label': 'Old maps', 'value': 'archive'},
                 {'label': 'Investigation', 'value': 'missions'},
+                {'label': 'Library', 'value': 'library'},
             ], value='map', className='clovis-workbench-tools', inline=True),
             example_panel(),
             dcc.Store(id='resident-example-store', storage_type='memory'),
             html.Div(id='clovis-reading-path', className='clovis-reading-path', role='status'),
         ], id='resident-workbench-bar', className='clovis-workbench-bar'),
-        html.Div([_build_map(), archive_workspace(), mission_workspace()], className='clovis-tool-body'),
+        html.Div([_build_map(), archive_workspace(), mission_workspace(), library_workspace()], className='clovis-tool-body'),
     ], id='resident-workbench', className='clovis-workbench', style={'display': 'flex', 'flexDirection': 'column', 'height': '100%', 'minHeight': '0'})
 
 
@@ -170,9 +174,18 @@ import atlas.gui.callbacks  # noqa: E402,F401
 import atlas.gui.resident_callbacks  # noqa: E402,F401
 import atlas.gui.inspection_callbacks  # noqa: E402,F401
 import atlas.gui.fieldbook_callbacks  # noqa: E402,F401
+import atlas.gui.expert_callbacks  # noqa: E402,F401
 import atlas.gui.archive_callbacks  # noqa: E402,F401
 import atlas.gui.geology_callbacks  # noqa: E402,F401
 import atlas.gui.investigation_callbacks  # noqa: E402,F401
+import atlas.gui.library_callbacks  # noqa: E402,F401
+import atlas.gui.fossil_library_callbacks  # noqa: E402,F401
+import atlas.gui.newspaper_library_callbacks  # noqa: E402,F401
+import atlas.gui.unit_library_callbacks  # noqa: E402,F401
+import atlas.gui.object_guide_callbacks  # noqa: E402,F401
+import atlas.gui.archaeology_library_callbacks  # noqa: E402,F401
+import atlas.gui.mineral_library_callbacks  # noqa: E402,F401
+import atlas.gui.dig_records_callbacks  # noqa: E402,F401
 
 
 def _open_browser(url: str) -> None:

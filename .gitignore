@@ -29,3 +29,8 @@ runtime-*.png
 !.env.example
 /tools/config.json
 /release/
+# Retained intermediate fossil builds are not active runtime snapshots.
+atlas/gui/data/fossil_references_[0-9a-f][0-9a-f].sqlite*
+atlas/gui/data/fossil_references_index.sqlite
+atlas/gui/data/fossil_references_taxa_[0-9a-f][0-9a-f].sqlite*
+atlas/gui/data/*.sqlite.*.tmp*

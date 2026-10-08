@@ -7,6 +7,7 @@ from core.investigations import MISSIONS, investigation_entry
 from core.resident_context import current_report
 from core.us_places import get_place
 from core.example_catalog import get_example, pick_example
+from core.town_knowledge import knowledge_for_place
 
 
 @callback(Output('workflow-mode','value',allow_duplicate=True), Output('resident-tool','value'),
@@ -20,7 +21,7 @@ def open_workbench_tool(clicks):
         return 'inspect', no_update
     if value == 'notebook':
         return 'notebook', no_update
-    return ('resident', value) if value in ('map','archive','missions') else (no_update, no_update)
+    return ('resident', value) if value in ('map','archive','missions','library') else (no_update, no_update)
 
 
 @callback(Output('resident-state','value'), Output('resident-place','options',allow_duplicate=True),
@@ -68,16 +69,45 @@ def show_example(saved,state,geoid,mode):
           Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'))
 def report_overview(token,state,geoid,history,online,mode):
     report = current_report(token,state,geoid,history,online)
-    if report is None:
+    place=get_place(geoid,state)
+    if place is None:
         return html.P('Build your town evidence, or open Historical maps to investigate a source directly.',className='atlas-help')
-    available = report.get('geology_status') == 'available'
-    unavailable = 'Not loaded' if report.get('geology_status')=='not_requested' else 'Unavailable'
-    items = [('Mapped units',str(report['unit_count']) if available else unavailable),
-             ('Formation guides',str(len(report.get('guides',[]))) if available else unavailable)]
-    return [html.Div([
-        html.Div([html.Strong(value),html.Span(label)],className='clovis-evidence-metric') for label,value in items
-    ],className='clovis-evidence-metrics'),
-        html.P('Discovery odds: unknown. Town context cannot predict a find in a yard.',className='clovis-scope-note')]
+    knowledge=report.get('knowledge') if report else None
+    knowledge=knowledge if isinstance(knowledge,dict) else knowledge_for_place(place)
+    stats=knowledge['maps']
+    regional=knowledge['regional_maps']
+    children=[]
+    offline_units=knowledge.get('usgs_units',[])
+    if offline_units:
+        children.append(html.Div([html.Strong('Regional geology · Offline USGS map'),
+            *[html.P([html.Strong(unit['name']+': '),' · '.join(v for v in (unit.get('age',''),unit.get('geomaterial','')) if v)]) for unit in offline_units[:2]],
+            html.Button('Read mapped units →',id={'type':'workbench-action','target':'library','key':'town-units'},n_clicks=0,className='atlas-secondary-button')],className='clovis-town-catalog'))
+    if stats['maps']:
+        label=f"{stats['maps']:,} dated town maps"
+        text=f"Sanborn editions indexed to this town · {stats.get('earliest') or ''} to {stats.get('latest') or ''}"
+    else:
+        label=f"{regional['maps']:,} historic state maps"
+        text='Browse the statewide collection. This snapshot has no exact town-name match.'
+    children.append(html.Div([html.Strong(label),html.Span(text),
+        html.Button('Read the old maps →',id={'type':'workbench-action','target':'archive','key':'town-catalog'},n_clicks=0,className='atlas-secondary-button')],className='clovis-town-catalog'))
+    news=knowledge.get('newspapers')
+    if news and news['titles']:
+        first=knowledge.get('newspaper_records',[])
+        children.append(html.Div([html.Strong(f"{news['titles']:,} newspaper title records"),
+            html.P((first[0]['title']+' · '+first[0].get('publication_dates','')) if first else 'Publication timelines and languages recorded by LOC'),
+            html.Small('Partial directory snapshot · no article text'),
+            html.Button('Read newspaper history →',id={'type':'workbench-action','target':'library','key':'town-newspapers'},n_clicks=0,className='atlas-secondary-button')],className='clovis-town-catalog'))
+    chapter=knowledge.get('chapter')
+    if isinstance(chapter,dict) and chapter.get('facts'):
+        children.append(html.Div([html.Strong(chapter['name']+' fossil story'),html.P(chapter['facts'][0]['text']),
+            html.Button('Read the state chapter →',id={'type':'workbench-action','target':'library','key':'state-chapter'},n_clicks=0,className='atlas-secondary-button')],className='clovis-town-catalog'))
+    if report and report.get('geology_status')=='available':
+        items=[('Mapped units',str(report['unit_count'])),('Formation guides',str(len(report.get('guides',[]))))]
+        children.append(html.Div([html.Div([html.Strong(value),html.Span(label)],className='clovis-evidence-metric') for label,value in items],className='clovis-evidence-metrics'))
+    elif report:
+        children.append(html.P('Live rock maps are off.' if report.get('geology_status')=='not_requested' else 'Live rock maps could not load; bundled sources remain available.',className='atlas-help'))
+    children.append(html.P('Town and state context · Backyard discovery odds are not estimated.',className='clovis-scope-note'))
+    return children
 
 
 @callback(Output('mission-type','value'), Output('resident-tool','value',allow_duplicate=True),
@@ -160,6 +190,10 @@ def fieldbook_progress(book):
         rows = validate_book(book or EMPTY_BOOK)['entries']
     except ValueError:
         return []
-    metrics = [('Saved records',len(rows)),('Source investigations',sum(r['kind']=='investigation' for r in rows)),
-               ('Object observations',sum(r['kind']=='find' for r in rows)),('Follow-up records',sum('follow_up' in r['summary'] and '· follow-up' in r['title'] for r in rows))]
+    followups = {r['id'] for r in rows if r['summary'].get('mission') not in ('Expert question','Expert response')
+                 and 'follow_up' in r['summary'] and '· follow-up' in r['title']}
+    questions = sum(r['summary'].get('mission')=='Expert question' and r['id'] not in followups for r in rows)
+    responses = sum(r['summary'].get('mission')=='Expert response' and r['id'] not in followups for r in rows)
+    metrics = [('Saved records',len(rows)), ('Notes & investigations',len(rows)-questions-responses-len(followups)),
+               ('Questions',questions), ('Responses & follow-ups',responses+len(followups))]
     return [html.Div([html.Strong(str(value)),html.Span(label)]) for label,value in metrics]

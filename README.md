@@ -7,8 +7,8 @@
 Clovis helps residents explore what historical objects, fossils and geological
 materials might be present around a U.S. town. It also helps research teams
 review published archaeological projects and export source-linked briefs.
-This public edition contains reviewed code, a public town lookup and a
-coordinate-free archaeological directory.
+This edition contains dated historical maps, museum reference collections,
+state fossil chapters, a public town lookup and a coordinate-free research directory.
 
 ## What works here
 
@@ -18,6 +18,18 @@ coordinate-free archaeological directory.
 - **Start in any state.** Expand Statewide background and sources for reviewed
   mineral learning examples across all 50 states, DC and Puerto Rico. These are
   background, not claims about a deposit in a yard.
+- **Read historical records.** Browse 50,578 Sanborn atlas records under 9,758
+  town/state names across all 50 states and DC, with dated catalog citations,
+  chronological pages and an in-app sheet viewer. Catalog searches work offline.
+- **Compare museum references.** Search 563,454 source objects from the Met and
+  Smithsonian in **Library**. Read materials, dates, cultures, labeled dimensions
+  and catalog numbers where recorded. Request eligible Met reference photographs
+  and save a sourced comparison to the fieldbook. State fossil chapters supply
+  three cited facts for every state, DC and Puerto Rico.
+- **Read mineral properties.** Search 6,381 Wikidata mineral records with 43,922
+  source statements in **Library → Mineral properties**. Read formulas,
+  hardness, density and crystal-system claims with original units, qualifiers
+  and sources; save a reference to Fieldbook without attaching a town.
 - **Take a next step.** The dashboard marks the public town point. Open
   **Read rock evidence · materials, ages & sources** below the Rocks & fossils
   map for unit cards, source details and matched formation guides. Historical
@@ -25,10 +37,14 @@ coordinate-free archaeological directory.
   Expand the full field notes for map descriptions, sources and limits.
 - **Inspect a find.** Record visible features, size and context for glass,
   ceramics, metal, rocks, possible fossils or bone. Get comparison questions
-  and a browser-local photo pad; no image analysis or automatic identification.
+  and a browser-local photo viewer with zoom, drag, rotation, fit and removal.
+  There is no image analysis or automatic identification.
 - **Keep a fieldbook.** Save reports and observations, compare two investigations,
   add dated follow-ups after checking maps, and print selected notes. Export or
   restore JSON to move devices; restoring preserves saved work.
+- **Ask a clearer question.** Preview, download or save a question packet about
+  saved notes. Record an attributed response separately and navigate related
+  records, with the original observations and sources preserved. No message is sent.
 - Eight sourced fossil guides match named units in reviewed states, including
   Ohio Shale, Cedar Valley, Hell Creek, Lockport and Casselman. These are learning
   examples in documented beds, not yard occurrences or collecting destinations.
@@ -63,8 +79,14 @@ restore withheld locations using guessed geocodes or publish restricted data.
 
 Python 3.11 or newer is required.
 
+**Fieldbook → Dig records** keeps named local projects with linked units,
+contexts, finds, samples and source documents. Preserve depth units and datums,
+bag identifiers, explicit context relationships and dated corrections. Download
+a project ZIP backup with its full history; restore checks links and refuses
+conflicting revisions. See [dig records](docs/DIG_RECORDS.md) for storage and bounds.
+
 ```sh
-git clone https://github.com/Itwas1time/four.leaf.clovis.git
+git clone https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T.git four.leaf.clovis
 cd four.leaf.clovis
 git switch clovis-handoff-2026-10-05
 python -m venv .venv
@@ -83,7 +105,7 @@ Click the town box and type in its search field:
 Open **Options & land-use context** for known past land use and the online setting.
 **Include local rock maps (online)** is selected by default; uncheck for an
 offline report. The lookup runs only when Explore is pressed. The central
-workbench has **Rocks & fossils**, **Old maps** and **Investigation**. The Rocks &
+workbench has **Rocks & fossils**, **Old maps**, **Investigation** and **Library**. The Rocks &
 fossils map fills the center. Open **Read rock evidence · materials, ages &
 sources** below it to read and select unit cards, source details and matched
 formation guides. This drawer starts closed and contains **Map overlay &
@@ -101,12 +123,26 @@ and report.
 The header **Dark / Light** toggle remembers this browser's preference while
 images retain their colours and printed notes remain light. Local map images stay
 in the browser. Source links support attribution and further research.
+Library searches use the bundled museum records. Choose a collection, enter a
+term, then select a record. The Met has object-group and recorded-date filters;
+Smithsonian tags derive from source titles and object types and its snapshot
+has no explicit object dates or CC0 media. **Load reference photograph** is an
+explicit online action. Museum references save without a town or attached image.
 See the [workbench guide](docs/WORKBENCH.md) for a practical walkthrough.
 Use **Inspect a find** for an already exposed object. Selected features produce
-specific observation questions in the center, with save/download actions above
-the guide and jump links for small screens. Including the selected public town
+specific observation question cards first in the center. **Record this detail**
+returns to your notes; full comparison notes and sources open on request.
+Zoom, drag, rotate, fit or remove a local photo without changing its original
+file. Save/download actions sit above the cards, with jump links for small
+screens. Including the selected public town
 is optional; changing town clears that choice. Use **Fieldbook** to return to
-written notes. Saved entries stay in this browser; export a backup.
+written notes. Select a record to **Prepare a question about these notes**;
+preview the packet before downloading or saving. On a saved question, **Record
+a response to this question** with its source, date and remaining uncertainty.
+Related saved records connect the source, question and responses. The new
+question or response leads readers and note downloads; preserved source notes
+follow. Photos are not attached and Clovis contacts nobody.
+Saved entries stay in this browser; export a backup.
 Print or save selected notes as PDF using the browser's print dialog.
 See [observations and fieldbook](docs/OBSERVATIONS.md) for a practical walkthrough
 and privacy details. Photos stay in the browser and are not saved or analyzed.
@@ -130,7 +166,10 @@ assets need network access; public directory searches and brief generation
 use the bundled coordinate-free snapshot. Public hosting needs a separate
 deployment review; this package has no authentication or multi-user design.
 Optional API keys belong in private environment/config files, never Git.
-The town workflow needs no API key. Its online option sends only a public
+The town workflow and offline catalogs need no API key. Optional reference
+photographs send a public museum object ID to the Met API and load an eligible
+image from its host; local notes, town choices and photographs are not sent.
+The town online option sends only a public
 Census town point to Macrostrat. Reports and provider responses stay in bounded
 server memory; the app does not write them to disk. Input changes invalidate
 downloads, and server-owned report tokens expire after an hour.
@@ -145,8 +184,25 @@ checks; verify seasons, permission, and support terms before acting. Source
 documentation retained under `docs/` has a scope banner where it describes
 optional datasets that are absent from this edition.
 
+The [Sanborn source notes](docs/SANBORN_SOURCES.md),
+[Met source notes](docs/OBJECT_REFERENCE_SOURCES.md),
+[Smithsonian source notes](docs/SMITHSONIAN_REFERENCE_SOURCES.md), and
+[state fossil sources](docs/STATE_FOSSIL_SOURCES.md) document the bundled
+snapshots, factual fields, reuse rights and selection. Museum metadata are CC0;
+image rights are checked separately. Sanborn catalog metadata and the LOC
+collection are public domain. Searchable reference databases currently occupy
+about 1.84 GB before compression; images and raw source downloads are not bundled.
+
+**Archaeological projects** in Library reads 203
+Open Context data publications. Search titles, creators, subjects and short
+source descriptions, then save attributed metadata to Fieldbook. Archaeological
+time coverage and publication dates are labeled separately. The full 204-record
+publisher query was checked; unsupported reuse licenses are excluded. This is
+one publisher's catalog, not a census of digs. See
+[archaeology source and license notes](docs/ARCHAEOLOGY_PROJECT_SOURCES.md).
+
 This public edition contains runtime source, user documentation, installation
-metadata, public Census town points and a coordinate-free directory. Keep
+metadata, public Census town points and reviewed reference catalogs. Keep
 credentials, personal details, sensitive locations and acquired datasets out
 of Git. Software licensing is separate from third-party data rights.
 See [security](SECURITY.md) and

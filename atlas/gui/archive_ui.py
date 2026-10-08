@@ -8,12 +8,19 @@ def workspace():
         dcc.Store(id='archive-image-event'),
         dcc.Store(id='archive-note-context'),
         dcc.Store(id='archive-source-mode'),
+        dcc.Store(id='archive-catalog-page', data=0),
         html.Div(className='archive-heading', children=[html.H2('Read the old map'), html.P('Find a map of your town, inspect its sheets, and write down the changes you can actually see.')]),
-        html.Div(className='archive-toolbar', children=[html.Button('Find maps of this town', id='archive-search', n_clicks=0), html.Span(id='archive-town')]),
-        html.Small('Search sends the selected public town and state, plus ordinary network metadata, to Library of Congress. Selected map images load directly from Library of Congress in your browser.'),
-        dcc.Loading(html.Div(id='archive-status', role='status', children='Choose a town, then search the Library of Congress digitized map collection.')),
+        html.Div(className='archive-toolbar', children=[html.Span(id='archive-town'), html.Button('Search more maps online', id='archive-search', n_clicks=0)]),
+        html.Div(className='archive-catalog-controls', children=[
+            html.Label(['Browse', dcc.Dropdown(id='archive-catalog-scope', options=[{'label':'This town (exact catalog name)','value':'town'},{'label':'Whole state','value':'state'}], value='town', clearable=False)]),
+            html.Label(['Dates', dcc.Dropdown(id='archive-catalog-order', options=[{'label':'Oldest first','value':'oldest'},{'label':'Newest first','value':'newest'}], value='oldest', clearable=False)]),
+            html.Div(className='archive-catalog-pagination', children=[html.Button('Browse offline records',id='archive-catalog-bundled',n_clicks=0),html.Button('Previous',id='archive-catalog-prev',n_clicks=0,disabled=True),html.Span(id='archive-catalog-page-label'),html.Button('Next',id='archive-catalog-next',n_clicks=0,disabled=True)]),
+        ]),
+        html.Small(id='archive-catalog-coverage', className='archive-catalog-coverage'),
+        html.Small('Bundled records work offline. Online search sends the selected public town and state to Library of Congress. Opening a map loads its image directly from Library of Congress in your browser.'),
+        dcc.Loading(html.Div(id='archive-status', role='status', children='Choose a state or town to browse the bundled historical map catalog.')),
         html.Div(className='archive-body', children=[
-            html.Div(className='archive-catalog', children=[html.H3('Map records'), html.Div(id='archive-cards'), dcc.Dropdown(id='archive-record', placeholder='Choose a map to inspect', clearable=False,style={'display':'none'}), html.P(id='archive-sheet-status'), dcc.Dropdown(id='archive-sheet', placeholder='Choose a sheet', clearable=False)]),
+            html.Div(className='archive-catalog', children=[html.H3('Map records'), html.Div(id='archive-cards'), dcc.Dropdown(id='archive-record', placeholder='Choose a map to inspect', clearable=False,style={'display':'none'}), html.Button('Load map sheets online',id='archive-load-sheets',n_clicks=0,disabled=True), html.P(id='archive-sheet-status'), dcc.Dropdown(id='archive-sheet', placeholder='Choose a sheet', clearable=False)]),
             html.Div(className='archive-viewer-panel', children=[
                 html.Div(className='archive-toolbar', children=[html.Button('− Zoom out', id='archive-zoom-out'), html.Button('+ Zoom in', id='archive-zoom-in'), html.Button('Fit map', id='archive-fit'), html.Button('Rotate 90°', id='archive-rotate')]),
                 html.Div(id='archive-image-viewport', style={'overflow':'auto','height':'min(62vh,700px)','minHeight':'300px','background':'#ece7da','position':'relative'}, children=[html.Img(id='archive-image', src='', alt='Selected historical map. Use zoom controls and scroll to inspect details.', style={'display':'none'}),html.P('Your map will open here. Zoom in, then scroll to read street names, boundaries and the legend.', id='archive-image-empty')]),

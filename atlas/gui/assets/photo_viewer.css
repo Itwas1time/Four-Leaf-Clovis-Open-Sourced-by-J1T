@@ -1,0 +1,82 @@
+.clovis-photo-viewer {
+  margin: 16px 0 12px;
+  border: 1px solid var(--clovis-rule);
+  border-radius: 9px;
+  overflow: hidden;
+  background: var(--clovis-paper-deep);
+  color: var(--clovis-ink);
+}
+.clovis-photo-viewer[hidden] { display: none !important; }
+.clovis-photo-viewer [hidden] { display: none !important; }
+.clovis-photo-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 9px;
+  border-bottom: 1px solid var(--clovis-rule);
+}
+.clovis-photo-toolbar button, .clovis-photo-remove {
+  min-height: 42px;
+  padding: 8px 11px;
+  border: 1px solid var(--clovis-control-rule);
+  border-radius: 6px;
+  background: var(--clovis-card);
+  color: var(--clovis-green);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.clovis-photo-toolbar button:hover:not(:disabled), .clovis-photo-remove:hover:not(:disabled) { background: var(--clovis-hover); }
+.clovis-photo-toolbar button:disabled, .clovis-photo-remove:disabled { color: var(--clovis-muted); cursor: default; }
+.clovis-photo-viewport {
+  position: relative;
+  height: clamp(210px, 43vh, 420px);
+  overflow: hidden;
+  background: var(--clovis-paper);
+  cursor: grab;
+  touch-action: none;
+  overscroll-behavior: contain;
+  user-select: none;
+}
+.clovis-photo-viewport.is-panning { cursor: grabbing; }
+.clovis-photo-viewport:focus-visible {
+  outline: 3px solid var(--clovis-focus);
+  outline-offset: -3px;
+}
+.clovis-photo-viewport .clovis-photo-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border-radius: 0;
+  transform-origin: center center;
+  object-fit: fill;
+  pointer-events: none;
+  filter: none !important;
+}
+.clovis-photo-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px 14px;
+  padding: 9px 11px;
+  border-top: 1px solid var(--clovis-rule);
+  color: var(--clovis-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+#find-photo-view-help { flex: 1 1 240px; }
+#find-photo-view-status { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.clovis-photo-viewer[data-photo-state="error"] #find-photo-view-status {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .clovis-photo-toolbar { gap: 5px; }
+  .clovis-photo-toolbar button { flex: 1 1 auto; padding: 8px; }
+  .clovis-photo-viewport { height: 280px; }
+}

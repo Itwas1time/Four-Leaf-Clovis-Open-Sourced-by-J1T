@@ -1,4 +1,4 @@
-> **Public edition:** public Census town points are bundled as spatial context; archaeological/fossil locations are not. See the [README](../README.md). Other datasets described below are optional and are not bundled.
+> **Public edition:** Census town points and reviewed reference catalogs are bundled. Precise archaeological and fossil find locations are excluded. See the [README](../README.md) for the data inventory.
 
 # From curiosity to field notes
 
@@ -19,16 +19,20 @@ you describe it and keep track of the next question.
    a plant fossil. The guide keeps these competing explanations visible.
    Selected features produce specific questions in the center, such as
    transcribing a mark exactly or recording where a seam ends. Select **Read
-   the questions for these features** to jump to the guide and **Edit your
-   observations** to return. Public town context defaults off. Check **Include
+   the questions for these features** to jump to the cards. **Record this
+   detail** focuses your notes without replacing them. Public town context
+   defaults off. Check **Include
    [town]** only when that town belongs with the object. Changing town clears
    the choice without erasing your observations. Included context survives
    downloads and backups; it is not an exact location or verified provenance.
 3. Optionally add a JPEG, PNG or WebP photo under 5 MB. Study both sides, an
-   existing edge and a ruler. The image stays in the browser, is not sent to
-   the server and is not analyzed, saved in the fieldbook or exported.
+   existing edge and a ruler. Zoom, drag, rotate or **Fit photo** to inspect
+   details. **Remove photo** clears the app's image without changing your file
+   or written notes. The image stays in the browser, is not sent to the server
+   and is not analyzed, saved in the fieldbook or exported.
 4. Read the comparison questions, then save or download your written notes.
-   Record actions are above the guide. Photo instructions remain closed until
+   Record actions are above the question cards. Open **Read the full comparison
+   notes & sources** for the longer guide. Photo instructions remain closed until
    requested so they do not push the useful comparison out of view.
    Take them to a qualified survey, museum or archaeologist for identification.
 
@@ -61,6 +65,36 @@ The saved map report is a snapshot. Return to Explore a town for a fresh
 provider lookup; a new report may differ. User notes and imported reports
 are unverified. Imported Markdown is displayed as literal text, so links and
 images cannot execute or load inside the saved-note viewer.
+
+## Keep a museum comparison
+
+The **Library** can save a museum reference in this fieldbook with its
+recorded facts, collection, catalog identifier and source link. It is labeled
+**Museum reference**, separate from an object observation. References never
+inherit your selected town and include no photograph. Select the reference
+card to read it, compare it with an observation, or prepare a question.
+
+Met reference photographs are optional online requests. The app contacts the
+Met's fixed public object API using the catalog object ID only, then loads an
+eligible image from the museum host. The provider receives normal network
+metadata; your notes, town and local photographs are not part of that request.
+Library search and reference saving use the bundled records locally.
+
+## Ask about saved observations
+
+Select saved notes in **Fieldbook**, then open **Prepare a question about these
+notes**. Write a question, preview the packet and download or save it. You can
+include a possible comparison and a wanted detail without turning either into
+an identification. The packet retains the original source and observations;
+photos are not attached and no message is sent.
+
+Select a saved question to **Record a response to this question**. Supply a public
+institution or role, the response date and its words or your clearly attributed
+summary. Record remaining uncertainty. It becomes a new entry, with the original
+notes and question preserved. **Related saved records** connects those entries.
+Clovis does not verify the respondent or their identification. The question or
+response appears first when reading, downloading or printing; source notes
+follow it. JSON exports preserve the saved snapshots exactly.
 
 ## Keep a backup
 

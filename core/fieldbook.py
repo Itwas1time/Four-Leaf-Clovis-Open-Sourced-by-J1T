@@ -89,4 +89,4 @@ def readable_text(markdown):
     text=re.sub(r'^#{1,6}\s+','',markdown,flags=re.M)
     text=text.replace('**','')
     text=re.sub(r'\[([^\]\n]+)\]\((https://[^)\s]+)\)',r'\1 — \2',text)
-    return re.sub(r'\\([\\`*_{}\[\]<>()!#|])',r'\1',text)
+    return re.sub(r'\\([\\`*_{}\[\]<>()!#|~+\-.=])',r'\1',text)

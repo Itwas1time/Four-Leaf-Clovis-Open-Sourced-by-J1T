@@ -1,0 +1,15 @@
+.clovis-dig-workspace {max-width:1100px;width:100%;margin:auto;}
+.clovis-dig-grid {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin:20px 0;}
+.clovis-dig-grid section {min-width:0;}
+#dig-editor,#dig-saved-records {scroll-margin-top:140px;}
+.clovis-dig-workspace .atlas-search-input,.clovis-dig-workspace textarea {width:100%;box-sizing:border-box;}
+.clovis-dig-workspace label {margin-top:12px;}
+.clovis-dig-workspace details {margin:16px 0;padding:12px;border:1px solid var(--clovis-border,#d6ddcd);border-radius:8px;}
+.clovis-dig-workspace button {max-width:100%;white-space:normal;}
+#dig-record-list .clovis-library-record {margin:8px 0;width:100%;}
+#dig-status {position:sticky;top:0;z-index:5;background:var(--clovis-paper-deep);margin:12px 0;}
+#dig-status:empty {display:none;}
+#dig-record-detail pre {white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;}
+#dig-record-detail dl {overflow-wrap:anywhere;}
+#dig-record-detail dd {margin:0 0 12px;}
+@media(max-width:980px) {.clovis-dig-grid {grid-template-columns:1fr;} #dig-saved-records {grid-row:1;} #dig-editor {grid-row:2;}}

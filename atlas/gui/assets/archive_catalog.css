@@ -1,0 +1,11 @@
+/* Offline atlas catalog controls; scoped to the Old maps workspace. */
+#archive-workspace .archive-catalog-controls { display:flex; flex-wrap:wrap; gap:12px; align-items:end; margin:12px 0; }
+#archive-workspace .archive-catalog-controls > label { display:grid; gap:5px; flex:1 1 190px; min-width:0; font-size:12px; color:var(--clovis-muted); }
+#archive-workspace .archive-catalog-pagination { display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:12px; }
+#archive-workspace .archive-catalog-pagination button, #archive-workspace #archive-load-sheets { border:1px solid var(--clovis-control-rule); border-radius:6px; background:var(--clovis-card); color:var(--clovis-green); padding:9px 12px; min-height:40px; }
+#archive-workspace button:disabled { opacity:.55; cursor:default; }
+#archive-workspace .archive-catalog-coverage { display:block; line-height:1.6; margin:8px 0; color:var(--clovis-muted); }
+#archive-workspace #archive-cards { max-height:580px; overflow:auto; padding-right:4px; }
+#archive-workspace .archive-card p { margin:5px 0; }
+#archive-workspace #archive-sheet-status, #archive-workspace #archive-source-record { overflow-wrap:anywhere; }
+@media(max-width:980px) { #archive-workspace .archive-catalog { display:flex; } #archive-workspace #archive-cards { max-height:400px; } }

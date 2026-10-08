@@ -15,6 +15,7 @@ from core.us_places import get_place, STATE_NAMES
 
 MAX_BYTES = 2_000_000
 MAX_RESULTS = 12
+ITEM_ID = r'[A-Za-z0-9_-]{1,100}(?:\.\d{1,6})?'
 _CACHE = {}
 _LOCK = Lock()
 _PROVIDER_GATE = BoundedSemaphore(2)
@@ -126,7 +127,7 @@ def search_maps(state, geoid):
             continue
         url = public_url(row.get('url')) or public_url(row.get('id'))
         p = urlsplit(url)
-        if not re.fullmatch(r'/item/[A-Za-z0-9_-]+/?', p.path):
+        if not re.fullmatch(r'/item/' + ITEM_ID + r'/?', p.path):
             continue
         rows.append({'id': p.path.strip('/').split('/')[-1], 'title': _text(row.get('title')) or 'Untitled map',
                      'date': _text(row.get('date'), 80) or 'Date not supplied', 'url': url,
@@ -136,7 +137,7 @@ def search_maps(state, geoid):
 
 
 def map_sheets(item_id):
-    if not isinstance(item_id, str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,100}', item_id):
+    if not isinstance(item_id, str) or not re.fullmatch(ITEM_ID, item_id):
         raise ValueError('Select a map record from the search results.')
     try:
         data = _fetch('/item/' + item_id + '/', {'fo': 'json', 'at': 'resources,item'})

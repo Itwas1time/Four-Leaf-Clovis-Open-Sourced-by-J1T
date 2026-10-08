@@ -96,13 +96,16 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
 .clovis-workbench-bar { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 0 12px; padding: 12px 18px 0; background: var(--clovis-card); border-bottom: 1px solid var(--clovis-rule); flex-shrink: 0; }
 .clovis-workbench-heading { display: flex; justify-content: space-between; gap: 16px; align-items: center; }
 .clovis-workbench-heading > div { flex: 1; min-width: 0; }
-.clovis-place-title { margin: 4px 0 8px; color: var(--clovis-ink); font: 400 24px/1.18 Georgia, serif; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.clovis-place-title { margin: 4px 0 8px; color: var(--clovis-ink); font: 400 24px/1.18 Georgia, serif; letter-spacing: -.035em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #resident-demo { flex: 0 0 auto; min-height: 38px; padding: 9px 12px; background: var(--clovis-paper-deep); border: 1px solid var(--clovis-control-rule); color: var(--clovis-green); border-radius: 7px; font-size: 12px; }
 #resident-demo:hover { background: var(--clovis-hover); }
 .clovis-example-invitation { margin: 0 0 18px !important; min-height: 40px !important; width: 100%; text-align: left; }
 .clovis-workbench-tools, #resident-tool { display: flex; gap: 5px; flex-wrap: wrap; align-self: end; }
 #resident-example-panel, #clovis-reading-path { grid-column: 1 / -1; }
 .clovis-has-report .clovis-reading-path { display: none; }
+.clovis-mode-resident.clovis-has-report #resident-controls > :is(.atlas-lead-eyebrow,.atlas-brief-heading,.atlas-resident-intro) { display: none; }
+.clovis-mode-resident.clovis-has-report #resident-demo { min-height: 32px !important; padding: 5px 0 !important; border: 0; background: transparent; margin-bottom: 12px !important; }
+.clovis-mode-resident.clovis-has-report #resident-choose-place { display: none; }
 #resident-tool .dash-options-list-option { display: flex !important; align-items: center; position: relative; margin: 0; padding: 12px 13px !important; color: var(--clovis-muted) !important; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 5px 5px 0 0; border-bottom: 3px solid transparent; }
 #resident-tool .dash-options-list-option.selected { background: var(--clovis-paper-deep) !important; color: var(--clovis-green) !important; border-bottom-color: var(--clovis-green); }
 #resident-tool .dash-options-list-option:hover { background: var(--clovis-hover); }

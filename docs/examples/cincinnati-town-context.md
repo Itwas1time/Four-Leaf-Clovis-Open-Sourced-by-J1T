@@ -1,4 +1,4 @@
-> **Public edition:** public Census town points are bundled as spatial context; archaeological/fossil locations are not. See the [README](../../README.md). Other datasets described below are optional and are not bundled.
+> **Public edition:** Census town points and reviewed reference catalogs are bundled. Precise archaeological and fossil find locations are excluded. See the [README](../../README.md) for the data inventory.
 
 # What might be here? — Cincinnati city, OH
 

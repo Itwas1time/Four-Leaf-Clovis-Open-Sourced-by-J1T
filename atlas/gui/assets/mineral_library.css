@@ -1,0 +1,6 @@
+#library-minerals > .dash-input-container { width:100%; max-width:550px; min-height:44px; }
+#library-minerals .dash-input-container input { width:100%; height:44px; padding:10px 12px; color:var(--clovis-ink); background:var(--clovis-card); border:1px solid var(--clovis-control-rule); border-radius:7px; }
+.clovis-mineral-property { padding:14px 0; border-top:1px solid var(--clovis-rule); }
+.clovis-mineral-property h4 { margin:0 0 6px; text-transform:capitalize; }
+.clovis-mineral-property > p { margin:0 0 12px; }
+.clovis-library-coverage { padding:12px 14px; border:1px solid var(--clovis-rule); border-radius:7px; background:var(--clovis-paper-deep); color:var(--clovis-muted); font-size:13px; line-height:1.6; }

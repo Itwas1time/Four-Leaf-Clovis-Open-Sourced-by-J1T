@@ -8,7 +8,7 @@ only when Explore is pressed. Uncheck the option for an offline report.
 ## Windows PowerShell
 
 ```powershell
-git clone https://github.com/Itwas1time/four.leaf.clovis.git
+git clone https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T.git four.leaf.clovis
 Set-Location four.leaf.clovis
 git switch clovis-handoff-2026-10-05
 py -3 -m venv .venv
@@ -21,7 +21,7 @@ Use the environment's Python directly; no execution-policy change is needed.
 ## macOS or Linux
 
 ```sh
-git clone https://github.com/Itwas1time/four.leaf.clovis.git
+git clone https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T.git four.leaf.clovis
 cd four.leaf.clovis
 git switch clovis-handoff-2026-10-05
 python3 -m venv .venv
@@ -42,7 +42,7 @@ this town** directly below the town box. **Options & land-use context** contains
 the optional past land use and online setting. Leave **Include local rock maps (online)** selected for map
 evidence or uncheck for an offline report, then select
 **Explore this town**. A marker shows the public Census town point. The central workbench has
-**Rocks & fossils**, **Old maps** and **Investigation**. The Rocks & fossils map
+**Rocks & fossils**, **Old maps**, **Investigation** and **Library**. The Rocks & fossils map
 fills the center. Open **Read rock evidence · materials, ages & sources** below
 it to read and select unit cards, source details and matched formation guides.
 This drawer starts closed and contains **Map overlay & sources**. **Words in
@@ -72,23 +72,56 @@ Town searches, directory searches and report generation work locally; the
 geology option and map tiles/styles require internet access. Changing report
 inputs invalidates the previous download.
 
+## Read the reference catalogs
+
+**Old maps** loads the offline dated Sanborn catalog for the selected town,
+with an explicitly labeled state catalog if there is no exact town-name match.
+Choose a date order, turn pages and read a record. **Load map sheets online**
+requests digitized sheets; **Search more maps online** retains live LOC search.
+Catalog-only records can supply a citation without claiming that a sheet was viewed.
+
+**Library** works without a town. Choose the Met or Smithsonian collection,
+search and select a record to read actual source fields. Met object groups and
+date ranges filter museum records; Smithsonian text tags are labeled separately
+from measured materials. Use **Load reference photograph** on an eligible Met
+record. **Save reference to fieldbook** keeps its source, with no town or photo.
+**Geology & fossils** supplies short cited chapters for all 50 states, DC and
+Puerto Rico. See [the workbench guide](WORKBENCH.md) and the individual source notes.
+
 ## Observe, save and return
 
 Choose **Inspect a find** to describe an already exposed object. Select visible
-features, record size and context, and read the feature-specific questions in the
-center. The links beside the form and guide let you jump between them on a small
-screen. Save or download actions sit above the guide. You can explicitly include
+features, record size and context, and read the feature-specific question cards
+first in the center. **Record this detail** focuses your notes without changing
+them. Full comparison notes and sources open on request. The links beside the
+form and cards let you jump between them on a small screen. Save or download
+actions sit above the cards. You can explicitly include
 the selected public town as broad context; changing town clears that choice.
-An optional photo stays in the browser; it is not sent to the server, analyzed or
+An optional photo stays in the browser; zoom, drag, rotate, fit or remove it
+without changing the original file. It is not sent to the server, analyzed or
 saved. Save the written notes, or save a report from **Explore a town**.
 
 In **Fieldbook**, open a card and choose another investigation to compare.
 Add a follow-up after checking a map: record its title, date, sheet and source,
-plus what you observed. A dated entry preserves the original. Print selected
-notes or use the browser's Save as PDF option. Download JSON to back up the
+plus what you observed. A dated entry preserves the original. To prepare a
+question packet, open **Prepare a question about these notes**, write your
+question, preview, then download or save it. On a saved question, **Record a
+response to this question** with its source, date and remaining uncertainty.
+Use **Related saved records** to navigate the source, question and responses.
+Original notes remain intact. Photos are not attached and Clovis sends no messages.
+Print selected notes or use the browser's Save as PDF option. Download JSON to back up the
 fieldbook or move devices; Restore merges valid notes with existing work.
 Limits are 50 entries and 750 KB. Browser storage is specific to the device
 and app origin. See [observations and fieldbook](OBSERVATIONS.md).
+
+For structured recording select **Fieldbook → Dig records**. Keep named local
+projects, units, contexts, finds, samples and source documents connected.
+Record measured depths with their units and datums, bag identifiers and
+explicit context relationships. Corrections preserve stable IDs and dated
+revisions. Project ZIP backups include the full history; restoring merges
+matching revisions and refuses conflicts. These records persist on the local
+computer outside the installed package. See [dig records](DIG_RECORDS.md) for
+the storage path, limits and recording references.
 
 ## Background maps
 

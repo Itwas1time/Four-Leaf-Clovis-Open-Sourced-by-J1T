@@ -22,22 +22,23 @@ def ready_to_explore(state, geoid):
 
 @callback(Output("resident-report-heading", "children"), Output("resident-choose-place", "children"),
           Output("header-place-button", "children"), Output("resident-lookup-note", "children"),
-          Output("resident-state-background", "open"), Output('resident-workbench-title', 'children'),
-          Input("resident-state", "value"), Input("resident-place", "value"), Input("resident-online", "value"))
-def place_actions(state, geoid, online):
+          Output("resident-state-background", "open"), Output('resident-workbench-title', 'children'), Output('resident-workbench-title','title'),
+          Input("resident-state", "value"), Input("resident-place", "value"), Input("resident-online", "value"),Input('resident-tool','value'))
+def place_actions(state, geoid, online, tool='map'):
     place = get_place(geoid, state)
     chosen = place is not None
     heading = f"{place['name']}, {place['state']}" if chosen else "Your field notes"
     note = ("Includes online rock maps at the public town point." if isinstance(online, list) and "geology" in online
             else "Offline report. Online rock maps are off.")
-    return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, False, heading if chosen else 'Explore a place.'
+    workbench='Reference library' if tool=='library' else heading if chosen else 'Explore a place.'
+    return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, False, workbench, heading
 
 
 @callback(Output('clovis-app','className'),
           Output('resident-build','children'), Output('clovis-reading-path','children'),
           Input('resident-report-store','data'), Input('resident-state','value'), Input('resident-place','value'),
-          Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'))
-def workspace_progress(token, state, geoid, history, online, mode):
+          Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'), Input('resident-tool','value'))
+def workspace_progress(token, state, geoid, history, online, mode, tool='map'):
     place = get_place(geoid, state)
     report = current_report(token, state, geoid, history, online)
     mode = mode if mode in ('resident','inspect','notebook','research') else 'resident'
@@ -48,7 +49,8 @@ def workspace_progress(token, state, geoid, history, online, mode):
                       className='is-done' if (index==0 and place) or (index==1 and report) else
                       'is-current' if index==(2 if report else 1 if place else 0) else '')
             for index,label in enumerate(labels)]
-    return f'atlas-app-shell clovis-mode-{mode} {stage}', \
+    tool = tool if tool in ('map','archive','missions','library') else 'map'
+    return f'atlas-app-shell clovis-mode-{mode} clovis-tool-{tool} {stage}', \
         ('Refresh town evidence ↻' if report else 'Explore this town →'), path
 
 
@@ -94,7 +96,7 @@ clientside_callback(
         if (mode !== 'resident') return window.dash_clientside.no_update;
         const panel = document.getElementById('inspector-panel');
         if (panel) panel.scrollTop = 0;
-        if (typeof token === 'string' && token && window.innerWidth <= 980 &&
+        if (typeof token === 'string' && token &&
             changed.some(item => item.prop_id === 'resident-report-store.data')) {
             return new Promise(resolve => {
                 let attempts = 0;
@@ -102,7 +104,9 @@ clientside_callback(
                     const shell = document.getElementById('clovis-app');
                     const workbench = document.getElementById('resident-workbench');
                     if (shell?.classList.contains('clovis-has-report') && workbench?.getBoundingClientRect().height) {
-                        window.scrollTo({top:Math.max(0, workbench.getBoundingClientRect().top + window.scrollY - 12),behavior:'auto'});
+                        const controls = document.getElementById('layer-panel');
+                        if (controls) controls.scrollTop = 0;
+                        if (window.innerWidth <= 980) window.scrollTo({top:Math.max(0, workbench.getBoundingClientRect().top + window.scrollY - 12),behavior:'auto'});
                         resolve(Date.now());
                     } else if (++attempts < 120) requestAnimationFrame(reveal);
                     else resolve(window.dash_clientside.no_update);
@@ -127,15 +131,16 @@ def clear_mismatched_place(state, geoid):
           Output('fieldbook-controls','style'), Output('fieldbook-inspector','style'), Output('fieldbook-workspace','style'),
           Output('archive-workspace','style'), Output('mission-workspace','style'),
           Output('resident-workbench','style'), Output('resident-workbench-bar','style'),
+          Output('library-workspace','style'),
           Input("workflow-mode", "value"), Input('resident-tool','value'))
 def workflow_sections(mode, tool='map'):
     show, hide = {"display": "block"}, {"display": "none"}
     map_show={'display':'flex','flexDirection':'column','height':'100%','width':'100%','position':'relative','flex':'1','minHeight':'0'}
     workbench_show={'display':'flex','flexDirection':'column','height':'100%','minHeight':'0'}
-    if mode == 'inspect': return hide, hide, hide, hide, show, show, show, hide, hide, hide, hide, hide, hide, hide, hide
-    if mode == 'notebook': return hide, hide, hide, hide, hide, hide, hide, hide, show, show, show, hide, hide, hide, hide
-    if mode == 'research': return hide, hide, show, show, hide, hide, hide, map_show, hide, hide, hide, hide, hide, workbench_show, hide
-    return show, show, hide, hide, hide, hide, hide, map_show if tool not in ('archive','missions') else hide, hide, hide, hide, show if tool=='archive' else hide, show if tool=='missions' else hide, workbench_show, {}
+    if mode == 'inspect': return hide, hide, hide, hide, show, show, show, hide, hide, hide, hide, hide, hide, hide, hide, hide
+    if mode == 'notebook': return hide, hide, hide, hide, hide, hide, hide, hide, show, show, show, hide, hide, hide, hide, hide
+    if mode == 'research': return hide, hide, show, show, hide, hide, hide, map_show, hide, hide, hide, hide, hide, workbench_show, hide, hide
+    return show, hide if tool=='library' else show, hide, hide, hide, hide, hide, map_show if tool not in ('archive','missions','library') else hide, hide, hide, hide, show if tool=='archive' else hide, show if tool=='missions' else hide, workbench_show, {}, show if tool=='library' else hide
 
 
 clientside_callback(
