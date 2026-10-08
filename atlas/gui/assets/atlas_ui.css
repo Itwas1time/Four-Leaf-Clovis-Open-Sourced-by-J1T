@@ -25,7 +25,7 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
 ::selection { background: var(--clovis-accent); color: #203a31; }
 
 /* Identity, workflow, then place and appearance. */
-.atlas-header { display: flex; align-items: center; justify-content: space-between; gap: 22px; flex: 0 0 88px; height: 88px; padding: 0 24px; background: var(--clovis-card); border-bottom: 1px solid var(--clovis-rule); }
+.atlas-header { display: flex; align-items: center; justify-content: space-between; gap: 22px; flex: 0 0 72px; height: 72px; padding: 0 20px; background: var(--clovis-card); border-bottom: 1px solid var(--clovis-rule); }
 .atlas-brand { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
 .atlas-brand-title { display: block; color: var(--clovis-ink); font: 700 31px/1.05 Georgia, 'Times New Roman', serif; letter-spacing: -.035em; }
 .atlas-brand-tagline { display: block; font-size: 11px; line-height: 1.4; margin-top: 5px; color: var(--clovis-muted); }
@@ -45,16 +45,16 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
 #resident-tool .dash-options-list-option-wrapper, .atlas-workflow-mode .dash-options-list-option-wrapper, .atlas-map-switch .dash-options-list-option-wrapper { position: absolute; opacity: 0; width: 1px; height: 1px; overflow: hidden; pointer-events: none; }
 
 /* Place controls, exploration, then a reading surface for the result. */
-.atlas-main-row { gap: 16px; padding: 18px; }
+.atlas-main-row { gap: 12px; padding: 12px; }
 #layer-panel, #inspector-panel { background: var(--clovis-card) !important; color: var(--clovis-ink) !important; border: 1px solid var(--clovis-rule) !important; border-radius: 12px; box-shadow: 0 4px 16px #203a3106; scrollbar-width: thin; scrollbar-color: var(--clovis-control-rule) transparent; }
-#layer-panel { width: 272px !important; height: auto !important; max-height: 100%; align-self: flex-start; overflow: auto; }
-#inspector-panel { width: 304px !important; }
+#layer-panel { width: 260px !important; height: auto !important; max-height: 100%; align-self: flex-start; overflow: auto; }
+#inspector-panel { width: 272px !important; }
 .clovis-mode-resident:is(.clovis-start, .clovis-has-place) #inspector-panel { display: none !important; }
 .atlas-workspace-label { padding: 20px 20px 14px; color: var(--clovis-muted); font-size: 11px; letter-spacing: .1em; font-weight: 700; }
 .atlas-resident-controls { padding: 20px; border: 0; }
 .atlas-lead-eyebrow, .atlas-photo-step { font: 600 10px/1.5 ui-monospace, 'Courier New', monospace; color: var(--clovis-ochre); letter-spacing: .09em; }
-.atlas-brief-heading { color: var(--clovis-ink); font: 400 27px/1.16 Georgia, 'Times New Roman', serif; letter-spacing: -.035em; margin: 8px 0 12px; overflow-wrap: anywhere; white-space: normal; }
-.atlas-resident-intro { color: var(--clovis-muted); font-size: 14px; line-height: 1.6; margin: 0 0 22px; }
+.atlas-brief-heading { color: var(--clovis-ink); font: 400 23px/1.16 Georgia, 'Times New Roman', serif; letter-spacing: -.035em; margin: 8px 0 12px; overflow-wrap: anywhere; white-space: normal; }
+.atlas-resident-intro { color: var(--clovis-muted); font-size: 13px; line-height: 1.6; margin: 0 0 16px; }
 .atlas-step-label { font-size: 11px; letter-spacing: .065em; font-weight: 650; color: var(--clovis-muted); margin: 22px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--clovis-rule); }
 .atlas-small-label { display: block; color: var(--clovis-ink); font-weight: 600; font-size: 13px; line-height: 1.45; margin: 0 0 7px; text-transform: none; letter-spacing: 0; }
 .atlas-help { color: var(--clovis-muted); font-size: 12px; line-height: 1.6; margin: 7px 0 14px; }
@@ -89,40 +89,39 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
 .atlas-place-status { margin: 8px 0 0; padding: 0; color: var(--clovis-muted); font-size: 12px; line-height: 1.6; border: 0; background: transparent; }
 .atlas-status-card { color: var(--clovis-muted); border: 1px solid var(--clovis-rule); background: var(--clovis-paper-deep); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.6; }
 
-/* A small original landscape adds curiosity without competing with the map. */
+/* The map owns the workspace; guidance and evidence open on request. */
 .atlas-map-shell { border: 1px solid var(--clovis-rule); border-radius: 12px; overflow: hidden; background: var(--clovis-card); box-shadow: 0 4px 16px #203a3106; min-height: 0; }
 #resident-workbench { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; background: var(--clovis-card); }
-.clovis-workspace-intro { position: relative; min-height: 108px; padding: 20px 24px; display: flex; align-items: center; gap: 20px; overflow: hidden; border-bottom: 1px solid var(--clovis-rule); background: var(--clovis-paper-deep); flex-shrink: 0; }
-.clovis-workspace-intro > :first-child { position: relative; z-index: 1; max-width: 68%; }
-.clovis-workspace-intro h3 { font: 400 29px/1.15 Georgia, serif; letter-spacing: -.03em; color: var(--clovis-ink); margin: 0 0 8px; }
-.clovis-workspace-intro p { color: var(--clovis-muted); font-size: 13px; line-height: 1.5; margin: 0; max-width: 430px; }
-.clovis-workspace-intro img, .clovis-landscape { position: absolute; width: 260px; height: 125px; object-fit: cover; right: 0; bottom: 0; opacity: .9; pointer-events: none; }
-.clovis-workbench-bar { padding: 16px 22px 0; background: var(--clovis-card); border-bottom: 1px solid var(--clovis-rule); flex-shrink: 0; }
+.clovis-workbench-bar { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 0 12px; padding: 12px 18px 0; background: var(--clovis-card); border-bottom: 1px solid var(--clovis-rule); flex-shrink: 0; }
 .clovis-workbench-heading { display: flex; justify-content: space-between; gap: 16px; align-items: center; }
 .clovis-workbench-heading > div { flex: 1; min-width: 0; }
-.clovis-place-title { margin: 5px 0 14px; color: var(--clovis-ink); font: 400 28px/1.18 Georgia, serif; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.clovis-place-title { margin: 4px 0 8px; color: var(--clovis-ink); font: 400 24px/1.18 Georgia, serif; letter-spacing: -.035em; overflow-wrap: anywhere; }
 #resident-demo { flex: 0 0 auto; min-height: 38px; padding: 9px 12px; background: var(--clovis-paper-deep); border: 1px solid var(--clovis-control-rule); color: var(--clovis-green); border-radius: 7px; font-size: 12px; }
 #resident-demo:hover { background: var(--clovis-hover); }
 .clovis-example-invitation { margin: 0 0 18px !important; min-height: 40px !important; width: 100%; text-align: left; }
-.clovis-workbench-tools, #resident-tool { display: flex; gap: 5px; flex-wrap: wrap; }
+.clovis-workbench-tools, #resident-tool { display: flex; gap: 5px; flex-wrap: wrap; align-self: end; }
+#resident-example-panel, #clovis-reading-path { grid-column: 1 / -1; }
+.clovis-has-report .clovis-reading-path { display: none; }
 #resident-tool .dash-options-list-option { display: flex !important; align-items: center; position: relative; margin: 0; padding: 12px 13px !important; color: var(--clovis-muted) !important; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 5px 5px 0 0; border-bottom: 3px solid transparent; }
 #resident-tool .dash-options-list-option.selected { background: var(--clovis-paper-deep) !important; color: var(--clovis-green) !important; border-bottom-color: var(--clovis-green); }
 #resident-tool .dash-options-list-option:hover { background: var(--clovis-hover); }
-.clovis-reading-path { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; color: var(--clovis-muted); font-size: 12px; line-height: 1.5; padding: 10px 0 12px; }
+.clovis-reading-path { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; color: var(--clovis-muted); font-size: 11px; line-height: 1.5; padding: 7px 0 8px; }
 .clovis-reading-path > span { display: flex; align-items: center; gap: 7px; }
-.clovis-reading-path small { display: inline-grid; place-items: center; width: 22px; height: 22px; font-size: 10px; border: 1px solid var(--clovis-rule); border-radius: 50%; }
+.clovis-reading-path small { display: inline-grid; place-items: center; width: 18px; height: 18px; font-size: 9px; border: 1px solid var(--clovis-rule); border-radius: 50%; }
 .clovis-reading-path .is-current { color: var(--clovis-green); font-weight: 600; }
 .clovis-reading-path .is-current small { background: var(--clovis-accent); border-color: var(--clovis-accent); color: #203a31; }
 .clovis-reading-path .is-done small { background: var(--clovis-hover); color: var(--clovis-green); }
-.clovis-example-strip { position: relative; padding: 12px 44px 12px 15px; background: var(--clovis-paper-deep); border-top: 1px solid var(--clovis-rule); border-left: 3px solid var(--clovis-ochre); flex-shrink: 0; font-size: 13px; line-height: 1.5; }
+.clovis-example-strip { position: relative; padding: 6px 42px 6px 10px; background: var(--clovis-paper-deep); border-top: 1px solid var(--clovis-rule); border-left: 3px solid var(--clovis-ochre); flex-shrink: 0; font-size: 13px; line-height: 1.5; }
 .clovis-example-topic { display: inline-block; margin-right: 8px; padding: 3px 6px; background: var(--clovis-hover); color: var(--clovis-green); font: 600 10px/1.3 ui-monospace, monospace; border-radius: 3px; }
-.clovis-example-title { font: 400 18px/1.35 Georgia, serif; color: var(--clovis-ink); margin: 0 0 4px; }
+.clovis-example-title { font: 500 13px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color: var(--clovis-ink); margin: 0; }
+.clovis-example-guidance > summary { cursor: pointer; min-height: 32px; padding: 5px 0; }
+.clovis-example-guidance[open] > summary { margin-bottom: 6px; }
 .clovis-example-summary { margin: 0; font-size: 12px; color: var(--clovis-muted); }
-#resident-example-dismiss { position: absolute; top: 10px; right: 10px; border: 1px solid var(--clovis-control-rule); background: var(--clovis-card); color: var(--clovis-muted); border-radius: 5px; min-width: 30px; min-height: 30px; }
+#resident-example-dismiss { position: absolute; top: 4px; right: 4px; border: 1px solid var(--clovis-control-rule); background: var(--clovis-card); color: var(--clovis-muted); border-radius: 5px; width: 36px; height: 36px; }
 .clovis-tool-body { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
 #map-workspace { min-height: 260px !important; }
 .clovis-map-workspace { display: flex; flex-direction: column; overflow: hidden; }
-.clovis-map-canvas { position: relative; flex: 1 1 58%; min-height: 230px; }
+.clovis-map-canvas { position: relative; flex: 1 1 0; min-height: 0; }
 .leaflet-container { background: #e3e8d8 !important; }
 .atlas-map-switch-wrap { position: absolute; top: 12px; right: 12px; z-index: 1000; padding: 4px; background: var(--clovis-card); border: 1px solid var(--clovis-control-rule); border-radius: 8px; box-shadow: 0 3px 12px #203a3115; }
 .atlas-map-switch { display: flex; gap: 2px; font-size: 12px; }
@@ -139,11 +138,11 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
 .atlas-town-tooltip { color: var(--clovis-ink); background: var(--clovis-card); border: 1px solid var(--clovis-control-rule); font-size: 12px; width: 200px; white-space: normal; text-align: center; }
 
 /* Cards present the evidence; advanced overlays and source details open on request. */
-.evidence-board { flex: 1 1 42%; min-height: 150px; max-height: 42%; overflow: auto; border-top: 1px solid var(--clovis-rule); background: var(--clovis-card); padding: 18px 20px; }
-.evidence-board:not(:has(.evidence-card)) { flex: 0 0 auto; min-height: 95px; max-height: 160px; }
+.clovis-evidence-drawer { flex: 0 0 auto; min-height: 44px; border-top: 1px solid var(--clovis-rule); background: var(--clovis-card); }
+.clovis-evidence-drawer > summary { min-height: 44px; padding: 12px 18px; font-size: 13px; font-weight: 600; color: var(--clovis-green); cursor: pointer; }
+.evidence-board { min-height: 0; max-height: min(28vh,240px); overflow: auto; border-top: 1px solid var(--clovis-rule); background: var(--clovis-card); padding: 16px 18px; }
 .evidence-board:not(:has(.evidence-card)) .geology-controls, .evidence-board:not(:has(.evidence-card)) .evidence-detail { display: none; }
-.clovis-start .evidence-board { display: none; }
-.clovis-map-workspace:has(.evidence-board:not(:has(.evidence-card))) .clovis-map-canvas { flex: 1 1 auto; }
+.clovis-start .clovis-evidence-drawer { display: none; }
 .clovis-evidence-heading { font: 400 22px/1.2 Georgia, serif; color: var(--clovis-ink); margin: 0 0 7px; }
 .geology-controls { padding: 10px 0 13px; margin-bottom: 15px; border-bottom: 1px solid var(--clovis-rule); font-size: 13px; color: var(--clovis-muted); line-height: 1.6; }
 .geology-controls summary { cursor: pointer; color: var(--clovis-green); font-weight: 600; }
@@ -164,12 +163,13 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
 .evidence-detail h4 { color: var(--clovis-ink); font-size: 14px; margin: 17px 0 6px; }
 .evidence-empty { border: 1px dashed var(--clovis-control-rule); background: var(--clovis-paper-deep); padding: 15px; border-radius: 8px; color: var(--clovis-muted); font-size: 13px; line-height: 1.6; }
 .atlas-map-research .evidence-board { display: none; }
+.atlas-map-research .clovis-evidence-drawer { display: none; }
 .atlas-map-research .clovis-map-canvas { flex: 1 1 100%; min-height: 0; }
 
 /* Field notes. */
 .atlas-brief-panel { padding: 21px 20px; background: var(--clovis-card); }
 .atlas-resident-actions { margin-bottom: 18px; background: var(--clovis-card); }
-.atlas-resident-actions .atlas-brief-heading { font-size: 25px; }
+.atlas-resident-actions .atlas-brief-heading { font-size: 21px; }
 .atlas-place-action { padding: 6px 0; min-height: 32px; margin: 0 0 8px; border: 0; background: transparent; text-decoration: underline; font-size: 12px; }
 .atlas-empty-state { padding: 18px 0; }
 .atlas-empty-state h3 { color: var(--clovis-ink); font: 400 21px/1.25 Georgia, serif; margin: 0 0 9px; }
@@ -195,7 +195,7 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
 .atlas-resident-summary li { margin-bottom: 16px; }
 .clovis-evidence-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 6px 0 17px; }
 .clovis-evidence-metric { padding: 13px; border: 1px solid var(--clovis-rule); background: var(--clovis-paper-deep); border-radius: 8px; display: flex; flex-direction: column; gap: 6px; }
-.clovis-evidence-metric strong { font: 400 26px/1 Georgia, serif; color: var(--clovis-ink); }
+.clovis-evidence-metric strong { font: 400 20px/1.15 Georgia, serif; color: var(--clovis-ink); }
 .clovis-evidence-metric span, .clovis-scope-note { font-size: 12px; line-height: 1.5; color: var(--clovis-muted); }
 
 /* Historical maps, investigations, finds and fieldbook share one control language. */
@@ -286,11 +286,11 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
     .atlas-workflow-mode .dash-options-list-option { padding: 10px !important; font-size: 12px; }
     #header-region { display: none; }
     .atlas-main-row { gap: 12px; padding: 12px; }
-    #layer-panel { width: 248px !important; } #inspector-panel { width: 276px !important; }
-    .clovis-workbench-bar { padding: 16px 16px 0; }
-    .clovis-workspace-intro { padding: 18px 16px; }
-    .clovis-workspace-intro img { width: 180px; opacity: .6; }
-    .clovis-workspace-intro h3 { font-size: 25px; }
+    #layer-panel { width: 232px !important; } #inspector-panel { width: 248px !important; }
+    .clovis-workbench-bar { padding: 12px 14px 0; }
+    .clovis-workbench-heading .atlas-lead-eyebrow { display: none; }
+    .clovis-place-title { font-size: 20px; }
+    #resident-tool .dash-options-list-option { padding: 12px 9px !important; font-size: 12px; }
     .clovis-mission-grid, .archive-body { grid-template-columns: 1fr; }
     .archive-catalog { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -307,12 +307,13 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
     #layer-panel { order: 0 !important; } #inspector-panel { order: 2 !important; }
     .atlas-map-shell { order: 1 !important; height: auto; min-height: 480px !important; flex: none !important; }
     #resident-workbench { min-height: 480px; overflow: visible; }
+    .clovis-workbench-bar { display: block; }
+    .clovis-has-report .clovis-reading-path { display: flex; }
     .clovis-tool-body { overflow: visible; }
-    #map-workspace.clovis-map-workspace { height: auto; min-height: 540px !important; }
+    #map-workspace.clovis-map-workspace { height: auto; min-height: 0 !important; }
     .clovis-start #map-workspace.clovis-map-workspace { min-height: 420px !important; }
-    .clovis-map-canvas { height: 420px; flex: none !important; }
-    .evidence-board { max-height: none; flex: none; overflow: visible; min-height: 120px; }
-    .evidence-board:not(:has(.evidence-card)) { max-height: none; }
+    .clovis-map-canvas { height: max(420px,65vh); flex: none !important; }
+    .evidence-board { max-height: 60vh; overflow: auto; min-height: 0; }
     .atlas-resident-controls { padding: 22px; }
     .atlas-resident-intro { max-width: 620px; }
     .atlas-inspection-workspace { height: auto; min-height: 450px; }
@@ -328,10 +329,6 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
     .atlas-workflow-mode .dash-options-list-option { padding: 10px 5px !important; min-height: 44px; white-space: normal; text-align: center; font-size: 12px; line-height: 1.25; }
     .atlas-main-row { padding: 10px; gap: 12px; }
     .atlas-resident-controls { padding: 20px; }
-    .clovis-workspace-intro { min-height: 126px; padding: 18px; }
-    .clovis-workspace-intro > :first-child { max-width: 85%; }
-    .clovis-workspace-intro h3 { font-size: 27px; }
-    .clovis-workspace-intro img { width: 145px; height: 105px; opacity: .25; }
     .clovis-workbench-bar { padding: 17px 15px 0; }
     .clovis-workbench-heading { align-items: start; gap: 8px; }
     .clovis-place-title { font-size: 24px; }
@@ -347,7 +344,7 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
     .atlas-map-switch-wrap { right: 8px; top: 10px; }
     .atlas-map-switch .dash-options-list-option { padding: 8px !important; font-size: 11px; }
     .atlas-map-network-status { left: 10px; right: 10px; top: 68px; font-size: 12px; }
-    .clovis-example-strip { padding-left: 12px; } .clovis-example-title { font-size: 17px; }
+    .clovis-example-strip { padding-left: 12px; } .clovis-example-title { font-size: 13px; }
 }
 @media (max-width: 380px) {
     .atlas-brand-title { font-size: 26px; } .atlas-brand-tagline { font-size: 8px; }

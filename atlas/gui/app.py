@@ -136,11 +136,6 @@ def _build_workbench():
             example_panel(),
             dcc.Store(id='resident-example-store', storage_type='memory'),
             html.Div(id='clovis-reading-path', className='clovis-reading-path', role='status'),
-            html.Div([
-                html.Div([html.H3('Every place leaves clues.'),
-                          html.P('Read the rocks. Look through time. Keep what you notice.')]),
-                html.Img(src='/assets/clovis-landscape.svg', alt='', **{'aria-hidden':'true'}),
-            ], id='clovis-workspace-intro', className='clovis-workspace-intro'),
         ], id='resident-workbench-bar', className='clovis-workbench-bar'),
         html.Div([_build_map(), archive_workspace(), mission_workspace()], className='clovis-tool-body'),
     ], id='resident-workbench', className='clovis-workbench', style={'display': 'flex', 'flexDirection': 'column', 'height': '100%', 'minHeight': '0'})

@@ -2,8 +2,6 @@
 
 # Investigate a place inside Clovis
 
-**A little curiosity, Dig deeper.**
-
 Clovis connects sources to observations. Start with a public town, inspect a
 map or exposed object, and save what you learned with its source and date.
 
@@ -16,8 +14,9 @@ as `Santa Rosa, CA`, also works. For a rural location, use a nearby town.
 The compact **Try an example** action randomly selects and explores one of
 100 public-town research questions, two distinct towns per state. It avoids
 the immediately previous example. No example or sample observations load on
-startup. The question appears in a small strip only after you click; close it
-to retain the current map and report, or change your town to close it. The
+startup. After you click, the question appears as a compact summary with its
+instructions closed. Click the question to expand the instructions. Dismiss
+the example to retain the current map and report, or change your town to close it. The
 example resets land-use history to unknown and follows your online geology
 choice. It preserves saved notes. Historical maps still require **Find maps
 of this town**; the example does not assert a map, fossil or object exists.
@@ -40,19 +39,23 @@ Printed notes remain light. Keyboard and touch controls work in both themes.
 
 ## Read local evidence
 
-The central **Rocks & fossils** tab shows mapped rock units as selectable cards.
-Open one for its material, interval, description and original source. Multiple
+The central **Rocks & fossils** tab gives the map room to explore. Below it,
+open **Read rock evidence · materials, ages & sources** to read and select
+mapped rock units. This drawer starts closed. Select a unit card to read its
+material, interval, description and original source. Multiple
 map units can overlap; they are separate map sources, not independent finds or
 layers under your yard. Reviewed formation guides show fossil learning examples
 only for matched named formations, with their own source and limits.
 
-Open **Map overlay & sources** for **Show regional geology overlay**, which is
+Inside the rock evidence drawer, open **Map overlay & sources** for
+**Show regional geology overlay**, which is
 optional and off initially. It requires a
 current successful online town report. Adjust its opacity to compare it with
 the background map. Colours distinguish mapped units; a colour or blank tile
 does not identify a specimen or prove absence. The overlay pauses in other
-tools. Select a unit and use its investigation action to carry the source and
-interval into written notes.
+tools. Read the selected unit's source detail and any matched formation guide,
+then use its investigation action to carry the source and interval into
+written notes.
 
 ## Read a historical map
 

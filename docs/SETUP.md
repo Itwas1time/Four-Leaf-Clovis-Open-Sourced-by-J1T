@@ -42,12 +42,17 @@ this town** directly below the town box. **Options & land-use context** contains
 the optional past land use and online setting. Leave **Include local rock maps (online)** selected for map
 evidence or uncheck for an offline report, then select
 **Explore this town**. A marker shows the public Census town point. The central workbench has
-**Rocks & fossils**, **Old maps** and **Investigation**. Open geological
-evidence cards and **Map overlay & sources**, inspect Library of Congress map
-sheets inside Clovis, then save sourced observations to the fieldbook. The
+**Rocks & fossils**, **Old maps** and **Investigation**. The Rocks & fossils map
+fills the center. Open **Read rock evidence · materials, ages & sources** below
+it to read and select unit cards, source details and matched formation guides.
+This drawer starts closed and contains **Map overlay & sources**. Read a unit's
+source, then use its investigation action to carry the source and interval into
+written notes. Inspect Library of Congress map sheets inside Clovis, then save
+sourced observations to the fieldbook. The
 compact **Try an example** action randomly picks one of 100 town questions,
-two distinct towns per state. Guidance appears only after that click; closing
-it preserves your town and report. The header **Dark / Light** toggle remembers
+two distinct towns per state. After that click, the question appears as a compact
+summary with instructions closed; click the question to read them. Dismissing
+the example preserves your town and report. The header **Dark / Light** toggle remembers
 your browser preference; images retain their colours and printing stays light. Source
 links support attribution and rights. No address is required. See the
 [workbench guide](WORKBENCH.md).

@@ -10,7 +10,9 @@ def make_geology_layer():
 
 
 def make_geology_board():
-    return html.Section(className='evidence-board', children=[
+    return html.Details(id='resident-evidence-drawer',className='clovis-evidence-drawer',children=[
+        html.Summary('Read rock evidence · materials, ages & sources'),
+        html.Section(className='evidence-board', children=[
         html.H3('What the rock maps show', className='clovis-evidence-heading'),
         html.Details(className='geology-controls', children=[
             html.Summary('Map overlay & sources'),
@@ -31,7 +33,7 @@ def make_geology_board():
         dcc.Store(id='geology-note-context', data=None, storage_type='memory'),
         html.Button('Start a rock comparison from this unit', id='geology-record-note', n_clicks=0,
                     disabled=True, className='atlas-primary-button'),
-    ])
+    ])])
 
 
 def evidence_card(card):

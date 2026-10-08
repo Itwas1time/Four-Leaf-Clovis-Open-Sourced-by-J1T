@@ -54,11 +54,13 @@ def show_example(saved,state,geoid,mode):
     example = get_example(saved.get('id')) if isinstance(saved,dict) and saved.get('active') is True else None
     if not example or mode!='resident' or (example['state'],example['geoid'])!=(state,geoid):
         return {'display':'none'},[]
-    return {'display':'flex'},[
-        html.Span(f"Example {example['number']}/100 · {example['topic']}",className='clovis-example-topic'),
-        html.H3(example['question'],className='clovis-example-title'),
+    return {'display':'flex'},[html.Details([
+        html.Summary([
+            html.Span(f"Example {example['number']}/100",className='clovis-example-topic'),
+            html.Span(example['question'],className='clovis-example-title'),
+        ]),
         html.P(example['prompt'],className='clovis-example-summary'),
-    ]
+    ],className='clovis-example-guidance',key=example['id'])]
 
 
 @callback(Output('resident-evidence-overview','children'),

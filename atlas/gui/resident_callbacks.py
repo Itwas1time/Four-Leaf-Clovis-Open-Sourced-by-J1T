@@ -33,7 +33,7 @@ def place_actions(state, geoid, online):
     return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, False, heading if chosen else 'Explore a place.'
 
 
-@callback(Output('clovis-app','className'), Output('clovis-workspace-intro','style'),
+@callback(Output('clovis-app','className'),
           Output('resident-build','children'), Output('clovis-reading-path','children'),
           Input('resident-report-store','data'), Input('resident-state','value'), Input('resident-place','value'),
           Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'))
@@ -48,7 +48,7 @@ def workspace_progress(token, state, geoid, history, online, mode):
                       className='is-done' if (index==0 and place) or (index==1 and report) else
                       'is-current' if index==(2 if report else 1 if place else 0) else '')
             for index,label in enumerate(labels)]
-    return f'atlas-app-shell clovis-mode-{mode} {stage}', ({'display':'none'} if place else {}), \
+    return f'atlas-app-shell clovis-mode-{mode} {stage}', \
         ('Refresh town evidence ↻' if report else 'Explore this town →'), path
 
 
@@ -135,13 +135,32 @@ def workflow_sections(mode, tool='map'):
     if mode == 'inspect': return hide, hide, hide, hide, show, show, show, hide, hide, hide, hide, hide, hide, hide, hide
     if mode == 'notebook': return hide, hide, hide, hide, hide, hide, hide, hide, show, show, show, hide, hide, hide, hide
     if mode == 'research': return hide, hide, show, show, hide, hide, hide, map_show, hide, hide, hide, hide, hide, workbench_show, hide
-    return show, show, hide, hide, hide, hide, hide, map_show if tool not in ('archive','missions') else hide, hide, hide, hide, show if tool=='archive' else hide, show if tool=='missions' else hide, workbench_show, show
+    return show, show, hide, hide, hide, hide, hide, map_show if tool not in ('archive','missions') else hide, hide, hide, hide, show if tool=='archive' else hide, show if tool=='missions' else hide, workbench_show, {}
 
 
 clientside_callback(
     """function(style) {
         if (style && style.display === 'none') return window.dash_clientside.no_update;
-        return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(Date.now()))));
+        return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => {
+            const element = document.getElementById('main-map');
+            if (element && window.ResizeObserver && window.dash_clientside.set_props) {
+                const previous = window.clovisMapResize;
+                if (!previous || previous.element !== element) {
+                    if (previous) { previous.observer.disconnect(); cancelAnimationFrame(previous.frame); }
+                    const state = {element, frame:0, observer:null};
+                    state.observer = new ResizeObserver(entries => {
+                        if (!entries.some(entry => entry.contentRect.width > 0 && entry.contentRect.height > 0)) return;
+                        cancelAnimationFrame(state.frame);
+                        state.frame = requestAnimationFrame(() => {
+                            window.dash_clientside.set_props('main-map', {invalidateSize:Date.now()});
+                        });
+                    });
+                    state.observer.observe(element);
+                    window.clovisMapResize = state;
+                }
+            }
+            resolve(Date.now());
+        })));
     }""",
     Output('main-map','invalidateSize'),Input('map-workspace','style'))
 

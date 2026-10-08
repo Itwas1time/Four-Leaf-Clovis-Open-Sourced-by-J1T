@@ -14,7 +14,6 @@
  }
  body[data-clovis-theme='dark'] :is(input, textarea, select, .dash-dropdown-trigger, .Select-control, .Select-menu-outer, .Select-option) { background-color: var(--clovis-card); color: var(--clovis-ink); border-color: var(--clovis-control-rule); }
  body[data-clovis-theme='dark'] input::placeholder, body[data-clovis-theme='dark'] textarea::placeholder { color: var(--clovis-muted); opacity: 1; }
- body[data-clovis-theme='dark'] .clovis-workspace-intro img { opacity: .55; }
  body[data-clovis-theme='dark'] .leaflet-container { background: var(--clovis-paper) !important; }
  body[data-clovis-theme='dark'] :is(.leaflet-popup-content-wrapper, .leaflet-popup-tip) { background: var(--clovis-card); color: var(--clovis-ink); }
  body[data-clovis-theme='dark'] .atlas-app-shell :is(.atlas-primary-button, .atlas-search-button, .archive-observations button):hover:not(:disabled) { background: #c7e0b8; color: #17221d; border-color: #c7e0b8; }

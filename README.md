@@ -18,9 +18,11 @@ coordinate-free archaeological directory.
 - **Start in any state.** Expand Statewide background and sources for reviewed
   mineral learning examples across all 50 states, DC and Puerto Rico. These are
   background, not claims about a deposit in a yard.
-- **Take a next step.** The dashboard marks the public town point and offers
-  built-in geological evidence cards, historical-map viewing and guided
-  investigations. Expand the full field notes for map descriptions, sources and limits.
+- **Take a next step.** The dashboard marks the public town point. Open
+  **Read rock evidence · materials, ages & sources** below the Rocks & fossils
+  map for unit cards, source details and matched formation guides. Historical
+  maps and guided investigations help turn a source into written observations.
+  Expand the full field notes for map descriptions, sources and limits.
 - **Inspect a find.** Record visible features, size and context for glass,
   ceramics, metal, rocks, possible fossils or bone. Get comparison questions
   and a browser-local photo pad; no image analysis or automatic identification.
@@ -80,17 +82,23 @@ Click the town box and type in its search field:
 `Santa Rosa`, `Santa Rosa, CA` and `Santa Rosa, California` all work.
 Open **Options & land-use context** for known past land use and the online setting.
 **Include local rock maps (online)** is selected by default; uncheck for an
-offline report. The lookup runs only when Explore is pressed. The central workbench has **Rocks & fossils**, **Old maps** and
-**Investigation**. Select geological evidence cards, inspect Library of
-Congress map sheets with built-in zoom/drag/rotation, then record a sourced,
+offline report. The lookup runs only when Explore is pressed. The central
+workbench has **Rocks & fossils**, **Old maps** and **Investigation**. The Rocks &
+fossils map fills the center. Open **Read rock evidence · materials, ages &
+sources** below it to read and select unit cards, source details and matched
+formation guides. This drawer starts closed and contains **Map overlay &
+sources**. Read a unit's source, then use its investigation action to carry the
+source and interval into written notes. Inspect Library of Congress map sheets
+with built-in zoom/drag/rotation, then record a sourced,
 dated investigation and save it to **Fieldbook**. The compact **Try an example**
 action randomly picks one of 100 public-town questions across all 50 states.
-Its guidance appears only after a click; closing it keeps your town and report.
+After a click, the question appears as a compact summary with instructions
+closed; click the question to read them. Dismissing the example keeps your town
+and report.
 The header **Dark / Light** toggle remembers this browser's preference while
 images retain their colours and printed notes remain light. Local map images stay
 in the browser. Source links support attribution and further research.
 See the [workbench guide](docs/WORKBENCH.md) for a practical walkthrough.
-**A little curiosity, Dig deeper.**
 Use **Inspect a find** for an already exposed object and **Fieldbook** to
 return to written notes. Saved entries stay in this browser; export a backup.
 Print or save selected notes as PDF using the browser's print dialog.
