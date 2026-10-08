@@ -20,6 +20,61 @@ def ready_to_explore(state, geoid):
     return get_place(geoid, state) is None
 
 
+@callback(Output("resident-report-heading", "children"), Output("resident-choose-place", "children"),
+          Output("header-place-button", "children"), Output("resident-lookup-note", "children"),
+          Output("resident-state-background", "open"),
+          Input("resident-state", "value"), Input("resident-place", "value"), Input("resident-online", "value"))
+def place_actions(state, geoid, online):
+    place = get_place(geoid, state)
+    chosen = place is not None
+    heading = f"{place['name']}, {place['state']}" if chosen else "A place has a story."
+    note = ("Includes online rock maps at the public town point." if isinstance(online, list) and "geology" in online
+            else "Offline report. Online rock maps are off.")
+    return heading, "Change town ↗" if chosen else "Choose a town ↗", "Change town ↗" if chosen else "Choose town ↗", note, bool(state_context(state)) and not chosen
+
+
+clientside_callback(
+    """function(header, panel) {
+        if (!window.dash_clientside.callback_context.triggered_id) return [window.dash_clientside.no_update, window.dash_clientside.no_update];
+        return ['resident', Date.now()];
+    }""",
+    Output('workflow-mode','value'), Output('place-focus-request','data'),
+    Input('header-place-button','n_clicks'), Input('resident-choose-place','n_clicks'), prevent_initial_call=True)
+
+
+clientside_callback(
+    """function(request, state) {
+        if (!request) return window.dash_clientside.no_update;
+        return new Promise(resolve => {
+            let attempts = 0;
+            const focusPlace = () => {
+                const controls = document.getElementById('resident-controls');
+                const target = document.getElementById(state ? 'resident-place' : 'resident-state');
+                if (controls && controls.getBoundingClientRect().height && target && !target.disabled) {
+                    target.scrollIntoView({block:'center', behavior:'auto'});
+                    target.focus();
+                    target.click();
+                    resolve(request);
+                } else if (++attempts < 120) requestAnimationFrame(focusPlace);
+                else resolve(window.dash_clientside.no_update);
+            };
+            requestAnimationFrame(focusPlace);
+        });
+    }""",
+    Output('place-focus-complete','data'), Input('place-focus-request','data'), State('resident-state','value'))
+
+
+clientside_callback(
+    """function(token, place, state, mode) {
+        if (mode !== 'resident') return window.dash_clientside.no_update;
+        const panel = document.getElementById('inspector-panel');
+        if (panel) panel.scrollTop = 0;
+        return Date.now();
+    }""",
+    Output('resident-panel-position','data'), Input('resident-report-store','data'),
+    Input('resident-place','value'), Input('resident-state','value'), State('workflow-mode','value'))
+
+
 @callback(Output("resident-place", "value"), Input("resident-state", "value"),
           State("resident-place", "value"), prevent_initial_call=True)
 def clear_mismatched_place(state, geoid):

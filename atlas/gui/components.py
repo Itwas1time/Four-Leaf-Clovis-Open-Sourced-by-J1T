@@ -31,7 +31,12 @@ def build_header() -> html.Header:
                               html.Span("A little curiosity, Dig deeper.", className="atlas-brand-tagline")]),
                 ], className="atlas-brand"
             ),
-            html.Div(id="header-region", children="Choose a town to explore"),
+            html.Div([
+                html.Span(id="header-region", children="No town selected"),
+                html.Button("Choose town ↗", id="header-place-button", n_clicks=0,
+                            className="atlas-secondary-button atlas-header-place-button",
+                            **{"aria-label": "Choose or change a town"}),
+            ], className="atlas-header-location"),
             html.Div("Town context & research", className="atlas-header-note"),
         ],
         className="atlas-header",
@@ -401,6 +406,9 @@ def build_stores() -> html.Div:
             dcc.Store(id="catalog-selected-store", data=None),
             dcc.Download(id="brief-download"),
             dcc.Store(id="resident-report-store", data=None),
+            dcc.Store(id="place-focus-request", data=None),
+            dcc.Store(id="place-focus-complete", data=None),
+            dcc.Store(id="resident-panel-position", data=None),
             dcc.Store(id='fieldbook-store',storage_type='local',data={'version':1,'entries':[]}),
             dcc.Download(id="resident-download"),
         ],

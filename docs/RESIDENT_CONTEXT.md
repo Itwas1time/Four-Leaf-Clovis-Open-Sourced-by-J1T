@@ -14,10 +14,14 @@ location, determine collection rights or estimate a discovery probability.
    town name in the dropdown's search field to narrow the list; each search
    shows up to 30 results. `Santa Rosa, CA` and `Santa Rosa, California` work too.
    Selecting a state immediately shows reviewed statewide background and sources.
+   **Choose town** in the header or field-notes panel opens the same editable
+   selector on the left; it remains available from other workflows too.
 3. Choose the land-use history you know. This selection remains explicitly
    user-reported; the app does not verify a building or former farm.
 4. **Include local rock maps (online)** is selected by default. Uncheck it for
-   an offline report, or leave it selected and press **Explore this town**.
+   an offline report, or leave it selected and press **Explore this town**
+   at the top of **Your field notes**. Selecting a town moves the map and
+   enables Explore; it does not build the report automatically.
    No geology request runs until you press Explore.
 5. Read the short summary and **Try one small investigation** checklist. A
    marker labels the public Census town point used for the map request.
@@ -26,7 +30,12 @@ location, determine collection rights or estimate a discovery probability.
    the previous preview and disables its download until a new report is built.
 
 The report begins with **At a glance**, including the names of actual returned
-map units or a clear provider-status message. Every state, DC and Puerto Rico
+map units or a clear provider-status message. **What the maps describe** shows
+the first three returned units' materials, intervals and bounded original
+description excerpts before the research checklist. Full notes retain all
+units and original references. Statewide background folds away when a town
+is selected so it cannot be mistaken for the town's results.
+Every state, DC and Puerto Rico
 has reviewed statewide background, including sources for further learning.
 State mineral-industry examples are not a list of collectible rocks or an
 inference about deposits at the selected town. Broad fossil examples are

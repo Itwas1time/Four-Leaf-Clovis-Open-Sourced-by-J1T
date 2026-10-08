@@ -653,7 +653,7 @@ def show_selected_region(selected_id, mode="research", geoid=None, state=None):
     if mode != "research":
         from core.us_places import get_place
         place = get_place(geoid, state)
-        return f"{place['name']}, {place['state']} · town context" if place else "Choose a town to explore"
+        return f"{place['name']}, {place['state']} · town context" if place else "No town selected"
     lead = LEADS_BY_ID.get(selected_id) if isinstance(selected_id, str) else None
     return f"{lead['name']} · fieldwork lead" if lead else "No current fieldwork lead"
 

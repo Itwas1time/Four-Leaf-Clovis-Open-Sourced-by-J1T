@@ -150,6 +150,22 @@ def build_context(state, geoid, context="unknown", online=None):
             f"{guide['name']} — {guide['examples']}" for guide in guides) + ". "
             "These published records are a comparison starting point if the mapped unit is actually present and exposed; "
             "they do not establish a find here. Sources are in the full field notes.", ""]
+    if units:
+        lines += ["## What the maps describe", "",
+                  "These are overlapping map descriptions at the public town point. Compare the material with an actual exposure or object.", ""]
+        for unit in units[:3]:
+            lines += [f"**{_md(unit['name'])}**", "",
+                      f"- Material: {_md(unit['lithology']) or 'Not specified'}.",
+                      f"- Map interval: {_md(unit['interval']) or 'Not specified'}."]
+            if unit['description']:
+                excerpt = unit['description']
+                if len(excerpt) > 400:
+                    excerpt = excerpt[:400].rsplit(' ', 1)[0] + '…'
+                lines += [f"- Original description excerpt: {_md(excerpt)}"]
+            lines += [f"- Map unit {unit['map_id']}, source {unit['source_id']}; original reference in full notes.", ""]
+        if len(units) > 3:
+            lines += [f"Showing 3 of {len(units)} returned map units. All units and references are in the full field notes.", ""]
+        lines += _map_words(units)
     lines += _next_steps(place, context)
     summary = f"**{_md(place['name'])}, {state} · Town context.** Maps use the public Census town point, not a yard assessment.\n\n" + "\n".join(lines[4:])
     lines += ["## Historical objects", "",

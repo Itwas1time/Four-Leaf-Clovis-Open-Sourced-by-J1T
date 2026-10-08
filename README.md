@@ -73,11 +73,16 @@ python -m atlas.gui.app
 
 The Dash app binds to localhost at port 8050. Start with **Explore a town**:
 select a state and town, choose known past land use, then select
-**Explore this town**. Click the town box and type in its search field:
+**Explore this town** at the top of **Your field notes**. Selecting a town
+moves the map and enables Explore; press it to build the report. **Choose
+town** in the header or notes panel opens the same editable place selector.
+Click the town box and type in its search field:
 `Santa Rosa`, `Santa Rosa, CA` and `Santa Rosa, California` all work.
 **Include local rock maps (online)** is selected by default; uncheck for an
 offline report. The lookup runs only when Explore is pressed. Read the
-**At a glance** summary and **Try one small investigation** checklist. Expand
+**At a glance** summary, actual mapped materials and description excerpts,
+and **Try one small investigation** checklist. Statewide background folds away
+after town selection. Expand
 **Read map evidence and full field notes** to inspect the sources, or download
 the complete report. External map coverage varies; a search link is not a
 confirmed match or permission to collect.
