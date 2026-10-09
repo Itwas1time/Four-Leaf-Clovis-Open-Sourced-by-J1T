@@ -30,10 +30,43 @@ searches retain their existing plans.
 | Neolithic food, farming and animal remains | 96,115 source rows in twelve linked UCL EUROEVOL tables; 4,757 sites and 2,807 occupation phases | 17.0 MB | 103.1 MB |
 | Excavation contexts, finds and survey effort | 153,867 distinct source subjects from Gabii, Petra and Eastern Korinthia; original observation documents, tables and field definitions | 243.2 MB | 576.6 MB |
 | Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
+| Anatolian animal-bone records | 242,457 published subject IDs, 4,026 context references and 814 aggregate rows; 838,710 original rows in 37 table editions | 456.7 MB | 981.6 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
 bundled. These additional collections are optional; the initial application
 still includes those existing large catalogs.
+
+## Anatolian animal-bone records
+
+Search a place such as **Catalhoyuk** or **okuzini**, a taxon, element,
+recovery method or original Open Context identifier. Use **Limit to a source →
+Open Context · Anatolian animal-bone records** to focus the collection.
+Open a subject, follow its **Recorded context references**, or read its
+**Original table rows and measurements** in the same source reader.
+
+All 838,710 original table rows retain their ordered fields and publisher IDs.
+Separate editions preserve source taxonomy, anatomy, tooth wear, taphonomy,
+biometrics, quantities, study flags and recovery methods. Original fields open
+under each table edition. Repeated column names, zero values, blanks and
+disagreements remain visible. Some old source fields contain undecodable bytes;
+Clovis shows those bytes explicitly, without guessing their characters.
+
+These are 242,457 published subject identifiers, 4,026 context references and
+814 aggregate rows. Subjects may appear in multiple editions. Counts do not
+describe 838,710 different bones. Measurement-only records, secure subsets,
+excluded seasons and original recovery flags retain their qualifications.
+Context references come from specimen tables; the collection supplies no
+independent excavation-unit documents or deposit sequence. Geographic and
+calendar-BP annotations are editorial context, rather than specimen GPS or
+direct dating measurements. Unspecified precision and measurement units remain
+unspecified.
+
+Source: [Open Context EOL zooarchaeology repository](https://github.com/ekansa/opencontext-eol-zooarch),
+pinned edition `1402f66d445aa36bab044c34f3f10b758fc4c5ef`. This particular
+repository edition declares **CC BY 3.0**. Original contributor names, project
+and context URIs, table URLs and SHA-256 citations accompany records and saved
+references. Download once for local reading; original external source pages
+require internet access.
 
 ## Radiocarbon results
 

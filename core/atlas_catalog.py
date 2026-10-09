@@ -16,6 +16,7 @@ from core import usgs_unit_library as geology
 from core import object_material_guides as guides
 from core import excavation_catalog as contexts
 from core import environment_catalog as environments
+from core import zooarchaeology_catalog as specimens
 
 PAGE_SIZE = 24
 SOURCES = {
@@ -26,12 +27,13 @@ SOURCES = {
     "minerals": "Wikidata · mineral properties", "newspapers": "Library of Congress · newspaper titles",
     "guides": "Material reference guides", "contexts": "Open Context · excavations & surveys",
     "environments": "Neotoma · sites, samples & environments",
+    "specimens": "Open Context · Anatolian animal-bone records",
 }
 KINDS = {"all": "All evidence", "archaeology": "Archaeology & objects", "fossils": "Fossils",
          "history": "Historical documents", "earth": "Geology & minerals"}
-GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "projects", "dates", "met", "si", "guides"),
+GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "projects", "dates", "met", "si", "guides"),
           "fossils": ("fossils", "dinosaurs"), "history": ("newspapers",), "earth": ("geology", "minerals")}
-OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments}
+OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments, "specimens": specimens}
 _READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas")
 
 
@@ -52,6 +54,10 @@ def _signature(sources=None):
 
 
 def _native(source, query, page, context=()):
+    if source == "specimens":
+        parameters = dict(context)
+        parameters.pop("collection", None)
+        return specimens.search(query=query, page=page, **parameters), specimens.PAGE_SIZE
     if source == "environments":
         parameters = dict(context)
         parameters.pop("collection", None)
@@ -140,7 +146,7 @@ def _card(source, row):
                 "fossils": "Fossil specimen", "dinosaurs": "Published fossil occurrence",
                 "dates": "Radiocarbon determination", "geology": "Mapped geological unit",
                 "minerals": "Mineral reference", "newspapers": "Newspaper title", "guides": "Material guide"}.get(source)
-    if source == "environments":
+    if source in ("environments", "specimens"):
         evidence, subtitle = row["category"], row["subtitle"]
     elif source == "contexts":
         evidence = row["category"]
@@ -171,7 +177,11 @@ def _parameters(query, kind, source, context):
                    or any(ord(char) < 32 or 0xD800 <= ord(char) <= 0xDFFF for char in value) for value in context.values())):
         raise ValueError("Choose a published evidence association.")
     collection = context.get("collection", "assemblages")
-    if collection == "environments":
+    if collection == "specimens":
+        if set(context) - {"collection", "view", "subject_id", "context_id", "table_sha", "project_id", "record_id"}:
+            raise ValueError("Choose an original zooarchaeological subject or context association.")
+        specimens.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
+    elif collection == "environments":
         if set(context) - {"collection", "view", "record_id", *environments.SCOPES}:
             raise ValueError("Choose an original Neotoma scientific association.")
         environments.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
@@ -226,7 +236,14 @@ def get_record(identifier):
     source, key = _identifier(identifier)
     if source is None:
         return None
-    if source == "environments":
+    if source == "specimens":
+        row = specimens.get_record(key)
+        if row is None:
+            return None
+        facts, url = specimens.facts(row), row["source_url"]
+        notes = [row["summary"][name] for name in ("quantity_note", "context_note", "sampling_note", "location_note", "encoding_note")]
+        description, license_text = "", specimens.LICENSE
+    elif source == "environments":
         row = environments.get_record(key)
         if row is None:
             return None
@@ -337,6 +354,8 @@ def reference_entry(identifier):
     row = get_record(identifier)
     if row is None:
         raise ValueError("Choose a current atlas record to save.")
+    if source == "specimens":
+        return specimens.reference_entry(key)
     if source == "environments":
         return environments.reference_entry(key)
     if source == "contexts":
@@ -368,6 +387,8 @@ def reference_entry(identifier):
 
 def relationships(record):
     """Source-specific associations for the shared reader and navigation."""
+    if record["source"] == "specimens":
+        return specimens.relationships(record["original"])
     if record["source"] == "environments":
         return environments.relationships(record["original"])
     if record["source"] == "contexts":

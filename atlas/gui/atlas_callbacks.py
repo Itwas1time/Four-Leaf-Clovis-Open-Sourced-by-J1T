@@ -2,7 +2,7 @@
 import sqlite3
 from urllib.parse import urlsplit
 from dash import ALL, MATCH, Input, Output, State, callback, callback_context, html, no_update
-from core import atlas_catalog as catalog, excavation_catalog, environment_catalog
+from core import atlas_catalog as catalog, excavation_catalog, environment_catalog, zooarchaeology_catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
 from core.data_packs import PackStore
 from atlas.gui.library_ui import reading_nav
@@ -10,7 +10,7 @@ from atlas.gui.published_location_ui import control as location_control, render 
 
 ERRORS = (ValueError, OSError, sqlite3.Error, TypeError, KeyError)
 PACK_SOURCES = {"radiocarbon-world": "dates", "dinosaur-sites": "dinosaurs", "neolithic-assemblages": "assemblages",
-                "excavations-surveys": "contexts", "dated-environments": "environments"}
+                "excavations-surveys": "contexts", "dated-environments": "environments", "anatolian-zooarchaeology": "specimens"}
 
 
 @callback(Output("library-section", "value", allow_duplicate=True),
@@ -105,6 +105,27 @@ def _facts(rows):
     return html.Dl([node for label, value in rows for node in (html.Dt(label), html.Dd(value))], className="clovis-library-facts")
 
 
+def _reading_facts(record):
+    if record["source"] != "specimens":
+        return record["facts"]
+    names = {"Published context": "Context", "Related person(s)": "Contributors",
+             "Has Biological Taxonomy [Label]": "Published taxon",
+             "Has Biological Taxonomy [Source value]": "Recorded taxon",
+             "Has anatomical identification [Label]": "Anatomical element",
+             "Has anatomical identification [Source value]": "Recorded element"}
+    rows = []
+    for label, value in record["facts"]:
+        # Exact source terms, ontology URIs and full provenance remain in the
+        # original edition panels and saved reference.
+        if label == "Source edition" or label.endswith(" [URI]"):
+            continue
+        header, separator, table = label.partition(" · ")
+        if separator:
+            label = header.removesuffix(" [Source]") + " · " + table.rsplit("/", 1)[-1]
+        rows.append((names.get(label, label), value))
+    return rows
+
+
 @callback(Output("atlas-detail", "children"), Input("atlas-selected", "data"),
           Input("atlas-query", "value"), Input("atlas-kind", "value"), Input("atlas-source", "value"),
           Input("atlas-context", "data"), Input("atlas-page", "data"), Input("data-pack-refresh", "data"))
@@ -114,7 +135,7 @@ def reader(selected, query, kind, source, context, page, _refresh):
         if row is None:
             return html.P("Choose a result to read its evidence, context and source.")
         children = [reading_nav("atlas-query"), html.P(row["evidence"], className="clovis-atlas-evidence"),
-                    html.H3(row["title"]), html.P(row["source_label"], className="atlas-help"), _facts(row["facts"])]
+                    html.H3(row["title"]), html.P(row["source_label"], className="atlas-help"), _facts(_reading_facts(row))]
         if row["description"]:
             children.append(html.P(row["description"]))
         links = catalog.relationships(row)
@@ -123,7 +144,7 @@ def reader(selected, query, kind, source, context, page, _refresh):
                 return html.Button(f'{link["total"]:,} · {link["label"]}',
                                    id={"type": "atlas-related", "index": link["key"]},
                                    n_clicks=0, className="atlas-secondary-button")
-            main_keys = ("animals", "plants", "dates", "phases", "sites", "parent", "children")
+            main_keys = ("animals", "plants", "dates", "phases", "sites", "parent", "children", "source-rows", "subject")
             main = [link for link in links if link["key"] in main_keys or
                     row["source"] == "environments" and link["parameters"]["view"] in ("observation", "sample", "age", "date")][:4]
             more = [link for link in links if link not in main]
@@ -131,7 +152,23 @@ def reader(selected, query, kind, source, context, page, _refresh):
             if more:
                 children.append(html.Details([html.Summary("More associated evidence"),
                     html.Div([button(link) for link in more], className="clovis-atlas-related")]))
-        if row["source"] == "environments":
+        if row["source"] == "specimens":
+            original = row["original"]
+            editions = original["editions"]
+            if original["kind"] == "context":
+                representative = original["representative"]
+                fields = [(header, zooarchaeology_catalog.value_text(value))
+                          for header, value in zip(representative["headers"], representative["values"])
+                          if header.startswith("Context (") or header in ("Context URI", "Project URI", "Project name", "Related person(s)")]
+                children.append(html.Details([html.Summary("Original context reference"), _facts(fields),
+                    html.P("These fields come from a specimen table row. Read the linked original rows for the separately recorded specimens and measurements.", className="atlas-help"),
+                    _source_link(representative["table"]["source_url"], "Read this original source table")]))
+            for edition in editions:
+                table = edition["table"]
+                children.append(html.Details([html.Summary(table["path"] + " · row " + str(edition["ordinal"])),
+                    html.P("Original table SHA-256: " + table["sha256"], className="atlas-help"),
+                    _facts(edition["fields"]), _source_link(table["source_url"], "Read original source table")]))
+        elif row["source"] == "environments":
             original = row["original"]
             text = environment_catalog.value_text
             children.append(html.Details([html.Summary("Original source fields"),

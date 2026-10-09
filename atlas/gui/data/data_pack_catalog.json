@@ -4610,7 +4610,7 @@
           "records": 5
         },
         {
-          "label": "São Tomé and Príncipe",
+          "label": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
           "value": "4658",
           "records": 1
         },
@@ -4690,6 +4690,113 @@
           "records": 2
         }
       ]
+    },
+    {
+      "id": "anatolian-zooarchaeology",
+      "version": "2026.10.09",
+      "title": "Anatolian animal-bone records",
+      "description": "Original specimen taxonomy, recovery, taphonomy, tooth wear and biometrics. Follow published specimen and context identities; overlapping editions remain separate.",
+      "records": 247297,
+      "record_type": "published zooarchaeological subjects, context references and original aggregate rows",
+      "coverage": "242,457 published subject identifiers; 4,026 context references; 838,710 original source rows. Partial site/season and measurement-only coverage remains explicit.",
+      "source_release": "Publisher repository edition 1402f66d445aa36bab044c34f3f10b758fc4c5ef",
+      "license": "CC BY 3.0 source repository edition; original contributor attribution retained",
+      "source_url": "https://github.com/ekansa/opencontext-eol-zooarch",
+      "citation_url": "https://github.com/ekansa/opencontext-eol-zooarch/blob/1402f66d445aa36bab044c34f3f10b758fc4c5ef/README.md",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-anatolian-zooarchaeology-2026.10.09/clovis-anatolian-zooarchaeology-2026.10.09.zip",
+      "archive_bytes": 456656608,
+      "archive_sha256": "9063ef6f28a7fb57dccbec61663e3f2303b7bcb601925dcd1856101fb6e6e904",
+      "installed_bytes": 981576902,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 1376,
+          "sha256": "0ca46006e0f4b8567e8ca5625521ca578ea02c74f797b7483e891b2b4fe34238"
+        },
+        {
+          "name": "reader.sqlite",
+          "bytes": 437309440,
+          "sha256": "45496de54ef7e30fcf234ada4f85984293cfd9cfda8dda6043ded34cd6c0dc13",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "records": [
+              "rowid",
+              "id",
+              "kind",
+              "source_id",
+              "title",
+              "subtitle",
+              "table_id",
+              "ordinal",
+              "project_id"
+            ],
+            "source_tables": [
+              "id",
+              "sha256"
+            ],
+            "source_index": [
+              "rowid",
+              "table_id",
+              "ordinal",
+              "subject_id",
+              "context_id",
+              "project_id"
+            ],
+            "source_links": [
+              "rowid",
+              "subject_rowid",
+              "context_rowid",
+              "aggregate_rowid"
+            ],
+            "source_fts": [
+              "values_text"
+            ]
+          },
+          "record_table": "records",
+          "records": 247297,
+          "user_version": 1
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 157542,
+          "sha256": "ac64f5ab7ef7be86ebe333097e3784d45a7b307a7d061aee18f5e64579b558d0"
+        },
+        {
+          "name": "specimens.sqlite",
+          "bytes": 544108544,
+          "sha256": "1a7437f13d354a1d67284819bf7f13e57c939743c942678f3edb1f37cf6fde54",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "table_editions": [
+              "id",
+              "path",
+              "source_url",
+              "sha256",
+              "headers_json",
+              "source_rows",
+              "escaped_bytes"
+            ],
+            "row_editions": [
+              "table_id",
+              "ordinal",
+              "subject_id",
+              "project_id",
+              "context_id",
+              "source_values"
+            ]
+          },
+          "record_table": "row_editions",
+          "records": 838710,
+          "user_version": 1
+        }
+      ],
+      "countries": []
     }
   ]
 }
