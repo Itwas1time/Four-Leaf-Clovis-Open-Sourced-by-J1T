@@ -4797,6 +4797,116 @@
         }
       ],
       "countries": []
+    },
+    {
+      "id": "excavation-assemblages",
+      "version": "2026.10.09",
+      "title": "Excavation assemblages and refits",
+      "description": "Original mixed-material field and recovery records, pottery observations and locus dates, lithic attributes and explicit refit connections. Follow qualified source associations in Atlas.",
+      "records": 34618,
+      "record_type": "original scientific rows, recording codes and workbook annotations",
+      "coverage": "Four excavation sites in South Africa, Egypt and Italy; all 26 acquired table editions. Overlapping analyses and grouped quantities remain explicit.",
+      "source_release": "Fixed Zenodo records 10731129, 18681814, 15382869 and pinned Fumane repository f6082f21e1c0d0f2ed8f81716cb7c2a1abfc5645",
+      "license": "CC BY 4.0 source data; original contributor and edition attribution retained",
+      "source_url": "https://zenodo.org/records/10731129",
+      "citation_url": "https://doi.org/10.5281/zenodo.10731129",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-excavation-assemblages-2026.10.09/clovis-excavation-assemblages-2026.10.09.zip",
+      "archive_bytes": 18163977,
+      "archive_sha256": "d8427460e53745d52b8ce3c9c52fa7de259fde5ef35ee6075ff36968c475e9c7",
+      "installed_bytes": 76375959,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 3963,
+          "sha256": "6c78ff8b775089e5dec2a7941d025b6969a8aaf7a4e99c0ec748cee5e64ab43a"
+        },
+        {
+          "name": "assemblages.sqlite",
+          "bytes": 76357632,
+          "sha256": "80e3b26af87c7f0299e3a4d0c4dcc91064bd3c99ee48688d6c0d17df5a1b9137",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "editions": [
+              "id",
+              "document"
+            ],
+            "source_files": [
+              "id",
+              "dataset",
+              "path",
+              "source_url",
+              "sha256",
+              "bytes",
+              "styles_xml"
+            ],
+            "source_tables": [
+              "id",
+              "file_id",
+              "sheet",
+              "headers_json",
+              "merges_json",
+              "header_rows",
+              "source_rows"
+            ],
+            "records": [
+              "rowid",
+              "id",
+              "table_id",
+              "ordinal",
+              "dataset",
+              "site",
+              "country",
+              "kind",
+              "title",
+              "subtitle",
+              "source_values",
+              "source_cells",
+              "reading_facts"
+            ],
+            "scopes": [
+              "id",
+              "kind",
+              "label"
+            ],
+            "record_scopes": [
+              "record",
+              "scope",
+              "basis"
+            ],
+            "source_fts": [
+              "values_text"
+            ]
+          },
+          "record_table": "records",
+          "records": 34618,
+          "user_version": 1
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 14364,
+          "sha256": "e6f94186c27fc366ecde551fa8679eef9028b97d573e26eab830c4964343991f"
+        }
+      ],
+      "countries": [
+        {
+          "label": "Egypt",
+          "value": "Egypt",
+          "records": 11293
+        },
+        {
+          "label": "Italy",
+          "value": "Italy",
+          "records": 18402
+        },
+        {
+          "label": "South Africa",
+          "value": "South Africa",
+          "records": 4923
+        }
+      ]
     }
   ]
 }

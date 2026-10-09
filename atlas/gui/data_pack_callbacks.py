@@ -8,7 +8,8 @@ LIBRARIES = {'radiocarbon-world': ('atlas', 'Explore in atlas'),
              'neolithic-assemblages': ('atlas', 'Explore in atlas'),
              'excavations-surveys': ('atlas', 'Explore in atlas'),
              'dated-environments': ('atlas', 'Explore in atlas'),
-             'anatolian-zooarchaeology': ('atlas', 'Explore in atlas')}
+             'anatolian-zooarchaeology': ('atlas', 'Explore in atlas'),
+             'excavation-assemblages': ('atlas', 'Explore in atlas')}
 
 
 @callback(Output("data-pack-cards", "children"), Input("data-pack-refresh", "data"), Input("library-section", "value"))

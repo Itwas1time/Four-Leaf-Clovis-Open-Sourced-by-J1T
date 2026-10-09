@@ -95,7 +95,8 @@ Puerto Rico. See [the workbench guide](WORKBENCH.md) and the individual source n
 
 **Atlas → Manage offline collections** offers radiocarbon, dinosaur taxa and
 sites, Neolithic assemblages, excavation and survey records, past environments,
-and Anatolian animal-bone records. Read coverage, rights and storage sizes, then choose
+Anatolian animal-bone records, and excavation assemblages and refits. Read
+coverage, rights and storage sizes, then choose
 **Download collection**. Downloads resume and verify before activation. Search
 installed records locally and save attributed references. See
 [downloadable collections](DATA_COLLECTIONS.md) for source conventions, storage,

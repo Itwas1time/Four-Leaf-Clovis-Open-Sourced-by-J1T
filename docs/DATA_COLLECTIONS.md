@@ -31,6 +31,7 @@ searches retain their existing plans.
 | Excavation contexts, finds and survey effort | 153,867 distinct source subjects from Gabii, Petra and Eastern Korinthia; original observation documents, tables and field definitions | 243.2 MB | 576.6 MB |
 | Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
 | Anatolian animal-bone records | 242,457 published subject IDs, 4,026 context references and 814 aggregate rows; 838,710 original rows in 37 table editions | 456.7 MB | 981.6 MB |
+| Excavation assemblages and refits | 34,618 original scientific rows in 26 tables from Hoedjiespunt 1, Berenike, Sikait and Fumane | 18.2 MB | 76.4 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
 bundled. These additional collections are optional; the initial application
@@ -67,6 +68,56 @@ repository edition declares **CC BY 3.0**. Original contributor names, project
 and context URIs, table URLs and SHA-256 citations accompany records and saved
 references. Download once for local reading; original external source pages
 require internet access.
+
+## Excavation assemblages and refits
+
+Search **Hoedjiespunt**, **Macrofauna**, **K11-9-1**, **Sikait**, **Berenike**,
+**RF.c_205** or **RF_Connections_Correlation**. Open the collection card or
+choose **Limit to a source → Excavation assemblages · recovery, pottery & refits**.
+Use the shared reader's **Associated evidence** to follow field recordings,
+original lithic-analysis keys, recorded loci, pottery-bag references and refit
+endpoints. Every matching source row remains available through pagination.
+
+Hoedjiespunt retains all twelve original tables: 1,852 field records, bulk
+recovery, lithic attributes and measurements, fauna, ochre and recording codes.
+Recovery quantities retain original units and zero values. Linked field
+records retain the original LITER volume field. Exact source identifiers and
+derived unambiguous suffix-zero associations are labelled separately.
+Source geological order refers to layers, while excavation UNIT refers to a
+square. Local XYZ coordinates and recording dates are retained as recorded.
+
+Berenike and Sikait retain all four original pottery and chronology workbooks.
+Their 10,653 pottery rows are grouped observations; recorded Total values sum
+to 58,175 Berenike fragments and 20,399 Sikait fragments. Formula expressions
+and publisher-cached results remain separate, without recalculation. Original
+cell positions, types, styles, merged anchors, chronological labels and mixture
+notes stay available. Qualified section links cite their heading cells; blank
+original trench/locus cells remain blank. Parallel chronology sections, ranges
+and campaign-qualified trench labels stay distinct. Adjacent chronology-strength
+legends do not become row confidence scores.
+
+Fumane retains all seven original refit/attribute tables and all 948 specimen
+metadata rows. Repeated endpoint columns retain their positions. Fragment IDs,
+reconstructed blank numbers and full RF artifact identifiers have separate
+namespaces. Both RF.c_205 model-metadata rows remain, with their different mesh
+resolution. Clovis includes metadata under the fixed edition's recorded CC BY
+4.0 rights. Its README also describes non-commercial model use and contains
+an inconsistent Bombrini overview; meshes and that overview are not imported.
+
+These rows, recording codes and annotations describe different quantities,
+including overlapping analyses. They do not count unique artifacts or digs.
+Undeclared units, geographic transformations and missing occupation dates are
+not inferred. A refit or connection note does not establish deposit order.
+Full original fields start closed; saving a reference retains contributors,
+the particular source edition, original file hash and row locator.
+
+Sources: [Hoedjiespunt 1](https://doi.org/10.5281/zenodo.10731129),
+[Berenike and Sikait pottery](https://doi.org/10.5281/zenodo.18681814),
+[Fumane specimen metadata](https://doi.org/10.5281/zenodo.15382869), and
+[Fumane research compendium](https://github.com/ArmandoFalcucci/Refitting-The-Context),
+pinned to `f6082f21e1c0d0f2ed8f81716cb7c2a1abfc5645`. Data editions retain CC BY
+4.0 contributor attribution. The fixed publication reproduction edition and
+developmental repository edition remain separate. Requires Clovis 0.17 or newer.
 
 ## Radiocarbon results
 
@@ -243,6 +294,8 @@ python -m core.data_packs install dinosaur-sites --archive clovis-dinosaur-sites
 python -m core.data_packs install neolithic-assemblages --archive clovis-neolithic-assemblages-2015.07.zip
 python -m core.data_packs install excavations-surveys --archive clovis-excavations-surveys-2026.10.08.zip
 python -m core.data_packs install dated-environments --archive clovis-dated-environments-2026.10.05.zip
+python -m core.data_packs install anatolian-zooarchaeology --archive clovis-anatolian-zooarchaeology-2026.10.09.zip
+python -m core.data_packs install excavation-assemblages --archive clovis-excavation-assemblages-2026.10.09.zip
 ```
 
 Use the exact official archive; unpacked or edited databases are not accepted.

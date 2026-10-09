@@ -2,7 +2,7 @@
 import sqlite3
 from urllib.parse import urlsplit
 from dash import ALL, MATCH, Input, Output, State, callback, callback_context, html, no_update
-from core import atlas_catalog as catalog, excavation_catalog, environment_catalog, zooarchaeology_catalog
+from core import atlas_catalog as catalog, excavation_catalog, environment_catalog, zooarchaeology_catalog, assemblage_catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
 from core.data_packs import PackStore
 from atlas.gui.library_ui import reading_nav
@@ -10,7 +10,8 @@ from atlas.gui.published_location_ui import control as location_control, render 
 
 ERRORS = (ValueError, OSError, sqlite3.Error, TypeError, KeyError)
 PACK_SOURCES = {"radiocarbon-world": "dates", "dinosaur-sites": "dinosaurs", "neolithic-assemblages": "assemblages",
-                "excavations-surveys": "contexts", "dated-environments": "environments", "anatolian-zooarchaeology": "specimens"}
+                "excavations-surveys": "contexts", "dated-environments": "environments", "anatolian-zooarchaeology": "specimens",
+                "excavation-assemblages": "field_assemblages"}
 
 
 @callback(Output("library-section", "value", allow_duplicate=True),
@@ -146,13 +147,38 @@ def reader(selected, query, kind, source, context, page, _refresh):
                                    n_clicks=0, className="atlas-secondary-button")
             main_keys = ("animals", "plants", "dates", "phases", "sites", "parent", "children", "source-rows", "subject")
             main = [link for link in links if link["key"] in main_keys or
+                    row["source"] == "field_assemblages" and link["key"].partition(":")[0] in ("recording", "analysis", "locus", "refit") or
                     row["source"] == "environments" and link["parameters"]["view"] in ("observation", "sample", "age", "date")][:4]
             more = [link for link in links if link not in main]
             children.append(html.Div([html.H4("Associated evidence"), *[button(link) for link in main]], className="clovis-atlas-related"))
             if more:
                 children.append(html.Details([html.Summary("More associated evidence"),
                     html.Div([button(link) for link in more], className="clovis-atlas-related")]))
-        if row["source"] == "specimens":
+        if row["source"] == "field_assemblages":
+            original = row["original"]
+            text = assemblage_catalog.value_text
+            children.append(html.Details([html.Summary("Original source fields"),
+                html.P(original["file"]["path"] + " · " + original["table"]["sheet"] + " · row " + str(original["ordinal"]), className="atlas-help"),
+                html.P("Original file SHA-256: " + original["file"]["sha256"], className="atlas-help"),
+                _facts(original["fields"]), _source_link(original["source_url"], "Read original source file")]))
+            formulas = [cell for cell in original["cells"]["cells"] if "formula" in cell]
+            if formulas:
+                children.append(html.Details([html.Summary("Stored formulas and publisher results"),
+                    _facts((cell["ref"], "Formula: " + text(cell["formula"]) + " · stored result: " + text(cell["cached_result"])) for cell in formulas),
+                    html.P("Clovis retains stored expressions and results without recalculating the source workbook.", className="atlas-help")]))
+            if original["merged_anchors"]:
+                children.append(html.Details([html.Summary("Merged source cells"),
+                    _facts((item["range"] + " · original anchor " + item["ref"], text(item["value"])) for item in original["merged_anchors"]),
+                    html.P("Original row blanks remain blank; these values belong to the source's merged-cell anchors.", className="atlas-help")]))
+            if original["associations"]:
+                children.append(html.Details([html.Summary("How source records are associated"),
+                    _facts((item["label"], item["basis"]) for item in original["associations"])]))
+            children.append(html.Details([html.Summary("Source edition and attribution"),
+                _facts([("Contributors", "; ".join(original["edition"]["contributors"])),
+                        ("Institutions", "; ".join(original["edition"]["institutions"])),
+                        ("Source edition", original["edition"]["edition"])]),
+                _source_link(original["edition"]["citation_url"], "Read cited publication or dataset")]))
+        elif row["source"] == "specimens":
             original = row["original"]
             editions = original["editions"]
             if original["kind"] == "context":

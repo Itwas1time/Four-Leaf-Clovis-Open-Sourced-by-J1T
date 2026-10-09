@@ -93,6 +93,13 @@ plants, measurements, dating samples and recovery methods, and **153,867
 excavation and survey source records** (243.2 MB) from Gabii, Petra and Eastern
 Korinthia. Follow recorded deposits, finds and samples in the same Atlas reader;
 read original recovery conditions, survey effort, field meanings and units.
+The Anatolian animal-bone collection adds 247,297 attributed subject identifiers,
+context references and aggregate rows, retaining all 838,710 original scientific
+rows (456.7 MB). Excavation assemblages and refits adds 34,618 original rows
+from Hoedjiespunt 1, Berenike, Sikait and Fumane (18.2 MB). Follow mixed-material
+recovery, pottery chronology and both endpoints of recorded refit connections.
+Original workbook cells, stored formulas, merged ranges and qualified source
+associations remain available through the same Atlas reader.
 Search materials, methods,
 uncertainty, taxonomy, sites and original references. Read source location
 precision and save attributed references. See [collections](docs/DATA_COLLECTIONS.md)
@@ -109,8 +116,8 @@ python -m atlas.gui.app
 ```
 
 The Dash app binds to localhost at port 8050. **Explore** opens on **Atlas**,
-with one search and a shared reader across **19,535,392 source records** when
-all five optional packs are installed. Search published places, cultures,
+with one search and a shared reader across **19,817,307 source records** when
+all seven optional packs are installed. Search published places, cultures,
 materials or fossils and follow the original source. **Specialist searches**
 keeps detailed collection filters available. Counts mix different record types
 and can overlap between sources; they do not count unique excavated finds.

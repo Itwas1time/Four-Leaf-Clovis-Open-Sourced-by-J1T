@@ -17,6 +17,7 @@ from core import object_material_guides as guides
 from core import excavation_catalog as contexts
 from core import environment_catalog as environments
 from core import zooarchaeology_catalog as specimens
+from core import assemblage_catalog as field_assemblages
 
 PAGE_SIZE = 24
 SOURCES = {
@@ -28,12 +29,13 @@ SOURCES = {
     "guides": "Material reference guides", "contexts": "Open Context · excavations & surveys",
     "environments": "Neotoma · sites, samples & environments",
     "specimens": "Open Context · Anatolian animal-bone records",
+    "field_assemblages": "Excavation assemblages · recovery, pottery & refits",
 }
 KINDS = {"all": "All evidence", "archaeology": "Archaeology & objects", "fossils": "Fossils",
          "history": "Historical documents", "earth": "Geology & minerals"}
-GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "projects", "dates", "met", "si", "guides"),
+GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "field_assemblages", "projects", "dates", "met", "si", "guides"),
           "fossils": ("fossils", "dinosaurs"), "history": ("newspapers",), "earth": ("geology", "minerals")}
-OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments, "specimens": specimens}
+OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments, "specimens": specimens, "field_assemblages": field_assemblages}
 _READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas")
 
 
@@ -54,6 +56,10 @@ def _signature(sources=None):
 
 
 def _native(source, query, page, context=()):
+    if source == "field_assemblages":
+        parameters = dict(context)
+        parameters.pop("collection", None)
+        return field_assemblages.search(query=query, page=page, **parameters), field_assemblages.PAGE_SIZE
     if source == "specimens":
         parameters = dict(context)
         parameters.pop("collection", None)
@@ -146,7 +152,7 @@ def _card(source, row):
                 "fossils": "Fossil specimen", "dinosaurs": "Published fossil occurrence",
                 "dates": "Radiocarbon determination", "geology": "Mapped geological unit",
                 "minerals": "Mineral reference", "newspapers": "Newspaper title", "guides": "Material guide"}.get(source)
-    if source in ("environments", "specimens"):
+    if source in ("environments", "specimens", "field_assemblages"):
         evidence, subtitle = row["category"], row["subtitle"]
     elif source == "contexts":
         evidence = row["category"]
@@ -177,7 +183,11 @@ def _parameters(query, kind, source, context):
                    or any(ord(char) < 32 or 0xD800 <= ord(char) <= 0xDFFF for char in value) for value in context.values())):
         raise ValueError("Choose a published evidence association.")
     collection = context.get("collection", "assemblages")
-    if collection == "specimens":
+    if collection == "field_assemblages":
+        if set(context) - {"collection", "view", "scope", "table_id", "dataset", "record_id"}:
+            raise ValueError("Choose an original excavation assemblage association.")
+        field_assemblages.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
+    elif collection == "specimens":
         if set(context) - {"collection", "view", "subject_id", "context_id", "table_sha", "project_id", "record_id"}:
             raise ValueError("Choose an original zooarchaeological subject or context association.")
         specimens.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
@@ -236,7 +246,14 @@ def get_record(identifier):
     source, key = _identifier(identifier)
     if source is None:
         return None
-    if source == "specimens":
+    if source == "field_assemblages":
+        row = field_assemblages.get_record(key)
+        if row is None:
+            return None
+        facts, url = field_assemblages.facts(row), row["source_url"]
+        notes = [*row["edition"]["notes"], row["summary"]["quantity_note"], row["summary"]["source_row_identifiers_note"]]
+        description, license_text = "", row["edition"]["license"]
+    elif source == "specimens":
         row = specimens.get_record(key)
         if row is None:
             return None
@@ -354,6 +371,8 @@ def reference_entry(identifier):
     row = get_record(identifier)
     if row is None:
         raise ValueError("Choose a current atlas record to save.")
+    if source == "field_assemblages":
+        return field_assemblages.reference_entry(key)
     if source == "specimens":
         return specimens.reference_entry(key)
     if source == "environments":
@@ -387,6 +406,8 @@ def reference_entry(identifier):
 
 def relationships(record):
     """Source-specific associations for the shared reader and navigation."""
+    if record["source"] == "field_assemblages":
+        return field_assemblages.relationships(record["original"])
     if record["source"] == "specimens":
         return specimens.relationships(record["original"])
     if record["source"] == "environments":
