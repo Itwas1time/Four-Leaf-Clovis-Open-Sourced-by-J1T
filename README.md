@@ -87,9 +87,13 @@ conflicting revisions. See [dig records](docs/DIG_RECORDS.md) for storage and bo
 
 **Atlas → Manage offline collections** adds optional local downloads: **173,946
 published radiocarbon determinations** (17.7 MB) and **37,852 dinosaur fossil
-occurrences linked to 14,371 collections** (27.8 MB), and **96,115 UCL EUROEVOL
+occurrences linked to 14,371 collections** (27.8 MB), **96,115 UCL EUROEVOL
 source rows** (17.0 MB) linking sites and occupation phases to animal remains,
-plants, measurements, dating samples and recovery methods. Search materials, methods,
+plants, measurements, dating samples and recovery methods, and **153,867
+excavation and survey source records** (243.2 MB) from Gabii, Petra and Eastern
+Korinthia. Follow recorded deposits, finds and samples in the same Atlas reader;
+read original recovery conditions, survey effort, field meanings and units.
+Search materials, methods,
 uncertainty, taxonomy, sites and original references. Read source location
 precision and save attributed references. See [collections](docs/DATA_COLLECTIONS.md)
 for coverage, reuse rights, original units and offline installation.
@@ -105,8 +109,8 @@ python -m atlas.gui.app
 ```
 
 The Dash app binds to localhost at port 8050. **Explore** opens on **Atlas**,
-with one search and a shared reader across **1,498,895 source records** when
-all three optional packs are installed. Search published places, cultures,
+with one search and a shared reader across **1,652,762 source records** when
+all four optional packs are installed. Search published places, cultures,
 materials or fossils and follow the original source. **Specialist searches**
 keeps detailed collection filters available. Counts mix different record types
 and can overlap between sources; they do not count unique excavated finds.

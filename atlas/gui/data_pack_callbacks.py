@@ -4,7 +4,8 @@ from core import data_pack_jobs
 
 LIBRARIES = {'radiocarbon-world': ('atlas', 'Explore in atlas'),
              'dinosaur-sites': ('atlas', 'Explore in atlas'),
-             'neolithic-assemblages': ('atlas', 'Explore in atlas')}
+             'neolithic-assemblages': ('atlas', 'Explore in atlas'),
+             'excavations-surveys': ('atlas', 'Explore in atlas')}
 
 
 @callback(Output("data-pack-cards", "children"), Input("data-pack-refresh", "data"))

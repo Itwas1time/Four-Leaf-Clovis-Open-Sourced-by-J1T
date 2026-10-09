@@ -2,13 +2,14 @@
 import sqlite3
 from urllib.parse import urlsplit
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
-from core import atlas_catalog as catalog, neolithic_catalog
+from core import atlas_catalog as catalog, excavation_catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
 from core.data_packs import PackStore
 from atlas.gui.library_ui import reading_nav
 
 ERRORS = (ValueError, OSError, sqlite3.Error, TypeError, KeyError)
-PACK_SOURCES = {"radiocarbon-world": "dates", "dinosaur-sites": "dinosaurs", "neolithic-assemblages": "assemblages"}
+PACK_SOURCES = {"radiocarbon-world": "dates", "dinosaur-sites": "dinosaurs", "neolithic-assemblages": "assemblages",
+                "excavations-surveys": "contexts"}
 
 
 @callback(Output("library-section", "value", allow_duplicate=True),
@@ -115,26 +116,49 @@ def reader(selected, query, kind, source, context, page, _refresh):
                     html.H3(row["title"]), html.P(row["source_label"], className="atlas-help"), _facts(row["facts"])]
         if row["description"]:
             children.append(html.P(row["description"]))
+        links = catalog.relationships(row)
+        if links:
+            def button(link):
+                return html.Button(f'{link["total"]:,} · {link["label"]}',
+                                   id={"type": "atlas-related", "index": link["key"]},
+                                   n_clicks=0, className="atlas-secondary-button")
+            main_keys = ("animals", "plants", "dates", "phases", "sites", "parent", "children")
+            main = [link for link in links if link["key"] in main_keys]
+            more = [link for link in links if link not in main]
+            children.append(html.Div([html.H4("Associated evidence"), *[button(link) for link in main]], className="clovis-atlas-related"))
+            if more:
+                children.append(html.Details([html.Summary("More associated evidence"),
+                    html.Div([button(link) for link in more], className="clovis-atlas-related")]))
         if row["source"] == "assemblages":
             original = row["original"]
-            links = neolithic_catalog.relationships(original)
-            if links:
-                def button(link):
-                    return html.Button(f'{link["total"]:,} · {link["label"]}',
-                                       id={"type": "atlas-related", "index": link["parameters"]["view"]},
-                                       n_clicks=0, className="atlas-secondary-button")
-                main = [link for link in links if link["parameters"]["view"] in ("animals", "plants", "dates", "phases", "sites")]
-                more = [link for link in links if link not in main]
-                children.append(html.Div([html.H4("Associated evidence"), *[button(link) for link in main]], className="clovis-atlas-related"))
-                if more:
-                    children.append(html.Details([html.Summary("More associated evidence"),
-                        html.Div([button(link) for link in more], className="clovis-atlas-related")]))
             children.append(html.Details([html.Summary("Original source fields"), _facts(original["source"].items())]))
             for key, title in (("animal_recovery", "Animal recovery methods"), ("plant_sampling", "Plant sampling phase"),
                                ("plant_recovery", "Plant recovery methods")):
                 fields = original["associated"].get(key)
                 if fields:
                     children.append(html.Details([html.Summary(title), _facts(fields.items())]))
+        elif row["source"] == "contexts":
+            original = row["original"]
+            locations = excavation_catalog.location_time_fields(original)
+            if locations:
+                children.append(html.Details([html.Summary("Published location and time"),
+                    *[_facts(fields) for fields in locations],
+                    html.P("Location references and precision retain the publisher's wording. Source ISO years use 0000 for 1 BCE.", className="atlas-help")]))
+            for observation in original["observations"]:
+                children.append(html.Details([html.Summary(observation.get("label", observation["id"])),
+                    _facts(excavation_catalog.observation_fields(observation, original["definitions"]))]))
+            if original["tables"]:
+                children.append(html.Details([html.Summary("Original published table fields"), *[
+                    html.Details([html.Summary(table["title"]),
+                                  html.Dl([node for key, value in table["fields"].items() for node in
+                                           (html.Dt(key.split(" [", 1)[0], title=key), html.Dd(value if value != "" else "Not recorded"))],
+                                          className="clovis-library-facts"),
+                                  _source_link(table["uri"], "Read source table")]) for table in original["tables"]]]))
+            definitions = excavation_catalog.definition_fields(original)
+            if definitions:
+                children.append(html.Details([html.Summary("Field meanings and units"), *[
+                    html.Div([html.H4(group["label"]), _facts(group["fields"]),
+                              _source_link(group["source_uri"], "Read original field definition")]) for group in definitions]]))
         elif row["source"] == "dinosaurs":
             original = row["original"].get("source")
             if original:
@@ -148,25 +172,27 @@ def reader(selected, query, kind, source, context, page, _refresh):
         return html.P("Choose a record from the current atlas search.")
 
 
-@callback(Output("atlas-context", "data"), Input({"type": "atlas-related", "index": ALL}, "n_clicks"),
+@callback(Output("atlas-context", "data"), Output("atlas-query", "value", allow_duplicate=True),
+          Input({"type": "atlas-related", "index": ALL}, "n_clicks"),
           Input("atlas-clear-context", "n_clicks"), Input("atlas-kind", "value"), Input("atlas-source", "value"),
           State("atlas-selected", "data"), State("atlas-query", "value"), State("atlas-context", "data"),
           State("atlas-page", "data"), prevent_initial_call=True)
 def associated(clicks, _clear, kind, source, selected, query, context, page):
     trigger = callback_context.triggered_id
     if trigger in ("atlas-clear-context", "atlas-kind", "atlas-source"):
-        return None
+        return None, no_update
     if not isinstance(trigger, dict) or not any(type(value) is int and value > 0 for value in clicks or []):
-        return no_update
+        return no_update, no_update
     try:
         row = current(selected, query, kind, source, context, page)
-        if row and row["source"] == "assemblages":
-            for link in neolithic_catalog.relationships(row["original"]):
-                if link["parameters"]["view"] == trigger["index"]:
-                    return {"parameters": link["parameters"], "label": row["title"] + " · " + link["label"]}
+        if row:
+            for link in catalog.relationships(row):
+                if link["key"] == trigger["index"]:
+                    # The originating search term need not occur in its linked deposit.
+                    return {"parameters": link["parameters"], "label": row["title"] + " · " + link["label"]}, ""
     except ERRORS:
         pass
-    return no_update
+    return no_update, no_update
 
 
 @callback(Output("atlas-source", "value"), Output("atlas-kind", "value"),

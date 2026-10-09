@@ -14,6 +14,7 @@ from core import mineral_property_catalog as minerals
 from core import newspaper_catalog as newspapers
 from core import usgs_unit_library as geology
 from core import object_material_guides as guides
+from core import excavation_catalog as contexts
 
 PAGE_SIZE = 24
 SOURCES = {
@@ -22,13 +23,13 @@ SOURCES = {
     "si": "Smithsonian · anthropology", "fossils": "Smithsonian · fossil specimens",
     "dinosaurs": "Paleobiology Database · Dinosauria", "geology": "USGS · mapped geology",
     "minerals": "Wikidata · mineral properties", "newspapers": "Library of Congress · newspaper titles",
-    "guides": "Material reference guides",
+    "guides": "Material reference guides", "contexts": "Open Context · excavations & surveys",
 }
 KINDS = {"all": "All evidence", "archaeology": "Archaeology & objects", "fossils": "Fossils",
          "history": "Historical documents", "earth": "Geology & minerals"}
-GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "projects", "dates", "met", "si", "guides"),
+GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "projects", "dates", "met", "si", "guides"),
           "fossils": ("fossils", "dinosaurs"), "history": ("newspapers",), "earth": ("geology", "minerals")}
-OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs}
+OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts}
 _READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas")
 
 
@@ -47,6 +48,10 @@ def _signature():
 
 
 def _native(source, query, page, context=()):
+    if source == "contexts":
+        parameters = dict(context)
+        parameters.pop("collection", None)
+        return contexts.search(query=query, page=page, **parameters), contexts.PAGE_SIZE
     if source == "assemblages":
         return assemblages.search(query=query, page=page, **dict(context)), assemblages.PAGE_SIZE
     if source == "projects":
@@ -127,7 +132,10 @@ def _card(source, row):
                 "fossils": "Fossil specimen", "dinosaurs": "Published fossil occurrence",
                 "dates": "Radiocarbon determination", "geology": "Mapped geological unit",
                 "minerals": "Mineral reference", "newspapers": "Newspaper title", "guides": "Material guide"}.get(source)
-    if source == "assemblages":
+    if source == "contexts":
+        evidence = row["category"]
+        subtitle = " · ".join(value for value in (contexts.DATASETS[row["dataset"]], row.get("context_label")) if value)
+    elif source == "assemblages":
         evidence = assemblages.VIEWS[row["view"]]
         subtitle = " · ".join(value for value in (row["subtitle"], row["country"]) if value)
     elif source == "dates":
@@ -148,13 +156,20 @@ def _parameters(query, kind, source, context):
         raise ValueError("Search the atlas with up to 120 characters and a listed evidence type.")
     if context is None:
         context = {}
-    if (not isinstance(context, dict) or set(context) - {"view", "phase_id", "site_id", "bone_id"}
+    if (not isinstance(context, dict)
             or any(not isinstance(value, str) or not value or len(value) > 120
-                   or any(ord(char) < 32 for char in value) for value in context.values())
-            or context.get("view", "all") not in (*assemblages.VIEWS, "all")):
+                   or any(ord(char) < 32 or 0xD800 <= ord(char) <= 0xDFFF for char in value) for value in context.values())):
+        raise ValueError("Choose a published evidence association.")
+    collection = context.get("collection", "assemblages")
+    if collection == "contexts":
+        if set(context) - {"collection", "dataset", "category", "scope", "record_id", "predicate"}:
+            raise ValueError("Choose a published excavation or survey association.")
+        contexts.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
+    elif (collection != "assemblages" or set(context) - {"view", "phase_id", "site_id", "bone_id"}
+          or context.get("view", "all") not in (*assemblages.VIEWS, "all")):
         raise ValueError("Choose a published evidence association.")
     # Association links are confined to their original source, never matched across datasets.
-    sources = (("assemblages",) if context else
+    sources = ((collection,) if context else
                tuple(name for name in GROUPS[kind] if source == "all" or name == source))
     return query.strip(), sources, tuple(sorted(context.items()))
 
@@ -197,7 +212,16 @@ def get_record(identifier):
     source, key = _identifier(identifier)
     if source is None:
         return None
-    if source == "assemblages":
+    if source == "contexts":
+        row = contexts.get_record(key)
+        if row is None:
+            return None
+        facts, url = contexts.facts(row), row["source_uri"]
+        notes = ["Records retain their original project and context identities; similar labels do not establish an association.",
+                 "Original observation groups and published table versions remain separate. Zero, false and unrecorded values have different meanings.",
+                 "Source links retain their predicates. Free-text relationships do not establish a deposit sequence."]
+        description, license_text = "", row["project"]["license"]
+    elif source == "assemblages":
         row = assemblages.get_record(key)
         if row is None:
             return None
@@ -291,6 +315,8 @@ def reference_entry(identifier):
     row = get_record(identifier)
     if row is None:
         raise ValueError("Choose a current atlas record to save.")
+    if source == "contexts":
+        return contexts.reference_entry(key)
     if source == "assemblages":
         return assemblages.reference_entry(key)
     if source == "projects":
@@ -314,3 +340,13 @@ def reference_entry(identifier):
         from core.object_guide_notes import reference_entry as save
         return save(row["original"])
     return save(row["original"])
+
+
+def relationships(record):
+    """Source-specific associations for the shared reader and navigation."""
+    if record["source"] == "contexts":
+        return contexts.relationships(record["original"])
+    if record["source"] == "assemblages":
+        return [{**link, "key": link["parameters"]["view"]}
+                for link in assemblages.relationships(record["original"])]
+    return []

@@ -1953,6 +1953,124 @@
           "records": 142
         }
       ]
+    },
+    {
+      "id": "excavations-surveys",
+      "version": "2026.10.08",
+      "title": "Excavations, finds and field survey observations",
+      "description": "Gabii deposits and finds, Petra trenches and loci, and Eastern Korinthia field survey effort, observed counts and collected specimens.",
+      "records": 153867,
+      "record_type": "distinct published subjects; overlapping table versions retained",
+      "coverage": "Three substantial regional projects in Italy, Jordan and Greece. Source rows, context descriptions and survey effort are retained; this is not a worldwide excavation census.",
+      "source_release": "2026.10.08",
+      "license": "CC BY 4.0; original attribution retained",
+      "source_url": "https://opencontext.org/",
+      "citation_url": "https://opencontext.org/",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-excavations-surveys-2026.10.08/clovis-excavations-surveys-2026.10.08.zip",
+      "archive_bytes": 243207705,
+      "archive_sha256": "16306a2f1dc5041da9f463f202fcbbe8600c08a92a7d824bec5ade676e3b6ee1",
+      "installed_bytes": 576638038,
+      "files": [
+        {
+          "name": "contexts.sqlite",
+          "bytes": 564674560,
+          "sha256": "0490960fc8f3b854ebaac9a0519f186e29af0b14beba96a56bd3f61cffcdeb27",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "datasets": [
+              "id",
+              "title",
+              "uri",
+              "license",
+              "source_json"
+            ],
+            "entities": [
+              "id",
+              "title",
+              "category",
+              "uri"
+            ],
+            "records": [
+              "rowid",
+              "id",
+              "dataset",
+              "title",
+              "category",
+              "context_label",
+              "parent_id",
+              "ark",
+              "source_uri",
+              "search_text"
+            ],
+            "query_summaries": [
+              "record_id",
+              "source_json"
+            ],
+            "item_sources": [
+              "record_id",
+              "source_json",
+              "source_sha256"
+            ],
+            "csv_tables": [
+              "id",
+              "dataset",
+              "title",
+              "uri",
+              "source_sha256",
+              "fields_json",
+              "rows"
+            ],
+            "csv_rows": [
+              "table_id",
+              "ordinal",
+              "record_id",
+              "source_values"
+            ],
+            "relationships": [
+              "source_id",
+              "target_id",
+              "predicate",
+              "observation_id",
+              "ordinal",
+              "origin"
+            ],
+            "field_definitions": [
+              "id",
+              "slug",
+              "label",
+              "source_uri",
+              "source_json",
+              "source_sha256"
+            ],
+            "definition_aliases": [
+              "alias",
+              "definition_id"
+            ]
+          },
+          "record_table": "records",
+          "records": 153867,
+          "user_version": 2
+        },
+        {
+          "name": "ABOUT.md",
+          "bytes": 1561,
+          "sha256": "bb28eb8b2139c48d15723c9da382265837bc3e514fb73b7278633165494269ed"
+        },
+        {
+          "name": "SOURCES.md",
+          "bytes": 9130,
+          "sha256": "fe213c2aaa8ced5c10d67d9b788f866f73f0c62e5a96e134df028d670cd567dd"
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 11952787,
+          "sha256": "f88c940d5f247d16ec11b7b9988a536c17a10eb14056494c9e0259021e292a35"
+        }
+      ],
+      "countries": []
     }
   ]
 }
