@@ -11,10 +11,17 @@ from core.town_knowledge import knowledge_for_place
 
 
 @callback(Output('workflow-mode','value',allow_duplicate=True), Output('resident-tool','value'),
-          Input({'type':'workbench-action','target':ALL,'key':ALL},'n_clicks'), prevent_initial_call=True)
-def open_workbench_tool(clicks):
+          Input({'type':'workbench-action','target':ALL,'key':ALL},'n_clicks'),
+          State({'type':'workbench-action','target':ALL,'key':ALL},'id'), prevent_initial_call=True)
+def open_workbench_tool(clicks, buttons):
     target = callback_context.triggered_id
-    if not isinstance(target, dict) or not any(clicks or []):
+    if (not isinstance(target, dict) or not isinstance(clicks, list)
+            or not isinstance(buttons, list) or len(clicks) != len(buttons)):
+        return no_update, no_update
+    # Adding a reader's buttons also triggers ALL. An earlier click on another
+    # (possibly hidden) action must not activate a newly mounted button.
+    selected = [count for button, count in zip(buttons, clicks) if button == target]
+    if len(selected) != 1 or type(selected[0]) is not int or selected[0] <= 0:
         return no_update, no_update
     value = target.get('target')
     if value == 'inspect':
