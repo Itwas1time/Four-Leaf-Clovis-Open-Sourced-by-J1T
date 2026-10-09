@@ -2071,6 +2071,2625 @@
         }
       ],
       "countries": []
+    },
+    {
+      "id": "dated-environments",
+      "version": "2026.10.05",
+      "title": "Sites, samples & past environments",
+      "description": "Original Neotoma fauna, pollen, charcoal, scientific samples and dating evidence. Source-linked observations and every original age model share the Atlas reader.",
+      "records": 17882630,
+      "record_type": "mixed scientific sites, samples, observations, dates and age-model records",
+      "coverage": "32,061 source sites; 20,447,331 original scientific rows including dictionaries and links. Modern samples, cores and archaeological excavations remain distinct.",
+      "source_release": "2026-10-05 public database snapshot",
+      "license": "CC BY 4.0; original contributors and citations retained",
+      "source_url": "https://www.neotomadb.org/data/db-snapshots",
+      "citation_url": "https://www.neotomadb.org/data/data-use-and-embargo-policy",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-dated-environments-2026.10.05/clovis-dated-environments-2026.10.05.zip",
+      "archive_bytes": 562445274,
+      "archive_sha256": "34498e3e4f2aa121bee9ba1a6ec05e06724d8e28b05dd182f1b9df90c4b08cd9",
+      "installed_bytes": 2666111040,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 1780,
+          "sha256": "61d16dc8e409e7c90d9d41bd4dba7835fd7611b3c7427b2acafc48851ea8a81f"
+        },
+        {
+          "name": "environment.sqlite",
+          "bytes": 951115776,
+          "sha256": "c0c3b4eb6dbf70edc5ded93e1fba1b245c30d6947b01e85d3c236f08ede7eb9c",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "ndb__accumulationrates": [
+              "source_row",
+              "analysisunitid",
+              "chronologyid",
+              "accumulationrate",
+              "variableunitsid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__aednamodels": [
+              "source_row",
+              "modelid",
+              "sequenceid",
+              "taxonid",
+              "model",
+              "supersededbymodelid",
+              "publicationid",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__agetypes": [
+              "source_row",
+              "agetypeid",
+              "agetype",
+              "precedence",
+              "shortagetype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__aggregatechronologies": [
+              "source_row",
+              "aggregatechronid",
+              "aggregatedatasetid",
+              "agetypeid",
+              "isdefault",
+              "chronologyname",
+              "ageboundyounger",
+              "ageboundolder",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__aggregatedatasets": [
+              "source_row",
+              "aggregatedatasetid",
+              "aggregatedatasetname",
+              "aggregateordertypeid",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__aggregateordertypes": [
+              "source_row",
+              "aggregateordertypeid",
+              "aggregateordertype",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__aggregatesampleages": [
+              "source_row",
+              "aggregatedatasetid",
+              "aggregatechronid",
+              "sampleageid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__aggregatesamples": [
+              "source_row",
+              "aggregatedatasetid",
+              "sampleid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__analysisunitaltdepths": [
+              "source_row",
+              "analysisunitid",
+              "altdepthscaleid",
+              "altdepth",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__analysisunitaltdepthscales": [
+              "source_row",
+              "altdepthscaleid",
+              "altdepthid",
+              "altdepthname",
+              "variableunitsid",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__analysisunitlithostrat": [
+              "source_row",
+              "analysisunitid",
+              "lithostratid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__analysisunits": [
+              "source_row",
+              "analysisunitid",
+              "collectionunitid",
+              "analysisunitname",
+              "depth",
+              "thickness",
+              "faciesid",
+              "mixed",
+              "igsn",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__assaytypes": [
+              "source_row",
+              "assaytypeid",
+              "assaytype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__calibrationcurves": [
+              "source_row",
+              "calibrationcurveid",
+              "calibrationcurve",
+              "publicationid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__calibrationprograms": [
+              "source_row",
+              "calibrationprogramid",
+              "calibrationprogram",
+              "version",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__chroncontrolaccuracydirections": [
+              "source_row",
+              "accuracydirectionid",
+              "accuracydirection",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__chroncontrolaccuracydistributions": [
+              "source_row",
+              "accuracydistributionid",
+              "accuracydistribution",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__chroncontrolaccuracyranks": [
+              "source_row",
+              "accuracyrankid",
+              "accuracyrank",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__chroncontrolprecisionranks": [
+              "source_row",
+              "precisionrankid",
+              "precisionrank",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__chroncontrolranks": [
+              "source_row",
+              "chroncontrolrankid",
+              "chroncontrolid",
+              "accuracyrankid",
+              "accuracydirectionid",
+              "accuracydistributionid",
+              "precisionrankid",
+              "outlier",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__chroncontrols": [
+              "source_row",
+              "chroncontrolid",
+              "chronologyid",
+              "chroncontroltypeid",
+              "depth",
+              "thickness",
+              "age",
+              "agelimityounger",
+              "agelimitolder",
+              "notes",
+              "recdatecreated",
+              "recdatemodified",
+              "analysisunitid",
+              "agetypeid"
+            ],
+            "ndb__chroncontrolscal14c": [
+              "source_row",
+              "chroncontrolid",
+              "calibrationcurveid",
+              "calibrationprogramid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__chroncontroltypes": [
+              "source_row",
+              "chroncontroltypeid",
+              "chroncontroltype",
+              "higherchroncontroltypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__chronologies": [
+              "source_row",
+              "chronologyid",
+              "collectionunitid",
+              "agetypeid",
+              "contactid",
+              "isdefault",
+              "chronologyname",
+              "dateprepared",
+              "agemodel",
+              "ageboundyounger",
+              "ageboundolder",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__collectiontypes": [
+              "source_row",
+              "colltypeid",
+              "colltype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__collectionunits": [
+              "source_row",
+              "collectionunitid",
+              "handle",
+              "siteid",
+              "colltypeid",
+              "depenvtid",
+              "collunitname",
+              "colldate",
+              "colldevice",
+              "gpslatitude",
+              "gpslongitude",
+              "gpsaltitude",
+              "gpserror",
+              "waterdepth",
+              "substrateid",
+              "slopeaspect",
+              "slopeangle",
+              "location",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__collectors": [
+              "source_row",
+              "collectorid",
+              "collectionunitid",
+              "contactid",
+              "collectororder",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__constituentdatabases": [
+              "source_row",
+              "databaseid",
+              "databasename",
+              "contactid",
+              "url",
+              "recdatecreated",
+              "recdatemodified",
+              "description",
+              "active"
+            ],
+            "ndb__contactinstitutions": [
+              "source_row",
+              "institutionid",
+              "contactid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__contactreferences": [
+              "source_row",
+              "contactid",
+              "exdatabaseid",
+              "identifier"
+            ],
+            "ndb__contacts": [
+              "source_row",
+              "contactid",
+              "aliasid",
+              "contactname",
+              "contactstatusid",
+              "familyname",
+              "leadinginitials",
+              "givennames",
+              "suffix",
+              "title",
+              "url",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__contactstatuses": [
+              "source_row",
+              "contactstatusid",
+              "contactstatus",
+              "statusdescription",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__contextsdatasettypes": [
+              "source_row",
+              "datasettypeid",
+              "variablecontextid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__dataprocessors": [
+              "source_row",
+              "datasetid",
+              "contactid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasetdatabases": [
+              "source_row",
+              "datasetid",
+              "databaseid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasetdoi": [
+              "source_row",
+              "datasetid",
+              "doi",
+              "recdatecreated",
+              "recdatemodified",
+              "published"
+            ],
+            "ndb__datasetpis": [
+              "source_row",
+              "datasetid",
+              "contactid",
+              "piorder",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasetpublications": [
+              "source_row",
+              "datasetid",
+              "publicationid",
+              "primarypub",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasets": [
+              "source_row",
+              "datasetid",
+              "collectionunitid",
+              "datasettypeid",
+              "datasetname",
+              "notes",
+              "recdatecreated",
+              "recdatemodified",
+              "embargoid"
+            ],
+            "ndb__datasetsubmissions": [
+              "source_row",
+              "submissionid",
+              "datasetid",
+              "databaseid",
+              "contactid",
+              "submissiontypeid",
+              "submissiondate",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasetsubmissiontypes": [
+              "source_row",
+              "submissiontypeid",
+              "submissiontype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasettaxagrouptypes": [
+              "source_row",
+              "datasettypeid",
+              "taxagroupid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasettaxonnotes": [
+              "source_row",
+              "datasetid",
+              "taxonid",
+              "contactid",
+              "date",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasettypes": [
+              "source_row",
+              "datasettypeid",
+              "datasettype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datasetvariables": [
+              "source_row",
+              "datasetvariableid",
+              "datasetid",
+              "variableid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datataxonnotes": [
+              "source_row",
+              "datataxonnotesid",
+              "dataid",
+              "contactid",
+              "date",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__datauncertainties": [
+              "source_row",
+              "dataid",
+              "uncertaintyvalue",
+              "uncertaintyunitid",
+              "uncertaintybasisid",
+              "notes"
+            ],
+            "ndb__decayconstants": [
+              "source_row",
+              "decayconstantid",
+              "decayconstant",
+              "publicationid",
+              "notes"
+            ],
+            "ndb__depagents": [
+              "source_row",
+              "analysisunitid",
+              "depagentid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__depagenttypes": [
+              "source_row",
+              "depagentid",
+              "depagent",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__depenvttypes": [
+              "source_row",
+              "depenvtid",
+              "depenvt",
+              "depenvthigherid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__depthreferencesystem": [
+              "source_row",
+              "depthreferencesystemid",
+              "depthreference",
+              "depthreferencenotes",
+              "depthreferencepublicationid"
+            ],
+            "ndb__ecolgroups": [
+              "source_row",
+              "taxonid",
+              "ecolsetid",
+              "ecolgroupid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__ecolgrouptypes": [
+              "source_row",
+              "ecolgroupid",
+              "ecolgroup",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__ecolsettypes": [
+              "source_row",
+              "ecolsetid",
+              "ecolsetname",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementdatasettaxagroups": [
+              "source_row",
+              "datasettypeid",
+              "taxagroupid",
+              "elementtypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementmaturities": [
+              "source_row",
+              "maturityid",
+              "maturity",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementportions": [
+              "source_row",
+              "portionid",
+              "portion",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementsymmetries": [
+              "source_row",
+              "symmetryid",
+              "symmetry",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementtaxagroupmaturities": [
+              "source_row",
+              "elementtaxagroupid",
+              "maturityid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementtaxagroupportions": [
+              "source_row",
+              "elementtaxagroupid",
+              "portionid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementtaxagroups": [
+              "source_row",
+              "elementtaxagroupid",
+              "taxagroupid",
+              "elementtypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementtaxagroupsymmetries": [
+              "source_row",
+              "elementtaxagroupid",
+              "symmetryid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__elementtypes": [
+              "source_row",
+              "elementtypeid",
+              "elementtype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__embargo": [
+              "source_row",
+              "embargoid",
+              "embargodate",
+              "embargopw"
+            ],
+            "ndb__entitycovers": [
+              "source_row",
+              "entityid",
+              "entitycoverid",
+              "entitycoverthickness",
+              "entitycoverunits"
+            ],
+            "ndb__entitycovertypes": [
+              "source_row",
+              "entitycoverid",
+              "entitycovertype",
+              "entitycovernotes"
+            ],
+            "ndb__entitydripheight": [
+              "source_row",
+              "entityid",
+              "speleothemdriptypeid",
+              "entitydripheight",
+              "entitydripheightunit"
+            ],
+            "ndb__entitygeology": [
+              "source_row",
+              "entityid",
+              "speleothemgeologyid",
+              "notes"
+            ],
+            "ndb__entitylandusecover": [
+              "source_row",
+              "entityid",
+              "landusecovertypeid",
+              "landusecoverpercent",
+              "landusecovernotes"
+            ],
+            "ndb__entityrelationship": [
+              "source_row",
+              "entityid",
+              "entitystatusid",
+              "referenceentityid",
+              "notes"
+            ],
+            "ndb__entitysamples": [
+              "source_row",
+              "entityid",
+              "organics",
+              "fluid_inclusions",
+              "mineralogy_petrology_fabric",
+              "clumped_isotopes",
+              "noble_gas_temperatures",
+              "c14",
+              "odl"
+            ],
+            "ndb__entityvegetationcover": [
+              "source_row",
+              "entityid",
+              "vegetationcovertypeid",
+              "vegetationcoverpercent",
+              "vegetationcovernotes"
+            ],
+            "ndb__eventchronology": [
+              "source_row",
+              "eventchronologyid",
+              "analysisunitid",
+              "eventid",
+              "notes",
+              "recdatecreated",
+              "recdatemodified",
+              "chroncontrolid"
+            ],
+            "ndb__eventpublications": [
+              "source_row",
+              "eventid",
+              "publicationid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__events": [
+              "source_row",
+              "eventid",
+              "eventtypeid",
+              "eventname",
+              "c14age",
+              "c14ageyounger",
+              "c14ageolder",
+              "calage",
+              "calageyounger",
+              "calageolder",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__eventtypes": [
+              "source_row",
+              "eventtypeid",
+              "eventtype",
+              "recdatecreated",
+              "recdatemodified",
+              "chroncontroltypeid"
+            ],
+            "ndb__externalcontacts": [
+              "source_row",
+              "contactid",
+              "identifier",
+              "extdatabaseid"
+            ],
+            "ndb__externaldatabases": [
+              "source_row",
+              "extdatabaseid",
+              "extdatabasename",
+              "url",
+              "recdatecreated",
+              "recdatemodified",
+              "urlmask"
+            ],
+            "ndb__externalgeochronology": [
+              "source_row",
+              "geochronid",
+              "extdatabaseid",
+              "identifier"
+            ],
+            "ndb__externalgrants": [
+              "source_row",
+              "grantid",
+              "identifier",
+              "extdatabaseid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__externalpublications": [
+              "source_row",
+              "publicationid",
+              "extdatabaseid",
+              "extpublicationid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__externalspeleothemdata": [
+              "source_row",
+              "entityid",
+              "externalid",
+              "extdatabaseid",
+              "externaldescription"
+            ],
+            "ndb__externaltaxa": [
+              "source_row",
+              "taxonid",
+              "extdatabaseid",
+              "exttaxonid",
+              "url",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__faciestypes": [
+              "source_row",
+              "faciesid",
+              "facies",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__formtaxa": [
+              "source_row",
+              "formtaxonid",
+              "taxonid",
+              "affinityid",
+              "publicationid",
+              "systematicdescription",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__fractiondated": [
+              "source_row",
+              "fractionid",
+              "fraction",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__fundinginstitutions": [
+              "source_row",
+              "institutionid",
+              "grantid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__geochroncontrols": [
+              "source_row",
+              "chroncontrolid",
+              "geochronid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__geochronology": [
+              "source_row",
+              "geochronid",
+              "sampleid",
+              "geochrontypeid",
+              "agetypeid",
+              "age",
+              "errorolder",
+              "erroryounger",
+              "infinite",
+              "delta13c",
+              "labnumber",
+              "materialdated",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__geochronpublications": [
+              "source_row",
+              "geochronid",
+              "publicationid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__geochrontypes": [
+              "source_row",
+              "geochrontypeid",
+              "geochrontype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__geopaths": [
+              "source_row",
+              "geoout",
+              "geoin"
+            ],
+            "ndb__geopoliticalunits": [
+              "source_row",
+              "geopoliticalid",
+              "geopoliticalname",
+              "geopoliticalunit",
+              "rank",
+              "highergeopoliticalid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__grantawardees": [
+              "source_row",
+              "grantid",
+              "contactid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__grants": [
+              "source_row",
+              "grantid",
+              "grantname",
+              "grantnumber",
+              "dateawarded",
+              "dateended",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__hiatuschronology": [
+              "source_row",
+              "hiatusid",
+              "chronologyid",
+              "hiatuslength",
+              "hiatusuncertainty"
+            ],
+            "ndb__hiatuses": [
+              "source_row",
+              "hiatusid",
+              "analysisunitstart",
+              "analysisunitend",
+              "notes"
+            ],
+            "ndb__institutions": [
+              "source_row",
+              "institutionid",
+              "institutionname",
+              "institutionlocation",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isobiomarkerbandtypes": [
+              "source_row",
+              "isobiomarkerbandtypeid",
+              "isobiomarkertypeid",
+              "isobiomarkerbandtype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isobiomarkertypes": [
+              "source_row",
+              "isobiomarkertypeid",
+              "isobiomarkertype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isoinstrumentation": [
+              "source_row",
+              "datasetid",
+              "variableid",
+              "isoinstrumentationtypeid",
+              "isosampleintrosystemtypeid",
+              "insterrorpercent",
+              "insterrorrunsd",
+              "insterrorlongtermpercent",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isoinstrumentationtypes": [
+              "source_row",
+              "isoinstrumentationtypeid",
+              "isoinstrumentationtype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isomatanalsubstrate": [
+              "source_row",
+              "isomatanaltypeid",
+              "isosubstratetypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isomaterialanalyzedtypes": [
+              "source_row",
+              "isomatanaltypeid",
+              "isomaterialanalyzedtype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isometadata": [
+              "source_row",
+              "isometadataid",
+              "dataid",
+              "isomatanaltypeid",
+              "isosubstratetypeid",
+              "analystid",
+              "lab",
+              "labnumber",
+              "mass_mg",
+              "weightpercent",
+              "atomicpercent",
+              "reps",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isopretreatmenttypes": [
+              "source_row",
+              "isopretreatmenttypeid",
+              "isopretreatmenttype",
+              "isopretreatmentqualifier",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isosampleintrosystemtypes": [
+              "source_row",
+              "isosampleintrosystemtypeid",
+              "isosampleintrosystemtype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isosampleorigintypes": [
+              "source_row",
+              "isosampleorigintypeid",
+              "isosampleorigintype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isosamplepretreatments": [
+              "source_row",
+              "dataid",
+              "isopretreatmenttypeid",
+              "order",
+              "value",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isoscaletypes": [
+              "source_row",
+              "isoscaletypeid",
+              "isoscaleacronym",
+              "isoscalename",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isospecimendata": [
+              "source_row",
+              "isospecimendataid",
+              "dataid",
+              "specimenid",
+              "sd",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isosrmetadata": [
+              "source_row",
+              "datasetid",
+              "variableid",
+              "srlocalvalue",
+              "srlocalgeolcontext",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isostandards": [
+              "source_row",
+              "datasetid",
+              "variableid",
+              "isostandardid",
+              "value",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isostandardtypes": [
+              "source_row",
+              "isostandardtypeid",
+              "isostandardtype",
+              "isostandardmaterial",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isostratdata": [
+              "source_row",
+              "dataid",
+              "sd",
+              "taxonid",
+              "elementtypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isosubstratetypes": [
+              "source_row",
+              "isosubstratetypeid",
+              "isosubstratetype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__isovariablescaletypes": [
+              "source_row",
+              "variableid",
+              "isoscaletypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__keywords": [
+              "source_row",
+              "keywordid",
+              "keyword",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__lakeparameters": [
+              "source_row",
+              "siteid",
+              "lakeparameterid",
+              "value",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__lakeparametertypes": [
+              "source_row",
+              "lakeparameterid",
+              "lakeparametercode",
+              "lakeparametershortname",
+              "lakeparameter",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__landusetypes": [
+              "source_row",
+              "landusecovertypeid",
+              "landusecovertype",
+              "landusecovernotes",
+              "publicationid"
+            ],
+            "ndb__leadmodelbasis": [
+              "source_row",
+              "pbbasisid",
+              "pbbasis"
+            ],
+            "ndb__leadmodels": [
+              "source_row",
+              "pbbasisid",
+              "analysisunitid",
+              "cumulativeinventory"
+            ],
+            "ndb__lithology": [
+              "source_row",
+              "lithologyid",
+              "collectionunitid",
+              "depthtop",
+              "depthbottom",
+              "lowerboundary",
+              "description",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__lithostrat": [
+              "source_row",
+              "lithostratid",
+              "lithostratunitid",
+              "lithostratname",
+              "higherlithostratid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__lithostratunits": [
+              "source_row",
+              "lithostratunitid",
+              "lithostratunit",
+              "rank",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__negativecontroltypes": [
+              "source_row",
+              "negativecontroltypeid",
+              "negativecontroltype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__projectdatasets": [
+              "source_row",
+              "projectid",
+              "datasetid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__projectgrants": [
+              "source_row",
+              "projectid",
+              "grantid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__projectkeywords": [
+              "source_row",
+              "projectid",
+              "keywordid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__projectparticipants": [
+              "source_row",
+              "projectid",
+              "contactid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__projects": [
+              "source_row",
+              "projectid",
+              "parentprojectid",
+              "projectname",
+              "projectdescription",
+              "projectstartdate",
+              "projectenddate",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__publicationauthors": [
+              "source_row",
+              "authorid",
+              "publicationid",
+              "authororder",
+              "familyname",
+              "initials",
+              "suffix",
+              "contactid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__publicationeditors": [
+              "source_row",
+              "editorid",
+              "publicationid",
+              "editororder",
+              "familyname",
+              "initials",
+              "suffix",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__publications": [
+              "source_row",
+              "publicationid",
+              "pubtypeid",
+              "year",
+              "citation",
+              "articletitle",
+              "journal",
+              "volume",
+              "issue",
+              "pages",
+              "citationnumber",
+              "doi",
+              "booktitle",
+              "numvolumes",
+              "edition",
+              "volumetitle",
+              "seriestitle",
+              "seriesvolume",
+              "publisher",
+              "url",
+              "city",
+              "state",
+              "country",
+              "originallanguage",
+              "notes",
+              "recdatecreated",
+              "recdatemodified",
+              "crossref",
+              "bibtex"
+            ],
+            "ndb__publicationtranslators": [
+              "source_row",
+              "translatorid",
+              "publicationid",
+              "translatororder",
+              "familyname",
+              "initials",
+              "suffix",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__publicationtypes": [
+              "source_row",
+              "pubtypeid",
+              "pubtype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__radiocarbon": [
+              "source_row",
+              "geochronid",
+              "radiocarbonmethodid",
+              "percentc",
+              "percentn",
+              "delta13c",
+              "delta15n",
+              "percentcollagen",
+              "reservoir",
+              "recdatecreated",
+              "recdatemodified",
+              "masscmg",
+              "cnratio"
+            ],
+            "ndb__radiocarboncalibration": [
+              "source_row",
+              "c14yrbp",
+              "calyrbp"
+            ],
+            "ndb__radiocarbonmethods": [
+              "source_row",
+              "radiocarbonmethodid",
+              "radiocarbonmethod",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__relativeagepublications": [
+              "source_row",
+              "relativeageid",
+              "publicationid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__relativeages": [
+              "source_row",
+              "relativeageid",
+              "relativeageunitid",
+              "relativeagescaleid",
+              "relativeage",
+              "c14ageyounger",
+              "c14ageolder",
+              "calageyounger",
+              "calageolder",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__relativeagescales": [
+              "source_row",
+              "relativeagescaleid",
+              "relativeagescale",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__relativeageunits": [
+              "source_row",
+              "relativeageunitid",
+              "relativeageunit",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__relativechronology": [
+              "source_row",
+              "relativechronid",
+              "analysisunitid",
+              "relativeageid",
+              "notes",
+              "recdatecreated",
+              "recdatemodified",
+              "chroncontrolid"
+            ],
+            "ndb__repositoryinstitutions": [
+              "source_row",
+              "repositoryid",
+              "acronym",
+              "repository",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__repositoryspecimens": [
+              "source_row",
+              "datasetid",
+              "repositoryid",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__rocktypes": [
+              "source_row",
+              "rocktypeid",
+              "rocktype",
+              "higherrocktypeid",
+              "description",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__sampleages": [
+              "source_row",
+              "sampleageid",
+              "sampleid",
+              "chronologyid",
+              "age",
+              "ageyounger",
+              "ageolder",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__sampleanalysts": [
+              "source_row",
+              "analystid",
+              "sampleid",
+              "contactid",
+              "analystorder",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__samplecategories": [
+              "source_row",
+              "samplecategoryid",
+              "samplecategory",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__samplekeywords": [
+              "source_row",
+              "sampleid",
+              "keywordid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__samples": [
+              "source_row",
+              "sampleid",
+              "analysisunitid",
+              "datasetid",
+              "samplename",
+              "analysisdate",
+              "labnumber",
+              "preparationmethod",
+              "notes",
+              "recdatecreated",
+              "recdatemodified",
+              "sampledate",
+              "taxonid"
+            ],
+            "ndb__samplestoragesolutions": [
+              "source_row",
+              "samplestoragesolutionid",
+              "samplestoragesolution",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__sequencedata": [
+              "source_row",
+              "dataid",
+              "sequenceid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__sequences": [
+              "source_row",
+              "sequenceid",
+              "datasetid",
+              "sequence",
+              "asv",
+              "primername",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__sitegeopolitical": [
+              "source_row",
+              "sitegeopoliticalid",
+              "siteid",
+              "geopoliticalid",
+              "recdatecreated",
+              "recdatemodified",
+              "objectid"
+            ],
+            "ndb__siteimages": [
+              "source_row",
+              "siteimageid",
+              "siteid",
+              "contactid",
+              "caption",
+              "credit",
+              "date",
+              "siteimage",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__sitelandusecover": [
+              "source_row",
+              "siteid",
+              "landusecovertypeid",
+              "landusecoverpercent",
+              "landusecovernotes"
+            ],
+            "ndb__sites": [
+              "source_row",
+              "siteid",
+              "sitename",
+              "longitudeeast",
+              "latitudenorth",
+              "longitudewest",
+              "latitudesouth",
+              "altitude",
+              "area",
+              "sitedescription",
+              "notes",
+              "recdatecreated",
+              "recdatemodified",
+              "geog"
+            ],
+            "ndb__sitestemp": [
+              "source_row",
+              "siteid",
+              "sitename",
+              "longitudeeast",
+              "latitudenorth",
+              "longitudewest",
+              "latitudesouth",
+              "altitude",
+              "area",
+              "sitedescription",
+              "notes",
+              "recdatecreated",
+              "recdatemodified",
+              "geog"
+            ],
+            "ndb__sitevegetationcover": [
+              "source_row",
+              "siteid",
+              "vegetationcovertypeid",
+              "vegetationcoverpercent",
+              "vegetationcovernotes"
+            ],
+            "ndb__spatialreferencesystems": [
+              "source_row",
+              "spatialreferencesystemid",
+              "spatialreferencesystem",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__specimendates": [
+              "source_row",
+              "specimendateid",
+              "geochronid",
+              "taxonid",
+              "fractionid",
+              "sampleid",
+              "notes",
+              "elementtypeid",
+              "recdatecreated",
+              "recdatemodified",
+              "specimenid"
+            ],
+            "ndb__specimendatescal": [
+              "source_row",
+              "specimendatecalid",
+              "specimendateid",
+              "calage",
+              "calageolder",
+              "calageyounger",
+              "calibrationcurveid",
+              "calibrationprogramid",
+              "datecalibrated",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__specimendomesticstatustypes": [
+              "source_row",
+              "domesticstatusid",
+              "domesticstatus",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__specimengenbank": [
+              "source_row",
+              "specimenid",
+              "genbanknr"
+            ],
+            "ndb__specimens": [
+              "source_row",
+              "specimenid",
+              "dataid",
+              "elementtypeid",
+              "symmetryid",
+              "portionid",
+              "maturityid",
+              "sexid",
+              "domesticstatusid",
+              "preservative",
+              "nisp",
+              "repositoryid",
+              "specimennr",
+              "fieldnr",
+              "arctosnr",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__specimensextypes": [
+              "source_row",
+              "sexid",
+              "sex",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__specimentaphonomy": [
+              "source_row",
+              "specimenid",
+              "taphonomictypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__speleothemcollectionunits": [
+              "source_row",
+              "entityid",
+              "collectionunitid",
+              "persistid"
+            ],
+            "ndb__speleothemdriptypes": [
+              "source_row",
+              "speleothemdriptypeid",
+              "speleothemdriptype",
+              "speleothemdriptypenotes",
+              "speleothemdriptypepublicationid"
+            ],
+            "ndb__speleothementitystatuses": [
+              "source_row",
+              "entitystatusid",
+              "entitystatus"
+            ],
+            "ndb__speleothems": [
+              "source_row",
+              "siteid",
+              "entityid",
+              "entityname",
+              "monitoring",
+              "rockageid",
+              "entrancedistance",
+              "entrancedistanceunits",
+              "speleothemtypeid"
+            ],
+            "ndb__speleothemtypes": [
+              "source_row",
+              "speleothemtypeid",
+              "speleothemtype",
+              "speleothemtypenotes",
+              "speleothemtypepublicationid"
+            ],
+            "ndb__summarydatataphonomy": [
+              "source_row",
+              "dataid",
+              "taphonomictypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__synonyms": [
+              "source_row",
+              "synonymid",
+              "invalidtaxonid",
+              "validtaxonid",
+              "synonymtypeid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__synonymtypes": [
+              "source_row",
+              "synonymtypeid",
+              "synonymtype",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__synonymy": [
+              "source_row",
+              "synonymyid",
+              "datasetid",
+              "taxonid",
+              "reftaxonid",
+              "fromcontributor",
+              "publicationid",
+              "notes",
+              "contactid",
+              "datesynonymized",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__sysdiagrams": [
+              "source_row",
+              "name",
+              "principal_id",
+              "diagram_id",
+              "version",
+              "definition"
+            ],
+            "ndb__taphonomicsystems": [
+              "source_row",
+              "taphonomicsystemid",
+              "taphonomicsystem",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__taphonomicsystemsdatasettypes": [
+              "source_row",
+              "datasettypeid",
+              "taphonomicsystemid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__taphonomictypes": [
+              "source_row",
+              "taphonomictypeid",
+              "taphonomicsystemid",
+              "taphonomictype",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__taxa": [
+              "source_row",
+              "taxonid",
+              "taxoncode",
+              "taxonname",
+              "author",
+              "valid",
+              "highertaxonid",
+              "extinct",
+              "taxagroupid",
+              "publicationid",
+              "validatorid",
+              "validatedate",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__taxaalthierarchy": [
+              "source_row",
+              "taxaalthierarchytypeid",
+              "taxonid",
+              "highertaxonid"
+            ],
+            "ndb__taxaalthierarchytypes": [
+              "source_row",
+              "taxaalthierarchytypeid",
+              "taxaalthierarchyname",
+              "taxaalthierarchydescript"
+            ],
+            "ndb__taxagrouptypes": [
+              "source_row",
+              "taxagroupid",
+              "taxagroup",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__taxonpaths": [
+              "source_row",
+              "taxonout",
+              "taxonid"
+            ],
+            "ndb__tephras": [
+              "source_row",
+              "tephraid",
+              "eventid",
+              "analysisunitid",
+              "notes",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__uncertaintybases": [
+              "source_row",
+              "uncertaintybasisid",
+              "uncertaintybasis"
+            ],
+            "ndb__unitsdatasettypes": [
+              "source_row",
+              "datasettypeid",
+              "variableunitsid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__uraniumseries": [
+              "source_row",
+              "geochronid",
+              "decayconstantid",
+              "ratio230th232th",
+              "ratiouncertainty230th232th",
+              "activity230th238u",
+              "activityuncertainty230th238u",
+              "activity234u238u",
+              "activityuncertainty234u238u",
+              "iniratio230th232th",
+              "iniratiouncertainty230th232th"
+            ],
+            "ndb__uraniumseriesdata": [
+              "source_row",
+              "geochronid",
+              "dataid"
+            ],
+            "ndb__variablecontexts": [
+              "source_row",
+              "variablecontextid",
+              "variablecontext",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__variableelements": [
+              "source_row",
+              "variableelementid",
+              "variableelement",
+              "elementtypeid",
+              "symmetryid",
+              "portionid",
+              "maturityid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__variables": [
+              "source_row",
+              "variableid",
+              "taxonid",
+              "variableelementid",
+              "variableunitsid",
+              "variablecontextid",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__variableunits": [
+              "source_row",
+              "variableunitsid",
+              "variableunits",
+              "recdatecreated",
+              "recdatemodified"
+            ],
+            "ndb__vegetationcovertypes": [
+              "source_row",
+              "vegetationcovertypeid",
+              "vegetationcovertype",
+              "vegetationcovernotes",
+              "vegetationpublicationid"
+            ]
+          },
+          "record_table": "ndb__sites",
+          "records": 32061,
+          "user_version": 2
+        },
+        {
+          "name": "observations.sqlite",
+          "bytes": 1487216640,
+          "sha256": "8d32474eaeb2defd4d527530e6dbd20e202406916e679ed4b8db7fe9e1645179",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "ndb__data": [
+              "source_row",
+              "dataid",
+              "sampleid",
+              "variableid",
+              "value",
+              "recdatecreated",
+              "recdatemodified"
+            ]
+          },
+          "record_table": "ndb__data",
+          "records": 12598201,
+          "user_version": 2
+        },
+        {
+          "name": "reader.sqlite",
+          "bytes": 227639296,
+          "sha256": "8f5c375128f2dd29231c1b7ad4d3ddc228c151d834c5fee31dae181521c6f643",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "search_documents": [
+              "rowid",
+              "kind",
+              "source_id"
+            ],
+            "search_fts": [
+              "text"
+            ],
+            "observation_counts": [
+              "datasetid",
+              "analysis_collectionunitid",
+              "variableid",
+              "observations"
+            ]
+          },
+          "record_table": "search_documents",
+          "records": 1763238,
+          "user_version": 2
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 110874,
+          "sha256": "3385e8eba922ab12bc5fde1e8175032f1d78807a1f8e7dd77cfdafd86894c49f"
+        },
+        {
+          "name": "SOURCES.md",
+          "bytes": 26674,
+          "sha256": "e893d7c2a823a4261eff1fbdf1e78045af979acbca44bf23b08764c483f80af5"
+        }
+      ],
+      "countries": [
+        {
+          "label": "Albania",
+          "value": "36",
+          "records": 1
+        },
+        {
+          "label": "Algeria",
+          "value": "85",
+          "records": 28
+        },
+        {
+          "label": "Andorra",
+          "value": "143",
+          "records": 5
+        },
+        {
+          "label": "Antarctic Islands",
+          "value": "174",
+          "records": 1
+        },
+        {
+          "label": "Antarctica",
+          "value": "173",
+          "records": 2
+        },
+        {
+          "label": "Arctic Ocean",
+          "value": "10076",
+          "records": 14
+        },
+        {
+          "label": "Argentina",
+          "value": "264",
+          "records": 46
+        },
+        {
+          "label": "Armenia",
+          "value": "289",
+          "records": 1
+        },
+        {
+          "label": "Atlantic Ocean",
+          "value": "9862",
+          "records": 22
+        },
+        {
+          "label": "Australia",
+          "value": "303",
+          "records": 221
+        },
+        {
+          "label": "Austria",
+          "value": "313",
+          "records": 176
+        },
+        {
+          "label": "Baffin Bay",
+          "value": "10077",
+          "records": 3
+        },
+        {
+          "label": "Bahamas",
+          "value": "403",
+          "records": 8
+        },
+        {
+          "label": "Barents Sea",
+          "value": "10088",
+          "records": 5
+        },
+        {
+          "label": "Belarus",
+          "value": "505",
+          "records": 96
+        },
+        {
+          "label": "Belgium",
+          "value": "513",
+          "records": 80
+        },
+        {
+          "label": "Belize",
+          "value": "527",
+          "records": 11
+        },
+        {
+          "label": "Benin",
+          "value": "534",
+          "records": 4
+        },
+        {
+          "label": "Bermuda",
+          "value": "547",
+          "records": 1
+        },
+        {
+          "label": "Black Sea",
+          "value": "9864",
+          "records": 8
+        },
+        {
+          "label": "Bolivia",
+          "value": "569",
+          "records": 65
+        },
+        {
+          "label": "Bosnia and Herzegovina",
+          "value": "579",
+          "records": 8
+        },
+        {
+          "label": "Botswana",
+          "value": "582",
+          "records": 1
+        },
+        {
+          "label": "Brazil",
+          "value": "593",
+          "records": 40
+        },
+        {
+          "label": "Bulgaria",
+          "value": "627",
+          "records": 54
+        },
+        {
+          "label": "Burkina Faso",
+          "value": "656",
+          "records": 1
+        },
+        {
+          "label": "Burundi",
+          "value": "702",
+          "records": 8
+        },
+        {
+          "label": "Cameroon",
+          "value": "745",
+          "records": 10
+        },
+        {
+          "label": "Canada",
+          "value": "756",
+          "records": 7932
+        },
+        {
+          "label": "Cape Verde",
+          "value": "770",
+          "records": 1
+        },
+        {
+          "label": "Caspian Sea",
+          "value": "9865",
+          "records": 6
+        },
+        {
+          "label": "Chad",
+          "value": "806",
+          "records": 9
+        },
+        {
+          "label": "Chile",
+          "value": "825",
+          "records": 45
+        },
+        {
+          "label": "China",
+          "value": "839",
+          "records": 780
+        },
+        {
+          "label": "Chukchi Sea",
+          "value": "10093",
+          "records": 1
+        },
+        {
+          "label": "Colombia",
+          "value": "876",
+          "records": 54
+        },
+        {
+          "label": "Congo, Democratic Republic of the [Zaire]",
+          "value": "914",
+          "records": 8
+        },
+        {
+          "label": "Congo, Republic of the",
+          "value": "941",
+          "records": 5
+        },
+        {
+          "label": "Costa Rica",
+          "value": "972",
+          "records": 60
+        },
+        {
+          "label": "Croatia",
+          "value": "1000",
+          "records": 20
+        },
+        {
+          "label": "Cuba",
+          "value": "1023",
+          "records": 1
+        },
+        {
+          "label": "Cyprus",
+          "value": "1039",
+          "records": 4
+        },
+        {
+          "label": "Czech Republic",
+          "value": "1046",
+          "records": 203
+        },
+        {
+          "label": "Denmark",
+          "value": "1061",
+          "records": 9
+        },
+        {
+          "label": "Djibouti",
+          "value": "1165",
+          "records": 1
+        },
+        {
+          "label": "Dominican Republic",
+          "value": "1173",
+          "records": 3
+        },
+        {
+          "label": "Ecuador",
+          "value": "1220",
+          "records": 170
+        },
+        {
+          "label": "Egypt",
+          "value": "1262",
+          "records": 6
+        },
+        {
+          "label": "Estonia",
+          "value": "1321",
+          "records": 50
+        },
+        {
+          "label": "Ethiopia",
+          "value": "1337",
+          "records": 11
+        },
+        {
+          "label": "Falkland Islands [Islas Malvinas]",
+          "value": "1350",
+          "records": 6
+        },
+        {
+          "label": "Faroe Islands",
+          "value": "1356",
+          "records": 2
+        },
+        {
+          "label": "Fiji",
+          "value": "1363",
+          "records": 12
+        },
+        {
+          "label": "Finland",
+          "value": "1411",
+          "records": 83
+        },
+        {
+          "label": "Fram Strait",
+          "value": "10094",
+          "records": 4
+        },
+        {
+          "label": "France",
+          "value": "1418",
+          "records": 1078
+        },
+        {
+          "label": "French Polynesia",
+          "value": "1538",
+          "records": 3
+        },
+        {
+          "label": "Gabon",
+          "value": "1663",
+          "records": 2
+        },
+        {
+          "label": "Georgia",
+          "value": "1681",
+          "records": 11
+        },
+        {
+          "label": "Germany",
+          "value": "1693",
+          "records": 587
+        },
+        {
+          "label": "Ghana",
+          "value": "1710",
+          "records": 5
+        },
+        {
+          "label": "Greece",
+          "value": "1723",
+          "records": 67
+        },
+        {
+          "label": "Greenland",
+          "value": "1792",
+          "records": 72
+        },
+        {
+          "label": "Greenland Sea",
+          "value": "10087",
+          "records": 7
+        },
+        {
+          "label": "Grenada",
+          "value": "1793",
+          "records": 1
+        },
+        {
+          "label": "Guadeloupe",
+          "value": "1796",
+          "records": 1
+        },
+        {
+          "label": "Guatemala",
+          "value": "1804",
+          "records": 44
+        },
+        {
+          "label": "Gulf of Alaska",
+          "value": "10098",
+          "records": 1
+        },
+        {
+          "label": "Gulf of St. Lawrence",
+          "value": "10081",
+          "records": 1
+        },
+        {
+          "label": "Hudson Bay",
+          "value": "10079",
+          "records": 3
+        },
+        {
+          "label": "Hudson Strait",
+          "value": "10080",
+          "records": 1
+        },
+        {
+          "label": "Hungary",
+          "value": "1914",
+          "records": 60
+        },
+        {
+          "label": "Iceland",
+          "value": "1957",
+          "records": 33
+        },
+        {
+          "label": "India",
+          "value": "1968",
+          "records": 16
+        },
+        {
+          "label": "Indonesia",
+          "value": "2025",
+          "records": 13
+        },
+        {
+          "label": "Iran",
+          "value": "2066",
+          "records": 23
+        },
+        {
+          "label": "Ireland",
+          "value": "2116",
+          "records": 70
+        },
+        {
+          "label": "Israel",
+          "value": "2148",
+          "records": 40
+        },
+        {
+          "label": "Italy",
+          "value": "2155",
+          "records": 390
+        },
+        {
+          "label": "Jan Mayen",
+          "value": "2280",
+          "records": 12
+        },
+        {
+          "label": "Japan",
+          "value": "2281",
+          "records": 642
+        },
+        {
+          "label": "Jordan",
+          "value": "2332",
+          "records": 25
+        },
+        {
+          "label": "Kazakhstan",
+          "value": "2346",
+          "records": 5
+        },
+        {
+          "label": "Kenya",
+          "value": "2364",
+          "records": 18
+        },
+        {
+          "label": "Korea, South",
+          "value": "2394",
+          "records": 154
+        },
+        {
+          "label": "Kyrgyzstan",
+          "value": "2418",
+          "records": 168
+        },
+        {
+          "label": "Labrador Sea",
+          "value": "10078",
+          "records": 6
+        },
+        {
+          "label": "Laptev Sea",
+          "value": "10095",
+          "records": 1
+        },
+        {
+          "label": "Latvia",
+          "value": "2446",
+          "records": 12
+        },
+        {
+          "label": "Lebanon",
+          "value": "2480",
+          "records": 6
+        },
+        {
+          "label": "Lesotho",
+          "value": "2487",
+          "records": 1
+        },
+        {
+          "label": "Lithuania",
+          "value": "2559",
+          "records": 8
+        },
+        {
+          "label": "Luxembourg",
+          "value": "2570",
+          "records": 9
+        },
+        {
+          "label": "Macedonia",
+          "value": "2586",
+          "records": 97
+        },
+        {
+          "label": "Madagascar",
+          "value": "2671",
+          "records": 9
+        },
+        {
+          "label": "Malawi",
+          "value": "2700",
+          "records": 3
+        },
+        {
+          "label": "Malta",
+          "value": "2788",
+          "records": 1
+        },
+        {
+          "label": "Mauritania",
+          "value": "2825",
+          "records": 1
+        },
+        {
+          "label": "Mauritius",
+          "value": "2839",
+          "records": 3
+        },
+        {
+          "label": "Mayotte",
+          "value": "2844",
+          "records": 1
+        },
+        {
+          "label": "Mediterranean Sea",
+          "value": "9863",
+          "records": 7
+        },
+        {
+          "label": "Mexico",
+          "value": "2845",
+          "records": 163
+        },
+        {
+          "label": "Mongolia",
+          "value": "2923",
+          "records": 137
+        },
+        {
+          "label": "Montenegro",
+          "value": "2946",
+          "records": 22
+        },
+        {
+          "label": "Morocco",
+          "value": "2969",
+          "records": 12
+        },
+        {
+          "label": "Namibia",
+          "value": "3074",
+          "records": 7
+        },
+        {
+          "label": "Nares Strait",
+          "value": "10100",
+          "records": 1
+        },
+        {
+          "label": "Netherlands",
+          "value": "3180",
+          "records": 574
+        },
+        {
+          "label": "New Caledonia",
+          "value": "3194",
+          "records": 8
+        },
+        {
+          "label": "New Zealand",
+          "value": "3205",
+          "records": 9
+        },
+        {
+          "label": "Niger",
+          "value": "3243",
+          "records": 1
+        },
+        {
+          "label": "Nigeria",
+          "value": "3252",
+          "records": 7
+        },
+        {
+          "label": "Norfolk Island",
+          "value": "3291",
+          "records": 1
+        },
+        {
+          "label": "Norway",
+          "value": "3307",
+          "records": 80
+        },
+        {
+          "label": "Norwegian Sea",
+          "value": "10086",
+          "records": 7
+        },
+        {
+          "label": "Oman",
+          "value": "3327",
+          "records": 5
+        },
+        {
+          "label": "Pacific Ocean",
+          "value": "10074",
+          "records": 2
+        },
+        {
+          "label": "Panama",
+          "value": "3348",
+          "records": 75
+        },
+        {
+          "label": "Papua New Guinea",
+          "value": "3361",
+          "records": 20
+        },
+        {
+          "label": "Peru",
+          "value": "3402",
+          "records": 113
+        },
+        {
+          "label": "Poland",
+          "value": "3761",
+          "records": 683
+        },
+        {
+          "label": "Portugal",
+          "value": "4158",
+          "records": 151
+        },
+        {
+          "label": "Puerto Rico",
+          "value": "4480",
+          "records": 12
+        },
+        {
+          "label": "Qatar",
+          "value": "4481",
+          "records": 3
+        },
+        {
+          "label": "Romania",
+          "value": "4493",
+          "records": 92
+        },
+        {
+          "label": "Russia",
+          "value": "4540",
+          "records": 544
+        },
+        {
+          "label": "Rwanda",
+          "value": "4624",
+          "records": 3
+        },
+        {
+          "label": "Senegal",
+          "value": "4675",
+          "records": 7
+        },
+        {
+          "label": "Serbia",
+          "value": "4687",
+          "records": 10
+        },
+        {
+          "label": "Slovakia",
+          "value": "4946",
+          "records": 50
+        },
+        {
+          "label": "Slovenia",
+          "value": "4955",
+          "records": 16
+        },
+        {
+          "label": "Somalia",
+          "value": "5212",
+          "records": 1
+        },
+        {
+          "label": "South Africa",
+          "value": "5231",
+          "records": 45
+        },
+        {
+          "label": "South Georgia and the South Sandwich Islands",
+          "value": "5241",
+          "records": 1
+        },
+        {
+          "label": "Spain",
+          "value": "5242",
+          "records": 858
+        },
+        {
+          "label": "St. Lawrence Estuary",
+          "value": "10096",
+          "records": 1
+        },
+        {
+          "label": "Sudan",
+          "value": "5348",
+          "records": 4
+        },
+        {
+          "label": "Svalbard",
+          "value": "5386",
+          "records": 87
+        },
+        {
+          "label": "Sweden",
+          "value": "5392",
+          "records": 204
+        },
+        {
+          "label": "Switzerland",
+          "value": "5414",
+          "records": 330
+        },
+        {
+          "label": "Syria",
+          "value": "5441",
+          "records": 5
+        },
+        {
+          "label": "São Tomé and Príncipe",
+          "value": "4658",
+          "records": 1
+        },
+        {
+          "label": "Taiwan",
+          "value": "5456",
+          "records": 1
+        },
+        {
+          "label": "Tanzania",
+          "value": "5487",
+          "records": 19
+        },
+        {
+          "label": "Tonga",
+          "value": "5601",
+          "records": 1
+        },
+        {
+          "label": "Tunisia",
+          "value": "5633",
+          "records": 14
+        },
+        {
+          "label": "Turkey",
+          "value": "5658",
+          "records": 129
+        },
+        {
+          "label": "Turkmenistan",
+          "value": "5740",
+          "records": 1
+        },
+        {
+          "label": "Uganda",
+          "value": "5771",
+          "records": 17
+        },
+        {
+          "label": "Ukraine",
+          "value": "5852",
+          "records": 45
+        },
+        {
+          "label": "United Kingdom",
+          "value": "5888",
+          "records": 751
+        },
+        {
+          "label": "United States",
+          "value": "6129",
+          "records": 11967
+        },
+        {
+          "label": "Uzbekistan",
+          "value": "9344",
+          "records": 2
+        },
+        {
+          "label": "Vanuatu",
+          "value": "9359",
+          "records": 4
+        },
+        {
+          "label": "Venezuela",
+          "value": "9397",
+          "records": 6
+        },
+        {
+          "label": "White Sea",
+          "value": "10101",
+          "records": 1
+        },
+        {
+          "label": "Yemen",
+          "value": "9516",
+          "records": 2
+        }
+      ]
     }
   ]
 }

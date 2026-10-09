@@ -10,11 +10,13 @@ from pathlib import Path
 import re
 import sqlite3
 import stat
+from threading import Lock
 import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 from uuid import uuid4
+from weakref import WeakValueDictionary
 import zipfile
 
 CATALOG = Path(__file__).resolve().parents[1] / "atlas/gui/data/data_pack_catalog.json"
@@ -123,7 +125,7 @@ def _catalog(path, modified, size):
                         or type(row["records"]) is not int or type(row["user_version"]) is not int
                         or not SQL_NAME.fullmatch(row["record_table"]) or row["records"] < 0
                         or not 0 <= row["user_version"] <= 2**31 - 1
-                        or not row["schema"] or len(row["schema"]) > 100
+                        or not row["schema"] or len(row["schema"]) > 256
                         or row["record_table"] not in row["schema"]
                         or any(not isinstance(name, str) or not SQL_NAME.fullmatch(name)
                                or not isinstance(columns, list) or not 1 <= len(columns) <= 200
@@ -156,9 +158,30 @@ def _inside(root, path):
     return path
 
 
+_HASH_LOCKS = WeakValueDictionary()
+_HASH_LOCKS_GUARD = Lock()
+
+
 @lru_cache(maxsize=2048)
-def _verified_file(path, size, modified, changed, expected):
+def _file_matches(path, size, modified, changed, expected):
     return _hash(Path(path)) == expected
+
+
+def _verified_file(path, size, modified, changed, expected):
+    # Initial Dash callbacks can request the same multi-gigabyte collection
+    # concurrently. Share its first full checksum; never replace it with a
+    # file-stat-only acceptance or use one file's result for another.
+    with _HASH_LOCKS_GUARD:
+        lock = _HASH_LOCKS.get(path)
+        if lock is None:
+            lock = Lock()
+            _HASH_LOCKS[path] = lock
+    with lock:
+        return _file_matches(path, size, modified, changed, expected)
+
+
+_verified_file.cache_clear = _file_matches.cache_clear
+_verified_file.cache_info = _file_matches.cache_info
 
 
 def _check_files(root, pack, *, database_checks=False):

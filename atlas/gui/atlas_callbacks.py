@@ -2,14 +2,14 @@
 import sqlite3
 from urllib.parse import urlsplit
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
-from core import atlas_catalog as catalog, excavation_catalog
+from core import atlas_catalog as catalog, excavation_catalog, environment_catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
 from core.data_packs import PackStore
 from atlas.gui.library_ui import reading_nav
 
 ERRORS = (ValueError, OSError, sqlite3.Error, TypeError, KeyError)
 PACK_SOURCES = {"radiocarbon-world": "dates", "dinosaur-sites": "dinosaurs", "neolithic-assemblages": "assemblages",
-                "excavations-surveys": "contexts"}
+                "excavations-surveys": "contexts", "dated-environments": "environments"}
 
 
 @callback(Output("library-section", "value", allow_duplicate=True),
@@ -123,13 +123,54 @@ def reader(selected, query, kind, source, context, page, _refresh):
                                    id={"type": "atlas-related", "index": link["key"]},
                                    n_clicks=0, className="atlas-secondary-button")
             main_keys = ("animals", "plants", "dates", "phases", "sites", "parent", "children")
-            main = [link for link in links if link["key"] in main_keys]
+            main = [link for link in links if link["key"] in main_keys or
+                    row["source"] == "environments" and link["parameters"]["view"] in ("observation", "sample", "age", "date")][:4]
             more = [link for link in links if link not in main]
             children.append(html.Div([html.H4("Associated evidence"), *[button(link) for link in main]], className="clovis-atlas-related"))
             if more:
                 children.append(html.Details([html.Summary("More associated evidence"),
                     html.Div([button(link) for link in more], className="clovis-atlas-related")]))
-        if row["source"] == "assemblages":
+        if row["source"] == "environments":
+            original = row["original"]
+            text = environment_catalog.value_text
+            children.append(html.Details([html.Summary("Original source fields"),
+                                         _facts((key, text(value)) for key, value in original["source"].items())]))
+            context_fields = [(key, values) for key, values in original["associated"].items()
+                              if key in ("sample", "dataset", "analysis", "chronology") and values]
+            if context_fields:
+                children.append(html.Details([html.Summary("Sample and collection context"),
+                    *[html.Details([html.Summary(key.capitalize()), _facts((name, text(value)) for name, value in values.items())]) for key, values in context_fields]]))
+            locations = environment_catalog.location_fields(original)
+            if locations:
+                children.append(html.Details([html.Summary("Published location"), *[_facts(fields) for fields in locations]]))
+            if original["age_assignments"]:
+                models = []
+                for assignment in original["age_assignments"]:
+                    chronology = assignment["chronology"]
+                    models.append(html.Details([html.Summary(chronology.get("chronologyname") or "Chronology " + str(assignment["source"]["chronologyid"])),
+                        _facts((key, text(value)) for key, value in assignment["source"].items()),
+                        _facts((key, text(value)) for key, value in chronology.items()),
+                        _facts((key, text(value)) for key, value in assignment["age_type"].items())]))
+                children.append(html.Details([html.Summary(f'{original["age_assignments_total"]:,} sample age assignments'), *models,
+                    html.P("These are age assignments from the original models. Dating measurements remain separate.", className="atlas-help"),
+                    *([html.P(f'Showing {len(models):,} of {original["age_assignments_total"]:,} assignments. Open the associated age evidence to read the others.', className="atlas-help")]
+                      if original["age_assignments_total"] > len(models) else [])]))
+            meanings = [(key, values) for key, values in original["associated"].items()
+                        if key in ("variable", "taxon", "variable_units", "element", "variable_context", "control_type", "date_type") and values]
+            if meanings or original["uncertainties"] or original.get("radiocarbon"):
+                children.append(html.Details([html.Summary("Variable meanings and measurement details"),
+                    *[html.Details([html.Summary(key.replace("_", " ").capitalize()), _facts((name, text(value)) for name, value in values.items())]) for key, values in meanings],
+                    *[_facts((key, text(value)) for key, value in row.items()) for row in original["uncertainties"]],
+                    *[_facts((key, text(value)) for key, value in meaning[group].items())
+                      for meaning in original["uncertainty_meanings"] for group in ("unit", "basis")],
+                    _facts((key, text(value)) for key, value in original.get("radiocarbon", {}).items())]))
+            if original["publications"] or original["dataset_dois"]:
+                children.append(html.Details([html.Summary("Source publications and dataset identifiers"),
+                    *[html.Div([html.P(publication.get("citation") or "Publication " + publication["publicationid"]),
+                        _facts((key, text(publication[key])) for key in ("publicationid", "articletitle", "booktitle", "year", "journal", "volume", "issue", "pages", "publisher", "doi", "url") if key in publication),
+                        _source_link(publication.get("url"), "Read source publication")]) for publication in original["publications"]],
+                    *[_facts((key, text(value)) for key, value in row.items()) for row in original["dataset_dois"]]]))
+        elif row["source"] == "assemblages":
             original = row["original"]
             children.append(html.Details([html.Summary("Original source fields"), _facts(original["source"].items())]))
             for key, title in (("animal_recovery", "Animal recovery methods"), ("plant_sampling", "Plant sampling phase"),

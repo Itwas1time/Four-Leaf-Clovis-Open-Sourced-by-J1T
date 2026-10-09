@@ -109,11 +109,18 @@ python -m atlas.gui.app
 ```
 
 The Dash app binds to localhost at port 8050. **Explore** opens on **Atlas**,
-with one search and a shared reader across **1,652,762 source records** when
-all four optional packs are installed. Search published places, cultures,
+with one search and a shared reader across **19,535,392 source records** when
+all five optional packs are installed. Search published places, cultures,
 materials or fossils and follow the original source. **Specialist searches**
 keeps detailed collection filters available. Counts mix different record types
 and can overlap between sources; they do not count unique excavated finds.
+
+The optional Neotoma collection adds source-linked fauna, pollen, charcoal,
+samples, dating measurements and every original age model. It retains
+20,447,331 scientific rows, with 17,882,630 readable records. Original units,
+uncertainties, preparation notes and location bounds remain with their sources.
+Modern samples and cores remain distinct from excavation contexts. Its download
+is about 562 MB; local storage is 2.67 GB. It uses the same Atlas reader.
 
 For local map research, choose **Rocks & fossils** or **Choose town**:
 select a state and town, then select

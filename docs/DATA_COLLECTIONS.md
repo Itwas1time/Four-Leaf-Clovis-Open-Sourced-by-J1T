@@ -1,4 +1,4 @@
-> **Public edition:** Census town points and reviewed reference catalogs are bundled. Precise archaeological and fossil find locations are excluded. See the [README](../README.md) for the data inventory.
+> **Public edition:** Census town points and reviewed reference catalogs are bundled. Optional data collections retain their publishers' original location qualifications. Private find locations and personal data are excluded from Git. See the [README](../README.md) for the data inventory.
 
 # Downloadable local collections
 
@@ -14,6 +14,7 @@ initial download and external source pages.
 | Dinosaur taxa and fossil sites | 37,852 published occurrences; 14,371 collections; 12,996 original taxonomic names across ranks, including synonyms | 27.8 MB | 266.8 MB |
 | Neolithic food, farming and animal remains | 96,115 source rows in twelve linked UCL EUROEVOL tables; 4,757 sites and 2,807 occupation phases | 17.0 MB | 103.1 MB |
 | Excavation contexts, finds and survey effort | 153,867 distinct source subjects from Gabii, Petra and Eastern Korinthia; original observation documents, tables and field definitions | 243.2 MB | 576.6 MB |
+| Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
 bundled. These additional collections are optional; the initial application
@@ -135,6 +136,45 @@ and [Eastern Korinthia Archaeological Survey](https://opencontext.org/projects/b
 published through Open Context under CC BY 4.0. Original authors, licenses and
 table versions accompany the collection. External media remain source links.
 
+## Sites, samples and past environments
+
+Search **Meadowcroft Mammalia**, **charcoal**, **pollen**, a published site,
+region or an original identifier such as **observation:918211**. Use **Limit to
+a source → Neotoma · sites, samples & environments** to focus this collection.
+Follow **Associated evidence** from the original site or collection context to
+samples, observations and dating evidence. These lists use the shared Atlas
+search, reader and pagination.
+
+The original public snapshot includes 12,598,201 observations, 1,069,197
+samples, 994,319 analysis units, 62,624 datasets, 45,553 collection units,
+32,061 sites, 45,448 age models, 415,615 chronology controls, 52,381 dating
+measurements and 2,567,231 sample-age assignments. Scientific dictionaries,
+taxa, publications and original identity links are also included. The
+20,447,331 scientific rows describe different quantities; modern surfaces,
+cores, animal middens and excavations retain their recorded methods.
+
+An observation retains its original value, variable, unit, taxon or measured
+parameter, preparation notes and uncertainties. Presence/absence is distinct
+from specimen counts. **Sample age assignments** shows every original model,
+age type, default flag and bound. A model range remains a range when its
+central age is unknown; infinite dating measurements remain greater-than
+results. Dating measurements and chronology controls are separate evidence.
+Original source fields and specialist details start closed.
+
+Published points, bounding areas and collection GPS fields remain unchanged.
+Some rectangles intentionally obscure a site's position and are not centred
+on it. Site-area documentation differs between Neotoma's schema and DataBUS;
+original values remain unchanged without unit conversion. Original publication
+citations, constituent databases, investigator names and DOI records accompany
+the evidence. Contact phone, fax, email, address and contact notes are omitted
+from the product; scientific attribution remains.
+
+Source: [Neotoma public snapshot](https://www.neotomadb.org/data/db-snapshots),
+5 October 2026, under its [CC BY 4.0 data policy](https://www.neotomadb.org/data/data-use-and-embargo-policy).
+Source IDs establish associations within this snapshot; similar names do not
+establish matches to other collections. Downloading this optional pack requires
+Clovis 0.14 or newer. All installed reference searches work offline.
+
 ## Storage, updates and offline transfers
 
 Collections live in **`~/Clovis Local/packs`**, separately from the application,
@@ -154,6 +194,7 @@ python -m core.data_packs install radiocarbon-world --archive clovis-radiocarbon
 python -m core.data_packs install dinosaur-sites --archive clovis-dinosaur-sites-2026.09.20.zip
 python -m core.data_packs install neolithic-assemblages --archive clovis-neolithic-assemblages-2015.07.zip
 python -m core.data_packs install excavations-surveys --archive clovis-excavations-surveys-2026.10.08.zip
+python -m core.data_packs install dated-environments --archive clovis-dated-environments-2026.10.05.zip
 ```
 
 Use the exact official archive; unpacked or edited databases are not accepted.
