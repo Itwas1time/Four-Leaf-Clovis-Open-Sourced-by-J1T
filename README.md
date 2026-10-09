@@ -115,6 +115,16 @@ materials or fossils and follow the original source. **Specialist searches**
 keeps detailed collection filters available. Counts mix different record types
 and can overlap between sources; they do not count unique excavated finds.
 
+Inside a Neotoma or dinosaur occurrence record, open **Published location →
+Show published location map**. The source point or area appears over a bundled
+offline world land outline. Areas receive no invented centre pin; dinosaur
+points retain collection precision. Changing records clears the map. Specialist
+collections load when opened, and independent installed files verify concurrently
+on first access with their full checksums retained. See
+[offline map sources](docs/OFFLINE_MAP_SOURCES.md).
+Multiword Neotoma searches follow bounded original context matches, with the
+complete query retained for broader searches and pagination.
+
 The optional Neotoma collection adds source-linked fauna, pollen, charcoal,
 samples, dating measurements and every original age model. It retains
 20,447,331 scientific rows, with 17,882,630 readable records. Original units,
@@ -188,8 +198,8 @@ See the [resident workflow and data provenance](docs/RESIDENT_CONTEXT.md).
 An [actual demonstration report](docs/examples/cincinnati-town-context.md)
 uses Cincinnati's public town point and a hypothetical older-building history.
 
-Map tiles and external style
-assets need network access; public directory searches and brief generation
+Background map tiles need network access; map styles and the source reader's
+world land outline are bundled locally. Public directory searches and brief generation
 use the bundled coordinate-free snapshot. Public hosting needs a separate
 deployment review; this package has no authentication or multi-user design.
 Optional API keys belong in private environment/config files, never Git.

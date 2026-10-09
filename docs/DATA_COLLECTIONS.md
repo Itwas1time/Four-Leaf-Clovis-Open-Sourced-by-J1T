@@ -8,6 +8,21 @@ collection**; progress remains available after a page reload. Open the installed
 collection to explore it in the shared atlas search and reader. Internet access is needed for the
 initial download and external source pages.
 
+In the shared reader, **Published location → Show published location map**
+draws Neotoma's original point or bounding area and PBDB's modern collection
+coordinates. It opens only on request and works offline. Multiple original
+Neotoma sites stay separate. Missing or invalid coordinates receive no invented
+location; a taxon receives no point from its name. The coarse modern land outline
+provides orientation, with the publisher's coordinates and qualifications beside
+the map. See [offline map sources](OFFLINE_MAP_SOURCES.md).
+
+Multiword Neotoma searches use the two rarest terms to find a bounded set of
+original row ordinals, then check remaining terms through those rows' original
+parent links. The plan stores at most 1,000 candidate ordinals per evidence
+type. Larger candidate sets use the complete existing query; this threshold
+does not limit returned records or pagination. Single-term and broad aggregate
+searches retain their existing plans.
+
 | Collection | Contents | Download | Installed |
 |---|---|---:|---:|
 | World archaeological radiocarbon results | 173,946 laboratory determinations; 144 recorded country labels | 17.7 MB | 63.2 MB |

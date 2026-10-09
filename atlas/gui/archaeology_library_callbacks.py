@@ -1,4 +1,5 @@
 """Search and cite archaeology project publications from bundled source data."""
+from atlas.gui.library_activation import require_section
 import math
 import sqlite3
 
@@ -36,8 +37,9 @@ def project_coverage(section):
           Output('library-project-previous','disabled'), Output('library-project-next','disabled'),
           Input('library-project-query','value'), Input('library-project-country','value'),
           Input('library-project-previous','n_clicks'), Input('library-project-next','n_clicks'),
-          State('library-project-page','data'))
-def project_results(query, country, previous, next_clicks, page):
+          State('library-project-page','data'), Input("library-section", "value"))
+def project_results(query, country, previous, next_clicks, page, section="projects"):
+    require_section(section, "projects")
     trigger = callback_context.triggered_id
     page = page if type(page) is int and page > 0 else 1
     if trigger == 'library-project-previous':

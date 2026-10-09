@@ -35,10 +35,12 @@ OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, 
 _READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas")
 
 
-def _signature():
+def _signature(sources=None):
     """Verify optional data before using cached results, including after repair."""
     signature = []
     for name, module in OPTIONAL.items():
+        if sources is not None and name not in sources:
+            continue
         try:
             path = module.database()
             stat = path.stat() if path else None
@@ -190,7 +192,7 @@ def search(query="", kind="all", source="all", page=1, context=None):
     if type(page) is not int or not 1 <= page <= 1_000_000:
         raise ValueError("Choose a valid atlas page.")
     query, sources, context = _parameters(query, kind, source, context)
-    signature = _signature()
+    signature = _signature(sources)
     available, missing = _first_pages(query, sources, context, signature)
     counts = [result["total"] for _, result, _ in available]
     total = sum(counts)

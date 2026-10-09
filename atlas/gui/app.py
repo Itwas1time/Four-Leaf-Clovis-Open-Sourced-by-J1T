@@ -39,10 +39,6 @@ from atlas.gui.library_ui import workspace as library_workspace
 
 app = dash.Dash(
     __name__,
-    external_stylesheets=[
-        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
-        "https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css",
-    ],
     suppress_callback_exceptions=True,
     title="Clovis Discovery Planner",
     update_title=None,

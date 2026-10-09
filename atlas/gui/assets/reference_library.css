@@ -10,6 +10,9 @@
 .clovis-atlas-related h4 { width:100%; margin:0 0 4px; }
 .clovis-atlas-related button { text-align:left; font-size:12px; }
 .clovis-atlas-coverage { margin:18px 0; font-size:13px; }
+.clovis-published-map { margin:12px 0; border:1px solid var(--clovis-rule); border-radius:7px; overflow:hidden; }
+.clovis-location-key { margin:12px 0; padding-left:20px; font-size:13px; }
+.clovis-location-key p { margin:4px 0 10px; }
 #atlas-context-banner { border-left:3px solid var(--clovis-green); padding:10px 14px; margin:10px 0; background:var(--clovis-hover); }
 #atlas-context-banner .clovis-library-back { margin:8px 0 0; }
 .clovis-library-heading { font: 400 26px/1.2 Georgia,serif; margin: 7px 0 10px; }

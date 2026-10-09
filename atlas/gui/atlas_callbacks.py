@@ -1,11 +1,12 @@
 """Common local search, authoritative record reading and evidence navigation."""
 import sqlite3
 from urllib.parse import urlsplit
-from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from dash import ALL, MATCH, Input, Output, State, callback, callback_context, html, no_update
 from core import atlas_catalog as catalog, excavation_catalog, environment_catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
 from core.data_packs import PackStore
 from atlas.gui.library_ui import reading_nav
+from atlas.gui.published_location_ui import control as location_control, render as location_map
 
 ERRORS = (ValueError, OSError, sqlite3.Error, TypeError, KeyError)
 PACK_SOURCES = {"radiocarbon-world": "dates", "dinosaur-sites": "dinosaurs", "neolithic-assemblages": "assemblages",
@@ -142,7 +143,7 @@ def reader(selected, query, kind, source, context, page, _refresh):
                     *[html.Details([html.Summary(key.capitalize()), _facts((name, text(value)) for name, value in values.items())]) for key, values in context_fields]]))
             locations = environment_catalog.location_fields(original)
             if locations:
-                children.append(html.Details([html.Summary("Published location"), *[_facts(fields) for fields in locations]]))
+                children.append(html.Details([html.Summary("Published location"), location_control(row["id"]), *[_facts(fields) for fields in locations]]))
             if original["age_assignments"]:
                 models = []
                 for assignment in original["age_assignments"]:
@@ -204,6 +205,7 @@ def reader(selected, query, kind, source, context, page, _refresh):
             original = row["original"].get("source")
             if original:
                 children.append(html.Details([html.Summary("Original occurrence fields"), _facts(original.items())]))
+                children.append(html.Details([html.Summary("Published location"), location_control(row["id"])]))
         children += [html.Details([html.Summary("Evidence conventions"), *[html.P(note) for note in row["notes"]]]),
                      _source_link(row["source_url"], "Read original source"), html.P(row["license"], className="atlas-help"),
                      html.Button("Save source to fieldbook", id="atlas-save", n_clicks=0, className="atlas-primary-button"),
@@ -211,6 +213,24 @@ def reader(selected, query, kind, source, context, page, _refresh):
         return children
     except ERRORS:
         return html.P("Choose a record from the current atlas search.")
+
+
+@callback(Output({"type": "atlas-location-view", "index": MATCH}, "children"),
+          Input({"type": "atlas-location-open", "index": MATCH}, "n_clicks"),
+          State("atlas-selected", "data"), State("atlas-query", "value"), State("atlas-kind", "value"),
+          State("atlas-source", "value"), State("atlas-context", "data"), State("atlas-page", "data"),
+          State({"type": "atlas-location-open", "index": MATCH}, "id"),
+          prevent_initial_call=True)
+def published_map(clicks, selected, query, kind, source, context, page, button):
+    if not clicks:
+        return no_update
+    try:
+        row = current(selected, query, kind, source, context, page)
+        if row is not None and isinstance(button, dict) and button.get("index") == row["id"]:
+            return location_map(row)
+    except ERRORS:
+        pass
+    return html.P("Choose a record from the current atlas search.", className="atlas-help")
 
 
 @callback(Output("atlas-context", "data"), Output("atlas-query", "value", allow_duplicate=True),

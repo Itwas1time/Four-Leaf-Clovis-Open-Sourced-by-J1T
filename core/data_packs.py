@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from contextlib import closing
+from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
 import hashlib
 import json
@@ -160,6 +161,7 @@ def _inside(root, path):
 
 _HASH_LOCKS = WeakValueDictionary()
 _HASH_LOCKS_GUARD = Lock()
+_FILE_READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-pack-verification")
 
 
 @lru_cache(maxsize=2048)
@@ -188,25 +190,35 @@ def _check_files(root, pack, *, database_checks=False):
     expected = {row["name"] for row in pack["files"]}
     if not root.is_dir() or root.is_symlink() or {path.name for path in root.iterdir()} != expected:
         raise ValueError("The installed collection is incomplete or contains unexpected files.")
-    for row in pack["files"]:
-        path = _inside(root, root / row["name"])
-        details = path.stat()
-        if (details.st_size != row["bytes"] or not _verified_file(
-                str(path.resolve()), details.st_size, details.st_mtime_ns, details.st_ctime_ns, row["sha256"])):
-            raise ValueError("A collection file does not match its published checksum.")
-        if database_checks and path.suffix == ".sqlite":
-            with closing(sqlite3.connect(path.resolve().as_uri() + "?mode=ro&immutable=1", uri=True)) as connection:
-                if connection.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
-                    raise ValueError("The collection database failed its integrity check.")
-                if connection.execute("PRAGMA user_version").fetchone()[0] != row["user_version"]:
-                    raise ValueError("The collection database version is unsupported.")
-                for table, columns in row["schema"].items():
-                    found = [entry[1] for entry in connection.execute(f'PRAGMA table_info("{table}")')]  # nosec B608: checked identifier from the publisher catalog, never query text
-                    if found != columns:
-                        raise ValueError("The collection database columns changed.")
-                count = connection.execute(f'SELECT count(*) FROM "{row["record_table"]}"').fetchone()[0]  # nosec B608: checked publisher identifier
-                if count != row["records"] or connection.execute("PRAGMA foreign_key_check").fetchone() is not None:
-                    raise ValueError("The collection record count or relationships are inconsistent.")
+    if database_checks:
+        # Installation owns temporary files. Finish each integrity check before
+        # returning or cleaning those files; live first-use hashes are read-only.
+        for row in pack["files"]:
+            _check_member(root, row, database_checks=True)
+    else:
+        for _ in _FILE_READERS.map(lambda row: _check_member(root, row), pack["files"]):
+            pass
+
+
+def _check_member(root, row, *, database_checks=False):
+    path = _inside(root, root / row["name"])
+    details = path.stat()
+    if (details.st_size != row["bytes"] or not _verified_file(
+            str(path.resolve()), details.st_size, details.st_mtime_ns, details.st_ctime_ns, row["sha256"])):
+        raise ValueError("A collection file does not match its published checksum.")
+    if database_checks and path.suffix == ".sqlite":
+        with closing(sqlite3.connect(path.resolve().as_uri() + "?mode=ro&immutable=1", uri=True)) as connection:
+            if connection.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
+                raise ValueError("The collection database failed its integrity check.")
+            if connection.execute("PRAGMA user_version").fetchone()[0] != row["user_version"]:
+                raise ValueError("The collection database version is unsupported.")
+            for table, columns in row["schema"].items():
+                found = [entry[1] for entry in connection.execute(f'PRAGMA table_info("{table}")')]  # nosec B608: checked publisher identifier from catalog
+                if found != columns:
+                    raise ValueError("The collection database columns changed.")
+            count = connection.execute(f'SELECT count(*) FROM "{row["record_table"]}"').fetchone()[0]  # nosec B608: checked publisher identifier
+            if count != row["records"] or connection.execute("PRAGMA foreign_key_check").fetchone() is not None:
+                raise ValueError("The collection record count or relationships are inconsistent.")
 
 
 class _CheckedRedirect(HTTPRedirectHandler):

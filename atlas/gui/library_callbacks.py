@@ -1,4 +1,5 @@
 """Read authoritative local reference records; no client-supplied record text."""
+from atlas.gui.library_activation import require_section
 from urllib.parse import urlsplit
 from dash import ALL, MATCH, Input, Output, State, callback, callback_context, html, no_update
 
@@ -82,8 +83,9 @@ def read_state(state):
           Output('library-object-source','children'),
           Input('library-object-query','value'),Input('library-object-material','value'),
           Input('library-object-previous','n_clicks'),Input('library-object-next','n_clicks'),Input('library-object-era','value'),Input('library-object-collection','value'),
-          State('library-object-page','data'))
-def object_results(query,category,previous,next_clicks,era,collection,page):
+          State('library-object-page','data'), Input("library-section", "value"))
+def object_results(query,category,previous,next_clicks,era,collection,page, section="objects"):
+    require_section(section, "objects")
     query=query if isinstance(query,str) and len(query)<=120 else ''
     collection=collection_key(collection)
     categories=SI_GROUPS if collection=='si' else MET_GROUPS

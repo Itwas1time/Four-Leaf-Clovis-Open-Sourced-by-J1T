@@ -1,4 +1,5 @@
 """Read canonical mineral records and save only the current search selection."""
+from atlas.gui.library_activation import require_section
 import sqlite3
 from urllib.parse import urlsplit
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
@@ -24,8 +25,9 @@ def source_link(value, label):
           Output('library-mineral-page','data'),Output('library-mineral-page-label','children'),
           Output('library-mineral-previous','disabled'),Output('library-mineral-next','disabled'),
           Output('library-mineral-coverage','children'),Input('library-mineral-query','value'),
-          Input('library-mineral-previous','n_clicks'),Input('library-mineral-next','n_clicks'),State('library-mineral-page','data'))
-def results(query, previous, next_clicks, page):
+          Input('library-mineral-previous','n_clicks'),Input('library-mineral-next','n_clicks'),State('library-mineral-page','data'), Input("library-section", "value"))
+def results(query, previous, next_clicks, page, section="minerals"):
+    require_section(section, "minerals")
     page = page if type(page) is int and 1 <= page <= 10000 else 1
     trigger = callback_context.triggered_id
     page = max(1,page-1) if trigger == 'library-mineral-previous' else page+1 if trigger == 'library-mineral-next' else 1

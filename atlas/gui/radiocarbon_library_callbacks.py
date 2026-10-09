@@ -1,3 +1,4 @@
+from atlas.gui.library_activation import require_section
 import sqlite3
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
 from core import radiocarbon_catalog as catalog
@@ -18,8 +19,9 @@ def _parameters(query, country, minimum, maximum):
             "min_age": _age(minimum), "max_age": _age(maximum)}
 
 
-@callback(Output("radiocarbon-country", "options"), Input("data-pack-refresh", "data"))
-def countries(_refresh):
+@callback(Output("radiocarbon-country", "options"), Input("data-pack-refresh", "data"), Input("library-section", "value"))
+def countries(_refresh, section="radiocarbon"):
+    require_section(section, "radiocarbon")
     try:
         return [{"label": "All recorded countries", "value": "all"}, *[
             {"label": f'{row["label"]} · {row["records"]:,}', "value": row["value"]} for row in catalog.definition()["countries"]]]
@@ -34,8 +36,9 @@ def countries(_refresh):
           Input("radiocarbon-query", "value"), Input("radiocarbon-country", "value"),
           Input("radiocarbon-min-age", "value"), Input("radiocarbon-max-age", "value"),
           Input("radiocarbon-previous", "n_clicks"), Input("radiocarbon-next", "n_clicks"),
-          Input("data-pack-refresh", "data"), State("radiocarbon-page", "data"))
-def results(query, country, minimum, maximum, _previous, _next, _refresh, page):
+          Input("data-pack-refresh", "data"), State("radiocarbon-page", "data"), Input("library-section", "value"))
+def results(query, country, minimum, maximum, _previous, _next, _refresh, page, section="radiocarbon"):
+    require_section(section, "radiocarbon")
     try:
         parameters = _parameters(query, country, minimum, maximum)
         page = page if type(page) is int and page >= 1 else 1

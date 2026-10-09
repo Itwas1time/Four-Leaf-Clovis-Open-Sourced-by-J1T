@@ -31,6 +31,7 @@ KINDS = {
 }
 IDENTIFIER = re.compile(r"(site|unit|dataset|analysis|sample|chronology|control|date|observation|age):(0|[1-9][0-9]{0,11})\Z")
 NUMBER = re.compile(r"0|[1-9][0-9]{0,11}\Z")
+MAX_NARROW_ROWS = 1000
 SCOPES = {"site_id": "site", "unit_id": "unit", "dataset_id": "dataset", "analysis_id": "analysis",
           "sample_id": "sample", "chronology_id": "chronology", "variable_id": "variable"}
 # A sample has both a dataset and an analysis-unit link. Preserve both original
@@ -139,6 +140,63 @@ def _scope_condition(kind, scope, value, alias="r"):
     return ('(' + ' OR '.join(clauses) + ')' if clauses else ""), values
 
 
+def _correlated_text_condition(kind, hits, match, alias="r", depth=0):
+    """Check the actual parents of bounded rows instead of all matching samples."""
+    clauses, values = [], []
+    if kind in hits:
+        query, parameters = _documents(kind, match)
+        key = "variableid" if kind == "variable" else KINDS[kind][1]
+        clauses.append(alias + '.' + key + ' IN (' + query + ')')
+        values.extend(parameters)
+    for column, parent in PARENTS.get(kind, ()):
+        parent_alias = "parent_" + str(depth + 1)
+        child, parameters = _correlated_text_condition(parent, hits, match, parent_alias, depth + 1)
+        if child:
+            table = "n.ndb__variables" if parent == "variable" else _table(parent)
+            key = "variableid" if parent == "variable" else KINDS[parent][1]
+            # Table, alias and columns come from the fixed scientific graph.
+            clauses.append('EXISTS(SELECT 1 FROM ' + table + ' ' + parent_alias + ' WHERE ' +  # nosec B608
+                           parent_alias + '.' + key + '=' + alias + '.' + column + ' AND ' + child + ')')  # nosec B608: fixed scientific mappings; text is bound separately
+            values.extend(parameters)
+    return ('(' + ' OR '.join(clauses) + ')' if clauses else ""), values
+
+
+def _narrow_rows(connection, kind, matches, supplement, supplement_values):
+    """Return every matched ordinal when candidates fit; None means full fallback.
+
+    The cap selects a query plan. It never caps search results. Both independent
+    sample-parent paths and variable meanings use the original source IDs.
+    """
+    clauses, values = [], []
+    for match, hits in matches[:2]:
+        clause, parameters = _text_condition(kind, hits, match)
+        clauses.append(clause or "0")
+        values.extend(parameters)
+    tail, tail_values = [], []
+    for match, hits in matches[2:]:
+        clause, parameters = _correlated_text_condition(kind, hits, match)
+        tail.append(clause or "0")
+        tail_values.extend(parameters)
+    tail.extend(supplement)
+    tail_values.extend(supplement_values)
+    cap = min(MAX_NARROW_ROWS, connection.getlimit(sqlite3.SQLITE_LIMIT_VARIABLE_NUMBER) - len(tail_values))
+    if cap < 1:
+        return None
+    rows = [row[0] for row in connection.execute(
+        "SELECT r.source_row FROM " + _table(kind) + " r WHERE " + " AND ".join(clauses) + " LIMIT ?",  # nosec B608
+        [*values, cap + 1])]  # nosec B608: fixed scientific table; all text and limits are bound
+    if len(rows) > cap:
+        return None
+    if not rows or not tail:
+        return rows
+    # CROSS JOIN keeps the bounded ordinals as the driver. Native parent keys
+    # then resolve the remaining terms; no name-based associations are added.
+    statement = ("WITH candidates(source_row) AS (VALUES " + ",".join("(?)" for _ in rows) + ") "  # nosec B608
+                 "SELECT r.source_row FROM candidates CROSS JOIN " + _table(kind) +
+                 " r WHERE r.source_row=candidates.source_row AND " + " AND ".join(tail))
+    return [row[0] for row in connection.execute(statement, [*rows, *tail_values])]  # nosec B608: fixed SQL compiler and bound ordinal/text values
+
+
 def _bulk_condition(hits, match):
     clauses, parameters = [], []
     dataset, values = _text_condition("dataset", hits, match)
@@ -239,11 +297,16 @@ def _plans(query, view, record_id, scopes, paths, signature):
     with closing(_connect(paths)) as connection:
         summary = _summary(connection)
         matches = []
+        frequencies = {}
         for term in terms:
             match = '"' + term + '"*'
             hits = {row[0] for row in connection.execute(
                 "SELECT DISTINCT d.kind FROM search_fts JOIN search_documents d ON d.rowid=search_fts.rowid WHERE search_fts MATCH ?", (match,))}
             matches.append((match, hits))
+            if len(terms) > 1:
+                frequencies[match] = connection.execute(
+                    "SELECT count(*) FROM search_fts WHERE search_fts MATCH ?", (match,)).fetchone()[0]
+        ordered_matches = sorted(matches, key=lambda row: frequencies[row[0]]) if frequencies else []
         counts, statements = [], []
         for kind in kinds:
             clauses, parameters = [], []
@@ -251,6 +314,7 @@ def _plans(query, view, record_id, scopes, paths, signature):
                 clause, values = _text_condition(kind, hits, match)
                 clauses.append(clause or "0")
                 parameters.extend(values)
+            text_parameters = len(parameters)
             if exact_id:
                 target, _, key = exact_id.partition(":")
                 clauses.append("r." + KINDS[kind][1] + "=?" if kind == target else "0")
@@ -264,7 +328,14 @@ def _plans(query, view, record_id, scopes, paths, signature):
                 parameters.extend(values)
             where = " WHERE " + " AND ".join(clauses) if clauses else ""
             statement = " FROM " + _table(kind) + " r" + where
-            if kind == "observation" and matches and not (exact_id or scopes):
+            ordinals = (_narrow_rows(connection, kind, ordered_matches, clauses[len(matches):], parameters[text_parameters:])
+                        if len(ordered_matches) > 1 else None)
+            if ordinals is not None:
+                count = len(ordinals)
+                statement = " FROM " + _table(kind) + " r WHERE " + (
+                    "r.source_row IN (" + ",".join("?" for _ in ordinals) + ")" if ordinals else "0")
+                parameters = ordinals
+            elif kind == "observation" and matches and not (exact_id or scopes):
                 count = _observation_count(connection, matches)
             else:
                 count = (connection.execute("SELECT count(*)" + statement, parameters).fetchone()[0] if clauses

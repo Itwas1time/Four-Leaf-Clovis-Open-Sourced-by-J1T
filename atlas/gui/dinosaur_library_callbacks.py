@@ -1,3 +1,4 @@
+from atlas.gui.library_activation import require_section
 import json
 import sqlite3
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
@@ -10,8 +11,9 @@ def parameters(query,country,lineage,view,scope):
         raise ValueError('Choose a search scope.')
     return {'query':query or '', 'country':country or 'all', 'lineage':lineage, 'view':view, 'names_only':scope=='names'}
 
-@callback(Output('dinosaur-country','options'),Input('data-pack-refresh','data'))
-def countries(_refresh):
+@callback(Output('dinosaur-country','options'),Input('data-pack-refresh','data'), Input("library-section", "value"))
+def countries(_refresh, section="dinosaurs"):
+    require_section(section, "dinosaurs")
     try:
         return [{'label':'All recorded countries','value':'all'},*[
             {'label':f'{row["label"]} · {row["records"]:,} occurrences','value':row['value']} for row in catalog.definition()['countries']]]
@@ -22,8 +24,9 @@ def countries(_refresh):
           Output('dinosaur-page-label','children'),Output('dinosaur-previous','disabled'),Output('dinosaur-next','disabled'),
           Output('dinosaur-coverage','children'),Input('dinosaur-query','value'),Input('dinosaur-country','value'),
           Input('dinosaur-lineage','value'),Input('dinosaur-view','value'),Input('dinosaur-scope','value'),Input('dinosaur-previous','n_clicks'),
-          Input('dinosaur-next','n_clicks'),Input('data-pack-refresh','data'),State('dinosaur-page','data'))
-def results(query,country,lineage,view,scope,_previous,_next,_refresh,page):
+          Input('dinosaur-next','n_clicks'),Input('data-pack-refresh','data'),State('dinosaur-page','data'), Input("library-section", "value"))
+def results(query,country,lineage,view,scope,_previous,_next,_refresh,page, section="dinosaurs"):
+    require_section(section, "dinosaurs")
     try:
         page = page if type(page) is int and page>=1 else 1
         trigger = callback_context.triggered_id

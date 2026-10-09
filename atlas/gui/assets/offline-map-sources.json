@@ -1,0 +1,78 @@
+[
+  {
+    "project": "Leaflet/Leaflet",
+    "version": "v1.9.4",
+    "commit": "d15112c9e8ac339f0f74f563959d0423d291308d",
+    "source": "https://raw.githubusercontent.com/Leaflet/Leaflet/d15112c9e8ac339f0f74f563959d0423d291308d/dist/leaflet.css",
+    "file": "00-leaflet.css",
+    "sha256": "66c0bc09b28ad54474629882ffef152a6da037b7262658740b815a7501244943",
+    "changes": "Resource URLs rewritten to bundled flat asset filenames.",
+    "license": "BSD 2-Clause License\r\n\r\nCopyright (c) 2010-2023, Volodymyr Agafonkin\r\nCopyright (c) 2010-2011, CloudMade\r\nAll rights reserved.\r\n\r\nRedistribution and use in source and binary forms, with or without\r\nmodification, are permitted provided that the following conditions are met:\r\n\r\n1. Redistributions of source code must retain the above copyright notice, this\r\n   list of conditions and the following disclaimer.\r\n\r\n2. Redistributions in binary form must reproduce the above copyright notice,\r\n   this list of conditions and the following disclaimer in the documentation\r\n   and/or other materials provided with the distribution.\r\n\r\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\r\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\r\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\r\nDISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE\r\nFOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL\r\nDAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\r\nSERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\r\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,\r\nOR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\r\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\r\n",
+    "images": [
+      {
+        "file": "leaflet-layers-2x.png",
+        "source": "https://raw.githubusercontent.com/Leaflet/Leaflet/d15112c9e8ac339f0f74f563959d0423d291308d/dist/images/layers-2x.png",
+        "sha256": "066daca850d8ffbef007af00b06eac0015728dee279c51f3cb6c716df7c42edf"
+      },
+      {
+        "file": "leaflet-layers.png",
+        "source": "https://raw.githubusercontent.com/Leaflet/Leaflet/d15112c9e8ac339f0f74f563959d0423d291308d/dist/images/layers.png",
+        "sha256": "1dbbe9d028e292f36fcba8f8b3a28d5e8932754fc2215b9ac69e4cdecf5107c6"
+      },
+      {
+        "file": "leaflet-marker-icon-2x.png",
+        "source": "https://raw.githubusercontent.com/Leaflet/Leaflet/d15112c9e8ac339f0f74f563959d0423d291308d/dist/images/marker-icon-2x.png",
+        "sha256": "00179c4c1ee830d3a108412ae0d294f55776cfeb085c60129a39aa6fc4ae2528"
+      },
+      {
+        "file": "leaflet-marker-icon.png",
+        "source": "https://raw.githubusercontent.com/Leaflet/Leaflet/d15112c9e8ac339f0f74f563959d0423d291308d/dist/images/marker-icon.png",
+        "sha256": "574c3a5cca85f4114085b6841596d62f00d7c892c7b03f28cbfa301deb1dc437"
+      },
+      {
+        "file": "leaflet-marker-shadow.png",
+        "source": "https://raw.githubusercontent.com/Leaflet/Leaflet/d15112c9e8ac339f0f74f563959d0423d291308d/dist/images/marker-shadow.png",
+        "sha256": "264f5c640339f042dd729062cfc04c17f8ea0f29882b538e3848ed8f10edb4da"
+      }
+    ]
+  },
+  {
+    "project": "Leaflet/Leaflet.draw",
+    "version": "v1.0.4",
+    "commit": "65d7866b14e926b72465d0077809683a77344019",
+    "source": "https://raw.githubusercontent.com/Leaflet/Leaflet.draw/65d7866b14e926b72465d0077809683a77344019/dist/leaflet.draw.css",
+    "file": "00-leaflet-draw.css",
+    "sha256": "1b33ecc961c0985c4b3d834563b29ee581b79043c83e32d49dffad70eed2d804",
+    "changes": "Resource URLs rewritten to bundled flat asset filenames.",
+    "license": "Copyright 2012-2017 Jon West, Jacob Toye, and Leaflet\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+    "images": [
+      {
+        "file": "leaflet-draw-spritesheet-2x.png",
+        "source": "https://raw.githubusercontent.com/Leaflet/Leaflet.draw/65d7866b14e926b72465d0077809683a77344019/dist/images/spritesheet-2x.png",
+        "sha256": "fa2c95e0610f3787c879645e42b86ad010c305f8312e116841730d00d4ab72b7"
+      },
+      {
+        "file": "leaflet-draw-spritesheet.png",
+        "source": "https://raw.githubusercontent.com/Leaflet/Leaflet.draw/65d7866b14e926b72465d0077809683a77344019/dist/images/spritesheet.png",
+        "sha256": "a8978a1d3d21d8ee6f16cce342ff67fc47c4241f52161f05baf88f15e1058199"
+      },
+      {
+        "file": "leaflet-draw-spritesheet.svg",
+        "source": "https://raw.githubusercontent.com/Leaflet/Leaflet.draw/65d7866b14e926b72465d0077809683a77344019/dist/images/spritesheet.svg",
+        "sha256": "7077bae968047180921324df351d95fe2f021cdaefa01e20645162402f767da4"
+      }
+    ]
+  },
+  {
+    "project": "Natural Earth",
+    "commit": "ca96624a56bd078437bca8184e78163e5039ad19",
+    "source": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_110m_land.geojson",
+    "file": "natural-earth-land-110m.json",
+    "sha256": "9e0729ee253ca7d7a5c4ae9395fb1902264c5377c52e224d13dd85010e2835d9",
+    "scale": "1:110 million",
+    "changes": "None; original GeoJSON bytes.",
+    "license": "Public domain",
+    "license_url": "https://www.naturalearthdata.com/about/terms-of-use/",
+    "purpose": "Modern land outline for offline orientation; not ancient geography or a site boundary."
+  }
+]

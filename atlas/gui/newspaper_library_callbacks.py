@@ -1,4 +1,5 @@
 """Local title chronology; town scope always uses cataloged names."""
+from atlas.gui.library_activation import require_section
 import sqlite3
 from dash import ALL,Input,Output,State,callback,callback_context,html,no_update
 from core.newspaper_catalog import search_titles,get_title
@@ -21,8 +22,9 @@ def town_scope(clicks):
           Output('library-newspaper-previous','disabled'),Output('library-newspaper-next','disabled'),
           Input('library-newspaper-query','value'),Input('library-newspaper-scope','value'),
           Input('library-newspaper-previous','n_clicks'),Input('library-newspaper-next','n_clicks'),
-          Input('resident-state','value'),Input('resident-place','value'),State('library-newspaper-page','data'))
-def results(query,scope,previous,next_clicks,state,geoid,page):
+          Input('resident-state','value'),Input('resident-place','value'),State('library-newspaper-page','data'), Input("library-section", "value"))
+def results(query,scope,previous,next_clicks,state,geoid,page, section="newspapers"):
+    require_section(section, "newspapers")
     query=query if isinstance(query,str) and len(query)<=120 else ''
     page=page if type(page) is int and 1<=page<=100000 else 1
     trigger=callback_context.triggered_id

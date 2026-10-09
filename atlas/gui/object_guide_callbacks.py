@@ -1,4 +1,5 @@
 """Read the reviewed material guides with fact-level sources."""
+from atlas.gui.library_activation import require_section
 from dash import ALL,Input,Output,State,callback,callback_context,html,no_update
 from core.object_material_guides import search_guides,get_guide,guide_stats
 from core.object_guide_notes import reference_entry
@@ -11,8 +12,9 @@ from atlas.gui.library_ui import reading_nav
           Output('library-guide-page','data'),Output('library-guide-page-label','children'),
           Output('library-guide-previous','disabled'),Output('library-guide-next','disabled'),
           Input('library-guide-query','value'),Input('library-guide-category','value'),
-          Input('library-guide-previous','n_clicks'),Input('library-guide-next','n_clicks'),State('library-guide-page','data'))
-def results(query,category,previous,next_clicks,page):
+          Input('library-guide-previous','n_clicks'),Input('library-guide-next','n_clicks'),State('library-guide-page','data'), Input("library-section", "value"))
+def results(query,category,previous,next_clicks,page, section="guides"):
+    require_section(section, "guides")
     page=page if type(page) is int and 1<=page<=10000 else 1
     trigger=callback_context.triggered_id
     page=max(1,page-1) if trigger=='library-guide-previous' else page+1 if trigger=='library-guide-next' else 1

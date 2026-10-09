@@ -1,4 +1,5 @@
 """Read fossil facts from the bundled source catalog, not client-supplied text."""
+from atlas.gui.library_activation import require_section
 from functools import lru_cache
 from dash import ALL,MATCH,Input,Output,State,callback,callback_context,html,no_update
 from core.fossil_reference_catalog import catalog_stats,search_taxa,search_fossils,get_fossil
@@ -18,8 +19,9 @@ def stats():
           Output('library-fossil-page','data'),Output('library-fossil-page-label','children'),
           Output('library-fossil-previous','disabled'),Output('library-fossil-next','disabled'),Output('library-fossil-source','children'),
           Input('library-fossil-query','value'),Input('library-fossil-view','value'),
-          Input('library-fossil-previous','n_clicks'),Input('library-fossil-next','n_clicks'),State('library-fossil-page','data'))
-def results(query,view,previous,next_clicks,page):
+          Input('library-fossil-previous','n_clicks'),Input('library-fossil-next','n_clicks'),State('library-fossil-page','data'), Input("library-section", "value"))
+def results(query,view,previous,next_clicks,page, section="fossils"):
+    require_section(section, "fossils")
     query=query if isinstance(query,str) and len(query)<=120 else ''
     page=page if type(page) is int and 1<=page<=100000 else 1
     trigger=callback_context.triggered_id

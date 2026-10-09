@@ -1,3 +1,4 @@
+from atlas.gui.library_activation import require_section
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
 from core.data_packs import PackStore
 from core import data_pack_jobs
@@ -9,8 +10,9 @@ LIBRARIES = {'radiocarbon-world': ('atlas', 'Explore in atlas'),
              'dated-environments': ('atlas', 'Explore in atlas')}
 
 
-@callback(Output("data-pack-cards", "children"), Input("data-pack-refresh", "data"))
-def cards(_refresh):
+@callback(Output("data-pack-cards", "children"), Input("data-pack-refresh", "data"), Input("library-section", "value"))
+def cards(_refresh, section="packs"):
+    require_section(section, "packs")
     try:
         store = PackStore()
         identifiers = sorted({row["id"] for row in store.definitions})

@@ -1,4 +1,5 @@
 """Read offline USGS unit facts and preserve their exact source context."""
+from atlas.gui.library_activation import require_section
 from urllib.parse import urlsplit
 from dash import ALL,Input,Output,State,callback,callback_context,html,no_update
 from core.usgs_unit_library import search_units,units_for_place,get_unit
@@ -35,8 +36,9 @@ def _citation(citation):
           Output('library-unit-previous','disabled'),Output('library-unit-next','disabled'),
           Input('library-unit-query','value'),Input('library-unit-scope','value'),
           Input('library-unit-previous','n_clicks'),Input('library-unit-next','n_clicks'),
-          Input('resident-state','value'),Input('resident-place','value'),State('library-unit-page','data'))
-def results(query,scope,previous,next_clicks,state,geoid,page):
+          Input('resident-state','value'),Input('resident-place','value'),State('library-unit-page','data'), Input("library-section", "value"))
+def results(query,scope,previous,next_clicks,state,geoid,page, section="units"):
+    require_section(section, "units")
     query=query if isinstance(query,str) and len(query)<=120 else ''
     page=page if type(page) is int and 1<=page<=10000 else 1
     trigger=callback_context.triggered_id
