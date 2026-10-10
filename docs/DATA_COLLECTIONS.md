@@ -31,11 +31,45 @@ searches retain their existing plans.
 | Excavation contexts, finds and survey effort | 153,867 distinct source subjects from Gabii, Petra and Eastern Korinthia; original observation documents, tables and field definitions | 243.2 MB | 576.6 MB |
 | Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
 | Anatolian animal-bone records | 242,457 published subject IDs, 4,026 context references and 814 aggregate rows; 838,710 original rows in 37 table editions | 456.7 MB | 981.6 MB |
-| Excavation assemblages and refits | 153,796 original records: 64 matrices/spectra and 122 publisher documents across eight source corpora in seven countries | 163.5 MB | 531.4 MB |
+| Excavation assemblages and refits | 200,301 source records: 198,870 original rows and 1,431 physical context-column views across thirteen source corpora | 226.6 MB | 719.0 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
 bundled. These additional collections are optional; the initial application
 still includes those existing large catalogs.
+
+## Plant remains and recovery
+
+The current excavation collection also includes plant-recovery originals from
+Giza, Elephantine, Mezber, five Indus villages and the Monte Castelo shellmound.
+Search their sites, plant names or source context codes in the existing Atlas.
+Wide matrices have readable physical context-column views, with all original
+rows, cells, formulas, merged ranges and header tokens retained separately.
+These views repeat evidence; they are not additional samples or physical finds.
+
+Indus records retain 142 macroremain contexts with recorded sediment volumes
+(3,550 L counted once across paired crop/weed matrices), 124 phytolith contexts
+and 158 sampling-definition rows. Outer Word whitespace is recognized only for
+reading labels and explicitly qualified context correspondence. Original blank
+trench and period cells, internally different labels and missing quantities stay
+unchanged. Selected phytolith totals include omitted forms. Source drawings are
+not converted into stratigraphic relationships.
+
+Giza's 2018 observations and 2025 feature summaries remain distinct editions;
+sample volumes repeat across taxon observations. Elephantine retains recovery
+and preservation codes separately and qualifies expanded or ordinal estimates.
+Mezber's macroremain table omits negative contexts; those omissions are not zero
+results. Serial 20 has different pails in two phytolith tables, and the links
+retain that conflict without merging the deposits.
+
+Monte Castelo provides native macroremain and phytolith quantities for 21
+layers. The original C4 header declares macro fragments per 11 litres; this is
+not a phytolith denominator. The merged C22:AB25 label marks layers R–U as
+unanalysed for macroremains, while phytolith quantities remain recorded. The
+workbook macro-total sum (16,913) differs from the paper (16,680); original cells
+and source statements are retained. All five added source editions declare
+CC BY 4.0; contributors, institutions, citations and specific recovery limits
+are available in the reader and pack's SOURCES.json. Prior pack revisions remain
+available.
 
 ## Anatolian animal-bone records
 

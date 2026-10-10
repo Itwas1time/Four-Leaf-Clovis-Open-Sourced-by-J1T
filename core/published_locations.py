@@ -50,7 +50,7 @@ def locations(record):
                            "label": source.get("collection_name") or "Published fossil collection",
                            "shape": "point", "coordinates": [[latitude, longitude]],
                            "note": "Published modern collection coordinates. Precision is defined by the source. " + " · ".join(qualifiers)})
-    elif record.get("source") == "field_assemblages" and original.get("dataset") in ("chengdu", "el-progreso"):
+    elif record.get("source") == "field_assemblages" and original.get("dataset") in ("chengdu", "el-progreso", "giza-botany"):
         headers, values = original.get("headers", []), original.get("values", [])
         def cell(name):
             return values[headers.index(name)] if name in headers and headers.index(name) < len(values) else ""
@@ -60,6 +60,7 @@ def locations(record):
             context = cell("Item Context URI") or cell("Context URI")
             note = "Original table's WGS-84 reference point. The table does not establish an individual artifact's measured position or coordinate precision."
             if inference: note += " Geospatial inference (source): " + inference + "."
+            if cell("Geospatial note"): note += " Geospatial note (source): " + cell("Geospatial note") + "."
             if context: note += " Original context: " + context
             result.append({"id": cell("Item URI") or cell("URI") or original.get("id", ""),
                            "label": cell("Item Label") or cell("Label") or original.get("site", "Published reference point"),

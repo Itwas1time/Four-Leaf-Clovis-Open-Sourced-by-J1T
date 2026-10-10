@@ -21,12 +21,14 @@ KINDS = {
     "connection": "Published refit connection", "model": "3D specimen metadata",
     "deposit": "Recorded deposit", "survey": "Survey observation", "aggregate": "Published summary",
     "date": "Dating or calibration record", "laboratory": "Laboratory result", "document": "Publisher context record",
+    "plant": "Plant remains", "sample": "Published sample or context column",
 }
 SHA = re.compile(r"[a-f0-9]{64}\Z")
-ROW = re.compile(r"row:[a-f0-9]{64}:[0-9]{1,3}:[1-9][0-9]{0,11}\Z")
+ROW = re.compile(r"(?:row|column):[a-f0-9]{64}:[0-9]{1,3}:[1-9][0-9]{0,11}\Z")
 TABLE = re.compile(r"[a-f0-9]{64}:[0-9]{1,3}\Z")
 DATASETS = {"hoedjiespunt", "berenike-sikait", "fumane-refits", "fumane-models",
-            "chengdu", "el-progreso", "khao-toh-chong", "madjedbebe"}
+            "chengdu", "el-progreso", "khao-toh-chong", "madjedbebe",
+            "giza-botany", "elephantine-botany", "mezber-plants", "indus-plants", "monte-castelo-plants"}
 
 
 def database():
@@ -112,12 +114,17 @@ def search(query="", page=1, view="all", scope="", table_id="", dataset="", reco
         parameters.append(" AND ".join('"' + term + '"' + ("" if term.isdecimal() else "*") for term in terms))
     # All fragments are fixed internally; caller values are SQLite parameters.
     statement = " FROM records r WHERE " + (" AND ".join(conditions) or "1")  # nosec B608
+    # Wide matrices match every taxon in their headings. Let a searched
+    # observation or context reading appear before those summary rows, while
+    # retaining all matches and their stable ordering across later pages.
+    order = ("CASE WHEN r.kind IN ('aggregate','annotation') THEN 1 ELSE 0 END,r.rowid"
+             if literal else "r.rowid")
     with closing(connect(path)) as connection:
         total = connection.execute("SELECT count(*)" + statement, parameters).fetchone()[0]
         pages = max(1, (total + PAGE_SIZE - 1) // PAGE_SIZE)
         page = min(page, pages)
         rows = [dict(row) for row in connection.execute(
-            "SELECT r.rowid,r.id,r.kind,r.title,r.subtitle" + statement + " ORDER BY r.rowid LIMIT ? OFFSET ?",
+            "SELECT r.rowid,r.id,r.kind,r.title,r.subtitle" + statement + " ORDER BY " + order + " LIMIT ? OFFSET ?",
             parameters + [PAGE_SIZE, (page - 1) * PAGE_SIZE])]
     for row in rows:
         row["category"] = KINDS[row["kind"]]
@@ -144,28 +151,33 @@ def get_record(identifier):
         row["values"] = decode(row.pop("source_values"))
         row["cells"] = decode(row.pop("source_cells"))
         row["reading_facts"] = decode(row.pop("reading_facts"))
-        display = row["cells"]["attributes"].get("display_headers")
+        attributes = row["cells"]["attributes"]
+        display = attributes.get("display_headers")
         row["fields"] = original_fields(display if display is not None else row["headers"], row["values"])
         row["merged_anchors"] = []
-        for merged in row["merges"]:
+        for merged in (() if attributes.get("orientation") == "column" or attributes.get("source_cell_format", "").startswith("word") else row["merges"]):
             match = re.fullmatch(r"([A-Z]+)([1-9][0-9]*):([A-Z]+)([1-9][0-9]*)", merged)
             if match and int(match[2]) <= row["ordinal"] <= int(match[4]):
                 reference = match[1] + match[2]
-                anchor = connection.execute("SELECT source_cells FROM records WHERE table_id=? AND ordinal=?",
+                anchor = connection.execute("SELECT source_cells FROM records WHERE table_id=? AND ordinal=? AND id LIKE 'row:%'",
                                             (row["table_id"], int(match[2]))).fetchone()
                 if anchor:
                     for cell in decode(anchor[0])["cells"]:
                         if cell["ref"] == reference:
                             row["merged_anchors"].append({"range": merged, **cell})
-        if row["cells"]["cells"]:
+        if row["cells"]["cells"] or attributes.get("orientation") == "column":
             present = set()
             for cell in row["cells"]["cells"]:
+                if "field_index" in cell:
+                    present.add(cell["field_index"])
+                    continue
                 letters = re.match(r"[A-Z]+", cell["ref"])[0]
                 number = 0
                 for letter in letters:
                     number = number * 26 + ord(letter) - 64
                 present.add(number - 1)
-            row["fields"] = [(name, value if index in present else "Cell absent in this source row")
+            absent = "Cell absent in this source column" if attributes.get("orientation") == "column" else "Cell absent in this source row"
+            row["fields"] = [(name, value if index in present else absent)
                              for index, (name, value) in enumerate(row["fields"])]
         row["associations"] = [dict(item) for item in connection.execute(
             "SELECT s.id,s.kind,s.label,m.basis FROM record_scopes m JOIN scopes s ON s.id=m.scope "
@@ -184,12 +196,19 @@ def get_record(identifier):
     return row
 
 
-def facts(record):
+def source_locator(record):
     locator = record["file"]["path"]
     if record["table"]["sheet"]:
         locator += " · " + record["table"]["sheet"]
+    attributes = record["cells"]["attributes"]
+    axis = "column" if attributes.get("orientation") == "column" else "row"
+    return locator + " · " + axis + " " + str(record["ordinal"])
+
+
+def facts(record):
+    label = "Original source column" if record["cells"]["attributes"].get("orientation") == "column" else "Original source row"
     return [("Study or site", record["site"]), *record["reading_facts"],
-            ("Original source row", locator + " · row " + str(record["ordinal"])),
+            (label, source_locator(record)),
             ("Contributors", "; ".join(record["edition"]["contributors"])),
             ("Source edition", record["edition"]["edition"])]
 
@@ -205,7 +224,7 @@ def relationships(record):
             links.append({"key": item["kind"] + ":" + item["id"], "label": item["label"],
                           "total": result["total"], "parameters": {"collection": "field_assemblages", "scope": item["id"]}})
     result = search(table_id=record["table_id"])
-    links.append({"key": "source-rows", "label": "All rows in this source table", "total": result["total"],
+    links.append({"key": "source-rows", "label": "All records in this source table", "total": result["total"],
                   "parameters": {"collection": "field_assemblages", "table_id": record["table_id"]}})
     return links
 

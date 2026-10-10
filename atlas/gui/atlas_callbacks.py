@@ -159,7 +159,7 @@ def reader(selected, query, kind, source, context, page, _refresh):
             text = assemblage_catalog.value_text
             attributes = original["cells"]["attributes"]
             children.append(html.Details([html.Summary("Original source fields"),
-                html.P(original["file"]["path"] + " · " + original["table"]["sheet"] + " · row " + str(original["ordinal"]), className="atlas-help"),
+                html.P(assemblage_catalog.source_locator(original), className="atlas-help"),
                 html.P("Original file SHA-256: " + original["file"]["sha256"], className="atlas-help"),
                 *([html.P(attributes["header_binding_basis"], className="atlas-help")] if attributes.get("header_binding_basis") else []),
                 _facts(original["fields"]), _source_link(original["file"]["source_url"], "Read original source file")]))
