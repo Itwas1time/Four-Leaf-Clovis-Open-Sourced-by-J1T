@@ -19,18 +19,22 @@ def workspace():
     return html.Div([
         html.H3('Dig records'),
         html.P('Keep your project codes, contexts and bags connected. Record observations separately from interpretations; leave unobserved context and measurements unknown.', className='atlas-help'),
-        picker('dig-project', 'Local project', placeholder='Choose a project', persistence=True, persistence_type='local'),
+        html.Div(picker('dig-project', 'Local project', placeholder='Choose a project', persistence=True, persistence_type='local'),
+                 id='dig-project-picker', style={'display': 'none'}),
+        html.P('Start a project below, or restore a project backup.', id='dig-project-prompt', className='atlas-help'),
         html.Details([html.Summary('Start a project'),
                       text_field('dig-project-code', 'Project code', limit=80, placeholder='Your course or site code'),
                       text_field('dig-project-title', 'Project title', limit=200),
-                      html.Button('Create project', id='dig-project-create', n_clicks=0, className='atlas-secondary-button')]),
+                      html.Button('Create project', id='dig-project-create', n_clicks=0, className='atlas-primary-button')],
+                     id='dig-project-start', open=True),
         html.Div([
-            html.Button('Download project backup', id='dig-export', n_clicks=0, className='atlas-secondary-button'),
+            html.Button('Download project backup', id='dig-export', n_clicks=0, className='atlas-secondary-button', style={'display': 'none'}),
             dcc.Upload(id='dig-import', accept='.zip,application/zip', max_size=MAX_BACKUP_ZIP_BYTES,
                        children=html.Button('Restore project backup', className='atlas-secondary-button'), multiple=False),
         ], className='clovis-note-actions'),
         html.P('Records are saved on this computer by the local Clovis app. ZIP backups contain portable JSON and every revision. Restoring merges matching histories and refuses conflicting corrections.', className='atlas-help'),
         html.Div(id='dig-status', role='status', className='atlas-status-card'),
+        html.Div([
         html.Div([html.A('Jump to saved records', href='#dig-saved-records'), html.Span(' · '),
                   html.A('Jump to recording form', href='#dig-editor')], className='atlas-help'),
         html.Div([
@@ -94,9 +98,11 @@ def workspace():
             html.Button('Void relationship with reason', id='dig-relation-void', n_clicks=0, className='atlas-secondary-button'),
             html.P('Voiding keeps the original observation and your dated reason in the backup.', className='atlas-help'),
         ]),
+        ], id='dig-project-records', style={'display': 'none'}),
         dcc.Store(id='dig-refresh', data=0), dcc.Store(id='dig-project-request'), dcc.Store(id='dig-page', data=1),
         dcc.Store(id='dig-selection'), dcc.Store(id='dig-saved-selection'), dcc.Download(id='dig-download'),
-    ], id='dig-workspace', style={'display': 'none'}, className='clovis-dig-workspace')
+    ], id='dig-workspace', style={'display': 'none'}, className='clovis-dig-workspace',
+       **{'data-notebook-visible': 'false', 'data-project-ready': 'false'})
 
 
 def inspector():

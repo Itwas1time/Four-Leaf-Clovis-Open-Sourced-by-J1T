@@ -20,10 +20,11 @@ def _message(error):
 
 @callback(Output('fieldbook-reading-controls', 'style'), Output('fieldbook-reading-workspace', 'style'),
           Output('fieldbook-reading-inspector', 'style'), Output('dig-workspace', 'style'),
-          Output('dig-inspector', 'style'), Output('dig-controls-help', 'style'), Input('fieldbook-section', 'value'))
+          Output('dig-inspector', 'style'), Output('dig-controls-help', 'style'),
+          Output('dig-workspace', 'data-notebook-visible'), Input('fieldbook-section', 'value'))
 def notebook_section(section):
     show, hide = {}, {'display': 'none'}
-    return (hide, hide, hide, show, show, show) if section == 'dig' else (show, show, show, hide, hide, hide)
+    return (hide, hide, hide, show, show, show, 'true') if section == 'dig' else (show, show, show, hide, hide, hide, 'false')
 
 
 @callback(Output('dig-project', 'options'), Output('dig-project', 'value'),
@@ -37,6 +38,22 @@ def project_options(_refresh, requested, selected):
         return options, selected if isinstance(selected, str) and selected in known else None
     except (ValueError, OSError, sqlite3.Error):
         return [], None
+
+
+@callback(Output('dig-project-picker', 'style'), Output('dig-project-records', 'style'),
+          Output('dig-export', 'style'), Output('dig-project-start', 'open'),
+          Output('dig-project-prompt', 'children'), Output('dig-project-prompt', 'style'),
+          Output('dig-workspace', 'data-project-ready'),
+          Input('dig-project', 'value'), Input('dig-project', 'options'))
+def project_workflow(selected, options):
+    options = options if isinstance(options, list) else []
+    known = {row['value'] for row in options if isinstance(row, dict) and isinstance(row.get('value'), str)}
+    ready = isinstance(selected, str) and selected in known
+    show, hide = {}, {'display': 'none'}
+    prompt = ('Choose a project above to read or add records, or start another project.'
+              if known else 'Start a project below, or restore a project backup.')
+    return (show if known else hide, show if ready else hide, show if ready else hide,
+            not known, prompt, hide if ready else show, 'true' if ready else 'false')
 
 
 @callback(Output('dig-refresh', 'data'), Output('dig-status', 'children'), Output('dig-project-request', 'data'),

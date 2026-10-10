@@ -7,9 +7,9 @@ def controls():
     return html.Section([
         html.Div('KEEP THE THREAD',className='atlas-lead-eyebrow'),
         html.H2('Your fieldbook.',className='atlas-brief-heading'),
-        html.P('Save town reports and object observations. Return to them, compare your notes and keep a portable backup.',className='atlas-resident-intro'),
         dcc.RadioItems(id='fieldbook-section', value='readings', options=[{'label':'Saved readings','value':'readings'}, {'label':'Dig records','value':'dig'}], className='clovis-library-tabs'),
         html.Div([
+        html.P('Save town reports and object observations. Return to them, compare your notes and keep a portable backup.',className='atlas-resident-intro'),
         html.Label('Read a saved investigation',htmlFor='fieldbook-selected',className='atlas-small-label'),
         dcc.Dropdown(id='fieldbook-selected',options=[],className='atlas-filter-dropdown',placeholder='Choose saved notes'),
         html.Label('Compare with',htmlFor='fieldbook-compare',className='atlas-small-label'),
@@ -32,9 +32,9 @@ def controls():
 
 def workspace():
     return html.Section([
+        html.Div([
         html.Div('FOLLOW YOUR CURIOSITY',className='atlas-lead-eyebrow'),
         html.H2('Pick up where you left off.',className='atlas-brief-heading'),
-        html.Div([
         html.Div(id='fieldbook-metrics', className='clovis-fieldbook-metrics'),
         html.Div(id='fieldbook-comparison'),
         expert_tools(),

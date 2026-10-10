@@ -2,8 +2,10 @@
 
 # Local dig records
 
-In **Fieldbook → Dig records**, create a project with the code used by your
-course or field team. Add units or trenches, contexts, finds, samples and source
+In **Fieldbook → Dig records**, start with a project code and title, or restore
+a project backup. Existing projects appear in the project chooser. The recording
+form and export action appear after you select a project.
+Use the code required by your course or field team. Add units or trenches, contexts, finds, samples and source
 documents. Record what you observed separately from interpretation and
 uncertainty. An unknown context, count or measurement stays unknown.
 
