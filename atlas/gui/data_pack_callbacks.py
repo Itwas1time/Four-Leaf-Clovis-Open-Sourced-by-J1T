@@ -35,7 +35,7 @@ def cards(_refresh, section="packs"):
                 html.Div([html.Button(action, id={"type": "data-pack-install", "index": identifier}, n_clicks=0,
                                       disabled=state["state"] == "installed", className="atlas-primary-button"),
                           html.Button(LIBRARIES[identifier][1], id={"type": "data-pack-open", "index": identifier}, n_clicks=0,
-                                      disabled=state["state"] != "installed",
+                                      disabled=state["state"] not in ("installed", "update"),
                                       className="atlas-secondary-button")] if identifier in LIBRARIES else [
                           html.Button(action, id={"type": "data-pack-install", "index": identifier}, n_clicks=0,
                                       disabled=state["state"] == "installed", className="atlas-primary-button")], className="clovis-pack-actions"),

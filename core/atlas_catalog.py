@@ -29,7 +29,7 @@ SOURCES = {
     "guides": "Material reference guides", "contexts": "Open Context · excavations & surveys",
     "environments": "Neotoma · sites, samples & environments",
     "specimens": "Open Context · Anatolian animal-bone records",
-    "field_assemblages": "Excavation assemblages · recovery, pottery & refits",
+    "field_assemblages": "Excavation & survey assemblages",
 }
 KINDS = {"all": "All evidence", "archaeology": "Archaeology & objects", "fossils": "Fossils",
          "history": "Historical documents", "earth": "Geology & minerals"}

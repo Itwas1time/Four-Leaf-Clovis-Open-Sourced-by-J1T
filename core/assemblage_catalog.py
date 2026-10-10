@@ -16,14 +16,17 @@ KINDS = {
     "field": "Field recording", "lithic": "Lithic analysis", "fauna": "Faunal analysis",
     "ochre": "Ochre analysis", "recovery": "Bulk recovery", "code": "Original recording codes",
     "layer": "Source stratigraphic order", "pottery": "Grouped pottery observation",
-    "chronology": "Locus chronology", "annotation": "Workbook annotation",
+    "chronology": "Locus chronology", "annotation": "Source annotation or blank template",
     "fragment": "Refitting fragment", "blank": "Reconstructed refitting blank",
     "connection": "Published refit connection", "model": "3D specimen metadata",
+    "deposit": "Recorded deposit", "survey": "Survey observation", "aggregate": "Published summary",
+    "date": "Dating or calibration record", "laboratory": "Laboratory result", "document": "Publisher context record",
 }
 SHA = re.compile(r"[a-f0-9]{64}\Z")
 ROW = re.compile(r"row:[a-f0-9]{64}:[0-9]{1,3}:[1-9][0-9]{0,11}\Z")
 TABLE = re.compile(r"[a-f0-9]{64}:[0-9]{1,3}\Z")
-DATASETS = {"hoedjiespunt", "berenike-sikait", "fumane-refits", "fumane-models"}
+DATASETS = {"hoedjiespunt", "berenike-sikait", "fumane-refits", "fumane-models",
+            "chengdu", "el-progreso", "khao-toh-chong", "madjedbebe"}
 
 
 def database():
@@ -42,7 +45,8 @@ def connect(path):
 def value_text(value):
     if value == "":
         return "Not recorded (blank)"
-    return re.sub(r"[\udc80-\udcff]", lambda match: "\\x" + format(ord(match[0]) - 0xDC00, "02X"), str(value))
+    return re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f\udc80-\udcff]",
+                  lambda match: "\\x" + format(ord(match[0]) - 0xDC00 if ord(match[0]) >= 0xDC80 else ord(match[0]), "02X"), str(value))
 
 
 def original_fields(headers, values):
@@ -105,7 +109,7 @@ def search(query="", page=1, view="all", scope="", table_id="", dataset="", reco
     elif re.findall(r"\w+", query, flags=re.UNICODE):
         terms = re.findall(r"\w+", query, flags=re.UNICODE)
         conditions.append("r.rowid IN (SELECT rowid FROM source_fts WHERE source_fts MATCH ?)")
-        parameters.append(" AND ".join('"' + term + '"*' for term in terms))
+        parameters.append(" AND ".join('"' + term + '"' + ("" if term.isdecimal() else "*") for term in terms))
     # All fragments are fixed internally; caller values are SQLite parameters.
     statement = " FROM records r WHERE " + (" AND ".join(conditions) or "1")  # nosec B608
     with closing(connect(path)) as connection:
@@ -140,7 +144,8 @@ def get_record(identifier):
         row["values"] = decode(row.pop("source_values"))
         row["cells"] = decode(row.pop("source_cells"))
         row["reading_facts"] = decode(row.pop("reading_facts"))
-        row["fields"] = original_fields(row["headers"], row["values"])
+        display = row["cells"]["attributes"].get("display_headers")
+        row["fields"] = original_fields(display if display is not None else row["headers"], row["values"])
         row["merged_anchors"] = []
         for merged in row["merges"]:
             match = re.fullmatch(r"([A-Z]+)([1-9][0-9]*):([A-Z]+)([1-9][0-9]*)", merged)
@@ -168,6 +173,14 @@ def get_record(identifier):
         row["summary"] = json.loads(connection.execute("SELECT value FROM metadata WHERE key='summary'").fetchone()[0])
     row["category"] = KINDS[row["kind"]]
     row["source_url"] = row["file"]["source_url"]
+    publisher_uri = row["cells"]["attributes"].get("publisher_uri")
+    if publisher_uri is None and row["dataset"] in ("chengdu", "el-progreso"):
+        for name in ("Item URI", "URI"):
+            if name in row["headers"] and row["headers"].index(name) < len(row["values"]):
+                publisher_uri = row["values"][row["headers"].index(name)]
+                break
+    if isinstance(publisher_uri, str) and re.fullmatch(r"https?://opencontext\.org/subjects/[a-f0-9-]{36}", publisher_uri):
+        row["source_url"] = "https://" + publisher_uri.split("://", 1)[1]
     return row
 
 
@@ -175,7 +188,7 @@ def facts(record):
     locator = record["file"]["path"]
     if record["table"]["sheet"]:
         locator += " · " + record["table"]["sheet"]
-    return [("Excavation site", record["site"]), *record["reading_facts"],
+    return [("Study or site", record["site"]), *record["reading_facts"],
             ("Original source row", locator + " · row " + str(record["ordinal"])),
             ("Contributors", "; ".join(record["edition"]["contributors"])),
             ("Source edition", record["edition"]["edition"])]

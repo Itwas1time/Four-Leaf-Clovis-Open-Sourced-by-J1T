@@ -147,7 +147,7 @@ def reader(selected, query, kind, source, context, page, _refresh):
                                    n_clicks=0, className="atlas-secondary-button")
             main_keys = ("animals", "plants", "dates", "phases", "sites", "parent", "children", "source-rows", "subject")
             main = [link for link in links if link["key"] in main_keys or
-                    row["source"] == "field_assemblages" and link["key"].partition(":")[0] in ("recording", "analysis", "locus", "refit") or
+                    row["source"] == "field_assemblages" and link["key"].partition(":")[0] in ("recording", "analysis", "locus", "refit", "pottery-bag", "layer", "recovery", "unit", "trench") or
                     row["source"] == "environments" and link["parameters"]["view"] in ("observation", "sample", "age", "date")][:4]
             more = [link for link in links if link not in main]
             children.append(html.Div([html.H4("Associated evidence"), *[button(link) for link in main]], className="clovis-atlas-related"))
@@ -157,10 +157,19 @@ def reader(selected, query, kind, source, context, page, _refresh):
         if row["source"] == "field_assemblages":
             original = row["original"]
             text = assemblage_catalog.value_text
+            attributes = original["cells"]["attributes"]
             children.append(html.Details([html.Summary("Original source fields"),
                 html.P(original["file"]["path"] + " · " + original["table"]["sheet"] + " · row " + str(original["ordinal"]), className="atlas-help"),
                 html.P("Original file SHA-256: " + original["file"]["sha256"], className="atlas-help"),
-                _facts(original["fields"]), _source_link(original["source_url"], "Read original source file")]))
+                *([html.P(attributes["header_binding_basis"], className="atlas-help")] if attributes.get("header_binding_basis") else []),
+                _facts(original["fields"]), _source_link(original["file"]["source_url"], "Read original source file")]))
+            if attributes.get("display_headers") is not None:
+                children.append(html.Details([html.Summary("Original header tokens"),
+                    _facts(("Original header column " + str(index + 1), text(value)) for index, value in enumerate(original["headers"])),
+                    html.P("These are the source's literal header tokens. The readable binding above is identified separately.", className="atlas-help")]))
+            if attributes.get("instrument_header") is not None:
+                children.append(html.Details([html.Summary("Original instrument line"),
+                    _facts([("First line", text(attributes["instrument_header"])), ("Data line", text(attributes["original_line"]))])]))
             formulas = [cell for cell in original["cells"]["cells"] if "formula" in cell]
             if formulas:
                 children.append(html.Details([html.Summary("Stored formulas and publisher results"),
@@ -178,6 +187,8 @@ def reader(selected, query, kind, source, context, page, _refresh):
                         ("Institutions", "; ".join(original["edition"]["institutions"])),
                         ("Source edition", original["edition"]["edition"])]),
                 _source_link(original["edition"]["citation_url"], "Read cited publication or dataset")]))
+            if "Latitude (WGS-84)" in original["headers"] and "Longitude (WGS-84)" in original["headers"]:
+                children.append(html.Details([html.Summary("Published location"), location_control(row["id"])]))
         elif row["source"] == "specimens":
             original = row["original"]
             editions = original["editions"]

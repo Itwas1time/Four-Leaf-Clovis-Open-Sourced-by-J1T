@@ -4907,6 +4907,151 @@
           "records": 4923
         }
       ]
+    },
+    {
+      "id": "excavation-assemblages",
+      "version": "2026.10.09.2",
+      "title": "Excavation assemblages and refits",
+      "description": "Excavation and survey recording, mixed-material recovery, pottery, fauna, dating, lithic refits and original sediment analyses. Follow qualified source contexts in Atlas.",
+      "records": 153796,
+      "record_type": "original matrix rows, instrument points and publisher context documents",
+      "coverage": "South Africa, Egypt, Italy, China, Ecuador, Thailand and Australia; 64 acquired matrices/spectra and 122 context documents. Laboratory teaching sections and reproduction attachments are identified separately.",
+      "source_release": "Fixed Zenodo and Figshare v4 editions, Open Context source tables/context documents, and pinned Fumane repository f6082f21e1c0d0f2ed8f81716cb7c2a1abfc5645",
+      "license": "CC BY 4.0, CC0 and original public-domain declarations; per-edition attribution and qualifications retained",
+      "source_url": "https://zenodo.org/records/10731129",
+      "citation_url": "https://doi.org/10.5281/zenodo.10731129",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-excavation-assemblages-2026.10.09.2/clovis-excavation-assemblages-2026.10.09.2.zip",
+      "archive_bytes": 163485821,
+      "archive_sha256": "7611c985916c7e9eb4d645146499d48f481f543204e9d84684dd9e3613331c07",
+      "installed_bytes": 531415835,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 9438,
+          "sha256": "c0f25bf3017e7d6d7a5f0a5866d686d3030a426c2868b92b0ec8dfcbf94dd3a8"
+        },
+        {
+          "name": "assemblages.sqlite",
+          "bytes": 531218432,
+          "sha256": "f1c6b6ac611a410f8654e0904bd1c2dadb5b8a393d1f119d694cbf3dbe80c807",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "editions": [
+              "id",
+              "document"
+            ],
+            "source_files": [
+              "id",
+              "dataset",
+              "path",
+              "source_url",
+              "sha256",
+              "bytes",
+              "styles_xml"
+            ],
+            "source_tables": [
+              "id",
+              "file_id",
+              "sheet",
+              "headers_json",
+              "merges_json",
+              "header_rows",
+              "source_rows"
+            ],
+            "source_attachments": [
+              "file_id",
+              "original_bytes",
+              "role"
+            ],
+            "records": [
+              "rowid",
+              "id",
+              "table_id",
+              "ordinal",
+              "dataset",
+              "site",
+              "country",
+              "kind",
+              "title",
+              "subtitle",
+              "source_values",
+              "source_cells",
+              "reading_facts"
+            ],
+            "scopes": [
+              "id",
+              "kind",
+              "label"
+            ],
+            "record_scopes": [
+              "record",
+              "scope",
+              "basis"
+            ],
+            "source_fts": [
+              "values_text"
+            ]
+          },
+          "record_table": "records",
+          "records": 153796,
+          "user_version": 1
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 187965,
+          "sha256": "863a776308acd4733c4f917d11619cadc3781ee1441b463e89192c258b32ae22"
+        }
+      ],
+      "countries": [
+        {
+          "label": "Australia",
+          "value": "Australia",
+          "records": 173
+        },
+        {
+          "label": "China",
+          "value": "China",
+          "records": 80773
+        },
+        {
+          "label": "Ecuador",
+          "value": "Ecuador",
+          "records": 4727
+        },
+        {
+          "label": "Egypt",
+          "value": "Egypt",
+          "records": 11293
+        },
+        {
+          "label": "Italy",
+          "value": "Italy",
+          "records": 18402
+        },
+        {
+          "label": "Mixed laboratory sections",
+          "value": "Mixed laboratory sections",
+          "records": 56
+        },
+        {
+          "label": "Not stated (Banda Neira section)",
+          "value": "Not stated (Banda Neira section)",
+          "records": 54
+        },
+        {
+          "label": "South Africa",
+          "value": "South Africa",
+          "records": 4923
+        },
+        {
+          "label": "Thailand",
+          "value": "Thailand",
+          "records": 33395
+        }
+      ]
     }
   ]
 }

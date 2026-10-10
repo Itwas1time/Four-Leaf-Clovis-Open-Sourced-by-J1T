@@ -31,7 +31,7 @@ searches retain their existing plans.
 | Excavation contexts, finds and survey effort | 153,867 distinct source subjects from Gabii, Petra and Eastern Korinthia; original observation documents, tables and field definitions | 243.2 MB | 576.6 MB |
 | Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
 | Anatolian animal-bone records | 242,457 published subject IDs, 4,026 context references and 814 aggregate rows; 838,710 original rows in 37 table editions | 456.7 MB | 981.6 MB |
-| Excavation assemblages and refits | 34,618 original scientific rows in 26 tables from Hoedjiespunt 1, Berenike, Sikait and Fumane | 18.2 MB | 76.4 MB |
+| Excavation assemblages and refits | 153,796 original records: 64 matrices/spectra and 122 publisher documents across eight source corpora in seven countries | 163.5 MB | 531.4 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
 bundled. These additional collections are optional; the initial application
@@ -73,7 +73,7 @@ require internet access.
 
 Search **Hoedjiespunt**, **Macrofauna**, **K11-9-1**, **Sikait**, **Berenike**,
 **RF.c_205** or **RF_Connections_Correlation**. Open the collection card or
-choose **Limit to a source → Excavation assemblages · recovery, pottery & refits**.
+choose **Limit to a source → Excavation & survey assemblages**.
 Use the shared reader's **Associated evidence** to follow field recordings,
 original lithic-analysis keys, recorded loci, pottery-bag references and refit
 endpoints. Every matching source row remains available through pagination.
@@ -111,13 +111,57 @@ not inferred. A refit or connection note does not establish deposit order.
 Full original fields start closed; saving a reference retains contributors,
 the particular source edition, original file hash and row locator.
 
+The expanded edition adds the Chengdu Plain survey in China, Hacienda El
+Progreso in Ecuador, Khao Toh Chong in Thailand and Madjedbebe in Australia.
+Search **Chengdu**, **El Progreso**, **Madjedbebe**, **Banda Neira pH** or
+**PTTDBDT**. Publisher context documents and laboratory readings have their
+own record labels. Collection updates retain prior installed versions for
+offline use, and the interface still shows seven collection cards.
+
+Chengdu retains all 80,656 original CSV rows, including layers, sampling
+waypoints, artifact bags, sherd observations, area-period summaries and tombs.
+Negative soil observations remain evidence. Bag correspondence distinguishes
+18,274 complete-key matches from 537 dictionary-supported FCN/waypoint matches
+whose original Bag Number remains blank. Eighteen unmatched and nineteen
+ambiguous sherd rows remain unresolved. Context containment does not establish
+deposit order. Published WGS-84 reference points retain location-inference
+wording; they do not establish an individual artifact's measured position.
+
+El Progreso's 4,722 grouped faunal rows contain 25,492 recorded specimens;
+these quantities are distinct. Literal locale/unit/level identifiers, weights,
+taxonomic and anatomical identifications, burning and breakage remain available.
+The row weights sum to 118,880 g, while project prose reports 118,820 g;
+both statements retain their attribution. The publisher's public-domain label
+and CC0 machine URI are retained separately.
+
+Khao Toh Chong includes material recording, radiocarbon, 31 particle-size runs,
+all 31,559 points in nine original diffraction spectra, and nineteen distinct
+laboratory matrix sections. Its particle export's malformed header and NUL
+trailer remain available separately from readable bindings. Banda Neira Unit 5
+is a separately labelled source block. Blank templates, laboratory controls,
+filename/title conflicts and undeclared signal units remain explicit.
+
+Madjedbebe's fixed 1989-excavation compendium retains all six original CSVs.
+Compound square/spit identifiers and calibration editions stay separate.
+Two original serialized reproduction results are retained as opaque data
+attachments; posterior draws are not counted as dates or excavated specimens.
+These two Figshare compendia dedicate data to CC0 in their READMEs, while the
+archive metadata states CC BY 4.0. Publisher R and other code is not executed
+or included in the collection.
+
+Additional sources: [Chengdu survey](https://opencontext.org/projects/968ea7e8-d521-4b4c-951c-01adcac7307f),
+[El Progreso fauna](https://doi.org/10.6078/M7MS3QTG),
+[Khao Toh Chong v4](https://doi.org/10.6084/m9.figshare.2065602.v4), and
+[Madjedbebe v4](https://doi.org/10.6084/m9.figshare.1297059.v4).
+
 Sources: [Hoedjiespunt 1](https://doi.org/10.5281/zenodo.10731129),
 [Berenike and Sikait pottery](https://doi.org/10.5281/zenodo.18681814),
 [Fumane specimen metadata](https://doi.org/10.5281/zenodo.15382869), and
 [Fumane research compendium](https://github.com/ArmandoFalcucci/Refitting-The-Context),
 pinned to `f6082f21e1c0d0f2ed8f81716cb7c2a1abfc5645`. Data editions retain CC BY
 4.0 contributor attribution. The fixed publication reproduction edition and
-developmental repository edition remain separate. Requires Clovis 0.17 or newer.
+developmental repository edition remain separate. The expanded collection
+requires Clovis 0.18 or newer; the original 0.17 snapshot remains available.
 
 ## Radiocarbon results
 
