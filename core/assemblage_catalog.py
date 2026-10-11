@@ -28,7 +28,9 @@ ROW = re.compile(r"(?:row|column):[a-f0-9]{64}:[0-9]{1,3}:[1-9][0-9]{0,11}\Z")
 TABLE = re.compile(r"[a-f0-9]{64}:[0-9]{1,3}\Z")
 DATASETS = {"hoedjiespunt", "berenike-sikait", "fumane-refits", "fumane-models",
             "chengdu", "el-progreso", "khao-toh-chong", "madjedbebe",
-            "giza-botany", "elephantine-botany", "mezber-plants", "indus-plants", "monte-castelo-plants"}
+            "giza-botany", "elephantine-botany", "mezber-plants", "indus-plants", "monte-castelo-plants",
+            "cixwicen-birds", "cixwicen-bird-sorting", "cixwicen-fish", "cixwicen-charcoal",
+            "locumba-recovery", "soro-wilamaya-evidence", "huaca-grande-deposits"}
 
 
 def database():
@@ -202,11 +204,15 @@ def source_locator(record):
         locator += " · " + record["table"]["sheet"]
     attributes = record["cells"]["attributes"]
     axis = "column" if attributes.get("orientation") == "column" else "row"
+    if axis == "column" and attributes.get("source_column_end_number"):
+        return locator + " · columns " + str(record["ordinal"]) + "–" + str(attributes["source_column_end_number"])
     return locator + " · " + axis + " " + str(record["ordinal"])
 
 
 def facts(record):
     label = "Original source column" if record["cells"]["attributes"].get("orientation") == "column" else "Original source row"
+    if label == "Original source column" and record["cells"]["attributes"].get("source_column_end_number"):
+        label = "Original source columns"
     return [("Study or site", record["site"]), *record["reading_facts"],
             (label, source_locator(record)),
             ("Contributors", "; ".join(record["edition"]["contributors"])),

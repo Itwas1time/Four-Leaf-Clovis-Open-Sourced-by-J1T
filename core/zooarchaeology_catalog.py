@@ -2,6 +2,7 @@
 from contextlib import closing
 from datetime import datetime, timezone
 from functools import lru_cache
+from itertools import chain
 import hashlib
 import json
 from pathlib import Path
@@ -217,13 +218,14 @@ def _matched_rows(path, where, parameters, signature, view, record_id):
                 where = "l.rowid IN (SELECT i.rowid FROM source_index i WHERE " + where + ")"  # nosec B608
         # Columns/tables/clauses are internal constants; all source values are bound.
         statement = "SELECT " + columns + " FROM " + source + " WHERE " + where  # nosec B608
-        matched = set()
-        for row in connection.execute(statement, parameters):
-            if target is not None:
-                if target in row:
-                    return (target,)
-            else:
-                matched.update(value for value in row if value is not None)
+        # This projection contains integer source ordinals only. Flatten it
+        # directly instead of allocating a generator and set update per row.
+        connection.row_factory = None
+        rows = connection.execute(statement, parameters)
+        if target is not None:
+            return (target,) if any(target in row for row in rows) else ()
+        matched = set(chain.from_iterable(rows))
+        matched.discard(None)
         return tuple(sorted(matched))
 
 

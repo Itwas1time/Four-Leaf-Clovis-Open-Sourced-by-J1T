@@ -31,13 +31,39 @@ searches retain their existing plans.
 | Excavation contexts, finds and survey effort | 153,867 distinct source subjects from Gabii, Petra and Eastern Korinthia; original observation documents, tables and field definitions | 243.2 MB | 576.6 MB |
 | Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
 | Anatolian animal-bone records | 242,457 published subject IDs, 4,026 context references and 814 aggregate rows; 838,710 original rows in 37 table editions | 456.7 MB | 981.6 MB |
-| Excavation assemblages and refits | 200,301 source records: 198,870 original rows and 1,431 physical context-column views across thirteen source corpora | 226.6 MB | 719.0 MB |
+| Excavation assemblages and refits | 235,663 source records: 234,196 original rows and 1,467 physical context-column views across twenty source corpora | 286.6 MB | 920.3 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
 bundled. These additional collections are optional; the initial application
 still includes those existing large catalogs.
 
 ## Plant remains and recovery
+
+The current Americas increment retains four complete Čḯxʷicən editions from
+Port Angeles, Washington: 34,944 original rows and 29,691 unique publisher
+subject IDs. Search **Cixwicen**, **Port Angeles** or **Lower Elwha Klallam**.
+Exact subjects link separate editions; the 5,253-row bird sorting edition does
+not add physical specimens. Original and analyst-adjusted bags, units and
+strata remain distinct. Bird zero quantities denote source refits, while absent
+fine fractions are not biological negatives. Map points retain their inherited
+and coarsened project setting.
+
+Locumba, Peru, provides 36 identified analyzed aliquots with adjacent COUNT and
+WEIGHT(g) columns. Each readable pair keeps native cells, metadata anchors,
+formula expressions and caches. The 18 L analyzed total describes selected
+aliquots, not the full deposits or all 134 collected samples. Missing collected
+samples are not negatives. Local N/E fields lack a declared coordinate system
+and are not converted into GPS.
+
+Soro Mik’aya Patjxa and Wilamaya Patjxa retain all five native publication tables:
+isotope controls, individual laboratory observations, replicate comparisons,
+model outputs and Soro flotation results. The 16 flotation feature groups total
+300 L. Feature 17 has 9 L and explicitly zero analyzed carbonized macroremains.
+The mixed 14/15* row stays separate. Human burial IDs and flotation feature IDs
+have independent namespaces. Models are not executed. Huaca Grande adds 49
+original deposit descriptions within Area A4.1, profile 4; it does not supply a
+complete per-deposit sample-volume register. All seven new editions declare
+CC BY 4.0 and retain primary author attribution.
 
 The current excavation collection also includes plant-recovery originals from
 Giza, Elephantine, Mezber, five Indus villages and the Monte Castelo shellmound.

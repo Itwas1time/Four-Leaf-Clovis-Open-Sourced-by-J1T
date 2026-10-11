@@ -5212,6 +5212,176 @@
           "records": 33395
         }
       ]
+    },
+    {
+      "id": "excavation-assemblages",
+      "version": "2026.10.11",
+      "title": "Excavation assemblages and refits",
+      "description": "Excavation and survey recording, mixed-material recovery, plant and animal remains, pottery, dating, lithic refits and original sediment analyses. Follow qualified source contexts in Atlas.",
+      "records": 235663,
+      "record_type": "original matrix rows, instrument points, publisher context documents and qualified context-column views",
+      "coverage": "Australia; Brazil; China; Ecuador; Egypt; Ethiopia; India; Italy; Mixed laboratory sections; Not stated (Banda Neira section); Peru; South Africa; Thailand; United States; 156 acquired matrices/spectra and 122 context documents. Includes 1,467 readable physical context-column views of the same original cells; these are not additional samples or finds. Laboratory teaching sections and reproduction attachments are identified separately.",
+      "source_release": "Fixed source editions from Zenodo, Figshare, Open Context, Springer, Wiley, PLOS ONE and Cambridge; original publication tables, native scientific workbooks and pinned Fumane repository f6082f21e1c0d0f2ed8f81716cb7c2a1abfc5645",
+      "license": "CC BY 4.0, CC0 and original public-domain declarations; per-edition attribution and qualifications retained",
+      "source_url": "https://zenodo.org/records/10731129",
+      "citation_url": "https://doi.org/10.5281/zenodo.10731129",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-excavation-assemblages-2026.10.11/clovis-excavation-assemblages-2026.10.11.zip",
+      "archive_bytes": 286633393,
+      "archive_sha256": "d94d84d67c274a17e876be5381cf085f5d31440042b59b355241684af1996e23",
+      "installed_bytes": 920293505,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 28441,
+          "sha256": "e8bd9616fb3bb6a0983f9e03bdbc1558ec7f66a658d0e796723aec127f5a4986"
+        },
+        {
+          "name": "assemblages.sqlite",
+          "bytes": 919998464,
+          "sha256": "271df414397ed35cdcd85b571e668568d340f320f848e8864c310712c61db7aa",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "editions": [
+              "id",
+              "document"
+            ],
+            "source_files": [
+              "id",
+              "dataset",
+              "path",
+              "source_url",
+              "sha256",
+              "bytes",
+              "styles_xml"
+            ],
+            "source_tables": [
+              "id",
+              "file_id",
+              "sheet",
+              "headers_json",
+              "merges_json",
+              "header_rows",
+              "source_rows"
+            ],
+            "source_attachments": [
+              "file_id",
+              "original_bytes",
+              "role"
+            ],
+            "records": [
+              "rowid",
+              "id",
+              "table_id",
+              "ordinal",
+              "dataset",
+              "site",
+              "country",
+              "kind",
+              "title",
+              "subtitle",
+              "source_values",
+              "source_cells",
+              "reading_facts"
+            ],
+            "scopes": [
+              "id",
+              "kind",
+              "label"
+            ],
+            "record_scopes": [
+              "record",
+              "scope",
+              "basis"
+            ],
+            "source_fts": [
+              "values_text"
+            ]
+          },
+          "record_table": "records",
+          "records": 235663,
+          "user_version": 1
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 266600,
+          "sha256": "004d0eba43e1ec99c0369a75fbf9c14da86b39697c70966c00eb73d90419b06d"
+        }
+      ],
+      "countries": [
+        {
+          "label": "Australia",
+          "value": "Australia",
+          "records": 173
+        },
+        {
+          "label": "Brazil",
+          "value": "Brazil",
+          "records": 21
+        },
+        {
+          "label": "China",
+          "value": "China",
+          "records": 80773
+        },
+        {
+          "label": "Ecuador",
+          "value": "Ecuador",
+          "records": 4727
+        },
+        {
+          "label": "Egypt",
+          "value": "Egypt",
+          "records": 56410
+        },
+        {
+          "label": "Ethiopia",
+          "value": "Ethiopia",
+          "records": 488
+        },
+        {
+          "label": "India",
+          "value": "India",
+          "records": 879
+        },
+        {
+          "label": "Italy",
+          "value": "Italy",
+          "records": 18402
+        },
+        {
+          "label": "Mixed laboratory sections",
+          "value": "Mixed laboratory sections",
+          "records": 56
+        },
+        {
+          "label": "Not stated (Banda Neira section)",
+          "value": "Not stated (Banda Neira section)",
+          "records": 54
+        },
+        {
+          "label": "Peru",
+          "value": "Peru",
+          "records": 418
+        },
+        {
+          "label": "South Africa",
+          "value": "South Africa",
+          "records": 4923
+        },
+        {
+          "label": "Thailand",
+          "value": "Thailand",
+          "records": 33395
+        },
+        {
+          "label": "United States",
+          "value": "United States",
+          "records": 34944
+        }
+      ]
     }
   ]
 }

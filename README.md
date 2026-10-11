@@ -95,11 +95,17 @@ Korinthia. Follow recorded deposits, finds and samples in the same Atlas reader;
 read original recovery conditions, survey effort, field meanings and units.
 The Anatolian animal-bone collection adds 247,297 attributed subject identifiers,
 context references and aggregate rows, retaining all 838,710 original scientific
-rows (456.7 MB). Excavation assemblages and refits provides 200,301 source records:
-198,870 original rows and 1,431 readable physical context-column views across
-thirteen source corpora. Giza, Elephantine, Mezber, five Indus villages and the
+rows (456.7 MB). Excavation assemblages and refits provides 235,663 source records:
+234,196 original rows and 1,467 readable physical context-column views across
+twenty source corpora. Čḯxʷicən in Washington and Locumba, Soro Mik’aya Patjxa,
+Wilamaya Patjxa and Huaca Grande in Peru join Giza, Elephantine, Mezber, five Indus villages and the
 Monte Castelo shellmound join Hoedjiespunt 1, Berenike/Sikait, Fumane metadata and
-refits, Chengdu, El Progreso, Khao Toh Chong and Madjedbebe (226.6 MB).
+refits, Chengdu, El Progreso, Khao Toh Chong and Madjedbebe (286.6 MB).
+Search **Cixwicen** or **Port Angeles** for Washington's attributed bird, fish
+and charcoal editions. Locumba pairs counts with gram weights; Soro retains
+laboratory comparisons alongside actual flotation quantities and an explicit
+analyzed-macroplant negative. Overlapping editions remain separate, without
+increasing the number of physical finds or inventing whole-deposit coverage.
 Read sediment volumes, plant quantities, recovery methods, explicit unanalysed
 layers, pottery chronology, survey contexts, sediment analyses and refit connections.
 Column views repeat original cells, not samples or finds. Blank and omitted
@@ -122,7 +128,7 @@ python -m atlas.gui.app
 ```
 
 The Dash app binds to localhost at port 8050. **Explore** opens on **Atlas**,
-with one search and a shared reader across **19,982,990 source records** when
+with one search and a shared reader across **20,018,352 source records** when
 the latest versions of all seven optional packs are installed. Search published places, cultures,
 materials or fossils and follow the original source. **Specialist searches**
 keeps detailed collection filters available. Counts mix different record types
