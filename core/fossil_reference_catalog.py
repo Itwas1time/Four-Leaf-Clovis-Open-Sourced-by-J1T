@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import closing
 from functools import lru_cache
 from email.utils import parsedate_to_datetime
 import hashlib
@@ -23,9 +24,15 @@ MAX_QUERY_TERMS = 8
 SOURCE_KEY = "paleo"
 
 
+@lru_cache(maxsize=1024)
+def _read_uri(absolute_path: str) -> str:
+    """Bundled shard locations stay fixed during one application process."""
+    return Path(absolute_path).resolve().as_uri() + "?mode=ro&immutable=1"
+
+
 def _connect(path: Path) -> sqlite3.Connection:
     """Open one bundled shard read-only without creating journals or files."""
-    uri = path.resolve().as_uri() + "?mode=ro&immutable=1"
+    uri = _read_uri(str(path.absolute()))
     connection = sqlite3.connect(uri, uri=True)
     connection.row_factory = sqlite3.Row
     return connection
@@ -43,7 +50,7 @@ def _inventory(directory: str) -> tuple[tuple[str, dict[str, str]], ...]:
     if not index.is_file():
         return ()
     try:
-        with _connect(index) as connection:
+        with closing(_connect(index)) as connection:
             names = [str(row[0]) for row in connection.execute(
                 "SELECT filename FROM shard_manifest WHERE record_count > 0 AND database_bytes > 0 ORDER BY shard"
             )]
@@ -57,7 +64,7 @@ def _inventory(directory: str) -> tuple[tuple[str, dict[str, str]], ...]:
         if not path.is_file():
             continue
         try:
-            with _connect(path) as connection:
+            with closing(_connect(path)) as connection:
                 found.append((path.name, _metadata(connection)))
         except (OSError, sqlite3.Error):
             continue
@@ -78,7 +85,7 @@ def _index_metadata() -> dict[str, str]:
     if not path.is_file():
         return {}
     try:
-        with _connect(path) as connection:
+        with closing(_connect(path)) as connection:
             return _metadata(connection)
     except (OSError, sqlite3.Error):
         return {}
@@ -96,7 +103,7 @@ def catalog_stats() -> dict[str, Any]:
             "field_coverage": {}, "excluded": {},
         }
     try:
-        with _connect(index_path) as connection:
+        with closing(_connect(index_path)) as connection:
             meta = _metadata(connection)
             rows = [dict(row) for row in connection.execute("SELECT * FROM shard_manifest ORDER BY shard")]
             taxon_rows = [dict(row) for row in connection.execute("SELECT * FROM taxa_shards ORDER BY bucket")]
@@ -211,7 +218,7 @@ def _matching_counts(directory: str, query_expression: str, group: str) -> tuple
     counts: list[tuple[str, int]] = []
     for filename, _ in _inventory(directory):
         try:
-            with _connect(Path(directory) / filename) as connection:
+            with closing(_connect(Path(directory) / filename)) as connection:
                 count = int(connection.execute("SELECT COUNT(*) FROM records r" + where, params).fetchone()[0])  # nosec B608 # Fixed SQL clauses and placeholders; values use bound parameters.
             counts.append((filename, count))
         except (OSError, sqlite3.Error):
@@ -307,7 +314,7 @@ def get_fossil(record_id: str | int | None) -> dict[str, Any] | None:
     if not value or len(value) > 160:
         return None
     try:
-        with _connect(index_path) as connection:
+        with closing(_connect(index_path)) as connection:
             route = connection.execute(
                 "SELECT m.shard,m.filename FROM routes r JOIN shard_manifest m ON m.shard=r.shard "
                 "WHERE r.source_id=?", (value,)
@@ -321,7 +328,7 @@ def get_fossil(record_id: str | int | None) -> dict[str, Any] | None:
         return None
     path = DATA_DIR.resolve() / filename
     try:
-        with _connect(path) as connection:
+        with closing(_connect(path)) as connection:
             row = connection.execute("SELECT * FROM records WHERE source_id=?", (value,)).fetchone()
             meta = _metadata(connection)
     except (OSError, sqlite3.Error):
@@ -338,7 +345,7 @@ def get_fossil(record_id: str | int | None) -> dict[str, Any] | None:
 
 def _taxon_paths(index_path: Path) -> list[Path]:
     try:
-        with _connect(index_path) as connection:
+        with closing(_connect(index_path)) as connection:
             names = [str(row[0]) for row in connection.execute("SELECT filename FROM taxa_shards ORDER BY bucket")]
     except (OSError, sqlite3.Error):
         return []
@@ -391,7 +398,7 @@ def search_taxa(query: str = "", group: str = "all", page: int = 1) -> dict[str,
     try:
         total = 0
         for path in paths:
-            with _connect(path) as connection:
+            with closing(_connect(path)) as connection:
                 total += int(connection.execute("SELECT COUNT(*) FROM taxa t" + where, params).fetchone()[0])  # nosec B608 # Fixed SQL clauses and placeholders; values use bound parameters.
         requested_page = max(1, int(page or 1))
     except (TypeError, ValueError, OverflowError, OSError, sqlite3.Error):

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import closing
 from functools import lru_cache
 import heapq
 import hashlib
@@ -28,7 +29,7 @@ def _inventory(directory: str) -> tuple[tuple[str, dict[str, str]], ...]:
     found: list[tuple[str, dict[str, str]]] = []
     for path in sorted(Path(directory).glob(SHARD_GLOB), key=lambda item: item.name.casefold()):
         try:
-            with _connect(path) as connection:
+            with closing(_connect(path)) as connection:
                 found.append((path.name, _metadata(connection)))
         except (OSError, sqlite3.Error):
             continue
@@ -44,9 +45,15 @@ def available() -> bool:
     return bool(_shard_paths())
 
 
+@lru_cache(maxsize=1024)
+def _read_uri(absolute_path: str) -> str:
+    """Bundled shard locations stay fixed during one application process."""
+    return Path(absolute_path).resolve().as_uri() + "?mode=ro&immutable=1"
+
+
 def _connect(path: Path) -> sqlite3.Connection:
     """Open one bundled shard read-only without creating journals or files."""
-    uri = path.resolve().as_uri() + "?mode=ro&immutable=1"
+    uri = _read_uri(str(path.absolute()))
     connection = sqlite3.connect(uri, uri=True)
     connection.row_factory = sqlite3.Row
     return connection
@@ -147,7 +154,7 @@ def _matching_counts(directory: str, query_expression: str, material: str) -> tu
     counts: list[tuple[str, int]] = []
     for filename, _ in _inventory(directory):
         try:
-            with _connect(Path(directory) / filename) as connection:
+            with closing(_connect(Path(directory) / filename)) as connection:
                 count = int(connection.execute(
                     "SELECT COUNT(*) FROM records r" + where, params  # nosec B608 # Fixed SQL clauses and placeholders; values use bound parameters.
                 ).fetchone()[0])
@@ -259,7 +266,7 @@ def get_object(record_id: str | int | None) -> dict[str, Any] | None:
     shard: str | None = None
     if lookup_path.is_file():
         try:
-            with sqlite3.connect(lookup_path.resolve().as_uri() + "?mode=ro&immutable=1", uri=True) as connection:
+            with closing(_connect(lookup_path)) as connection:
                 found = connection.execute("SELECT shard FROM routes WHERE source_id = ?", (value,)).fetchone()
             if found is not None and re.fullmatch(r"[0-9a-f]{2}", str(found[0])):
                 shard = str(found[0])
@@ -273,7 +280,7 @@ def get_object(record_id: str | int | None) -> dict[str, Any] | None:
         paths = _shard_paths()
     for path in paths:
         try:
-            with _connect(path) as connection:
+            with closing(_connect(path)) as connection:
                 row = connection.execute("SELECT * FROM records WHERE source_id = ?", (value,)).fetchone()
         except (OSError, sqlite3.Error):
             continue

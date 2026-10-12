@@ -5563,6 +5563,416 @@
           "records": 227962
         }
       ]
+    },
+    {
+      "id": "excavation-assemblages",
+      "version": "2026.10.12",
+      "title": "Excavation assemblages and refits",
+      "description": "Excavation and survey recording, mixed-material recovery, plant and animal remains, pottery, dating, lithic refits and original sediment analyses. Follow qualified source contexts in Atlas.",
+      "records": 343904,
+      "record_type": "original matrix rows, instrument points, publisher context documents and qualified context-column views",
+      "coverage": "Australia; Brazil; China; Ecuador; Egypt; Ethiopia; India; Italy; Mixed laboratory sections; Not stated (Banda Neira section); Peru; South Africa; Thailand; United States; 209 acquired matrices/spectra and 122 context documents. Includes 1,467 readable physical context-column views of the same original cells; these are not additional samples or finds. Laboratory teaching sections and reproduction attachments are identified separately.",
+      "source_release": "Fixed source editions from Zenodo, Figshare, Open Context, Springer, Wiley, PLOS ONE and Cambridge; original publication tables, native scientific workbooks and pinned Fumane repository f6082f21e1c0d0f2ed8f81716cb7c2a1abfc5645; complete Geelbek v1, Harris Mendeley v1, Las Capas pinned 64498c2abd8cf007f7efe0664a831cb7dc78ca31",
+      "license": "CC BY 4.0, CC0, original public-domain and qualified repository MIT declarations; per-edition attribution retained",
+      "source_url": "https://zenodo.org/records/10731129",
+      "citation_url": "https://doi.org/10.5281/zenodo.10731129",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-excavation-assemblages-2026.10.12/clovis-excavation-assemblages-2026.10.12.zip",
+      "archive_bytes": 326002484,
+      "archive_sha256": "e4544d4149a19f51bda2b00532832cb1c7c7d0169d55f286b91142ea06a695dc",
+      "installed_bytes": 1151126114,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 33460,
+          "sha256": "b1e3c45f70a5e8ba1c5628c5934287f2300d14dd76bb0c797d25d4cdcdb8e2d2"
+        },
+        {
+          "name": "assemblages.sqlite",
+          "bytes": 1138352128,
+          "sha256": "4905208ea859498e595335074e34a2840460b4ea6319fed935a0d4dd0ffc4ce8",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "editions": [
+              "id",
+              "document"
+            ],
+            "source_files": [
+              "id",
+              "dataset",
+              "path",
+              "source_url",
+              "sha256",
+              "bytes",
+              "styles_xml"
+            ],
+            "source_tables": [
+              "id",
+              "file_id",
+              "sheet",
+              "headers_json",
+              "merges_json",
+              "header_rows",
+              "source_rows"
+            ],
+            "source_attachments": [
+              "file_id",
+              "original_bytes",
+              "role"
+            ],
+            "records": [
+              "rowid",
+              "id",
+              "table_id",
+              "ordinal",
+              "dataset",
+              "site",
+              "country",
+              "kind",
+              "title",
+              "subtitle",
+              "source_values",
+              "source_cells",
+              "reading_facts"
+            ],
+            "scopes": [
+              "id",
+              "kind",
+              "label"
+            ],
+            "record_scopes": [
+              "record",
+              "scope",
+              "basis"
+            ],
+            "source_fts": [
+              "values_text"
+            ]
+          },
+          "record_table": "records",
+          "records": 343904,
+          "user_version": 1
+        },
+        {
+          "name": "geelbek-Geelbek_BUCKETS.csv",
+          "bytes": 467949,
+          "sha256": "428292298a1c5b8d4286e1e5640263423f4330a9df4c32377b3c456f9900a573"
+        },
+        {
+          "name": "geelbek-Geelbek_DATES_14C.csv",
+          "bytes": 7862,
+          "sha256": "94be636f6257a439747aa36a00e2f248db5b0ca18753b1045c68f951bee4998d"
+        },
+        {
+          "name": "geelbek-Geelbek_DATES_IRSL.csv",
+          "bytes": 4331,
+          "sha256": "b7606394bfdcd6f4593d1c65e011a92eca09430dca1731440d84f1e05892d503"
+        },
+        {
+          "name": "geelbek-Geelbek_DATES_U-SERIES.csv",
+          "bytes": 3312,
+          "sha256": "dafdf8f49cb5db28057afdbb6fc23637b19a498b464cf531c5dd3f686d940df4"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA.csv",
+          "bytes": 3242533,
+          "sha256": "ebffa82850f470e75974dc07daec0ca1c333bc93c0bd2d7d6e86c41e2e35703b"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Age_code.csv",
+          "bytes": 359,
+          "sha256": "51125ba848b3ce112315b5acd71f23e95f4df13cda87e9a2996a3c9a05958c38"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Breakage_code.csv",
+          "bytes": 77,
+          "sha256": "ab4f3b494029a1eb4f5d9c55a1b47a65b71d9c135a21561a14b93a56e2b0f251"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Dental_epiphysis_code.csv",
+          "bytes": 5403,
+          "sha256": "ad9172eec46dd4ffb77da90de96ba8c9996594f876cf040fc99d3933ffe2f008"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Landmark_code.csv",
+          "bytes": 2965,
+          "sha256": "38bc7dc26c22f105ab5e7ed03e5d724dfd8612944c2dd4b9f87198596937d829"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Metrics.csv",
+          "bytes": 8444,
+          "sha256": "2e8790138e3d0c27cbd9dca73fb8504b9b6298db25cc4057d46ae0840bc7fe63"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Preservation_general_code.csv",
+          "bytes": 98,
+          "sha256": "7be3a5e3602a20a916142cde31bf430c52432cbe6c2e82b386af7843cbfee211"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Preservation_mineralization_code.csv",
+          "bytes": 173,
+          "sha256": "027aa4d1bb4ca09e78a0bcfab48bc8a3dfa371307d61901affdc7acffb92ebe0"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Preservation_surface_code.csv",
+          "bytes": 98,
+          "sha256": "7be3a5e3602a20a916142cde31bf430c52432cbe6c2e82b386af7843cbfee211"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Sex_code.csv",
+          "bytes": 389,
+          "sha256": "ca3662a7b2a2bab7f2f6b2d8fb2b8720128d247cb63af658e28d3a7307ce1414"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Shaft_completeness_code.csv",
+          "bytes": 611,
+          "sha256": "0703239a0c38f14d852b94b51d16549e8c8a6924f468e13b2497f1f7a8c9a896"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Side_code.csv",
+          "bytes": 133,
+          "sha256": "bc487f5170cb288a602d0b8c5b19b56fd264a03893cbb225e58d65f034bfbba5"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Size_class_code.csv",
+          "bytes": 492,
+          "sha256": "7314ba9625dc99e198dc2c7a1e0a1e374bcb4876a5a7c17d285356a068ccbca5"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Skeletal_code.csv",
+          "bytes": 5062,
+          "sha256": "dc5c6c947c4293d59ad78d2267585d457e24002c5ba226b4b197cdb00d9a1148"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Skeletal_element_code.csv",
+          "bytes": 16037,
+          "sha256": "90da90a8f05d8575de20812c7292b154ed8984bfa7941bc46c536d05a8d55f13"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Skeletal_portion_code.csv",
+          "bytes": 54569,
+          "sha256": "65cb860071ff76ff6bf885dac4a71a325090b3635a02738c5b1c11c0c7bdbbf8"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Species_code.csv",
+          "bytes": 3235,
+          "sha256": "ec454286ee3dd73e1c18f1a5089e50f76ee93fbc4ef5192d2b6c01ffb15d93b4"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Taxa_code.csv",
+          "bytes": 19936,
+          "sha256": "b84d61ef3e25a101ca75bc7f8d383ceedb82126e3cd6c1f2db29705ddb7bb44c"
+        },
+        {
+          "name": "geelbek-Geelbek_FEATURES.csv",
+          "bytes": 256742,
+          "sha256": "bf0064feba4e453ac8aead574f01536829c1567ea2907239ed376beb538277fa"
+        },
+        {
+          "name": "geelbek-Geelbek_FISH.csv",
+          "bytes": 12668,
+          "sha256": "fbcac9bfabdbf6c6b4dd47509f778521e6cfad8386fb319705947d6c11a29a8b"
+        },
+        {
+          "name": "geelbek-Geelbek_GEOSAMPLES.csv",
+          "bytes": 21377,
+          "sha256": "a7d40c4ff8aae51ec5ad4579dc2b3aed3f66a04fa42fcbe823244ceea62f9f07"
+        },
+        {
+          "name": "geelbek-Geelbek_INDIVIDUALS_code.csv",
+          "bytes": 5768,
+          "sha256": "bc0e58f48a13980f75b14354cf72d12b6bbf3e2568561173a6e2c58019df6dd2"
+        },
+        {
+          "name": "geelbek-Geelbek_ISOTOPES.csv",
+          "bytes": 707,
+          "sha256": "5b63165b4d34e18eb5242d170a3027f87b1bd71e88446c2a2afb02bf426e7d17"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Blanks.csv",
+          "bytes": 352542,
+          "sha256": "a4c99d2d35a2df7e836a349211f76fb83a06540d0bb169214774cd20e6bdd3fb"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Cores.csv",
+          "bytes": 45536,
+          "sha256": "7c4b63eeb5c026425050da257779bc6375029a2e65f348397c4303518a6130b2"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Extras.csv",
+          "bytes": 59266,
+          "sha256": "9870716e5b8681b3807f47b06fd6a3e13f1fede8c86756153be246c488939bf3"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Main.csv",
+          "bytes": 1403125,
+          "sha256": "34f11235ef0101dd57455c16c96f0e05fe382548fbe163db5a09ba3a3220a8e6"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Main_Reduction_sequence_code.csv",
+          "bytes": 456,
+          "sha256": "5e8a0258a0b2e0549fd6ada9b3c3e125c85b88deac020dba087b97463965474a"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Metrics.csv",
+          "bytes": 248867,
+          "sha256": "ef787dc650c05c334638db2877d978579f682faa8d2d909e1e71516029a2ac42"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Rawmaterials_DR.csv",
+          "bytes": 2468,
+          "sha256": "27a3d99221bd5f4b5174468410ce935f293721e6ef750e5839c741f10e5dcf02"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Tools.csv",
+          "bytes": 54926,
+          "sha256": "abc7374da25ec852da2bc501947809ef6f3414e48a9e8b2668a5dc07bdee2b61"
+        },
+        {
+          "name": "geelbek-Geelbek_LOCALITY_code.csv",
+          "bytes": 1169,
+          "sha256": "86d3e27006b371b713bbabdc202a196577ee735e2485689afd98424f99cc05e8"
+        },
+        {
+          "name": "geelbek-Geelbek_MAIN.csv",
+          "bytes": 4623465,
+          "sha256": "7ec31700476dbf7726f5354ec4bf94c09c4621e0cfe1e208c4960d3381a2ac15"
+        },
+        {
+          "name": "geelbek-Geelbek_MODERN.csv",
+          "bytes": 30041,
+          "sha256": "44d10d9df0b929f39af72cfd279be883d0e7123b09e808661ef1c1fa0a2fbb37"
+        },
+        {
+          "name": "geelbek-Geelbek_OSTRICH_EGGSHELL_Beads.csv",
+          "bytes": 85945,
+          "sha256": "9359fe5ec4fbdddb96e57fde351a153136f5499636d617765181ddc368745fbd"
+        },
+        {
+          "name": "geelbek-Geelbek_OSTRICH_EGGSHELL_Fragments.csv",
+          "bytes": 159306,
+          "sha256": "28433a9fa8141932501d7a4d81f8e3ccca1dbf122c1a4311e4bac062c09ce824"
+        },
+        {
+          "name": "geelbek-Geelbek_PEOPLE_code.csv",
+          "bytes": 6807,
+          "sha256": "93e26529cc9382cd8936f4a598d29d1181bd4e77a4377616bede5d12727aecd3"
+        },
+        {
+          "name": "geelbek-Geelbek_POTTERY.csv",
+          "bytes": 43798,
+          "sha256": "f2b728ea3d29897462f0ea19b42cb394be54a694f54337af919c195c7f1db048"
+        },
+        {
+          "name": "geelbek-Geelbek_REFITS.csv",
+          "bytes": 101521,
+          "sha256": "68fb4615cf68c9a8068edaa673fe0f7f122a4b9b898d2d0bdfdceeb63decd308"
+        },
+        {
+          "name": "geelbek-Geelbek_SHELL.csv",
+          "bytes": 219823,
+          "sha256": "f88d025f4742d55650fa509e8f7f14fbd2f0bb9845d282aecc775aa9ff84c004"
+        },
+        {
+          "name": "geelbek-Geelbek_SHELL_code.csv",
+          "bytes": 10254,
+          "sha256": "b5732fa95a0ebd5122328f2029eedaac0ad21feefb9987185fd0489e3cecfcd0"
+        },
+        {
+          "name": "harris-obsidian-HarrisObsidianMasterDatabase_wSources_Jan2017.xlsx",
+          "bytes": 317432,
+          "sha256": "fc7116aec47f688957273069d708e198c5f4e2e58414f2c36d71ceba7de534b1"
+        },
+        {
+          "name": "las-capas-plants-sinensky_and_farahani_2018_estimates_output.csv",
+          "bytes": 323922,
+          "sha256": "09ba223f6245682003fb9b8963072cb00241afa1329012343b56e24ea9375027"
+        },
+        {
+          "name": "las-capas-plants-sinensky_and_farahani_2018_paleoethnobotanical_data.csv",
+          "bytes": 212636,
+          "sha256": "ed1d25e4129842baab8a0b938b9aa8878acf58a19c79aac27a2f847b220ed227"
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 295891,
+          "sha256": "077308ac0a09b8d66a8a130ee76f00147d9d3ce98788fe13235586da1057d6f2"
+        }
+      ],
+      "countries": [
+        {
+          "label": "Australia",
+          "value": "Australia",
+          "records": 173
+        },
+        {
+          "label": "Brazil",
+          "value": "Brazil",
+          "records": 21
+        },
+        {
+          "label": "China",
+          "value": "China",
+          "records": 80773
+        },
+        {
+          "label": "Ecuador",
+          "value": "Ecuador",
+          "records": 4727
+        },
+        {
+          "label": "Egypt",
+          "value": "Egypt",
+          "records": 56410
+        },
+        {
+          "label": "Ethiopia",
+          "value": "Ethiopia",
+          "records": 488
+        },
+        {
+          "label": "India",
+          "value": "India",
+          "records": 879
+        },
+        {
+          "label": "Italy",
+          "value": "Italy",
+          "records": 18402
+        },
+        {
+          "label": "Mixed laboratory sections",
+          "value": "Mixed laboratory sections",
+          "records": 56
+        },
+        {
+          "label": "Not stated (Banda Neira section)",
+          "value": "Not stated (Banda Neira section)",
+          "records": 54
+        },
+        {
+          "label": "Peru",
+          "value": "Peru",
+          "records": 418
+        },
+        {
+          "label": "South Africa",
+          "value": "South Africa",
+          "records": 108568
+        },
+        {
+          "label": "Thailand",
+          "value": "Thailand",
+          "records": 33395
+        },
+        {
+          "label": "United States",
+          "value": "United States",
+          "records": 39540
+        }
+      ]
     }
   ]
 }

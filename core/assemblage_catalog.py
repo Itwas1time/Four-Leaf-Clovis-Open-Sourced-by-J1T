@@ -30,7 +30,8 @@ DATASETS = {"hoedjiespunt", "berenike-sikait", "fumane-refits", "fumane-models",
             "chengdu", "el-progreso", "khao-toh-chong", "madjedbebe",
             "giza-botany", "elephantine-botany", "mezber-plants", "indus-plants", "monte-castelo-plants",
             "cixwicen-birds", "cixwicen-bird-sorting", "cixwicen-fish", "cixwicen-charcoal",
-            "locumba-recovery", "soro-wilamaya-evidence", "huaca-grande-deposits"}
+            "locumba-recovery", "soro-wilamaya-evidence", "huaca-grande-deposits",
+            "geelbek", "harris-obsidian", "las-capas-plants"}
 
 
 def database():

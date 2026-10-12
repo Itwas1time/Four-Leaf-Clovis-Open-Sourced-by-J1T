@@ -95,12 +95,19 @@ Korinthia. Follow recorded deposits, finds and samples in the same Atlas reader;
 read original recovery conditions, survey effort, field meanings and units.
 The Anatolian animal-bone collection adds 247,297 attributed subject identifiers,
 context references and aggregate rows, retaining all 838,710 original scientific
-rows (456.7 MB). Excavation assemblages and refits provides 235,663 source records:
-234,196 original rows and 1,467 readable physical context-column views across
-twenty source corpora. Čḯxʷicən in Washington and Locumba, Soro Mik’aya Patjxa,
+rows (456.7 MB). Excavation assemblages and refits provides 343,904 source records:
+342,437 original rows and 1,467 readable physical context-column views across
+twenty-three source corpora. Čḯxʷicən in Washington and Locumba, Soro Mik’aya Patjxa,
 Wilamaya Patjxa and Huaca Grande in Peru join Giza, Elephantine, Mezber, five Indus villages and the
 Monte Castelo shellmound join Hoedjiespunt 1, Berenike/Sikait, Fumane metadata and
-refits, Chengdu, El Progreso, Khao Toh Chong and Madjedbebe (286.6 MB).
+refits, Chengdu, El Progreso, Khao Toh Chong and Madjedbebe. Geelbek's complete
+45-table field register, the Harris Site obsidian workbook from New Mexico,
+and Las Capas flotation observations from Arizona join the same reader
+(326.0 MB download; 1.15 GB installed). All 48 new original data files are
+included unchanged. Las Capas retains 1,324 measured-volume sample rows and a
+separately labelled 1,324-row statistical output; these do not count additional
+finds. Its original README declares MIT and references an absent license file;
+that source qualification stays with the data.
 Search **Cixwicen** or **Port Angeles** for Washington's attributed bird, fish
 and charcoal editions. Locumba pairs counts with gram weights; Soro retains
 laboratory comparisons alongside actual flotation quantities and an explicit
@@ -128,7 +135,7 @@ python -m atlas.gui.app
 ```
 
 The Dash app binds to localhost at port 8050. **Explore** opens on **Atlas**,
-with one search and a shared reader across **20,246,314 source records** when
+with one search and a shared reader across **20,354,555 source records** when
 the latest versions of all eight optional packs are installed. Search published places, cultures,
 materials or fossils and follow the original source. **Specialist searches**
 keeps detailed collection filters available. Counts mix different record types

@@ -31,7 +31,7 @@ searches retain their existing plans.
 | Excavation contexts, finds and survey effort | 153,867 distinct source subjects from Gabii, Petra and Eastern Korinthia; original observation documents, tables and field definitions | 243.2 MB | 576.6 MB |
 | Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
 | Anatolian animal-bone records | 242,457 published subject IDs, 4,026 context references and 814 aggregate rows; 838,710 original rows in 37 table editions | 456.7 MB | 981.6 MB |
-| Excavation assemblages and refits | 235,663 source records: 234,196 original rows and 1,467 physical context-column views across twenty source corpora | 286.6 MB | 920.3 MB |
+| Excavation assemblages and refits | 343,904 source records: 342,437 original rows and 1,467 physical context-column views across twenty-three source corpora | 326.0 MB | 1.15 GB |
 | Archaeological site registers · eastern US | 227,962 distinct publisher site IDs across eight states; five overlapping original table editions | 238.5 MB | 815.1 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
@@ -251,6 +251,39 @@ pinned to `f6082f21e1c0d0f2ed8f81716cb7c2a1abfc5645`. Data editions retain CC BY
 4.0 contributor attribution. The fixed publication reproduction edition and
 developmental repository edition remain separate. The expanded collection
 requires Clovis 0.18 or newer; the original 0.17 snapshot remains available.
+
+The 2026.10.12 revision requires Clovis 0.22 or newer. It preserves all earlier
+records and adds all 45 Geelbek tables: 103,645 rows, including 47,922 MAIN
+recording IDs and repeated analytical observations. Exact original IDs connect
+the editions and refits. The two unmatched refit endpoints remain unrepaired.
+Geelbek includes explicit screen-negative comments, qualified exceptions and
+lost bags that contained finds. Its collection flags do not establish whether
+samples were processed. Native GPS/UTM fields have no declared transformation,
+so the reader supplies no inferred find map.
+
+Harris Site, New Mexico, contributes its complete six-sheet obsidian workbook:
+1,946 observations and two nonitem annotations. Repeated laboratory IDs stay
+as separate source rows. Unit, Level, Context, Feature/Pithouse and expressly
+recorded Household support literal context browsing. Units apply only where
+the source declares them; blank object-volume fields are not recovery volumes.
+
+Las Capas, Arizona, contributes 1,324 original flotation-sample rows, including
+analyzed volume in litres, feature, stratum, locus, campaign and 45 plant
+categories. The recorded analyzed volumes sum to 6,873.6 L; they do not measure
+whole deposits or all collected samples. The 248 maize-zero samples retain
+their other plant results. The separate 1,324-row statistical output retains
+its published estimates and bounds; its Samples field is computational effort,
+not a sample ID or an additional find. No publisher code is executed.
+
+All 48 new data originals are bundled unchanged alongside their indexed
+fields. Geelbek and Harris declare CC BY 4.0. The pinned Las Capas repository
+README declares MIT but references an absent LICENSE.txt; the exact declaration,
+URL, hash and qualification remain in source metadata. Separate journal text
+is not bundled under that repository declaration.
+
+New sources: [Geelbek v.1](https://doi.org/10.5281/zenodo.10017377),
+[Harris Site v1](https://doi.org/10.17632/4tbrvj5v8z.1), and
+[Las Capas original repository revision](https://github.com/alanfarahani/las-capas-bots-analysis/tree/64498c2abd8cf007f7efe0664a831cb7dc78ca31).
 
 ## Radiocarbon results
 
