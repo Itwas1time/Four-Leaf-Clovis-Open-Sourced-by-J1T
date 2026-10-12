@@ -38,6 +38,19 @@ def locations(record):
                            "label": site.get("sitename") or "Published site", "shape": shape,
                            "coordinates": coordinates,
                            "note": "Published point or bounding area. An area may describe extent, uncertainty or an obscured location; its centre is not an exact site position."})
+    elif record.get("source") == "site_registers":
+        from core.site_register_catalog import cell
+        for edition in original.get("editions", []):
+            latitude = _coordinate(cell(edition, "Latitude (WGS-84)"), 90)
+            longitude = _coordinate(cell(edition, "Longitude (WGS-84)"), 180)
+            if latitude is None or longitude is None:
+                continue
+            result.append({"id": edition["id"], "label": edition["metadata"]["label"],
+                "shape": "point", "coordinates": [[latitude, longitude]],
+                "note": "Original published WGS-84 reference point, CSV record " + str(edition["ordinal"]) + ". "
+                    + "Location note (source): " + (cell(edition, "Geospatial note") or "Not recorded")
+                    + ". Obscured grid references and county centroids do not establish an exact site position. "
+                    + "Underlying source accuracy or local coordinate systems do not determine the published point's precision."})
     elif record.get("source") == "dinosaurs" and original.get("kind") == "occ":
         source = original.get("source") or {}
         latitude, longitude = _coordinate(source.get("lat"), 90), _coordinate(source.get("lng"), 180)

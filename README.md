@@ -128,11 +128,21 @@ python -m atlas.gui.app
 ```
 
 The Dash app binds to localhost at port 8050. **Explore** opens on **Atlas**,
-with one search and a shared reader across **20,018,352 source records** when
-the latest versions of all seven optional packs are installed. Search published places, cultures,
+with one search and a shared reader across **20,246,314 source records** when
+the latest versions of all eight optional packs are installed. Search published places, cultures,
 materials or fossils and follow the original source. **Specialist searches**
 keeps detailed collection filters available. Counts mix different record types
 and can overlap between sources; they do not count unique excavated finds.
+
+The eastern US site-register collection adds 227,962 published site IDs across
+Alabama, Florida, Georgia, Louisiana, Maryland, North Carolina, South Carolina
+and Virginia (238.5 MB download; 815.1 MB installed). Read original site types,
+periods, artifact classifications, reports and repositories, then follow the
+publisher's county context in the same reader. Five overlapping table editions
+retain their original fields and attribution separately. Their 353,141 bound
+site-edition rows do not count additional sites. Edition-specific offline maps
+retain source obscuring and county-centroid qualifications. This is a prepared
+register snapshot, not every excavation or a current site census.
 
 Inside a Neotoma, dinosaur occurrence or georeferenced excavation/survey record, open **Published location →
 Show published location map**. The source point or area appears over a bundled

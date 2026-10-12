@@ -32,10 +32,39 @@ searches retain their existing plans.
 | Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
 | Anatolian animal-bone records | 242,457 published subject IDs, 4,026 context references and 814 aggregate rows; 838,710 original rows in 37 table editions | 456.7 MB | 981.6 MB |
 | Excavation assemblages and refits | 235,663 source records: 234,196 original rows and 1,467 physical context-column views across twenty source corpora | 286.6 MB | 920.3 MB |
+| Archaeological site registers · eastern US | 227,962 distinct publisher site IDs across eight states; five overlapping original table editions | 238.5 MB | 815.1 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
 bundled. These additional collections are optional; the initial application
 still includes those existing large catalogs.
+
+## Eastern US site registers
+
+Search a site name, source site code, place, period or material in the shared
+Atlas. Choose **DINAA · archaeological site registers** to focus the collection.
+Its 227,962 published subject IDs cover Alabama, Florida, Georgia, Louisiana,
+Maryland, North Carolina, South Carolina and Virginia. A site's county action
+follows the publisher's exact county-context identifier. No town is required.
+
+Five complete prepared tables retain all original CSV files and table/project
+metadata. Georgia and Florida main registers, Florida artifact and diagnostic
+editions, and a coastal sea-level study view overlap. Read the original editions
+separately for source reports, classifications, investigation dates, repositories
+and source status flags. Their 353,141 site-edition rows describe 227,962 IDs;
+they are not that many physical sites, finds or digs. Five unbound native CSV
+fragments remain separate, without assigning them to fields or repairing rows.
+
+Published WGS-84 points retain each edition's location qualification. Obscured
+zoom-11 references and county centroids do not establish exact site positions.
+Missing coordinates receive no invented point. Coastal period readings require
+an explicit native True flag; blanks and False remain original source values.
+This acquired prepared-table snapshot is not a current census or a complete
+excavation, stratigraphy or sampling register. No new collection tabs are added.
+
+The four Georgia/Florida table editions declare CC BY 4.0; the coastal edition
+records a CC0 URI alongside a Public Domain Mark label. Original declarations,
+creators, contributors, dates and source file hashes accompany each edition and
+saved reference. Source: [DINAA in Open Context](https://ux.opencontext.org/archaeology-site-data/).
 
 ## Plant remains and recovery
 
@@ -176,7 +205,7 @@ Progreso in Ecuador, Khao Toh Chong in Thailand and Madjedbebe in Australia.
 Search **Chengdu**, **El Progreso**, **Madjedbebe**, **Banda Neira pH** or
 **PTTDBDT**. Publisher context documents and laboratory readings have their
 own record labels. Collection updates retain prior installed versions for
-offline use, and the interface still shows seven collection cards.
+offline use. All eight optional collections use the shared Atlas reader.
 
 Chengdu retains all 80,656 original CSV rows, including layers, sampling
 waypoints, artifact bags, sherd observations, area-period summaries and tombs.

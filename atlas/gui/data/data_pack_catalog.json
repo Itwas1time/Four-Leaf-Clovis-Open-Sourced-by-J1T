@@ -4610,7 +4610,7 @@
           "records": 5
         },
         {
-          "label": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
+          "label": "São Tomé and Príncipe",
           "value": "4658",
           "records": 1
         },
@@ -5380,6 +5380,187 @@
           "label": "United States",
           "value": "United States",
           "records": 34944
+        }
+      ]
+    },
+    {
+      "id": "north-american-sites",
+      "version": "2026.10.11",
+      "title": "Archaeological site registers · eastern US",
+      "description": "Read eight states' published site definitions, periods, site types, collections and documentation. Exact publisher identities link separate original table editions.",
+      "records": 227962,
+      "record_type": "distinct publisher site identifiers",
+      "coverage": "Alabama, Florida, Georgia, Louisiana, Maryland, North Carolina, South Carolina and Virginia. Five prepared tables; overlapping editions and qualified published locations.",
+      "source_release": "Native prepared-table snapshot acquired 2026-10-11; source edition dates retained separately",
+      "license": "CC BY 4.0 tables; coastal table records CC0 URI / Public Domain Mark label; original attribution retained",
+      "source_url": "https://ux.opencontext.org/archaeology-site-data/",
+      "citation_url": "https://opencontext.org/projects/416a274c-cf88-4471-3e31-93db825e9e4a",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-north-american-sites-2026.10.11/clovis-north-american-sites-2026.10.11.zip",
+      "archive_bytes": 238505157,
+      "archive_sha256": "501f03ee032f83fd556d8f1e9cf3de8a3643c0806e17bc3af849f270bf67119f",
+      "installed_bytes": 815085446,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 1318,
+          "sha256": "90ae1571408b5f4ea11aea345cf8a9c42853666aad007e25edc196f499077931"
+        },
+        {
+          "name": "alabama-project.json",
+          "bytes": 9919,
+          "sha256": "5a766bc9acaf21da755926fbbd71989a4d40dd2121b26f45c001f796d0c5a627"
+        },
+        {
+          "name": "coastal-model-sites-table.json",
+          "bytes": 201122,
+          "sha256": "e6f75498bd9b5fbab4c619b1f7a5d9aa2f4f7ba35728a57a1c18b68c8bdb9fd6"
+        },
+        {
+          "name": "coastal-model-sites.csv",
+          "bytes": 111900316,
+          "sha256": "2743fbd41a448ecff78b3e4d7e9bb33013fd29881dcdf7813064e7293ed8d576"
+        },
+        {
+          "name": "dinaa-project.json",
+          "bytes": 10874,
+          "sha256": "22f80572f37e5bd6ff31216c549694cc4a7fd3fc2df784e3282c72918ec45d04"
+        },
+        {
+          "name": "florida-artifact-categories-table.json",
+          "bytes": 1174062,
+          "sha256": "8fb9c6043fdd6198e385dda89b9a865821a8ab37e0015c3c7cab37110cf93e28"
+        },
+        {
+          "name": "florida-artifact-categories.csv",
+          "bytes": 31550867,
+          "sha256": "83b3a807c3bffcaa0e413d5b0fd06e8f082398e1bbf42101f00d7408e2f744aa"
+        },
+        {
+          "name": "florida-diagnostic-artifacts-table.json",
+          "bytes": 1221664,
+          "sha256": "16432fd91b7dc28ac6687e59dceffca43cbdeac94d1cc2d772dfd9de05b8c33d"
+        },
+        {
+          "name": "florida-diagnostic-artifacts.csv",
+          "bytes": 19736544,
+          "sha256": "9951f0ea18509268abf38b0360e5dc06b987d2fc3cd74c450eb7c1a170b3f220"
+        },
+        {
+          "name": "florida-project.json",
+          "bytes": 11698,
+          "sha256": "aa86a75bad34a5a2f640566a938f9081b05e9f9287d73ea9ce29c7f73e0ea3fe"
+        },
+        {
+          "name": "florida-sites-table.json",
+          "bytes": 1174692,
+          "sha256": "20fb652bf9d3b3b5eb9d53ce146ce3dc8f1bebedcc1162c584b7793e5c4e8be8"
+        },
+        {
+          "name": "florida-sites.csv",
+          "bytes": 39955075,
+          "sha256": "185ace962eaa4f284c8e5e6be0b0e2eda43ef680fb3aede5faa6236acb9b84f2"
+        },
+        {
+          "name": "georgia-project.json",
+          "bytes": 12350,
+          "sha256": "e429a2f34095f601077c9722ade19a5eea89ee96c4728b340bfc5bced20abf43"
+        },
+        {
+          "name": "georgia-sites.csv",
+          "bytes": 48854757,
+          "sha256": "e3993ae245f706fd067a48905a1806a18b56c6cedb6df326608a30310367b3d8"
+        },
+        {
+          "name": "georgia-table.json",
+          "bytes": 247077,
+          "sha256": "5c4c8b5d807c9739574e8b9a6c6337c77c10f6f591840daf51b1ac3b28eda826"
+        },
+        {
+          "name": "louisiana-project.json",
+          "bytes": 8778,
+          "sha256": "12a3a96695f6f0cbd2147e3ada3d762acc925ef3d7cc74a069ee1083fd07ab01"
+        },
+        {
+          "name": "maryland-project.json",
+          "bytes": 8523,
+          "sha256": "3053becbfd6dc48800b0a6d56e3292ff8e4b0b9f4f8973c41c5ee4822928acc2"
+        },
+        {
+          "name": "north-carolina-project.json",
+          "bytes": 8619,
+          "sha256": "0f2defe18f3148b77c1eac08257da2ca9cb41388079b4cf53776c6ab5751d0f5"
+        },
+        {
+          "name": "sites.sqlite",
+          "bytes": 558968832,
+          "sha256": "b8c13d0c3bca1ffaad51a5e4944731f825be00a1fee17713de9c8ceae197aa08",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "projects": [
+              "id",
+              "document",
+              "source_file",
+              "sha256",
+              "source_url"
+            ],
+            "editions": [
+              "id",
+              "document",
+              "headers",
+              "source_file",
+              "sha256",
+              "source_url",
+              "priority"
+            ],
+            "sites": [
+              "id",
+              "title",
+              "subtitle",
+              "country",
+              "state",
+              "county",
+              "context_id",
+              "source_url"
+            ],
+            "records": [
+              "id",
+              "edition",
+              "ordinal",
+              "line_start",
+              "line_end",
+              "site_key",
+              "context_id",
+              "source_values"
+            ]
+          },
+          "record_table": "sites",
+          "records": 227962,
+          "user_version": 1
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 10503,
+          "sha256": "be6274eb9842d2105a9cc06f9bd8eed2fcf0883d6fb1eb4f88874bd95989efc3"
+        },
+        {
+          "name": "south-carolina-project.json",
+          "bytes": 9015,
+          "sha256": "feddde5a889fc62d42e1e66b9090c99a2c48aa98c928be90bdfd69aae7ec46fc"
+        },
+        {
+          "name": "virginia-project.json",
+          "bytes": 8841,
+          "sha256": "738fd385b8a1bc0419b1161c03f144a511c06ab5d53d695ea9a276283800300d"
+        }
+      ],
+      "countries": [
+        {
+          "label": "United States",
+          "value": "United States",
+          "records": 227962
         }
       ]
     }

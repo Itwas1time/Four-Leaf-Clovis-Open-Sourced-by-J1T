@@ -2,7 +2,7 @@
 import sqlite3
 from urllib.parse import urlsplit
 from dash import ALL, MATCH, Input, Output, State, callback, callback_context, html, no_update
-from core import atlas_catalog as catalog, excavation_catalog, environment_catalog, zooarchaeology_catalog, assemblage_catalog
+from core import atlas_catalog as catalog, excavation_catalog, environment_catalog, zooarchaeology_catalog, assemblage_catalog, site_register_catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
 from core.data_packs import PackStore
 from atlas.gui.library_ui import reading_nav
@@ -11,7 +11,7 @@ from atlas.gui.published_location_ui import control as location_control, render 
 ERRORS = (ValueError, OSError, sqlite3.Error, TypeError, KeyError)
 PACK_SOURCES = {"radiocarbon-world": "dates", "dinosaur-sites": "dinosaurs", "neolithic-assemblages": "assemblages",
                 "excavations-surveys": "contexts", "dated-environments": "environments", "anatolian-zooarchaeology": "specimens",
-                "excavation-assemblages": "field_assemblages"}
+                "excavation-assemblages": "field_assemblages", "north-american-sites": "site_registers"}
 
 
 @callback(Output("library-section", "value", allow_duplicate=True),
@@ -107,6 +107,11 @@ def _facts(rows):
 
 
 def _reading_facts(record):
+    if record["source"] == "site_registers":
+        # Complete identifiers, rights and locators remain in the edition
+        # disclosures and saved citation; lead with the site's recorded evidence.
+        provenance = {"Published site identifier", "Table rights (source)", "Original CSV record", "Original file SHA-256"}
+        return [(label, value) for label, value in record["facts"] if label not in provenance]
     if record["source"] != "specimens":
         return record["facts"]
     names = {"Published context": "Context", "Related person(s)": "Contributors",
@@ -145,7 +150,7 @@ def reader(selected, query, kind, source, context, page, _refresh):
                 return html.Button(f'{link["total"]:,} · {link["label"]}',
                                    id={"type": "atlas-related", "index": link["key"]},
                                    n_clicks=0, className="atlas-secondary-button")
-            main_keys = ("animals", "plants", "dates", "phases", "sites", "parent", "children", "source-rows", "subject")
+            main_keys = ("animals", "plants", "dates", "phases", "sites", "county", "parent", "children", "source-rows", "subject")
             main = [link for link in links if link["key"] in main_keys or
                     row["source"] == "field_assemblages" and link["key"].partition(":")[0] in ("recording", "analysis", "locus", "refit", "pottery-bag", "layer", "recovery", "unit", "trench") or
                     row["source"] == "environments" and link["parameters"]["view"] in ("observation", "sample", "age", "date")][:4]
@@ -154,7 +159,33 @@ def reader(selected, query, kind, source, context, page, _refresh):
             if more:
                 children.append(html.Details([html.Summary("More associated evidence"),
                     html.Div([button(link) for link in more], className="clovis-atlas-related")]))
-        if row["source"] == "field_assemblages":
+        if row["source"] == "site_registers":
+            original = row["original"]
+            text = site_register_catalog.value_text
+            children.append(html.Details([html.Summary("Published locations by source edition"),
+                location_control(row["id"]),
+                html.P(original["summary"]["location_note"], className="atlas-help")]))
+            editions = []
+            for edition in original["editions"]:
+                metadata = edition["metadata"]
+                attribution = [(label, "; ".join(item.get("label", item.get("id", "")) for item in metadata.get(key, [])))
+                    for key, label in (("dc-terms:creator", "Table creators"), ("dc-terms:contributor", "Table contributors"))]
+                attribution.extend((label, metadata.get(key) or "Not recorded") for key, label in
+                    (("dc-terms:issued", "Table issued"), ("dc-terms:modified", "Table modified")))
+                if edition["project"]:
+                    attribution.append(("Source project rights", site_register_catalog.rights_text(edition["project"])))
+                fragments = [html.Details([html.Summary("Adjacent unbound CSV fragment · record " + str(fragment["ordinal"])),
+                    html.P("Native adjacent values remain separate. They are not assigned to the table's headers or repaired into the preceding site.", className="atlas-help"),
+                    _facts(("Native column " + str(index + 1), text(value)) for index, value in enumerate(fragment["values"]))])
+                    for fragment in edition["adjacent_fragments"]]
+                editions.append(html.Details([html.Summary(metadata["label"]),
+                    _facts(site_register_catalog.edition_facts(edition)), _facts(attribution),
+                    html.Details([html.Summary("Original source fields"),
+                        html.P(f'Original CSV record {edition["ordinal"]}; file lines {edition["line_start"]}–{edition["line_end"]}.', className="atlas-help"),
+                        _facts(site_register_catalog.original_fields(edition))]),
+                    *fragments, _source_link(edition["source_url"], "Read original source table")]))
+            children.append(html.Details([html.Summary(f'{len(editions)} original table editions'), *editions]))
+        elif row["source"] == "field_assemblages":
             original = row["original"]
             text = assemblage_catalog.value_text
             attributes = original["cells"]["attributes"]

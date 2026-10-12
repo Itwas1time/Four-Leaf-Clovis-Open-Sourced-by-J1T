@@ -18,6 +18,7 @@ from core import excavation_catalog as contexts
 from core import environment_catalog as environments
 from core import zooarchaeology_catalog as specimens
 from core import assemblage_catalog as field_assemblages
+from core import site_register_catalog as site_registers
 
 PAGE_SIZE = 24
 SOURCES = {
@@ -30,12 +31,13 @@ SOURCES = {
     "environments": "Neotoma · sites, samples & environments",
     "specimens": "Open Context · Anatolian animal-bone records",
     "field_assemblages": "Excavation & survey assemblages",
+    "site_registers": "DINAA · archaeological site registers",
 }
 KINDS = {"all": "All evidence", "archaeology": "Archaeology & objects", "fossils": "Fossils",
          "history": "Historical documents", "earth": "Geology & minerals"}
-GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "field_assemblages", "projects", "dates", "met", "si", "guides"),
+GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "field_assemblages", "site_registers", "projects", "dates", "met", "si", "guides"),
           "fossils": ("fossils", "dinosaurs"), "history": ("newspapers",), "earth": ("geology", "minerals")}
-OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments, "specimens": specimens, "field_assemblages": field_assemblages}
+OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments, "specimens": specimens, "field_assemblages": field_assemblages, "site_registers": site_registers}
 _READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas")
 
 
@@ -56,6 +58,10 @@ def _signature(sources=None):
 
 
 def _native(source, query, page, context=()):
+    if source == "site_registers":
+        parameters = dict(context)
+        parameters.pop("collection", None)
+        return site_registers.search(query=query, page=page, **parameters), site_registers.PAGE_SIZE
     if source == "field_assemblages":
         parameters = dict(context)
         parameters.pop("collection", None)
@@ -152,7 +158,7 @@ def _card(source, row):
                 "fossils": "Fossil specimen", "dinosaurs": "Published fossil occurrence",
                 "dates": "Radiocarbon determination", "geology": "Mapped geological unit",
                 "minerals": "Mineral reference", "newspapers": "Newspaper title", "guides": "Material guide"}.get(source)
-    if source in ("environments", "specimens", "field_assemblages"):
+    if source in ("environments", "specimens", "field_assemblages", "site_registers"):
         evidence, subtitle = row["category"], row["subtitle"]
     elif source == "contexts":
         evidence = row["category"]
@@ -183,7 +189,11 @@ def _parameters(query, kind, source, context):
                    or any(ord(char) < 32 or 0xD800 <= ord(char) <= 0xDFFF for char in value) for value in context.values())):
         raise ValueError("Choose a published evidence association.")
     collection = context.get("collection", "assemblages")
-    if collection == "field_assemblages":
+    if collection == "site_registers":
+        if set(context) - {"collection", "context_id", "edition", "state"}:
+            raise ValueError("Choose an original site-register association.")
+        site_registers.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
+    elif collection == "field_assemblages":
         if set(context) - {"collection", "view", "scope", "table_id", "dataset", "record_id"}:
             raise ValueError("Choose an original excavation assemblage association.")
         field_assemblages.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
@@ -246,7 +256,14 @@ def get_record(identifier):
     source, key = _identifier(identifier)
     if source is None:
         return None
-    if source == "field_assemblages":
+    if source == "site_registers":
+        row = site_registers.get_record(key)
+        if row is None:
+            return None
+        facts, url = site_registers.facts(row), row["source_url"]
+        notes = [row["summary"][name] for name in ("scope_note", "count_note", "location_note", "source_condition_note", "period_note")]
+        description, license_text = "", "Original table and project rights retained separately for each edition"
+    elif source == "field_assemblages":
         row = field_assemblages.get_record(key)
         if row is None:
             return None
@@ -371,6 +388,8 @@ def reference_entry(identifier):
     row = get_record(identifier)
     if row is None:
         raise ValueError("Choose a current atlas record to save.")
+    if source == "site_registers":
+        return site_registers.reference_entry(key)
     if source == "field_assemblages":
         return field_assemblages.reference_entry(key)
     if source == "specimens":
@@ -406,6 +425,8 @@ def reference_entry(identifier):
 
 def relationships(record):
     """Source-specific associations for the shared reader and navigation."""
+    if record["source"] == "site_registers":
+        return site_registers.relationships(record["original"])
     if record["source"] == "field_assemblages":
         return field_assemblages.relationships(record["original"])
     if record["source"] == "specimens":
