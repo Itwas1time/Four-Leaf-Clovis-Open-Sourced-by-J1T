@@ -5973,6 +5973,746 @@
           "records": 39540
         }
       ]
+    },
+    {
+      "id": "excavation-assemblages",
+      "version": "2026.10.13",
+      "title": "Excavation assemblages and refits",
+      "description": "Excavation and survey recording, mixed-material recovery, plant and animal remains, pottery, dating, lithic refits and original sediment analyses. Follow qualified source contexts in Atlas.",
+      "records": 345301,
+      "record_type": "original matrix rows, instrument points, publisher context documents and qualified context-column views",
+      "coverage": "Australia; Brazil; Canada; China; Ecuador; Egypt; Ethiopia; India; Iraq; Italy; Mixed laboratory sections; Not stated (Banda Neira section); Peru; South Africa; Thailand; United States; 250 source tables, spectra and supplementary documents and 122 context documents. Includes 1,595 readable physical context-column views of the same original cells; these are not additional samples or finds. Laboratory teaching sections and reproduction attachments are identified separately.",
+      "source_release": "Fixed source editions from Zenodo, Figshare, Open Context, Springer, Wiley, PLOS ONE and Cambridge; original publication tables, native scientific workbooks and pinned Fumane repository f6082f21e1c0d0f2ed8f81716cb7c2a1abfc5645; complete Geelbek v1, Harris Mendeley v1, Las Capas pinned 64498c2abd8cf007f7efe0664a831cb7dc78ca31; complete Palegawra 2020 supplements, Connley 2022 supplements and corrected Bridge River 2026 article/supplement",
+      "license": "CC BY 4.0, CC0, original public-domain and qualified repository MIT declarations; per-edition attribution retained",
+      "source_url": "https://zenodo.org/records/10731129",
+      "citation_url": "https://doi.org/10.5281/zenodo.10731129",
+      "download_url": "https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/data-excavation-assemblages-2026.10.13/clovis-excavation-assemblages-2026.10.13.zip",
+      "archive_bytes": 500335356,
+      "archive_sha256": "a153916d6f9ea642b300050fb3eb2a4e61a7f1117d636a10cb0cf490043f93d8",
+      "installed_bytes": 1340236224,
+      "files": [
+        {
+          "name": "ABOUT.md",
+          "bytes": 40378,
+          "sha256": "94948619d93b75b182c109b5b73a0a1034534b72ad9c3ce82f599a5041bd34fb"
+        },
+        {
+          "name": "assemblages.sqlite",
+          "bytes": 1143136256,
+          "sha256": "40f588004ab4ace44ec7061ca5364c49e8e753db1edbeca2ae64c3c555191caa",
+          "schema": {
+            "metadata": [
+              "key",
+              "value"
+            ],
+            "editions": [
+              "id",
+              "document"
+            ],
+            "source_files": [
+              "id",
+              "dataset",
+              "path",
+              "source_url",
+              "sha256",
+              "bytes",
+              "styles_xml"
+            ],
+            "source_tables": [
+              "id",
+              "file_id",
+              "sheet",
+              "headers_json",
+              "merges_json",
+              "header_rows",
+              "source_rows"
+            ],
+            "source_attachments": [
+              "file_id",
+              "original_bytes",
+              "role"
+            ],
+            "records": [
+              "rowid",
+              "id",
+              "table_id",
+              "ordinal",
+              "dataset",
+              "site",
+              "country",
+              "kind",
+              "title",
+              "subtitle",
+              "source_values",
+              "source_cells",
+              "reading_facts"
+            ],
+            "scopes": [
+              "id",
+              "kind",
+              "label"
+            ],
+            "record_scopes": [
+              "record",
+              "scope",
+              "basis"
+            ],
+            "source_fts": [
+              "values_text"
+            ]
+          },
+          "record_table": "records",
+          "records": 345301,
+          "user_version": 1
+        },
+        {
+          "name": "bridge-river-article-scientific-tables.json",
+          "bytes": 149595,
+          "sha256": "17f58366d6b7b8b2cb3d425da209526d44e9490827e75c91b60603b6a96c130b"
+        },
+        {
+          "name": "bridge-river-recovery-fnut-12-1716684-g0001.jpg",
+          "bytes": 176700,
+          "sha256": "119550f5de68ee2b46839c44cf592223d293bd05390f49b243cb1b90a65d87c7"
+        },
+        {
+          "name": "bridge-river-recovery-fnut-12-1716684-g0002.jpg",
+          "bytes": 185693,
+          "sha256": "65684afe5930547528e443d7348b242e539ac7250d526ee7fa9084ccda8b6b6b"
+        },
+        {
+          "name": "bridge-river-recovery-fnut-12-1716684-g0003.jpg",
+          "bytes": 73049,
+          "sha256": "b39437921b9b51d706f0035331f750467f1ba07c47183f08014fa4a54d41b3db"
+        },
+        {
+          "name": "bridge-river-recovery-fnut-12-1716684-g0004.jpg",
+          "bytes": 99979,
+          "sha256": "3cc2005baac716c1bb353970304e53e0470576b79404c8ba2480347465e3c2b5"
+        },
+        {
+          "name": "bridge-river-recovery-fnut-12-1716684-g0005.jpg",
+          "bytes": 145088,
+          "sha256": "c77119800f76846acfe0b2994f8b56366c002c2b314480466de657da58b4e168"
+        },
+        {
+          "name": "bridge-river-recovery-fnut-12-1716684-g0006.jpg",
+          "bytes": 98326,
+          "sha256": "d14b869bdc396266c565a70391232b4fc76440536a418b883d4717446c310354"
+        },
+        {
+          "name": "bridge-river-recovery-Presentation_1.pdf",
+          "bytes": 1225291,
+          "sha256": "b87c5d3f0fadcb9ca6b144004b526461781b964a695b3ae7358f09fcd57f4871"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup001.docx",
+          "bytes": 56890,
+          "sha256": "3380ba1bf36a46e1b4e6e1f7d9a17ad983e35a1c3f5dd62bd10652573c8d1f90"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup002.jpg",
+          "bytes": 2345528,
+          "sha256": "3886b78573b05c1a2f20c0758a6ceb968a387e726ef17802409f6bd3f8498f4d"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup003.jpg",
+          "bytes": 3063034,
+          "sha256": "b7ad6c58d51e472481a298e212a014406f593ff4218d368807f50a2b024c3ed4"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup004.jpg",
+          "bytes": 2332872,
+          "sha256": "68ccc17e152002f4ab6620a8b033d8ad9fa75e7275f5da810c2071441420ecee"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup005.docx",
+          "bytes": 16654,
+          "sha256": "9e7fbc4c6745788f86db9aa0495f374dda1483a2261ba608f1e9d9f136cf7e3a"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup006.docx",
+          "bytes": 13668,
+          "sha256": "dd5f78c90a81215fa64ef77db80e19f836fb9a2bd399adf7ec254c0dcb50f6fa"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup007.docx",
+          "bytes": 16837,
+          "sha256": "74fbd4dc146c151a625d1d8541728c9191adb059ed95ab9af3a40eba69472085"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup008.docx",
+          "bytes": 23877,
+          "sha256": "699788df4aa25bdc7f14f6a28eabc8855012c8efc0e492d54f6fe9673e5f436a"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup009.docx",
+          "bytes": 16164,
+          "sha256": "65cd1cc0b8ed0a9508d0b43cdebe8e88ab0e87cc106d85ed598c9eb451718934"
+        },
+        {
+          "name": "connley-recovery-S0002731621001414sup010.docx",
+          "bytes": 20500,
+          "sha256": "cc51787fb3a95582b86621f5f35e756667e7b7735aded3e2900920f4c12a5ac5"
+        },
+        {
+          "name": "geelbek-Geelbek_BUCKETS.csv",
+          "bytes": 467949,
+          "sha256": "428292298a1c5b8d4286e1e5640263423f4330a9df4c32377b3c456f9900a573"
+        },
+        {
+          "name": "geelbek-Geelbek_DATES_14C.csv",
+          "bytes": 7862,
+          "sha256": "94be636f6257a439747aa36a00e2f248db5b0ca18753b1045c68f951bee4998d"
+        },
+        {
+          "name": "geelbek-Geelbek_DATES_IRSL.csv",
+          "bytes": 4331,
+          "sha256": "b7606394bfdcd6f4593d1c65e011a92eca09430dca1731440d84f1e05892d503"
+        },
+        {
+          "name": "geelbek-Geelbek_DATES_U-SERIES.csv",
+          "bytes": 3312,
+          "sha256": "dafdf8f49cb5db28057afdbb6fc23637b19a498b464cf531c5dd3f686d940df4"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA.csv",
+          "bytes": 3242533,
+          "sha256": "ebffa82850f470e75974dc07daec0ca1c333bc93c0bd2d7d6e86c41e2e35703b"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Age_code.csv",
+          "bytes": 359,
+          "sha256": "51125ba848b3ce112315b5acd71f23e95f4df13cda87e9a2996a3c9a05958c38"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Breakage_code.csv",
+          "bytes": 77,
+          "sha256": "ab4f3b494029a1eb4f5d9c55a1b47a65b71d9c135a21561a14b93a56e2b0f251"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Dental_epiphysis_code.csv",
+          "bytes": 5403,
+          "sha256": "ad9172eec46dd4ffb77da90de96ba8c9996594f876cf040fc99d3933ffe2f008"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Landmark_code.csv",
+          "bytes": 2965,
+          "sha256": "38bc7dc26c22f105ab5e7ed03e5d724dfd8612944c2dd4b9f87198596937d829"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Metrics.csv",
+          "bytes": 8444,
+          "sha256": "2e8790138e3d0c27cbd9dca73fb8504b9b6298db25cc4057d46ae0840bc7fe63"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Preservation_general_code.csv",
+          "bytes": 98,
+          "sha256": "7be3a5e3602a20a916142cde31bf430c52432cbe6c2e82b386af7843cbfee211"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Preservation_mineralization_code.csv",
+          "bytes": 173,
+          "sha256": "027aa4d1bb4ca09e78a0bcfab48bc8a3dfa371307d61901affdc7acffb92ebe0"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Preservation_surface_code.csv",
+          "bytes": 98,
+          "sha256": "7be3a5e3602a20a916142cde31bf430c52432cbe6c2e82b386af7843cbfee211"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Sex_code.csv",
+          "bytes": 389,
+          "sha256": "ca3662a7b2a2bab7f2f6b2d8fb2b8720128d247cb63af658e28d3a7307ce1414"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Shaft_completeness_code.csv",
+          "bytes": 611,
+          "sha256": "0703239a0c38f14d852b94b51d16549e8c8a6924f468e13b2497f1f7a8c9a896"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Side_code.csv",
+          "bytes": 133,
+          "sha256": "bc487f5170cb288a602d0b8c5b19b56fd264a03893cbb225e58d65f034bfbba5"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Size_class_code.csv",
+          "bytes": 492,
+          "sha256": "7314ba9625dc99e198dc2c7a1e0a1e374bcb4876a5a7c17d285356a068ccbca5"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Skeletal_code.csv",
+          "bytes": 5062,
+          "sha256": "dc5c6c947c4293d59ad78d2267585d457e24002c5ba226b4b197cdb00d9a1148"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Skeletal_element_code.csv",
+          "bytes": 16037,
+          "sha256": "90da90a8f05d8575de20812c7292b154ed8984bfa7941bc46c536d05a8d55f13"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Skeletal_portion_code.csv",
+          "bytes": 54569,
+          "sha256": "65cb860071ff76ff6bf885dac4a71a325090b3635a02738c5b1c11c0c7bdbbf8"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Species_code.csv",
+          "bytes": 3235,
+          "sha256": "ec454286ee3dd73e1c18f1a5089e50f76ee93fbc4ef5192d2b6c01ffb15d93b4"
+        },
+        {
+          "name": "geelbek-Geelbek_FAUNA_Taxa_code.csv",
+          "bytes": 19936,
+          "sha256": "b84d61ef3e25a101ca75bc7f8d383ceedb82126e3cd6c1f2db29705ddb7bb44c"
+        },
+        {
+          "name": "geelbek-Geelbek_FEATURES.csv",
+          "bytes": 256742,
+          "sha256": "bf0064feba4e453ac8aead574f01536829c1567ea2907239ed376beb538277fa"
+        },
+        {
+          "name": "geelbek-Geelbek_FISH.csv",
+          "bytes": 12668,
+          "sha256": "fbcac9bfabdbf6c6b4dd47509f778521e6cfad8386fb319705947d6c11a29a8b"
+        },
+        {
+          "name": "geelbek-Geelbek_GEOSAMPLES.csv",
+          "bytes": 21377,
+          "sha256": "a7d40c4ff8aae51ec5ad4579dc2b3aed3f66a04fa42fcbe823244ceea62f9f07"
+        },
+        {
+          "name": "geelbek-Geelbek_INDIVIDUALS_code.csv",
+          "bytes": 5768,
+          "sha256": "bc0e58f48a13980f75b14354cf72d12b6bbf3e2568561173a6e2c58019df6dd2"
+        },
+        {
+          "name": "geelbek-Geelbek_ISOTOPES.csv",
+          "bytes": 707,
+          "sha256": "5b63165b4d34e18eb5242d170a3027f87b1bd71e88446c2a2afb02bf426e7d17"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Blanks.csv",
+          "bytes": 352542,
+          "sha256": "a4c99d2d35a2df7e836a349211f76fb83a06540d0bb169214774cd20e6bdd3fb"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Cores.csv",
+          "bytes": 45536,
+          "sha256": "7c4b63eeb5c026425050da257779bc6375029a2e65f348397c4303518a6130b2"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Extras.csv",
+          "bytes": 59266,
+          "sha256": "9870716e5b8681b3807f47b06fd6a3e13f1fede8c86756153be246c488939bf3"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Main.csv",
+          "bytes": 1403125,
+          "sha256": "34f11235ef0101dd57455c16c96f0e05fe382548fbe163db5a09ba3a3220a8e6"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Main_Reduction_sequence_code.csv",
+          "bytes": 456,
+          "sha256": "5e8a0258a0b2e0549fd6ada9b3c3e125c85b88deac020dba087b97463965474a"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Metrics.csv",
+          "bytes": 248867,
+          "sha256": "ef787dc650c05c334638db2877d978579f682faa8d2d909e1e71516029a2ac42"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Rawmaterials_DR.csv",
+          "bytes": 2468,
+          "sha256": "27a3d99221bd5f4b5174468410ce935f293721e6ef750e5839c741f10e5dcf02"
+        },
+        {
+          "name": "geelbek-Geelbek_LITHICS_Tools.csv",
+          "bytes": 54926,
+          "sha256": "abc7374da25ec852da2bc501947809ef6f3414e48a9e8b2668a5dc07bdee2b61"
+        },
+        {
+          "name": "geelbek-Geelbek_LOCALITY_code.csv",
+          "bytes": 1169,
+          "sha256": "86d3e27006b371b713bbabdc202a196577ee735e2485689afd98424f99cc05e8"
+        },
+        {
+          "name": "geelbek-Geelbek_MAIN.csv",
+          "bytes": 4623465,
+          "sha256": "7ec31700476dbf7726f5354ec4bf94c09c4621e0cfe1e208c4960d3381a2ac15"
+        },
+        {
+          "name": "geelbek-Geelbek_MODERN.csv",
+          "bytes": 30041,
+          "sha256": "44d10d9df0b929f39af72cfd279be883d0e7123b09e808661ef1c1fa0a2fbb37"
+        },
+        {
+          "name": "geelbek-Geelbek_OSTRICH_EGGSHELL_Beads.csv",
+          "bytes": 85945,
+          "sha256": "9359fe5ec4fbdddb96e57fde351a153136f5499636d617765181ddc368745fbd"
+        },
+        {
+          "name": "geelbek-Geelbek_OSTRICH_EGGSHELL_Fragments.csv",
+          "bytes": 159306,
+          "sha256": "28433a9fa8141932501d7a4d81f8e3ccca1dbf122c1a4311e4bac062c09ce824"
+        },
+        {
+          "name": "geelbek-Geelbek_PEOPLE_code.csv",
+          "bytes": 6807,
+          "sha256": "93e26529cc9382cd8936f4a598d29d1181bd4e77a4377616bede5d12727aecd3"
+        },
+        {
+          "name": "geelbek-Geelbek_POTTERY.csv",
+          "bytes": 43798,
+          "sha256": "f2b728ea3d29897462f0ea19b42cb394be54a694f54337af919c195c7f1db048"
+        },
+        {
+          "name": "geelbek-Geelbek_REFITS.csv",
+          "bytes": 101521,
+          "sha256": "68fb4615cf68c9a8068edaa673fe0f7f122a4b9b898d2d0bdfdceeb63decd308"
+        },
+        {
+          "name": "geelbek-Geelbek_SHELL.csv",
+          "bytes": 219823,
+          "sha256": "f88d025f4742d55650fa509e8f7f14fbd2f0bb9845d282aecc775aa9ff84c004"
+        },
+        {
+          "name": "geelbek-Geelbek_SHELL_code.csv",
+          "bytes": 10254,
+          "sha256": "b5732fa95a0ebd5122328f2029eedaac0ad21feefb9987185fd0489e3cecfcd0"
+        },
+        {
+          "name": "harris-obsidian-HarrisObsidianMasterDatabase_wSources_Jan2017.xlsx",
+          "bytes": 317432,
+          "sha256": "fc7116aec47f688957273069d708e198c5f4e2e58414f2c36d71ceba7de534b1"
+        },
+        {
+          "name": "las-capas-plants-sinensky_and_farahani_2018_estimates_output.csv",
+          "bytes": 323922,
+          "sha256": "09ba223f6245682003fb9b8963072cb00241afa1329012343b56e24ea9375027"
+        },
+        {
+          "name": "las-capas-plants-sinensky_and_farahani_2018_paleoethnobotanical_data.csv",
+          "bytes": 212636,
+          "sha256": "ed1d25e4129842baab8a0b938b9aa8878acf58a19c79aac27a2f847b220ed227"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s001.pdf",
+          "bytes": 4904973,
+          "sha256": "67066925ff51693ab6307340892cd9f98f4c4ff9bcda24fd68eaa40858c55786"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s002.pdf",
+          "bytes": 755450,
+          "sha256": "aad1591a8446d70f3e09306aab649fca9af2a9bfe451f5e501636d65a17f88a6"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s003.pdf",
+          "bytes": 1430440,
+          "sha256": "46f1bf7a842f328d5587f0afdc4af87c5196cdcc6cd59929af7e5163994a3d01"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s004.xlsx",
+          "bytes": 14123,
+          "sha256": "70918a73349c16b0f86060c1049ccb44dc7d246ba944fab3cae61702c7be6d18"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s005.xlsx",
+          "bytes": 16463,
+          "sha256": "780d5dfd65515878357f6f059275c5dbb5627fe9f06c66306129885f4f8cc27c"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s006.xlsx",
+          "bytes": 14211,
+          "sha256": "21853ef241a7b47db85d4f3477e4305d8be84a7bd9b81df370b3a314ebd7bc37"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s007.xlsx",
+          "bytes": 12322,
+          "sha256": "a3ca5689ed07565dea7312bc597e9bd8353adf24d0bafa0b968cd778e976b54e"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s008.xlsx",
+          "bytes": 11393,
+          "sha256": "699e8446e86203500df410ed29b582a2023e742f2c43de9b6acec98e5eaa2581"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s009.xlsx",
+          "bytes": 37063,
+          "sha256": "cde4569794f9ef0d18958d50b2b08af0772aa056519bea76cb85e7218339eea0"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s010.xlsx",
+          "bytes": 11471,
+          "sha256": "17c334bccf10ec5967a65ae82cba89bfa5ba7bc3ee9e23a6056dcdc3cc6ef22f"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s011.xlsx",
+          "bytes": 15117,
+          "sha256": "fa4dd45f9b8b414b054275e0ad35a8def7dfe9910df2b751b1e8295c2a43d03d"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s012.xlsx",
+          "bytes": 15116,
+          "sha256": "87504788dc91de7ed8869dfc72439e461ee797988ac46ab633d80d0a81a80b91"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s013.xlsx",
+          "bytes": 14334,
+          "sha256": "8c3ee23f9bd2a0b7bd0a62108e211f559c10339f91fe714f4656237b9103308f"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s014.xlsx",
+          "bytes": 11747,
+          "sha256": "e87eea4b162da1546bcb6cf733091e5943513c42b06a13d1f9c71cd4b4b509ba"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s015.xlsx",
+          "bytes": 12808,
+          "sha256": "e872158e8b556b3cb40d2e5e6de53c4fbcfe648c50516ff16f0b6eaa06f8d7e7"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s016.xlsx",
+          "bytes": 14211,
+          "sha256": "ce896e89c396cb904c9fe1d8bc614d9ebcc32d00469efdb2028026d658945e01"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s017.xlsx",
+          "bytes": 12303,
+          "sha256": "a67b7d101fff7fc9fa73476b85f15ca9979ec5d36ed219ae84ed00fc5f6dfc20"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s018.xlsx",
+          "bytes": 10033,
+          "sha256": "12774279652ccad83be7dde8f548152dfaa9a9ad88420932f3889d25b7879eab"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s019.xlsx",
+          "bytes": 25998,
+          "sha256": "0e433686fd0cc7e940cea5fd1bb67a538eae6ddf26444d41563ed302d5028dc1"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s020.source",
+          "bytes": 10027828,
+          "sha256": "e8f1eae5b572ba23a5a43c7c3b1ae0fa83423c4d42a1dc2a68dd8018620b37a9"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s021.source",
+          "bytes": 10019212,
+          "sha256": "626795a9e023df401832526373a7b70bbbbc70b523098056bbd8859febb90b0a"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s022.source",
+          "bytes": 7320972,
+          "sha256": "05e6bbea906182317e54d041bf520f06038610700648d0dc914fe7cac5d65e5a"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s023.source",
+          "bytes": 9711044,
+          "sha256": "18337af086069c58cabae151e8bf997f279e7691c6b4f449e7bb59870bf7666d"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s024.source",
+          "bytes": 8570924,
+          "sha256": "4e99ce0b592de39dba5a25f835133528f75ba9a5ec24fab6695c601af82f67c7"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s025.source",
+          "bytes": 1670268,
+          "sha256": "4365993d903e7e64d122f0c3741b9679a2f242b3737360361ba3c76b38b51f15"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s026.source",
+          "bytes": 1792232,
+          "sha256": "141af696354806e056d668049014a291fbf8b8cc671625073c5e8848a91e8083"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s027.source",
+          "bytes": 7245328,
+          "sha256": "3091f2a53ed46d88733eb9ff2553fb337f481893f8123f914605f8d237d7040d"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s028.source",
+          "bytes": 6209920,
+          "sha256": "d3111869adb1a27afad5a0568a9a582a3aadaaf36dbbf6f96fb9c36f1a98ce8d"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s029.source",
+          "bytes": 9438884,
+          "sha256": "2abded76c6ea06ff61b18f5151b8749cf2ae574487d83f8be6f5ac2e333a8083"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s030.source",
+          "bytes": 6709472,
+          "sha256": "a080b1a9633b34524d6d7aa5cfb8bdd3ab785ef5d04f297919923d68473a7ab5"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s031.source",
+          "bytes": 5390680,
+          "sha256": "f8437b7adabeaa38672a47675521efac798ea4a37eddf84d177c0a89153e8618"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s032.source",
+          "bytes": 4407956,
+          "sha256": "f45e72c450aeac36c99d4a4d14f01296849f69358771d18c7e4693ef1e980e07"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s033.source",
+          "bytes": 4897304,
+          "sha256": "e0faf2ed84c13e5ded4cf25ab0381aa8a73ec2fb9dc6f3be402797cc0ea2f020"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s034.source",
+          "bytes": 4907636,
+          "sha256": "8f58a045d2725f2ac2b6b587f7880704b3aa1ac0cc66b27b423980ee5009af76"
+        },
+        {
+          "name": "palegawra-recovery-journal.pone.0239564.s035.source",
+          "bytes": 3327288,
+          "sha256": "7d62466596fe2a31921b41ebf736e00e29ddf407cf3c35298a8a16ca3dc87d21"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g007.tif",
+          "bytes": 6624276,
+          "sha256": "ec43f58a9ce6bce975f4f6a469e1500892171ef8680c26dddbcd6f74073d0e01"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g008.tif",
+          "bytes": 5966480,
+          "sha256": "c206cb821232f87a5edd0451f931a8184712fe22d09518755494074f69a768f6"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g009.tif",
+          "bytes": 1865872,
+          "sha256": "38e267abf5f9b69ed5a93836f6f1bbaa9a74ab8d7e734003ea3a4369546b3b0b"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g010.tif",
+          "bytes": 8571396,
+          "sha256": "8fdd343875cc2f8e934cd1b3fe46fce8901dfb4ad8efc8c8d5349423334773b7"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g011.tif",
+          "bytes": 1617124,
+          "sha256": "948fad76258e7ebb66d3dddfc7ee2da8072dadfdcd9a9d3677ccf8d0db0fb700"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g012.tif",
+          "bytes": 6843888,
+          "sha256": "abc655e572bf776928654745bc153376ad9bfaed5ec6710483bb65a560efc8c9"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g013.tif",
+          "bytes": 9360876,
+          "sha256": "592b5a0b8cd7cd8714bae4b7359078f54d370d0bb7818066e81672c768cfcda1"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g014.tif",
+          "bytes": 4449360,
+          "sha256": "3220b7127ad081d402acd1f7a13623cc080c6fe2e732d402808257135af450a2"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g016.tif",
+          "bytes": 9275296,
+          "sha256": "63ee48403539f1221be68e7b1f307ae395b596e4e6487b23e8e029729311f617"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g017.tif",
+          "bytes": 1369332,
+          "sha256": "942f0f587cb65e52e61d3ba22c8ff6bf74543b56cddb6d7c9537096252f958b3"
+        },
+        {
+          "name": "palegawra-recovery-pone.0239564.g018.tif",
+          "bytes": 9293628,
+          "sha256": "6e6e6b9332b6459f8079245496430c17814de0689c3b66eca111ad90114c29dd"
+        },
+        {
+          "name": "SOURCES.json",
+          "bytes": 331158,
+          "sha256": "38ecd20c3a006d8d0bf5ed2f697ac4982bb475750747967f78cddc7038082c12"
+        }
+      ],
+      "countries": [
+        {
+          "label": "Australia",
+          "value": "Australia",
+          "records": 173
+        },
+        {
+          "label": "Brazil",
+          "value": "Brazil",
+          "records": 21
+        },
+        {
+          "label": "Canada",
+          "value": "Canada",
+          "records": 445
+        },
+        {
+          "label": "China",
+          "value": "China",
+          "records": 80773
+        },
+        {
+          "label": "Ecuador",
+          "value": "Ecuador",
+          "records": 4727
+        },
+        {
+          "label": "Egypt",
+          "value": "Egypt",
+          "records": 56410
+        },
+        {
+          "label": "Ethiopia",
+          "value": "Ethiopia",
+          "records": 488
+        },
+        {
+          "label": "India",
+          "value": "India",
+          "records": 879
+        },
+        {
+          "label": "Iraq",
+          "value": "Iraq",
+          "records": 539
+        },
+        {
+          "label": "Italy",
+          "value": "Italy",
+          "records": 18402
+        },
+        {
+          "label": "Mixed laboratory sections",
+          "value": "Mixed laboratory sections",
+          "records": 56
+        },
+        {
+          "label": "Not stated (Banda Neira section)",
+          "value": "Not stated (Banda Neira section)",
+          "records": 54
+        },
+        {
+          "label": "Peru",
+          "value": "Peru",
+          "records": 418
+        },
+        {
+          "label": "South Africa",
+          "value": "South Africa",
+          "records": 108568
+        },
+        {
+          "label": "Thailand",
+          "value": "Thailand",
+          "records": 33395
+        },
+        {
+          "label": "United States",
+          "value": "United States",
+          "records": 39953
+        }
+      ]
     }
   ]
 }

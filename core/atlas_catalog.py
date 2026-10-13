@@ -268,7 +268,8 @@ def get_record(identifier):
         if row is None:
             return None
         facts, url = field_assemblages.facts(row), row["source_url"]
-        notes = [*row["edition"]["notes"], row["summary"]["quantity_note"], row["summary"]["source_row_identifiers_note"]]
+        notes = [*field_assemblages.source_notes(row), *row["edition"]["notes"],
+                 row["summary"]["quantity_note"], row["summary"]["source_row_identifiers_note"]]
         description, license_text = "", row["edition"]["license"]
     elif source == "specimens":
         row = specimens.get_record(key)

@@ -31,7 +31,8 @@ DATASETS = {"hoedjiespunt", "berenike-sikait", "fumane-refits", "fumane-models",
             "giza-botany", "elephantine-botany", "mezber-plants", "indus-plants", "monte-castelo-plants",
             "cixwicen-birds", "cixwicen-bird-sorting", "cixwicen-fish", "cixwicen-charcoal",
             "locumba-recovery", "soro-wilamaya-evidence", "huaca-grande-deposits",
-            "geelbek", "harris-obsidian", "las-capas-plants"}
+            "geelbek", "harris-obsidian", "las-capas-plants",
+            "palegawra-recovery", "connley-recovery", "bridge-river-recovery"}
 
 
 def database():
@@ -158,7 +159,7 @@ def get_record(identifier):
         display = attributes.get("display_headers")
         row["fields"] = original_fields(display if display is not None else row["headers"], row["values"])
         row["merged_anchors"] = []
-        for merged in (() if attributes.get("orientation") == "column" or attributes.get("source_cell_format", "").startswith("word") else row["merges"]):
+        for merged in (() if attributes.get("orientation") == "column" or attributes.get("source_cell_format", "").startswith(("word", "pdf", "xml")) else row["merges"]):
             match = re.fullmatch(r"([A-Z]+)([1-9][0-9]*):([A-Z]+)([1-9][0-9]*)", merged)
             if match and int(match[2]) <= row["ordinal"] <= int(match[4]):
                 reference = match[1] + match[2]
@@ -220,6 +221,18 @@ def facts(record):
             ("Source edition", record["edition"]["edition"])]
 
 
+def source_notes(record):
+    """Keep original table definitions with the observations they qualify."""
+    attributes = record["cells"]["attributes"]
+    notes = []
+    for key, label in (("source_footnotes", "Original table footnote"),
+                       ("source_notes", "Original source note")):
+        for text in attributes.get(key, []):
+            if isinstance(text, str) and text.strip():
+                notes.append(label + ": " + value_text(text))
+    return notes
+
+
 def relationships(record):
     links, seen = [], set()
     for item in record["associations"]:
@@ -246,6 +259,7 @@ def reference_entry(identifier):
     lines.extend("- " + _md(label) + ": " + _md(value) for label, value in facts(record))
     lines += ["", record["source_url"], "SHA-256: " + record["file"]["sha256"],
               "Citation: " + record["edition"]["citation_url"], "Data rights: " + record["edition"]["license"]]
+    lines.extend("\n" + note for note in source_notes(record))
     lines.extend("\n" + note for note in record["edition"]["notes"])
     lines.extend("\nAssociation: " + _md(item["label"]) + " — " + _md(item["basis"]) for item in record["associations"])
     lines.append("\n" + record["summary"]["quantity_note"])

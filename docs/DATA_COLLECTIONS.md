@@ -8,6 +8,12 @@ collection**; progress remains available after a page reload. Open the installed
 collection to explore it in the shared atlas search and reader. Internet access is needed for the
 initial download and external source pages.
 
+Each collection uses one active revision. Its search database and original
+source tables serve different roles. An updated excavation pack includes its
+earlier scientific payload, so it needs no chain of old packs. Older installed
+revisions remain preserved and are excluded from searches. Source editions and
+analyses can describe the same site or sample; records are not unique-find counts.
+
 In the shared reader, **Published location → Show published location map**
 draws Neotoma's original point or bounding area and PBDB's modern collection
 coordinates. It opens only on request and works offline. Multiple original
@@ -31,7 +37,7 @@ searches retain their existing plans.
 | Excavation contexts, finds and survey effort | 153,867 distinct source subjects from Gabii, Petra and Eastern Korinthia; original observation documents, tables and field definitions | 243.2 MB | 576.6 MB |
 | Sites, samples and past environments | 17,882,630 readable records within 20,447,331 original Neotoma scientific rows; 32,061 source sites | 562.4 MB | 2.67 GB |
 | Anatolian animal-bone records | 242,457 published subject IDs, 4,026 context references and 814 aggregate rows; 838,710 original rows in 37 table editions | 456.7 MB | 981.6 MB |
-| Excavation assemblages and refits | 343,904 source records: 342,437 original rows and 1,467 physical context-column views across twenty-three source corpora | 326.0 MB | 1.15 GB |
+| Excavation assemblages and refits | 345,301 source records: 343,706 original rows and 1,595 physical context-column views across twenty-six source corpora | 500.3 MB | 1.34 GB |
 | Archaeological site registers · eastern US | 227,962 distinct publisher site IDs across eight states; five overlapping original table editions | 238.5 MB | 815.1 MB |
 
 The existing museum, newspaper, map, geology and mineral catalogs remain
@@ -284,6 +290,53 @@ is not bundled under that repository declaration.
 New sources: [Geelbek v.1](https://doi.org/10.5281/zenodo.10017377),
 [Harris Site v1](https://doi.org/10.17632/4tbrvj5v8z.1), and
 [Las Capas original repository revision](https://github.com/alanfarahani/las-capas-bots-analysis/tree/64498c2abd8cf007f7efe0664a831cb7dc78ca31).
+
+The 2026.10.13 revision requires Clovis 0.23 or newer. It adds 1,269 original
+body rows and 128 explicitly labelled views of physical sample columns from
+Palegawra, Connley Cave 5 and Bridge River. All earlier scientific rows and
+associations remain unchanged. The self-contained archive retains all 48
+earlier Western originals, adds 63 unchanged original files and one separately
+identified extraction of eight Bridge River scientific tables. Transport ZIPs
+and identical image aliases are excluded. Source documents, table headers and
+column views are not additional sampled deposits or excavated finds.
+
+Search **Palegawra AAJ 16010 16011 84** to compare the native recovery row
+with its contextual plant column. The 84 L belongs to the whole original
+register group. The 63 recovery rows record 2,652.95 L, while the 52 plant
+columns represent 53 register rows and 2,130.95 L. ABM lower/upper is one pooled
+13 L plant column. Omitted plant columns do not establish zero finds or an
+unprocessed sample. Six laboratory dating rows remain distinct from seventeen
+model chronology statements. Native field-section images and original
+workbooks are retained; their order does not establish deposit relationships.
+
+Search **Connley C1 765.1** to read an original sediment-column sample with
+zero seeds and recorded debitage. Its Volume and bulk Weight units stay
+unspecified. The eleven feature-sample columns have a shared native caption
+declaring one litre per sample; that declaration is shown separately from
+original cells. Seventeen sediment-column samples retain literal strata and
+original seed, charcoal, bone and lithic quantities. The supplemental methods
+document does not establish a complete register of collected or unprocessed
+samples. Four supplied feature descriptions are not extended to the fifth
+feature group. Seventeen dated-charcoal provenience rows retain laboratory IDs
+and local coordinates without a geographic transformation.
+
+Search **Bridge River GC31 Dataset 2** to read the corrected elemental row.
+The original 34-page supplement preserves all ten tables, including ninety
+isotope rows and ninety elemental rows for the same ninety original laboratory
+IDs. The 79-row outlier-removed table is a repeated subset. GC031 and GC31 stay
+distinct; campaign-qualified bag and feature references retain their literal
+identities. The eight article tables include actual grouped charred plant
+quantities, fractional specimens and separately labelled summaries. Original
+table footnotes explain plant abbreviations, faunal indexes and estimated dates
+in **Evidence conventions**, and accompany saved Fieldbook references.
+Preparation methods do not supply missing measured flotation denominators.
+The native floor spellings and combined feature labels remain unchanged.
+
+These three editions declare CC BY 4.0, with original author, university,
+project, vocabulary and figure credits retained. Sources:
+[Palegawra recovery supplements](https://doi.org/10.1371/journal.pone.0239564),
+[Connley Cave 5 supplements](https://doi.org/10.1017/aaq.2021.141), and
+[Bridge River corrected study and supplements](https://doi.org/10.3389/fnut.2025.1716684).
 
 ## Radiocarbon results
 

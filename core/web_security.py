@@ -119,7 +119,12 @@ class BoundedRequestMiddleware:
         cursor = iter(messages)
 
         async def replay():
-            return next(cursor, {"type": "http.disconnect"})
+            try:
+                return next(cursor)
+            except StopIteration:
+                # Finishing the request body does not disconnect the client.
+                # Streaming/file responses still need the actual receive channel.
+                return await receive()
 
         async def with_headers(message):
             if message["type"] == "http.response.start":
