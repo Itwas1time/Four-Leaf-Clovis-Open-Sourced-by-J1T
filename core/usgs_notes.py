@@ -2,8 +2,37 @@
 from datetime import datetime, timezone
 import hashlib
 import re
+from urllib.parse import urlsplit
 from core.fieldbook import validate_book
 from core.resident_context import _md
+
+
+def _quoted_url(value):
+    # A URL embedded in bibliographic prose is literal source text. Keep its
+    # punctuation/underscores without letting Markdown autolink escaped text.
+    width=max((len(match[0]) for match in re.finditer(r'`+',value)),default=0)+1
+    fence='`'*width
+    return fence+' '+value+' '+fence
+
+
+def citation_markdown(citation):
+    """Escape source prose separately from its explicit original URL."""
+    text=citation.get('text','')
+    text=text if isinstance(text,str) else ''
+    parts=re.split(r'(https?://\S+)',text)
+    prose=''.join(_quoted_url(part) if index%2 else _md(part) for index,part in enumerate(parts))
+    url=citation.get('url','')
+    if not isinstance(url,str) or not url:
+        return prose
+    try:
+        parsed=urlsplit(url)
+        safe=(parsed.scheme in ('http','https') and bool(parsed.hostname) and not parsed.username
+              and not parsed.password and parsed.port in (None,80,443) and len(url)<=2048
+              and not any(character.isspace() or ord(character)<32 or character in '\\<>"`' for character in url))
+    except ValueError:
+        safe=False
+    link='[Read original map source](<'+url+'>)' if safe else _quoted_url(url)
+    return prose+' '+link
 
 
 def facts(unit):
@@ -36,12 +65,12 @@ def reference_entry(unit,place=None):
             if isinstance(source.get(key),str) and source[key].strip():
                 lines.append(f'- {label}: {_md(source[key])}')
         for citation in source.get('source_citations',[])[:10]:
-            lines.append(_md(citation.get('text',''))+' '+_md(citation.get('url','')))
+            lines.append(citation_markdown(citation))
     if len(sources)>10:
         lines+=['',f'Included the first 10 of {len(sources)} returned source-map units; the library retains the other units.']
     lines+=['','## Source citations']
     for citation in unit.get('source_citations',[])[:20]:
-        lines.append(_md(citation.get('text',''))+' '+_md(citation.get('url','')))
+        lines.append(citation_markdown(citation))
     lines+=['','https://ngmdb.usgs.gov/Prodesc/proddesc_118545.htm','USGS release data: CC0 1.0.',
             'The four map themes are separate mapping products, not a measured soil profile or a find prediction.']
     markdown='\n'.join(lines)

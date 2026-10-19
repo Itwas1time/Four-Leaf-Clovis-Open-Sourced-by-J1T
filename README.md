@@ -85,6 +85,21 @@ bag identifiers, explicit context relationships and dated corrections. Download
 a project ZIP backup with its full history; restore checks links and refuses
 conflicting revisions. See [dig records](docs/DIG_RECORDS.md) for storage and bounds.
 
+Linked **Sample measurement / processing** records preserve quantity precision,
+units, mesh, fractions, analysis status and qualified estimates. Zero results
+remain distinct from unknown amounts. Sample readers page through all linked
+observations; dated corrections and version 2 backups retain their history.
+
+In an Atlas reader, **Use in a dig project** saves and opens a complete cited
+snapshot under your project's source code. Link and reopen it from supporting
+field records. Repeat saves preserve existing annotations; captured citations
+and their histories use version 3 project backups. See [dig records](docs/DIG_RECORDS.md).
+
+Atlas **Search ideas** offers related field terms, such as `projectile point`
+after `arrowhead`. Choose a separate text search while keeping the current
+filters and published association. Sourced word explanations work offline;
+original records and citations retain their wording.
+
 **Atlas → Manage offline collections** adds optional local downloads: **173,946
 published radiocarbon determinations** (17.7 MB) and **37,852 dinosaur fossil
 occurrences linked to 14,371 collections** (27.8 MB), **96,115 UCL EUROEVOL
@@ -145,8 +160,9 @@ python -m atlas.gui.app
 ```
 
 The Dash app binds to localhost at port 8050. **Explore** opens on **Atlas**,
-with one search and a shared reader across **20,355,952 source records** when
-the latest versions of all eight optional packs are installed. Search published places, cultures,
+with one search and a shared reader across the bundled reference catalogs and
+installed optional collections. Each collection declares its own record types,
+coverage and source edition. Search published places, cultures,
 materials or fossils and follow the original source. **Specialist searches**
 keeps detailed collection filters available. Counts mix different record types
 and can overlap between sources; they do not count unique excavated finds.
@@ -186,8 +202,8 @@ town** in the header or notes panel opens the same editable place selector.
 Click the town box and type in its search field:
 `Santa Rosa`, `Santa Rosa, CA` and `Santa Rosa, California` all work.
 Open **Options & land-use context** for known past land use and the online setting.
-**Include local rock maps (online)** is selected by default; uncheck for an
-offline report. The lookup runs only when Explore is pressed. The central
+**Include local rock maps (online)** is off initially. Select it when wanted;
+the lookup runs only when Explore is pressed. The default report works offline. The central
 workbench has **Rocks & fossils**, **Old maps**, **Investigation** and **Atlas**. The Rocks &
 fossils map fills the center. Open **Read rock evidence · materials, ages &
 sources** below it to read and select unit cards, source details and matched
@@ -224,19 +240,36 @@ preview the packet before downloading or saving. On a saved question, **Record
 a response to this question** with its source, date and remaining uncertainty.
 Related saved records connect the source, question and responses. The new
 question or response leads readers and note downloads; preserved source notes
-follow. Photos are not attached and Clovis contacts nobody.
-Saved entries stay in this browser; export a backup.
+follow. Personal photos and captions stay with saved observations, follow-ups,
+questions and attributed responses. A question packet with photos downloads as
+a ZIP containing readable Markdown and original files. Clovis contacts nobody.
+Saved notes stay in this browser; the local app preserves original photos in
+its notebook database. **Download this fieldbook** creates JSON for notes alone
+or a ZIP including the original files. Restore either format to merge the work
+on another computer. Text-only downloads and printing contain the written notes.
 Print or save selected notes as PDF using the browser's print dialog.
 See [observations and fieldbook](docs/OBSERVATIONS.md) for a practical walkthrough
-and privacy details. Photos stay in the browser and are not saved or analyzed.
+and privacy details. Photos are preserved without analysis or re-encoding.
+See [photo portability](docs/LOCAL_PHOTOS.md) for original metadata and limits.
+
+**Fieldbook → Dig records** keeps named projects, units, contexts, finds,
+samples, linked processing/analyzed quantities and source documents together.
+Keep original units, qualified estimates and unknown values. Corrections retain
+earlier dated revisions; source links do not turn published comparisons into
+new field observations. Capture a complete Atlas citation, reopen it from a
+supporting record and keep it readable without the original collection.
+Project ZIP backups include all revisions and attached original photos,
+including images removed from the current record. Restore checks the complete
+history and refuses divergent corrections. See [dig records](docs/DIG_RECORDS.md).
 Use **Research** for the directory and research briefs.
 Its **Move the research map** search accepts towns as well as regions and
 projects. It moves the map; use Explore a town for a resident report.
 
 The archaeology field-notebook theme uses warm paper, archival ink, olive
 controls and readable serif headings, with a bone-clover vector mark in the
-header and browser tab, and adapts to mobile screens. Switch between Terrain,
-Topographic and Satellite above the map. Background maps need internet access;
+header and browser tab, and adapts to mobile screens. A bundled world land
+outline provides offline orientation. Terrain, Topographic and Satellite above
+the map are explicit online choices. These detailed backgrounds need internet access;
 local reports remain available during a tile outage. Map images send only the
 app origin as a referrer. Terrain uses Stadia's local development access;
 hosting requires provider authorization. See [setup](docs/SETUP.md).

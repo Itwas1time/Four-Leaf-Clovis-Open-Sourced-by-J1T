@@ -5,6 +5,12 @@
 .clovis-atlas-specialist .atlas-filter-dropdown,.clovis-atlas-source-filter .atlas-filter-dropdown { margin-top:10px; }
 .clovis-atlas-filters { grid-template-columns:minmax(0,2fr) minmax(180px,1fr); }
 .clovis-atlas-count { font-size:14px; margin:16px 0; }
+.clovis-search-ideas { margin:8px 0 16px; padding:12px; border:1px solid var(--clovis-rule); border-radius:7px; font-size:13px; }
+.clovis-search-idea-buttons { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
+.clovis-search-idea-buttons button { white-space:normal; text-align:left; }
+.clovis-search-ideas details { margin-top:8px; }
+.clovis-search-ideas details > div { margin:12px 0; }
+.clovis-search-ideas details p { margin:4px 0; }
 .clovis-library-record .clovis-atlas-evidence,.clovis-atlas-evidence { color:var(--clovis-green); font-size:12px; font-weight:600; }
 .clovis-atlas-related { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 18px; }
 .clovis-atlas-related h4 { width:100%; margin:0 0 4px; }
@@ -27,6 +33,11 @@
 #library-fossils .dash-input-container input,#library-newspapers .dash-input-container input,#library-units .dash-input-container input { width:100%; height:44px; padding:10px 12px; color:var(--clovis-ink); background:var(--clovis-card); border:1px solid var(--clovis-control-rule); border-radius:7px; }
 .clovis-library-detail details { margin:10px 0; padding:12px; border:1px solid var(--clovis-rule); border-radius:7px; }
 .clovis-library-detail details p { white-space:pre-wrap; }
+.clovis-library-detail pre { white-space:pre-wrap; overflow-wrap:anywhere; max-width:100%; }
+#atlas-dig-tools label { display:block; margin:12px 0 6px; }
+#atlas-dig-tools .dash-input-container { width:100%; margin-bottom:12px; }
+#atlas-dig-tools input { width:100%; box-sizing:border-box; }
+#atlas-dig-tools button { max-width:100%; white-space:normal; }
 .clovis-guide-citations { display:flex; flex-wrap:wrap; gap:8px 14px; }
 .clovis-library-detail > .atlas-secondary-button { margin:0 0 16px; }
 .clovis-library-filters .atlas-filter-dropdown { margin:0; }
@@ -39,6 +50,7 @@
 .clovis-library-record[aria-pressed="true"] { border-color:var(--clovis-green); box-shadow:inset 3px 0 0 var(--clovis-green); }
 .clovis-library-detail { scroll-margin-top:12px; }
 .clovis-library-back { display:block; border:0; padding:0; margin:0 0 10px; background:transparent; color:var(--clovis-green); text-decoration:underline; cursor:pointer; }
+.clovis-pack-actions button:disabled { opacity:.5; cursor:default; }
 .clovis-library-record strong,.clovis-library-record small { display:block; }
 .clovis-library-record small { color:var(--clovis-muted); margin-top:4px; }
 .clovis-library-detail { min-width:0; padding:18px; border:1px solid var(--clovis-rule); border-radius:8px; background:var(--clovis-paper-deep); line-height:1.6; overflow-wrap:anywhere; }

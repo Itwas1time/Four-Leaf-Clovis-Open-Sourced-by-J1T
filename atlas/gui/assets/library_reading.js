@@ -12,6 +12,13 @@
     heading.focus({preventScroll:true});
   };
   document.addEventListener('click', event => {
+    const idea = event.target.closest('button[data-atlas-search-idea]');
+    if (idea) {
+      stop();
+      const query = document.getElementById('atlas-query');
+      if (query) query.focus({preventScroll:true});
+      return;
+    }
     const back = event.target.closest('button[data-library-back]');
     if (back) {
       stop();

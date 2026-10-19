@@ -29,6 +29,7 @@ def tools():
             ], className='clovis-expert-actions'),
             dcc.Store(id='expert-question-draft'),
             dcc.Download(id='expert-download-file'),
+            html.Div(id='expert-photo-download-status',role='status',className='atlas-help'),
         ], id='expert-question-panel', className='clovis-expert-disclosure'),
         html.Div(id='expert-save-status', role='status', className='atlas-help'),
         html.Details([

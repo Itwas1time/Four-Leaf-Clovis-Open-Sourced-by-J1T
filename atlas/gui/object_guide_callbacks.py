@@ -6,6 +6,7 @@ from core.object_guide_notes import reference_entry
 from core.fieldbook import EMPTY_BOOK,merge_entries
 from atlas.gui.library_callbacks import _url
 from atlas.gui.library_ui import reading_nav
+from atlas.gui.offline_reference_ui import control as local_source_control
 
 
 @callback(Output('library-guide-cards','children'),Output('library-guide-count','children'),
@@ -45,6 +46,8 @@ def read(selected):
     if not guide:
         return html.P('Choose a guide for facts you can compare with an object and questions you can answer by looking closely.')
     children=[reading_nav('library-guide-query'),html.H3(guide['title']),html.P(guide['summary'])]
+    for source in guide['sources']:
+        children.extend(local_source_control(source['url'],'specialist-guide'))
     for fact in guide['facts']:
         links=[]
         for source in fact['sources']:

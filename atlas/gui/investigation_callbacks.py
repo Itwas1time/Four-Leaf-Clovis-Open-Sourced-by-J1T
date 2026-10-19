@@ -1,6 +1,6 @@
 """Connect in-app evidence tools to guided observations and the existing fieldbook."""
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
-from core.evidence_board import note_context as geological_note_context
+from core.evidence_board import evidence_board, note_contexts as geological_note_contexts
 from core.fieldbook import EMPTY_BOOK, merge_entries, validate_book
 from core.historical_maps import validated_note_context
 from core.investigations import MISSIONS, investigation_entry
@@ -136,7 +136,7 @@ def start_investigation(clicks,archive_clicks,geology_clicks,archive_context,geo
         return 'history','missions','resident',source,context['date'][:120],context['notes'][:1500], 'Map evidence moved to your investigation. Review it and save to the fieldbook.'
     if trigger == 'geology-record-note':
         report = current_report(token,state,geoid,history,online)
-        contexts = [geological_note_context(report,f'unit-{u["map_id"]}') for u in report.get('units',[])] if report else []
+        contexts = list(geological_note_contexts(report).values())
         if not isinstance(geology_context,dict) or geology_context not in contexts:
             return empty
         source = (geology_context['title']+' — '+geology_context['source'])[:1000]
@@ -144,9 +144,9 @@ def start_investigation(clicks,archive_clicks,geology_clicks,archive_context,geo
     if isinstance(trigger,dict) and trigger.get('mission') in MISSIONS and any(clicks or []):
         mission = trigger['mission']
         report = current_report(token,state,geoid,history,online)
-        unit = report.get('units',[None])[0] if report and report.get('units') else None
-        source = (unit['name']+' — '+unit['reference'])[:1000] if unit and mission=='rocks' else ''
-        date = unit.get('interval','') if unit and mission=='rocks' else ''
+        unit = next(iter(geological_note_contexts(report).values()), None) if mission=='rocks' else None
+        source = (unit['title']+' — '+unit['source'])[:1000] if unit else ''
+        date = unit['date'] if unit else ''
         return mission,'missions','resident',source,date,'',no_update
     return empty
 
@@ -165,8 +165,11 @@ def investigation_guide(mission,token,state,geoid,history,online):
         evidence.append(html.P(f"Working around {place['name']}, {place['state']}. Record only broad public place context."))
     else:
         evidence.append(html.P('Choose a town in the place setup before saving this investigation.'))
-    if mission=='rocks' and report and report.get('units'):
-        evidence.append(html.P('Your current map materials: '+ '; '.join(unit['lithology'] or unit['name'] for unit in report['units'][:3])))
+    if mission=='rocks' and report:
+        cards = [card for card in evidence_board(report)['cards'] if 'map_id' in card or 'usgs_id' in card]
+        if cards:
+            evidence.append(html.P('Your current map materials: '+ '; '.join(card['materials'] for card in cards[:3])))
+            evidence.append(html.P('These are separate source-map descriptions at the public town point, not observed material or a measured soil profile.', className='atlas-help'))
     return evidence, [{'label':step,'value':i} for i,step in enumerate(guide['steps'])],[],guide['prompt']
 
 

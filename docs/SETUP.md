@@ -2,8 +2,9 @@
 
 The maintained interface is the Dash place-context and research planner.
 Python 3.11 or newer is required. The town lookup, directory and planner need
-no API keys. Local rock maps are selected by default; the online request runs
-only when Explore is pressed. Uncheck the option for an offline report.
+no API keys. The app opens on Atlas search. Town reports start with online
+rock maps off; select the option when wanted. The online request runs only
+when Explore is pressed. The map starts with a bundled offline world outline.
 
 ## Windows PowerShell
 
@@ -39,8 +40,8 @@ Select a state and expand **Statewide background and sources** for learning cont
 Click the town box, type a town name in its search field and choose a Census
 place. `Santa Rosa, CA` or `Santa Rosa, California` also works. Select **Explore
 this town** directly below the town box. **Options & land-use context** contains
-the optional past land use and online setting. Leave **Include local rock maps (online)** selected for map
-evidence or uncheck for an offline report, then select
+the optional past land use and online setting. **Include local rock maps (online)** starts off.
+Select it for an online map lookup or keep it off for an offline report, then select
 **Explore this town**. A marker shows the public Census town point. The central workbench has
 **Rocks & fossils**, **Old maps**, **Investigation** and **Atlas**. The Rocks & fossils map
 fills the center. Open **Read rock evidence · materials, ages & sources** below
@@ -109,9 +110,10 @@ them. Full comparison notes and sources open on request. The links beside the
 form and cards let you jump between them on a small screen. Save or download
 actions sit above the cards. You can explicitly include
 the selected public town as broad context; changing town clears that choice.
-An optional photo stays in the browser; zoom, drag, rotate, fit or remove it
-without changing the original file. It is not sent to the server, analyzed or
-saved. Save the written notes, or save a report from **Explore a town**.
+Add and caption an original photo, then zoom, drag, rotate or fit it without
+changing the file. The local app stores the original without analysis or
+re-encoding. Save the observation and its photo references, or save a report
+from **Explore a town**. Removing a working attachment preserves saved notes.
 
 In **Fieldbook**, open a card and choose another investigation to compare.
 Add a follow-up after checking a map: record its title, date, sheet and source,
@@ -120,10 +122,13 @@ question packet, open **Prepare a question about these notes**, write your
 question, preview, then download or save it. On a saved question, **Record a
 response to this question** with its source, date and remaining uncertainty.
 Use **Related saved records** to navigate the source, question and responses.
-Original notes remain intact. Photos are not attached and Clovis sends no messages.
-Print selected notes or use the browser's Save as PDF option. Download JSON to back up the
-fieldbook or move devices; Restore merges valid notes with existing work.
-Limits are 50 entries and 750 KB. Browser storage is specific to the device
+Original notes and attached personal photos remain intact. A question packet
+with photos downloads as readable Markdown and originals in a ZIP. Clovis sends
+no messages. Print selected note text or use the browser's Save as PDF option.
+Download the complete fieldbook as JSON for notes alone, or ZIP with original
+photos. Restore merges valid notes and originals with existing work.
+Limits are 50 entries / 750 KB of note metadata and 100 MB of original photos.
+Browser storage is specific to the device
 and app origin. See [observations and fieldbook](OBSERVATIONS.md).
 
 For structured recording select **Fieldbook → Dig records**. Keep named local
@@ -131,13 +136,38 @@ projects, units, contexts, finds, samples and source documents connected.
 Record measured depths with their units and datums, bag identifiers and
 explicit context relationships. Corrections preserve stable IDs and dated
 revisions. Project ZIP backups include the full history; restoring merges
-matching revisions and refuses conflicts. These records persist on the local
+matching revisions and refuses conflicts. Personal photos and captions remain
+with dated revisions, including after removal from the current record. Complete
+project backups retain those originals. These records persist on the local
 computer outside the installed package. See [dig records](DIG_RECORDS.md) for
 the storage path, limits and recording references.
 
+Add **Sample measurement / processing** records linked to a saved sample to
+record quantities, original units, mesh, fractions, methods and analysis status.
+Keep zero results distinct from unknown amounts and unanalysed material.
+Sample readers page through all linked observations. Projects using the new
+record type have version 2 backups; older Clovis builds refuse the new database
+format, and current Clovis retains older records without rewriting them.
+
+In Atlas, expand **Use in a dig project**, choose a saved project and source
+code, then **Save and open project source**. Its complete generated citation
+remains readable after a collection is removed. Link and reopen the source from
+supporting field records. Repeat saves keep your annotations; changed cited
+content needs a separate record. Captured citations use version 3 project
+backups. Photo-inclusive histories use version 4; the current build reads all
+four project versions. See [photo portability](LOCAL_PHOTOS.md).
+
+Atlas **Search ideas** offers related field terms when you type familiar words.
+Choose a suggestion to replace the query while keeping the current evidence,
+source and published association. **What these words mean** contains short
+sourced explanations that work offline. These are separate text searches;
+check the source's evidence type and original wording before interpreting a
+match. See [downloadable collections](DATA_COLLECTIONS.md).
+
 ## Background maps
 
-Use Terrain, Topographic or Satellite above the map. Terrain uses Stadia's
+The bundled world outline works offline. Terrain, Topographic and Satellite
+are explicit online choices above the map. Terrain uses Stadia's
 localhost development access, with no key for `localhost` or `127.0.0.1`.
 Tile images send only the app origin as a referrer, without a page path or
 query, so the provider can recognize local access. The rest of the app keeps

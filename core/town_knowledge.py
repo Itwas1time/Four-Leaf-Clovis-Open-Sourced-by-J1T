@@ -3,6 +3,7 @@ from core.sanborn_catalog import catalog_stats, census_town, search_catalog
 from core.state_fossil_library import state_reading
 from core.resident_context import _md
 from core.usgs_unit_library import units_for_place
+from core.usgs_notes import citation_markdown
 from core.newspaper_catalog import catalog_stats as newspaper_stats, search_titles
 import sqlite3
 
@@ -45,7 +46,7 @@ def knowledge_markdown(place):
                 if not source.get('source_name') and not source.get('source_full_name'):
                     lines.append('The USGS source table does not provide a description for this mapped source code.')
                 for citation in source.get('source_citations',[])[:3]:
-                    lines.append(_md(citation.get('text',''))+' '+_md(citation.get('url','')))
+                    lines.append(citation_markdown(citation))
             if len(unit.get('source_units',[]))>3:
                 lines.append('Open Mapped geology for the remaining source units and descriptions.')
             lines.append('')

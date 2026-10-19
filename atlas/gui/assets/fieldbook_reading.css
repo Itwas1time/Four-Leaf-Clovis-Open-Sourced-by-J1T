@@ -1,0 +1,7 @@
+.clovis-note-dialog { width:min(960px,calc(100vw - 32px)); max-height:calc(100dvh - 32px); box-sizing:border-box; padding:24px; border:1px solid var(--clovis-rule); border-radius:10px; background:var(--clovis-paper,#fafbf5); color:var(--clovis-ink,#102f2d); box-shadow:0 12px 48px #0004; }
+.clovis-note-dialog::backdrop { background:#10241cc0; }
+.clovis-note-dialog-header { position:sticky; top:0; z-index:1; display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:24px; padding-bottom:12px; border-bottom:1px solid var(--clovis-rule); background:var(--clovis-paper,#fafbf5); }
+.clovis-note-dialog-header h2 { margin:0; }
+.clovis-note-dialog-header button { flex-shrink:0; }
+.clovis-note-dialog-text { margin:0 auto; max-width:75ch; font:inherit; line-height:1.65; white-space:pre-wrap; overflow-wrap:anywhere; }
+@media(max-width:600px) { .clovis-note-dialog { padding:16px; } .clovis-note-dialog-header { flex-direction:column; } }

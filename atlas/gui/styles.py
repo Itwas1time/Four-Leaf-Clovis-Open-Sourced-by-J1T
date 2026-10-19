@@ -37,12 +37,14 @@ LAYER_COLORS = {
 
 # Local terrain access needs an origin referrer; hosted usage needs provider authorization.
 TILE_URLS = {
+    "offline": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
     "satellite": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     "topographic": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
     "terrain": "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png",
 }
 
 TILE_ATTRIBUTIONS = {
+    "offline": 'Offline modern land outline: <a href="https://www.naturalearthdata.com/">Natural Earth</a> · 1:110 million; no roads or property detail',
     "satellite": 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
     "topographic": 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, SRTM | Map style &copy; <a href="https://opentopomap.org/">OpenTopoMap</a> (CC-BY-SA)',
     "terrain": '&copy; <a href="https://stadiamaps.com/attribution/">Stadia Maps</a> &copy; <a href="https://stamen.com/">Stamen Design</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',

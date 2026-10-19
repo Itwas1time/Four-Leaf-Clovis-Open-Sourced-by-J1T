@@ -3,6 +3,7 @@ from datetime import datetime,timezone
 import hashlib
 from core.fieldbook import validate_book
 from core.resident_context import _md
+from core import offline_references
 
 
 def reference_entry(guide):
@@ -13,6 +14,11 @@ def reference_entry(guide):
         lines.extend('  '+_md(source['name'])+' '+_md(source['url']) for source in fact['sources'])
     lines+=['','## Questions to examine']+['- '+_md(question) for question in guide['questions']]
     lines+=['','## Details to record']+['- '+_md(prompt) for prompt in guide['record']]
+    for source in guide['sources']:
+        article=offline_references.for_url(source['url'])
+        if article is not None:
+            lines+=['','## Complete local supporting source',
+                offline_references.reference_entry(article['id'])['markdown']]
     markdown='\n'.join(lines)
     row={'id':hashlib.sha256(('object-guide:'+guide['id']+markdown).encode()).hexdigest()[:24],
          'kind':'investigation','title':('Object guide · '+guide['title']).encode()[:120].decode('utf-8','ignore'),

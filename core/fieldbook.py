@@ -6,24 +6,45 @@ import re
 
 MAX_ENTRIES = 50
 MAX_BYTES = 750_000
+MAX_ENTRY_BYTES = 500_000
+MAX_CITATION_BYTES = 2_000_000
 EMPTY_BOOK = {'version':1,'entries':[]}
 FIELDS = {'place','material','history','maps','setting','features','size','follow_up','mission','source','date','outcome','steps'}
 
 
 def validate_book(value):
-    if not isinstance(value,dict) or set(value) != {'version','entries'} or type(value['version']) is not int or value['version'] != 1 or not isinstance(value['entries'],list) or len(value['entries'])>MAX_ENTRIES:
+    return _validate_book(value, MAX_BYTES, MAX_ENTRY_BYTES)
+
+
+def validate_citation_entry(value):
+    """Bound complete project citations separately from browser field notes."""
+    if not isinstance(value, dict) or value.get('kind') != 'investigation':
+        raise ValueError('Capture an Atlas source reference.')
+    # JSON escaping can double literal text; other entry fields stay bounded.
+    _validate_book({'version': 1, 'entries': [value]}, 4_100_000, MAX_CITATION_BYTES)
+    return value
+
+
+def _validate_book(value, max_bytes, max_entry_bytes):
+    if not isinstance(value,dict) or set(value) != {'version','entries'} or type(value['version']) is not int or value['version'] not in (1,2) or not isinstance(value['entries'],list) or len(value['entries'])>MAX_ENTRIES:
         raise ValueError('Use a Clovis fieldbook with up to 50 investigations.')
     try: size=len(json.dumps(value,ensure_ascii=False,allow_nan=False).encode('utf-8'))
     except (ValueError,TypeError,UnicodeError): raise ValueError('The fieldbook has invalid text.') from None
-    if size>MAX_BYTES: raise ValueError('Keep the fieldbook under 750 KB; export a backup before starting another.')
+    if size>max_bytes:
+        raise ValueError('Keep the fieldbook under 750 KB; export a backup before starting another.' if max_bytes == MAX_BYTES else 'The captured citation is too large.')
     ids=set()
     for row in value['entries']:
-        if not isinstance(row,dict) or set(row) != {'id','kind','title','created','summary','markdown'}:
+        required={'id','kind','title','created','summary','markdown'}
+        if not isinstance(row,dict) or not required<=set(row) or set(row)-required-{'photos'}:
             raise ValueError('A saved investigation has an unsupported format.')
+        if 'photos' in row:
+            from core.local_photos import validate_refs
+            if value['version']<2:raise ValueError('Saved photos require a version 2 fieldbook.')
+            validate_refs(row['photos'])
         if row['kind'] not in ('town','find','investigation') or not isinstance(row['id'],str) or not re.fullmatch(r'[a-f0-9]{24}',row['id']) or row['id'] in ids:
             raise ValueError('A saved investigation has an invalid identifier.')
         ids.add(row['id'])
-        for key,limit in (('title',120),('created',32),('markdown',100_000)):
+        for key,limit in (('title',120),('created',32),('markdown',max_entry_bytes)):
             if not isinstance(row[key],str) or len(row[key].encode('utf-8'))>limit or not row[key].strip():
                 raise ValueError('A saved investigation has invalid or oversized text.')
         if not re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+00:00',row['created']):
@@ -37,7 +58,11 @@ def validate_book(value):
     return value
 
 
-def new_entry(kind,report):
+def entry_book(rows):
+    return {'version':2 if any('photos' in row for row in rows) else 1,'entries':rows}
+
+
+def new_entry(kind,report,photos=None):
     from core.find_inspection import MATERIALS, SETTINGS, FEATURES
     from core.resident_context import CONTEXTS
     if kind == 'town':
@@ -56,31 +81,42 @@ def new_entry(kind,report):
     row={'id':hashlib.sha256((kind+text).encode()).hexdigest()[:24], 'kind':kind,
          'title':title.encode('utf-8')[:120].decode('utf-8','ignore'), 'created':datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
          'summary':summary,'markdown':text}
-    validate_book({'version':1,'entries':[row]})
+    if photos:
+        from core.local_photos import validate_refs
+        row['photos']=json.loads(json.dumps(validate_refs(photos),ensure_ascii=False,allow_nan=False))
+        row['id']=hashlib.sha256((kind+text+json.dumps(row['photos'],ensure_ascii=False,sort_keys=True)).encode('utf-8')).hexdigest()[:24]
+    validate_book(entry_book([row]))
     return row
 
 
 def merge_entries(book,entries):
     current=validate_book(book)
-    incoming=validate_book({'version':1,'entries':entries})
+    incoming=validate_book(entry_book(entries))
     known={row['id'] for row in current['entries']}
-    merged={'version':1,'entries':[*current['entries'],*[row for row in incoming['entries'] if row['id'] not in known]]}
+    old={row['id']:row for row in current['entries']}
+    for row in entries:
+        if row['id'] in old and ('photos' in row or 'photos' in old[row['id']]):
+            if {k:v for k,v in row.items() if k!='created'}!={k:v for k,v in old[row['id']].items() if k!='created'}:
+                raise ValueError('A saved investigation has conflicting notes or photos under the same identifier.')
+    merged={'version':max(current['version'],incoming['version']),'entries':[*current['entries'],*[row for row in incoming['entries'] if row['id'] not in known]]}
     return validate_book(merged)
 
 
 def follow_up_entry(row, notes):
     """Keep the original snapshot and create a separately dated follow-up."""
     from core.resident_context import _md
-    validate_book({'version':1,'entries':[row]})
+    validate_book(entry_book([row]))
     if not isinstance(notes,str) or not notes.strip() or len(notes)>1500:
         raise ValueError('Write a follow-up note of up to 1,500 characters.')
     updated=json.loads(json.dumps(row))
     updated['markdown'] += '\n\n## Your follow-up note\n\n' + _md(notes.strip()) + '\n\nUser-recorded observations; Clovis has not verified this source or interpretation.\n'
     updated['summary']['follow_up']=notes.strip().encode('utf-8')[:1500].decode('utf-8','ignore')
     updated['id']=hashlib.sha256((row['kind']+updated['markdown']).encode()).hexdigest()[:24]
+    if updated.get('photos'):
+        updated['id']=hashlib.sha256((row['kind']+updated['markdown']+json.dumps(updated['photos'],ensure_ascii=False,sort_keys=True)).encode('utf-8')).hexdigest()[:24]
     updated['title']=(row['title']+' · follow-up').encode('utf-8')[:120].decode('utf-8','ignore')
     updated['created']=datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-    validate_book({'version':1,'entries':[updated]})
+    validate_book(entry_book([updated]))
     return updated
 
 
@@ -88,5 +124,7 @@ def readable_text(markdown):
     """Show saved notes as readable literal text; never interpret imported markup."""
     text=re.sub(r'^#{1,6}\s+','',markdown,flags=re.M)
     text=text.replace('**','')
+    text=re.sub(r'\[([^\]\n]+)\]\(<(https?://[^<>\s]+)>\)',r'\1 — \2',text)
+    text=re.sub(r'(`+) (https?://[^\n]*?) \1',r'\2',text)
     text=re.sub(r'\[([^\]\n]+)\]\((https://[^)\s]+)\)',r'\1 — \2',text)
     return re.sub(r'\\([\\`*_{}\[\]<>()!#|~+\-.=])',r'\1',text)

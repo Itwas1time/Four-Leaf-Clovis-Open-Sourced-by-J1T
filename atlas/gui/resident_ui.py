@@ -17,7 +17,7 @@ def controls():
         dcc.Dropdown(id="resident-state", options=[{"label": f"{STATE_NAMES[value]} ({value})", "value": value} for value in sorted(states(), key=STATE_NAMES.get)],
                      placeholder="Choose state", className="atlas-filter-dropdown", clearable=False),
         html.Label("Town or Census place", htmlFor="resident-place", className="atlas-small-label"),
-        dcc.Dropdown(id="resident-place", options=[], placeholder="Type a town name after choosing state",
+        dcc.Dropdown(id="resident-place", options=[], placeholder="Choose a state first",
                      className="atlas-filter-dropdown", disabled=True),
         html.P("Type to search. For rural places, choose a nearby town.", className="atlas-help"),
         html.Button(["Explore this town", html.Span(" →", **{"aria-hidden": "true"})], id="resident-build", n_clicks=0,
@@ -25,7 +25,7 @@ def controls():
         html.P("Includes online rock maps at the public town point.", id="resident-lookup-note", className="atlas-help"),
         dcc.Loading(html.Div(id="resident-status", children="Choose a state, then a town.",
                             role="status", className="atlas-place-status"), type="dot", color="#2d6a4f"),
-        html.Div("Reading the rock maps…", id="resident-loading", role="status", className="atlas-status-card", style={"display": "none"}),
+        html.Div("Building your town context…", id="resident-loading", role="status", className="atlas-status-card", style={"display": "none"}),
         html.Details([
         html.Summary("Options & land-use context"),
         html.Label("What do you know about past land use?", htmlFor="resident-history", className="atlas-small-label"),
@@ -33,8 +33,8 @@ def controls():
                      value="unknown", clearable=False, className="atlas-filter-dropdown"),
         html.Div([
             dcc.Checklist(id="resident-online", options=[{"label": " Include local rock maps (online)", "value": "geology"}],
-                          value=["geology"], className="atlas-lead-support-filter"),
-            html.P("Macrostrat runs when you select Explore. Uncheck for an offline report.", className="atlas-help"),
+                          value=[], className="atlas-lead-support-filter"),
+            html.P("Town reports start offline. Enable this option to add Macrostrat rock maps when you select Explore.", className="atlas-help"),
             html.Details([html.Summary("What is shared?"), html.P("Only the public town point and standard network metadata go to Macrostrat. Its maps are regional context, not an assessment of your yard.")], className="atlas-privacy-note"),
         ], className="atlas-geology-option"),
         ], className="clovis-place-options"),
@@ -59,7 +59,7 @@ def report_panel():
         ], id="resident-empty-state", className="atlas-empty-state"),
         html.Div(id='resident-evidence-overview', className='clovis-evidence-overview'),
         html.Div([
-            html.Button('Record an observation →', id={'type':'workbench-action','target':'missions','key':'inspector-mission'}, n_clicks=0, className='atlas-primary-button'),
+            html.Button('Record an exposed object →', id={'type':'workbench-action','target':'inspect','key':'inspector-mission'}, n_clicks=0, className='atlas-primary-button'),
         ], className='clovis-inspector-tools'),
         html.Div([
         html.Button('Save town context',id='resident-save',n_clicks=0,className='atlas-secondary-button'),

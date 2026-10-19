@@ -21,7 +21,7 @@ def render_evidence(token, state, geoid, history, online):
     if not cards:
         cards = ['No current mapped unit cards. An offline report or missing coverage cannot establish an absence of finds.']
     elif not any(card['kind'] == 'Reviewed formation guide' for card in board['cards']):
-        cards.append('No reviewed formation guide matched these units. This is a catalogue gap, not evidence of no fossils.')
+        cards.append('No reviewed formation guide is linked to these map cards. This is a catalogue gap, not evidence of no fossils.')
     checked = f" Checked {board['checked_at']}." if board.get('checked_at') else ''
     return cards, board['status'] + checked
 

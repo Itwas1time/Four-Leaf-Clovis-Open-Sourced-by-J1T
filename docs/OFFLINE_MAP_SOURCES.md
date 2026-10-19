@@ -27,4 +27,14 @@ Leaflet.draw 1.0.4 styles and sprites are bundled under its MIT license. Resourc
 URLs are rewritten to local asset names; no map-style CDN is required.
 The original license notices, pinned upstream URLs and asset hashes are retained
 in [offline-map-sources.json](../atlas/gui/assets/offline-map-sources.json).
-The separate town map's optional detailed background tiles still need internet.
+The separate town/research map now starts with this same offline land outline.
+It has no streets or property detail. Terrain, topographic and satellite
+backgrounds are explicit online choices; they pause while the map is hidden.
+The outline remains underneath them, so a failed online background can fall
+back to general land orientation. No provider tiles are downloaded for offline
+storage. The phone selector reserves space for the zoom controls.
+
+Town reports also start with online geology off. Existing offline USGS unit
+descriptions and citations remain available; users can explicitly enable
+Macrostrat data when rebuilding a report. See the
+installed Chrome and local-source checks (omitted from this edition; see [edition scope](../README.md#sources-and-publication-status)).

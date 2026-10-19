@@ -11,6 +11,7 @@
 #dig-record-list .clovis-library-record {margin:8px 0;width:100%;}
 #dig-status {position:sticky;top:0;z-index:5;background:var(--clovis-paper-deep);margin:12px 0;}
 #dig-status:empty {display:none;}
+#dig-record-detail {overflow-wrap:anywhere;}
 #dig-record-detail pre {white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;}
 #dig-record-detail dl {overflow-wrap:anywhere;}
 #dig-record-detail dd {margin:0 0 12px;}

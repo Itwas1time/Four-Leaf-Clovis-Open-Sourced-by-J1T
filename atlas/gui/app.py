@@ -27,6 +27,7 @@ from atlas.gui.map_layers import (
     make_paleo_context_layer,
     make_scored_cells_layer,
     make_tile_layer,
+    make_offline_land_layer,
     make_tribal_boundaries_layer,
 )
 from atlas.gui.styles import BG_PRIMARY, MAP_CONTAINER_STYLE
@@ -48,8 +49,20 @@ server = app.server
 app.index_string = app.index_string.replace(
     "{%favicon%}", '<link rel="icon" type="image/svg+xml" href="/assets/clovis-bone-clover.svg">')
 configure_local_flask(server)
+from core.local_photo_routes import register_routes as register_local_photo_routes
+register_local_photo_routes(server)
+from core.dig_backup_uploads import register_routes as register_project_backup_routes
+register_project_backup_routes(server)
+from core.atlas_preparation import register_browser_preparation
+register_browser_preparation(server)
 from core.reference_media import register_image_routes
 register_image_routes(server)
+from core.offline_references import register_routes as register_local_reference_routes
+register_local_reference_routes(server)
+from core.pleiades_catalog import register_source_routes
+register_source_routes(server)
+from core.data_pack_uploads import register_routes as register_collection_upload_routes
+register_collection_upload_routes(server)
 _initial_leads = matching_leads()
 _initial_center = [39.8283, -98.5795]
 _initial_zoom = 4
@@ -62,11 +75,14 @@ def _build_map() -> html.Div:
         style={"flex": "1", "position": "relative", "minHeight": "0"},
         children=[
             html.Div([
-            html.Div(dcc.RadioItems(id="basemap-selector", options=[
-                {"label": "Terrain", "value": "terrain"},
-                {"label": "Topographic", "value": "topographic"},
-                {"label": "Satellite", "value": "satellite"},
-            ], value="terrain", className="atlas-map-switch", inline=True), className="atlas-map-switch-wrap"),
+            html.Div([dcc.RadioItems(id="basemap-selector", options=[
+                {"label": "Offline outline", "value": "offline"},
+                {"label": "Terrain (online)", "value": "terrain"},
+                {"label": "Topographic (online)", "value": "topographic"},
+                {"label": "Satellite (online)", "value": "satellite"},
+            ], value="offline", className="atlas-map-switch", inline=True),
+            html.Small('Offline outline: coastlines only; no streets or property detail.', className='atlas-offline-map-note'),
+            ], className="atlas-map-switch-wrap"),
             html.Div("The background map could not load. Try another map above; your town report still works.",
                      id="map-network-status", className="atlas-map-network-status", hidden=True, role="status"),
             dl.Map(
@@ -79,7 +95,8 @@ def _build_map() -> html.Div:
                 trackViewport=True,
                 style={"width": "100%", "height": "100%", "background": BG_PRIMARY},
                 children=[
-                    make_tile_layer("terrain"),
+                    make_offline_land_layer(),
+                    make_tile_layer("offline"),
                     make_geology_layer(),
                     dl.LayerGroup(id="resident-town-point"),
                     dl.ScaleControl(position="bottomleft"),
@@ -182,6 +199,7 @@ import atlas.gui.object_guide_callbacks  # noqa: E402,F401
 import atlas.gui.archaeology_library_callbacks  # noqa: E402,F401
 import atlas.gui.mineral_library_callbacks  # noqa: E402,F401
 import atlas.gui.dig_records_callbacks  # noqa: E402,F401
+import atlas.gui.photo_callbacks  # noqa: E402,F401
 import atlas.gui.data_pack_callbacks  # noqa: E402,F401
 import atlas.gui.radiocarbon_library_callbacks  # noqa: E402,F401
 import atlas.gui.dinosaur_library_callbacks  # noqa: E402,F401

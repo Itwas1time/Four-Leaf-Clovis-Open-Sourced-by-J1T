@@ -5,8 +5,10 @@ from __future__ import annotations
 import json
 import re
 import sqlite3
+from contextlib import closing, contextmanager
+from functools import lru_cache
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 DB_PATH = Path(__file__).resolve().parents[1] / "atlas" / "gui" / "data" / "usgs_units.sqlite"
 PAGE_SIZE = 24
@@ -15,12 +17,23 @@ _UNIT_ID = re.compile(r"[A-Za-z0-9_.:-]{1,160}\Z")
 _STATE = re.compile(r"[A-Z]{2}\Z")
 
 
-def _connect() -> sqlite3.Connection:
+@contextmanager
+def _connect() -> Iterator[sqlite3.Connection]:
     """Open the bundled snapshot without creating or changing database files."""
     uri = DB_PATH.resolve().as_uri() + "?mode=ro&immutable=1"
     connection = sqlite3.connect(uri, uri=True)
     connection.row_factory = sqlite3.Row
-    return connection
+    try:
+        yield connection
+    finally:
+        connection.close()
+
+
+@lru_cache(maxsize=4)
+def _mapped_counts(path, modified, changed, size):
+    """One exact aggregation per immutable bundled-file signature."""
+    with closing(sqlite3.connect(Path(path).as_uri() + '?mode=ro&immutable=1', uri=True)) as connection:
+        return tuple(connection.execute('SELECT unit_id,COUNT(DISTINCT geoid) FROM place_units GROUP BY unit_id'))
 
 
 def available() -> bool:
@@ -176,16 +189,20 @@ def search_units(state: str = "", query: str = "", page: int = 1) -> dict[str, A
         ).fetchone()[0])
         pages = max(1, (total + PAGE_SIZE - 1) // PAGE_SIZE)
         current_page = min(requested_page, pages)
-        rows = [
-            _public_unit(row) for row in connection.execute(
-                "SELECT u.*,COALESCE(m.mapped_places,0) AS mapped_places FROM units u "  # nosec B608 # Fixed SQL clauses and placeholders; values use bound parameters.
-                "LEFT JOIN (SELECT unit_id,COUNT(DISTINCT geoid) AS mapped_places FROM place_units GROUP BY unit_id) m "
-                f"ON m.unit_id=u.id{where} "
+        selected = connection.execute(
+                f"SELECT u.* FROM units u{where} "  # nosec B608: fixed clauses and bound values
                 "ORDER BY u.layer_order, u.name COLLATE NOCASE, u.map_unit "
                 "LIMIT ? OFFSET ?",
                 [*params, PAGE_SIZE, (current_page - 1) * PAGE_SIZE],
-            )
-        ]
+            ).fetchall()
+    # Do not aggregate unrelated town mappings for an empty result. A changed
+    # source file invalidates this small cache; counts still use every native row.
+    mapped = {}
+    if selected:
+        path = DB_PATH.resolve()
+        details = path.stat()
+        mapped = dict(_mapped_counts(str(path), details.st_mtime_ns, details.st_ctime_ns, details.st_size))
+    rows = [_public_unit({**dict(row), 'mapped_places': mapped.get(row['id'], 0)}) for row in selected]
     return {"rows": rows, "total": total, "page": current_page, "pages": pages}
 
 

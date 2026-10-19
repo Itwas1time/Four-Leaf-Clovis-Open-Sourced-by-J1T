@@ -70,6 +70,8 @@ def _catalog(path, modified, size):
             or not isinstance(document["packs"], list) or len(document["packs"]) > 10_000):
         raise ValueError("The collection catalog has an unsupported format.")
     seen = set()
+    archive_owners = {}
+    database_owners = {}
     for pack in document["packs"]:
         required = {"id", "version", "title", "description", "records", "record_type", "coverage",
                     "source_release", "license", "source_url", "citation_url", "download_url",
@@ -89,7 +91,13 @@ def _catalog(path, modified, size):
         if key in seen or not SHA.fullmatch(pack["archive_sha256"]):
             raise ValueError("A collection version is duplicated or has an invalid checksum.")
         seen.add(key)
-        _download_url(pack["download_url"])
+        archive_owner = archive_owners.setdefault(pack["archive_sha256"], pack["id"])
+        if archive_owner != pack["id"]:
+            raise ValueError("The same collection archive is listed under different collection identifiers.")
+        # An empty address explicitly describes a trusted local-ZIP collection.
+        # Remote addresses still require the approved HTTPS download hosts.
+        if pack['download_url']:
+            _download_url(pack["download_url"])
         _source_url(pack["source_url"])
         _source_url(pack["citation_url"])
         countries = set()
@@ -109,6 +117,7 @@ def _catalog(path, modified, size):
         if not 1 <= len(pack["files"]) <= 1024:
             raise ValueError("A collection has an unsupported number of files.")
         names = set()
+        database_hashes = set()
         for row in pack["files"]:
             common = {"name", "bytes", "sha256"}
             database_fields = {"schema", "record_table", "records", "user_version"}
@@ -134,6 +143,12 @@ def _catalog(path, modified, size):
                                or len(set(columns)) != len(columns)
                                for name, columns in row["schema"].items())):
                     raise ValueError("A collection database definition is invalid.")
+                if row["sha256"] in database_hashes:
+                    raise ValueError("The same database is repeated within a collection.")
+                database_hashes.add(row["sha256"])
+                database_owner = database_owners.setdefault(row["sha256"], pack["id"])
+                if database_owner != pack["id"]:
+                    raise ValueError("The same database is listed under different collection identifiers.")
         if sum(row["bytes"] for row in pack["files"]) != pack["installed_bytes"]:
             raise ValueError("The collection storage count is inconsistent.")
     return document["packs"]
@@ -286,7 +301,7 @@ class PackStore:
         pack = self.definition(identifier)
         archive = Path(archive)
         if archive.stat().st_size != pack["archive_bytes"] or _hash(archive) != pack["archive_sha256"]:
-            raise ValueError("The download does not match the published collection checksum.")
+            raise ValueError("The ZIP does not match the published collection checksum.")
         self.root.mkdir(parents=True, exist_ok=True)
         parent = _inside(self.root, self.root / identifier)
         parent.mkdir(exist_ok=True)
@@ -361,6 +376,8 @@ class PackStore:
 
     def download(self, identifier, progress=None, opener=None):
         pack = self.definition(identifier)
+        if not pack['download_url']:
+            raise ValueError('This collection uses a verified local ZIP. No online download is published in this catalog.')
         opener = opener or _open_download
         directory = _inside(self.root, self.root / ".downloads")
         directory.mkdir(parents=True, exist_ok=True)

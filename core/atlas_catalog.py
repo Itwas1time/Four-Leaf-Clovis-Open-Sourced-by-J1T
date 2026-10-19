@@ -3,6 +3,8 @@ from copy import deepcopy
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
 import sqlite3
+from threading import Lock
+from weakref import WeakValueDictionary
 
 from core import archaeology_project_catalog as projects
 from core import neolithic_catalog as assemblages
@@ -19,45 +21,96 @@ from core import environment_catalog as environments
 from core import zooarchaeology_catalog as specimens
 from core import assemblage_catalog as field_assemblages
 from core import site_register_catalog as site_registers
+from core import pleiades_catalog as places
+from core import ads_metadata_catalog as ads
+from core import amcr_catalog as amcr
+from core import dans_metadata_catalog as dans
+from core import raa_fieldwork_catalog as raa
 
 PAGE_SIZE = 24
 SOURCES = {
     "assemblages": "UCL · Neolithic assemblages", "projects": "Open Context · publications",
     "dates": "p3k14c · radiocarbon dates", "met": "Met · objects",
     "si": "Smithsonian · anthropology", "fossils": "Smithsonian · fossil specimens",
-    "dinosaurs": "Paleobiology Database · Dinosauria", "geology": "USGS · mapped geology",
+    "dinosaurs": "Paleobiology Database · fossil occurrences", "geology": "USGS · mapped geology",
     "minerals": "Wikidata · mineral properties", "newspapers": "Library of Congress · newspaper titles",
     "guides": "Material reference guides", "contexts": "Open Context · excavations & surveys",
     "environments": "Neotoma · sites, samples & environments",
     "specimens": "Open Context · Anatolian animal-bone records",
     "field_assemblages": "Excavation & survey assemblages",
     "site_registers": "DINAA · archaeological site registers",
+    "places": "Pleiades · ancient places",
+    "ads": "ADS · reports & archives",
+    "amcr": "AMCR · native fieldwork & sites",
+    "dans": "DANS · archaeology DOI metadata",
+    "raa": "Sweden · RAÄ fieldwork assignments",
 }
 KINDS = {"all": "All evidence", "archaeology": "Archaeology & objects", "fossils": "Fossils",
          "history": "Historical documents", "earth": "Geology & minerals"}
-GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "field_assemblages", "site_registers", "projects", "dates", "met", "si", "guides"),
+GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "field_assemblages", "site_registers", "places", "projects", "dates", "met", "si", "guides", "ads", "amcr", "dans", "raa"),
           "fossils": ("fossils", "dinosaurs"), "history": ("newspapers",), "earth": ("geology", "minerals")}
-OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments, "specimens": specimens, "field_assemblages": field_assemblages, "site_registers": site_registers}
+OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments, "specimens": specimens, "field_assemblages": field_assemblages, "site_registers": site_registers, "places": places}
+OPTIONAL['ads'] = ads
+OPTIONAL['amcr'] = amcr
+OPTIONAL['dans'] = dans
+OPTIONAL['raa'] = raa
 _READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas")
+_VERIFIERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas-verification")
+_FIRST_PAGE_LOCKS = WeakValueDictionary()
+_FIRST_PAGE_LOCKS_GUARD = Lock()
+
+
+def available_sources():
+    # A private candidate is offered only when its trusted catalog is supplied.
+    # Do not leave an unpublished source with no installation route in the UI.
+    offered = {}
+    for key, module in (('ads', ads), ('amcr', amcr), ('dans', dans), ('raa', raa)):
+        try:
+            offered[key] = module.advertised()
+        except (ValueError, OSError):
+            offered[key] = False
+    return {key: label for key, label in SOURCES.items() if key not in offered or offered[key]}
 
 
 def _signature(sources=None):
     """Verify optional data before using cached results, including after repair."""
-    signature = []
-    for name, module in OPTIONAL.items():
-        if sources is not None and name not in sources:
-            continue
+    selected=[(name,module) for name,module in OPTIONAL.items() if sources is None or name in sources]
+    def verify(item):
+        name,module=item
         try:
             path = module.database()
             stat = path.stat() if path else None
-            signature.append((name, str(path) if path else "", stat.st_mtime_ns if stat else 0,
-                              stat.st_ctime_ns if stat else 0, stat.st_size if stat else 0))
+            return (name, str(path) if path else "", stat.st_mtime_ns if stat else 0,
+                    stat.st_ctime_ns if stat else 0, stat.st_size if stat else 0)
         except (ValueError, OSError, sqlite3.Error):
-            signature.append((name, "unavailable"))
-    return tuple(signature)
+            return (name, "unavailable")
+    # Full checksum verification remains mandatory. Independent collections can
+    # wait on the bounded pack-file verifiers together, preserving source order.
+    # A separate pool avoids nesting verification inside the catalog query pool.
+    return tuple(_VERIFIERS.map(verify,selected))
 
 
 def _native(source, query, page, context=()):
+    if source == 'raa':
+        parameters=dict(context)
+        parameters.pop('collection',None)
+        return raa.search(query=query,page=page,**parameters),raa.PAGE_SIZE
+    if source == 'dans':
+        parameters = dict(context)
+        parameters.pop('collection', None)
+        return dans.search(query=query, page=page, **parameters), dans.PAGE_SIZE
+    if source == 'amcr':
+        parameters = dict(context)
+        parameters.pop('collection', None)
+        return amcr.search(query=query, page=page, **parameters), amcr.PAGE_SIZE
+    if source == 'ads':
+        parameters = dict(context)
+        parameters.pop('collection', None)
+        return ads.search(query=query, page=page, **parameters), ads.PAGE_SIZE
+    if source == "places":
+        parameters = dict(context)
+        parameters.pop("collection", None)
+        return places.search(query=query, page=page, **parameters), places.PAGE_SIZE
     if source == "site_registers":
         parameters = dict(context)
         parameters.pop("collection", None)
@@ -90,7 +143,9 @@ def _native(source, query, page, context=()):
     if source == "fossils":
         return fossils.search_fossils(query=query, page=page), fossils.PAGE_SIZE
     if source == "dinosaurs":
-        return dinosaurs.search(query=query, lineage="all", page=page), dinosaurs.PAGE_SIZE
+        parameters=dict(context)
+        parameters.pop("collection",None)
+        return dinosaurs.search(query=query, lineage="fossils", page=page, **parameters), dinosaurs.PAGE_SIZE
     if source == "geology":
         return geology.search_units(query=query, page=page), geology.PAGE_SIZE
     if source == "minerals":
@@ -103,7 +158,7 @@ def _native(source, query, page, context=()):
 
 
 @lru_cache(maxsize=256)
-def _first_pages(query, sources, context, signature):
+def _cached_first_pages(query, sources, context, signature):
     def read(source):
         try:
             result, size = _page(source, query, 1, context, signature)
@@ -119,6 +174,23 @@ def _first_pages(query, sources, context, signature):
         if unavailable is not None:
             missing.append(unavailable)
     return available, missing
+
+
+def _first_pages(query, sources, context, signature):
+    # Early preparation and a foreground query can arrive together. Reuse the
+    # same verified result instead of computing every collection page twice.
+    key=(query,sources,context,signature)
+    with _FIRST_PAGE_LOCKS_GUARD:
+        lock=_FIRST_PAGE_LOCKS.get(key)
+        if lock is None:
+            lock=Lock()
+            _FIRST_PAGE_LOCKS[key]=lock
+    with lock:
+        return _cached_first_pages(query,sources,context,signature)
+
+
+_first_pages.cache_clear = _cached_first_pages.cache_clear
+_first_pages.cache_info = _cached_first_pages.cache_info
 
 
 @lru_cache(maxsize=128)
@@ -154,11 +226,13 @@ def _positions(counts, offset, limit):
 
 def _card(source, row):
     title = row.get("title") or row.get("name") or row.get("accepted_name") or row.get("lab_id") or row["id"]
+    if source=="dinosaurs" and "occurrence_no" in row:
+        title=row.get("accepted_name") or row.get("identified_name") or "Occurrence "+row["occurrence_no"]
     evidence = {"projects": "Dataset publication", "met": "Museum object", "si": "Museum object",
                 "fossils": "Fossil specimen", "dinosaurs": "Published fossil occurrence",
                 "dates": "Radiocarbon determination", "geology": "Mapped geological unit",
                 "minerals": "Mineral reference", "newspapers": "Newspaper title", "guides": "Material guide"}.get(source)
-    if source in ("environments", "specimens", "field_assemblages", "site_registers"):
+    if source in ("environments", "specimens", "field_assemblages", "site_registers", "places", "ads", "amcr", "dans", "raa"):
         evidence, subtitle = row["category"], row["subtitle"]
     elif source == "contexts":
         evidence = row["category"]
@@ -189,7 +263,31 @@ def _parameters(query, kind, source, context):
                    or any(ord(char) < 32 or 0xD800 <= ord(char) <= 0xDFFF for char in value) for value in context.values())):
         raise ValueError("Choose a published evidence association.")
     collection = context.get("collection", "assemblages")
-    if collection == "site_registers":
+    if collection == 'raa':
+        if set(context)-{'collection','method','status','ground','field'}:
+            raise ValueError('Choose original Swedish assignment types, status and geometry coverage.')
+        raa.validate_parameters(**{key:value for key,value in context.items() if key!='collection'})
+    elif collection == 'dans':
+        if set(context) - {'collection', 'subject', 'field', 'shared_legacy'}:
+            raise ValueError('Choose an original DANS subject and metadata text field.')
+        dans.validate_parameters(**{key: value for key, value in context.items() if key != 'collection'})
+    elif collection == 'amcr':
+        if set(context) - {'collection', 'scope', 'method', 'field'}:
+            raise ValueError('Choose native AMCR record kind, method and text filters.')
+        amcr.validate_parameters(**{key: value for key, value in context.items() if key != 'collection'})
+    elif collection == 'ads':
+        if set(context) - {'collection', 'resource_type', 'field'}:
+            raise ValueError('Choose original ADS metadata type and text filters.')
+        ads.validate_parameters(**{key: value for key, value in context.items() if key != 'collection'})
+    elif collection == "dinosaurs":
+        if set(context)-{"collection","country","state","collection_no"}:
+            raise ValueError("Choose a published fossil location or collection.")
+        dinosaurs.validate_location_filters(**{key:value for key,value in context.items() if key!="collection"})
+    elif collection == "places":
+        if set(context) - {"collection", "place_id", "scope", "record_id"}:
+            raise ValueError("Choose an original ancient-place association.")
+        places.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
+    elif collection == "site_registers":
         if set(context) - {"collection", "context_id", "edition", "state"}:
             raise ValueError("Choose an original site-register association.")
         site_registers.validate_parameters(**{key: value for key, value in context.items() if key != "collection"})
@@ -213,8 +311,9 @@ def _parameters(query, kind, source, context):
           or context.get("view", "all") not in (*assemblages.VIEWS, "all")):
         raise ValueError("Choose a published evidence association.")
     # Association links are confined to their original source, never matched across datasets.
+    offered = available_sources() if not context else {}
     sources = ((collection,) if context else
-               tuple(name for name in GROUPS[kind] if source == "all" or name == source))
+               tuple(name for name in GROUPS[kind] if name in offered and (source == "all" or name == source)))
     return query.strip(), sources, tuple(sorted(context.items()))
 
 
@@ -256,7 +355,45 @@ def get_record(identifier):
     source, key = _identifier(identifier)
     if source is None:
         return None
-    if source == "site_registers":
+    if source == 'raa':
+        row=raa.get_record(key)
+        if row is None:
+            return None
+        facts,url=raa.fields(row),row['source_url']
+        notes,description,license_text=list(raa.NOTES),'',raa.LICENSE
+    elif source == 'dans':
+        row = dans.get_record(key)
+        if row is None:
+            return None
+        facts, url = dans.fields(row), row['source_url']
+        notes = list(dans.NOTES)
+        description = '\n\n'.join(item['text'] for item in dans.descriptions(row))
+        license_text = 'CC0 1.0 DataCite metadata; linked resource rights retained separately'
+    elif source == 'amcr':
+        row = amcr.get_record(key)
+        if row is None:
+            return None
+        facts, url = amcr.fields(row), row['source_url']
+        notes, description, license_text = list(amcr.NOTES), '', amcr.LICENSE
+    elif source == 'ads':
+        row = ads.get_record(key)
+        if row is None:
+            return None
+        facts, url = ads.fields(row), row['source_url']
+        notes = list(ads.NOTES)
+        description = '\n\n'.join(item.get('description', '') for item in row['source']['attributes'].get('descriptions', []) or [])
+        license_text = 'CC0 1.0 metadata; linked resource rights retained separately'
+    elif source == "places":
+        row = places.get_record(key)
+        if row is None:
+            return None
+        facts, url = places.facts(row), row["source_url"]
+        notes = ["One published gazetteer place resource; associated names, locations and connections are not additional places or excavations.",
+                 "Native place types include settlements, monuments, regions and other concepts; this is not a census of excavations.",
+                 "Representative points are publisher-calculated centroids or connected-place estimates, not exact excavation or find coordinates.",
+                 "Name and location attestations keep their separate periods and confidence; they are not merged into an occupation date range."]
+        description, license_text = row["description"], row["license"]
+    elif source == "site_registers":
         row = site_registers.get_record(key)
         if row is None:
             return None
@@ -389,6 +526,16 @@ def reference_entry(identifier):
     row = get_record(identifier)
     if row is None:
         raise ValueError("Choose a current atlas record to save.")
+    if source == 'raa':
+        return raa.reference_entry(key)
+    if source == 'dans':
+        return dans.reference_entry(key)
+    if source == 'amcr':
+        return amcr.reference_entry(key)
+    if source == 'ads':
+        return ads.reference_entry(key)
+    if source == "places":
+        return places.reference_entry(key)
     if source == "site_registers":
         return site_registers.reference_entry(key)
     if source == "field_assemblages":
@@ -426,6 +573,12 @@ def reference_entry(identifier):
 
 def relationships(record):
     """Source-specific associations for the shared reader and navigation."""
+    if record['source'] == 'dans':
+        return dans.relationships(record['original'])
+    if record["source"] == "dinosaurs":
+        return dinosaurs.relationships(record["original"])
+    if record["source"] == "places":
+        return places.relationships(record["original"])
     if record["source"] == "site_registers":
         return site_registers.relationships(record["original"])
     if record["source"] == "field_assemblages":

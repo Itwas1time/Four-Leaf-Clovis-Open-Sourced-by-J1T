@@ -756,12 +756,15 @@ def render_metrics(analysis):
     Output("base-tile-layer", "attribution"),
     Output("base-tile-layer", "maxNativeZoom"),
     Input("basemap-selector", "value"),
+    Input("workflow-mode", "value"),
+    Input("resident-tool", "value"),
 )
-def switch_basemap(value):
+def switch_basemap(value, mode='resident', tool='library'):
     from atlas.gui.styles import TILE_ATTRIBUTIONS, TILE_URLS
 
-    key = value or "terrain"
-    key = key if isinstance(key, str) and key in TILE_URLS else "terrain"
+    key = value if isinstance(value, str) and value in TILE_URLS else "offline"
+    if mode != 'research' and not (mode == 'resident' and tool == 'map'):
+        key = 'offline'
     return TILE_URLS[key], TILE_ATTRIBUTIONS[key], 17 if key == "topographic" else 19
 
 

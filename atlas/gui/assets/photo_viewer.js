@@ -120,8 +120,8 @@
       }
       if (next === source) return;
       reset();
-      // Only local formats approved by the upload callback; never load a URL here.
-      if (next.length > 6700000 || !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(next)) {
+      // Original local files use a fixed content-hash route; arbitrary URLs remain unsupported.
+      if (next.length > 6700000 || (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(next) && !/^\/clovis\/photos\/[a-f0-9]{64}$/.test(next))) {
         source = '';
         root.dataset.photoState = 'rejected';
         return;
@@ -173,9 +173,8 @@
       if (!window.dash_clientside || typeof window.dash_clientside.set_props !== 'function') return;
       source = '';
       reset();
-      // The existing upload callback clears src, help, and notice locally.
-      // No image data enters a store, server callback, or persistent storage.
-      window.dash_clientside.set_props('find-photo', {contents: null, filename: null});
+      // The notebook callback removes this reference from the working draft.
+      // Earlier saved observations and their original photo bytes remain intact.
     });
     viewport.addEventListener('wheel', event => {
       if (!ready) return;

@@ -2,6 +2,7 @@
 from dash import dcc, html
 import dash_leaflet as dl
 from atlas.gui.learning_ui import glossary, unit_words
+from core.usgs_notes import citation_markdown
 
 TILE_URL = 'https://tiles.macrostrat.org/carto/{z}/{x}/{y}.png'
 
@@ -57,6 +58,25 @@ def evidence_detail(card):
     if 'map_id' in card:
         children += [html.Small(f"Macrostrat map unit {card['map_id']} · original source {card['source_id']}"),
                      html.P('Original provider text is displayed literally. Distinct maps may describe the same point differently.')]
+    if 'usgs_id' in card:
+        children += [html.P(f"{card['map_theme']} · map unit {card['map_unit']} · USGS record {card['usgs_id']}"),
+                     html.A('Read the USGS map release ↗', href=card['reference_url'], target='_blank', rel='noopener noreferrer')]
+        for source in card.get('source_units', []):
+            source_name = source.get('source_name') or source.get('source_mapunit') or 'Name not supplied'
+            content = [html.Summary('Recorded source-map unit · ' + source_name)]
+            for key, label in (('source_mapunit', 'Source map unit'), ('source_age', 'Recorded age'),
+                               ('geomaterial', 'Geomaterial'), ('source_description', 'Source description')):
+                if source.get(key):
+                    content += [html.H4(label), html.P(source[key])]
+            if not source.get('source_description'):
+                content.append(html.P('No source-map description was supplied for this code.'))
+            content += [dcc.Markdown(citation_markdown(citation), link_target='_blank', dangerously_allow_html=False)
+                        for citation in source.get('source_citations', [])]
+            children.append(html.Details(content))
+        if card.get('source_citations'):
+            children.append(html.Details([html.Summary('Source-map citations'),
+                *[dcc.Markdown(citation_markdown(citation), link_target='_blank', dangerously_allow_html=False)
+                  for citation in card['source_citations']]]))
     if card.get('url'):
         children.append(html.A('Read the reviewed guide ↗', href=card['url'], target='_blank', rel='noopener noreferrer'))
     if card.get('scope_url'):

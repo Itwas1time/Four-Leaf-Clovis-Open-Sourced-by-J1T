@@ -130,7 +130,7 @@ def build_context(state, geoid, context="unknown", online=None):
     place = get_place(geoid, state)
     geology = geology_for_place(place) if key[3] else {
         "status": "not_requested", "units": [], "checked_at": "",
-        "message": "Online geology was not requested. Historical context still works offline."}
+        "message": "Online rock maps were not requested."}
     units = geology["units"]
     guides = matching_guides(state, units)
     knowledge, library_lines = knowledge_markdown(place)
@@ -197,8 +197,13 @@ def build_context(state, geoid, context="unknown", online=None):
                 lines += [f"- Original map notes excerpt: {_md(unit['comments'])}"]
             lines += [""]
     else:
-        lines += [geology["message"], "", "No mapped material is inferred when the provider is disabled, unavailable "
-                  "or has no coverage. Soil, gravel, landscaping stone and imported fill require local observations.", ""]
+        lines += [geology["message"], ""]
+        if knowledge.get('usgs_units'):
+            lines += ["The offline USGS map descriptions above remain geological evidence. No online map descriptions were added. "
+                      "Soil, gravel, landscaping stone and imported fill require local observations.", ""]
+        else:
+            lines += ["No mapped material is inferred from an online provider that is disabled, unavailable or has no coverage. "
+                      "Soil, gravel, landscaping stone and imported fill require local observations.", ""]
     lines += ["## Fossils", ""]
     for guide in guides:
         lines += [f"**Formation-specific examples — {guide['name']}:** Published formation records include "
@@ -208,7 +213,7 @@ def build_context(state, geoid, context="unknown", online=None):
         if guide.get('scope_source'):
             lines += [f"[USGS stratigraphic scope and bed variation]({guide['scope_source']})", ""]
     if not guides:
-        lines += ["No reviewed formation-specific fossil guide matched the returned map names. "
+        lines += ["No reviewed formation-specific fossil guide is linked to this report. "
                   f"The current guide covers {len(GUIDES)} reviewed named units in selected states; "
                   "an unmatched formation is a coverage gap, not evidence that it has no fossils.", ""]
     mentions = [unit for unit in units if "fossil" in unit["description"].casefold()]
@@ -219,8 +224,12 @@ def build_context(state, geoid, context="unknown", online=None):
     elif units:
         lines += ["The returned descriptions provide no explicit fossil occurrence for this town point. "
                   "That does not establish that fossils are absent.", ""]
+    elif knowledge.get('usgs_units'):
+        lines += ["Offline USGS geology is available above. Its source-map descriptions are regional context; "
+                  "they do not identify a fossil or confirm an occurrence at the town point or on a property.", ""]
     else:
-        lines += ["There is no local geological evidence here to narrow fossil types.", ""]
+        lines += ["No mapped geology is available from the selected sources in this report. "
+                  "This is a coverage limit, not evidence that fossils are absent.", ""]
     lines += ["General recognition examples include preserved shells, bones, wood, impressions and traces in rock "
               "or sediment. Their presence depends on the formation and preservation conditions; rock age alone "
               "does not predict a taxon or a find. A patterned rock or mineral coating may resemble a fossil.", "",

@@ -1,4 +1,4 @@
-"""One background download at a time; browser requests stay responsive."""
+"""One collection transfer or installation at a time; requests stay responsive."""
 from threading import Lock, Thread
 from uuid import uuid4
 import time
@@ -8,25 +8,38 @@ _lock = Lock()
 _jobs = {}
 
 
-def start(identifier):
-    PackStore().definition(identifier)
+def reserve(identifier, phase):
+    definition = PackStore().definition(identifier)
     with _lock:
         if any(row["state"] == "working" for row in _jobs.values()):
-            raise ValueError("A collection is already downloading. Its progress appears below.")
+            raise ValueError("A collection is already transferring or being checked. See Collection installation status.")
         for key in list(_jobs)[:-19]:
             if _jobs[key]["state"] != "working":
                 del _jobs[key]
         key = uuid4().hex
-        _jobs[key] = {"id": key, "pack": identifier, "state": "working", "phase": "Starting download",
-                      "received": 0, "total": 0, "message": ""}
+        _jobs[key] = {"id": key, "pack": identifier, "state": "working", "phase": phase,
+                      "title": definition['title'], "received": 0, "total": 0, "message": ""}
+    return key
+
+
+def update(key, **values):
+    with _lock:
+        _jobs[key].update(values)
+
+
+def start(identifier):
+    store = PackStore()
+    definition = store.definition(identifier)
+    if not definition['download_url']:
+        raise ValueError('This collection uses a verified local ZIP. No online download is published in this catalog.')
+    key = reserve(identifier, 'Starting download')
 
     def progress(phase, received, total):
-        with _lock:
-            _jobs[key].update(phase=phase, received=received, total=total)
+        update(key, phase=phase, received=received, total=total)
 
     def run():
         try:
-            PackStore().download(identifier, progress=progress)
+            store.download(identifier, progress=progress)
             with _lock:
                 _jobs[key].update(state="complete", phase="Installed",
                                   message="Collection installed and verified. Open its library to read the records.",

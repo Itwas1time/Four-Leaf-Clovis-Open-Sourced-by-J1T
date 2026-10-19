@@ -1,5 +1,5 @@
-"""Observation callbacks never accept a photograph as a server input."""
-from dash import Input, Output, State, callback, clientside_callback, html, no_update
+"""Observation callbacks use bounded photo references, never raw image bodies."""
+from dash import Input, Output, State, callback, html, no_update
 from core.find_inspection import FEATURES, FEATURE_QUESTIONS, GUIDES, inspect_find
 from core.us_places import get_place
 
@@ -33,14 +33,15 @@ def find_care(material):
           Output('find-next-questions','children'),
           Input('find-material','value'), Input('find-features','value'), Input('find-setting','value'),
           Input('find-size','value'), Input('find-notes','value'), Input('find-town','value'),
-          Input('resident-state','value'), Input('resident-place','value'))
-def render_find(material, features, setting, size, notes, town_context, state, geoid):
+          Input('resident-state','value'), Input('resident-place','value'),Input('find-photo-files','data'),Input('find-photo-transfer','data'))
+def render_find(material, features, setting, size, notes, town_context, state, geoid,photos=None,transfer=None):
     try:
         report = inspect_find(material,features,setting,size or '',notes or '',
                               town_context=town_context, state=state, geoid=geoid)
     except ValueError as exc:
         return '', str(exc), True, True, []
-    empty=not features and not (size or '').strip() and not (notes or '').strip() and setting=='unknown'
+    empty=not features and not (size or '').strip() and not (notes or '').strip() and setting=='unknown' and not photos
+    busy=isinstance(transfer,dict) and transfer.get('busy') is True
     prompts = [(FEATURES[feature], FEATURE_QUESTIONS[feature]) for feature in report['features']]
     if not prompts:
         prompts = [('Start with a detail', question) for question in GUIDES[material]['questions'][:2]]
@@ -50,7 +51,7 @@ def render_find(material, features, setting, size, notes, town_context, state, g
                      className='clovis-find-detail-card') for label, question in prompts
     ], className='clovis-find-question-grid')]
     return report['markdown'], ('Read the comparison guide in the center. Save your observations when ready.'
-        if not empty else 'Add a feature, setting, size or note to make your first record.'), False, empty, questions
+        if not empty else 'Add a feature, setting, size, note or photo to make your first record.'), False, empty or busy, questions
 
 
 @callback(Output('find-download','data'), Input('find-download-button','n_clicks'),
@@ -65,12 +66,3 @@ def download_find(clicks,material,features,setting,size,notes,town_context,state
     return {'content':report['markdown'],'filename':'clovis-observation-notes.md','type':'text/markdown'}
 
 
-clientside_callback(
-    """function(contents) {
-        if (!contents) return ['', {display:'none'}, {}, 'The photo stays in this browser. It is not sent to the app server or saved in the fieldbook.'];
-        if (typeof contents !== 'string' || contents.length > 6700000 || !/^data:image\\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(contents))
-            return ['', {display:'none'}, {}, 'Choose a JPEG, PNG or WebP photo under 5 MB.'];
-        return [contents, {display:'block'}, {display:'none'}, 'Photo selected locally. Use the viewer to inspect details.'];
-    }""",
-    Output('find-photo-preview','src'),Output('find-photo-preview','style'),Output('find-photo-help','style'),Output('find-photo-status','children'),
-    Input('find-photo','contents'))

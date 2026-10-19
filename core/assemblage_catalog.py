@@ -22,6 +22,7 @@ KINDS = {
     "deposit": "Recorded deposit", "survey": "Survey observation", "aggregate": "Published summary",
     "date": "Dating or calibration record", "laboratory": "Laboratory result", "document": "Publisher context record",
     "plant": "Plant remains", "sample": "Published sample or context column",
+    "geophysics": "Geophysical reading", "inversion": "Geophysical processing",
 }
 SHA = re.compile(r"[a-f0-9]{64}\Z")
 ROW = re.compile(r"(?:row|column):[a-f0-9]{64}:[0-9]{1,3}:[1-9][0-9]{0,11}\Z")
@@ -32,7 +33,7 @@ DATASETS = {"hoedjiespunt", "berenike-sikait", "fumane-refits", "fumane-models",
             "cixwicen-birds", "cixwicen-bird-sorting", "cixwicen-fish", "cixwicen-charcoal",
             "locumba-recovery", "soro-wilamaya-evidence", "huaca-grande-deposits",
             "geelbek", "harris-obsidian", "las-capas-plants",
-            "palegawra-recovery", "connley-recovery", "bridge-river-recovery"}
+            "palegawra-recovery", "connley-recovery", "bridge-river-recovery", "west-broken-kettle", "pompeii-ert"}
 
 
 def database():

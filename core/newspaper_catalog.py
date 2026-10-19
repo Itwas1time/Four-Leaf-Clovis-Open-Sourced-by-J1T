@@ -19,6 +19,7 @@ from core.us_places import STATE_NAMES as CENSUS_STATE_NAMES
 
 DATA = Path(__file__).resolve().parents[1] / "atlas/gui/data/newspaper_catalog.sqlite"
 PAGE_SIZE = 24
+NARROW_PAGE_MIN_MATCHES = 10_000
 SOURCE_TITLE = "Library of Congress, Directory of U.S. Newspapers in American Libraries"
 SOURCE_URL = "https://www.loc.gov/collections/directory-of-us-newspapers-in-american-libraries/"
 
@@ -296,11 +297,15 @@ def search_titles(state="", town="", query="", page=1):
         page = min(page, pages) if pages else 1
         offset = (page - 1) * PAGE_SIZE
         order = "t.start_year IS NULL,t.start_year,t.title,t.id"
-        rows = connection.execute(
-            "SELECT DISTINCT t.* FROM titles t" + join + condition  # nosec B608 # Fixed SQL clauses and placeholders; values use bound parameters.
-            + " ORDER BY " + order + " LIMIT ? OFFSET ?",
-            params + [PAGE_SIZE, offset],
-        ).fetchall()
+        if total >= NARROW_PAGE_MIN_MATCHES:
+            # Large result sets sort narrow identifiers before materializing
+            # source descriptions. The threshold changes the plan, not coverage.
+            statement = "SELECT t.* FROM titles t WHERE t.id IN (SELECT DISTINCT t.id FROM titles t" + join + condition  # nosec B608: fixed clauses and bound values
+            statement += " ORDER BY " + order + " LIMIT ? OFFSET ?) ORDER BY " + order
+        else:
+            statement = "SELECT DISTINCT t.* FROM titles t" + join + condition  # nosec B608: fixed clauses and bound values
+            statement += " ORDER BY " + order + " LIMIT ? OFFSET ?"
+        rows = connection.execute(statement, params + [PAGE_SIZE, offset]).fetchall()
         result_rows = _decorate(rows, connection)
     return {
         "rows": result_rows,

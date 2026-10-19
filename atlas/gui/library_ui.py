@@ -30,7 +30,7 @@ def workspace():
                                {'label':'State fossil stories','value':'states'}, {'label':'Archaeological projects','value':'projects'},
                                {'label':'Mineral properties','value':'minerals'},
                                {'label':'Radiocarbon dates','value':'radiocarbon'},
-                               {'label':'Dinosaur taxa & sites','value':'dinosaurs'},
+                               {'label':'Fossil taxa & sites','value':'dinosaurs'},
                                {'label':'Data collections','value':'packs'}],
                       className='atlas-filter-dropdown'),
         ], className='clovis-atlas-specialist'),

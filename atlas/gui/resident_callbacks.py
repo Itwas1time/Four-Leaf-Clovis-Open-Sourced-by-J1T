@@ -15,6 +15,11 @@ def place_choices(state, query, selected):
     return search_places(state, query or "", selected), state not in states() if isinstance(state, str) else True
 
 
+@callback(Output('resident-place','placeholder'), Input('resident-state','value'))
+def place_prompt(state):
+    return 'Type a town name' if isinstance(state,str) and state in states() else 'Choose a state first'
+
+
 @callback(Output("resident-build", "disabled"), Input("resident-state", "value"), Input("resident-place", "value"))
 def ready_to_explore(state, geoid):
     return get_place(geoid, state) is None
@@ -226,8 +231,8 @@ def render_resident_context(clicks, state, geoid, history, online):
     except ValueError as exc:
         return "", str(exc), None, True, "", True
     token = remember_report(report)
-    geology_status = {'available':'Rock-map evidence is ready.', 'not_requested':'Rock maps are off.',
-                      'no_coverage':'No rock-map coverage returned.', 'unavailable':'Rock maps could not load.'}
+    geology_status = {'available':'Online rock-map evidence is ready.', 'not_requested':'Online rock maps are off.',
+                      'no_coverage':'No online rock-map coverage returned.', 'unavailable':'Online rock maps could not load.'}
     status = 'Town context ready. ' + geology_status.get(report['geology_status'], 'Rock-map status is unknown.')
     return report["markdown"], status, token, False, report["summary"], False
 

@@ -237,8 +237,9 @@ Open **Prepare a question about these notes**, write your question and optionall
 add a possible comparison and a detail you want help with. **Preview question
 packet** shows exactly what you can download or save. Editing the fields clears
 that preview; preview again before saving. The packet includes the saved source
-notes and only the broad town context already included in that record. Photos
-are separate and are not attached. Clovis contacts nobody.
+notes and only the broad town context already included in that record. If the
+saved notes have personal photos, the downloaded ZIP includes readable Markdown
+and original files with captions. Clovis contacts nobody.
 
 On a saved question, open **Record a response to this question**. Record a public
 institution or role, the actual response date, what it said and what remains
@@ -246,8 +247,8 @@ uncertain. Saving creates a separate record and preserves the original notes
 and question. Attribution is user-recorded, not verified by Clovis. Use
 **Related saved records** to return to the source or question and add another
 response. Readers, note downloads and printed text lead with the new question
-or response, followed by preserved source notes; JSON backups retain the
-original snapshots unchanged.
+or response, followed by preserved source notes. Complete backups retain the
+original snapshots and attached photo files. See [photo portability](LOCAL_PHOTOS.md).
 
 ## Privacy and evidence limits
 
@@ -264,9 +265,10 @@ to Fieldbook; it inherits no selected town and does not identify your find.
 - Historical search sends the public town and state from the local app server
   to Library of Congress. Selected map images load from its image service in
   the browser. The app does not download an archive of those images.
-- Local map images and find photos remain in the browser. They are not sent to
-  Python, analyzed, saved in the fieldbook or included in exports. Local map
-  mode sends only a mode flag and the public town code, not image bytes.
+- Local map images remain in the browser. Local map mode sends only a mode flag
+  and the public town code, not image bytes. Personal find photos go to the
+  local app, which preserves original bytes and captions for saved observations
+  and complete ZIP backups. They are not analyzed or sent to an external service.
 - Saved readings and their browser fieldbook are processed by the local server
   for callbacks and remain in browser storage, specific to this device and app
   origin. Structured **Dig records** are written to the local computer's

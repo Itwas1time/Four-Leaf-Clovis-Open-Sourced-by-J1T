@@ -89,7 +89,9 @@ def preview_question(clicks, book, selected, question, comparison, detail):
         row = source_row(book, selected)
         packet = prepare_question(row, question, comparison, detail)
         draft = {'source_id':row['id'], 'packet_id':packet['id']}
-        return readable_text(question_first_markdown(packet)), draft, 'Review the packet. Photos are separate and are not included.', False, False
+        status=('Review the packet. Its ZIP download includes the original photos and captions.' if packet.get('photos') else
+            'Review the packet. No photos are attached to these notes.')
+        return readable_text(question_first_markdown(packet)), draft, status, False, False
     except (ValueError, TypeError, UnicodeError) as exc:
         return '', None, str(exc), True, True
 
@@ -103,6 +105,7 @@ def download_question(clicks, book, selected, question, comparison, detail, draf
         return no_update
     try:
         packet = current_packet(book, selected, question, comparison, detail, draft)
+        if packet.get('photos'):return no_update  # The bounded binary download route includes originals.
         return {'content':question_first_markdown(packet), 'filename':'clovis-question-packet.md', 'type':'text/markdown'}
     except (ValueError, TypeError, UnicodeError):
         return no_update

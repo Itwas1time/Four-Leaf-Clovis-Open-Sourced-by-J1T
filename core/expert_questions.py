@@ -9,7 +9,7 @@ import hashlib
 import re
 import unicodedata
 
-from core.fieldbook import validate_book
+from core.fieldbook import validate_book,entry_book
 
 QUESTION_MISSION = 'Expert question'
 RESPONSE_MISSION = 'Expert response'
@@ -41,7 +41,7 @@ def _escaped(value):
 
 def _snapshot(row):
     try:
-        validate_book({'version': 1, 'entries': [row]})
+        validate_book(entry_book([row]))
         copied = deepcopy(row)
         for key in ('title', 'created', 'markdown'):
             _text(copied[key], 'Saved ' + key, 100_000, required=True)
@@ -66,7 +66,8 @@ def _entry(parent, mission, title, summary, addition):
            'title': title.encode('utf-8')[:120].decode('utf-8', 'ignore'),
            'created': datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
            'summary': summary, 'markdown': markdown}
-    validate_book({'version': 1, 'entries': [row]})
+    if parent.get('photos'):row['photos']=deepcopy(parent['photos'])
+    validate_book(entry_book([row]))
     return row
 
 
@@ -97,7 +98,8 @@ def prepare_question(row, question, comparison, wanted_detail):
         '- Whole object and both sides, when these can be recorded without moving it.',
         '- A scale and a close view of the feature named in your question.',
         '- An in-place context view where available; omit personal details and precise sensitive locations.',
-        'No photograph is embedded or attached to this record. The checklist does not authorize handling or collection.', '',
+        ('Original photos and captions are preserved with this saved record and its fieldbook ZIP backup. No message is sent.' if parent.get('photos') else
+         'No photograph is embedded or attached to this record. The checklist does not authorize handling or collection.'), '',
         'Identity, age and find likelihood remain unestablished by this question.',
     ])
     return _entry(parent, QUESTION_MISSION, 'Question · ' + parent['title'], summary, addition)
@@ -140,7 +142,7 @@ def response_entry(row, attribution, response_date, response, remaining_uncertai
 
 def question_first_markdown(row):
     """Lead with the question/response for reading; stored snapshots stay intact."""
-    validate_book({'version':1, 'entries':[row]})
+    validate_book(entry_book([row]))
     header = {QUESTION_MISSION:'## Your expert question',
               RESPONSE_MISSION:'## Your recorded expert response'}.get(row['summary'].get('mission'))
     if header is None:

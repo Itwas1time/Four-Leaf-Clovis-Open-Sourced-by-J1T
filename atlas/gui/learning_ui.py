@@ -34,7 +34,7 @@ def word_card(term):
 
 
 def unit_words(card):
-    if 'map_id' not in card:
+    if 'map_id' not in card and 'usgs_id' not in card:
         return []
     result = explain_unit(card['materials'] + ' ' + card['description'], card['age'])
     terms = [*result['material_terms'], *result['age_terms']]

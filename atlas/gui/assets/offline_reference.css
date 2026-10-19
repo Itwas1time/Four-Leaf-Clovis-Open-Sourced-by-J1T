@@ -1,0 +1,17 @@
+.clovis-local-reference { color:#17372c; background:#f5f6ee; font:17px/1.65 system-ui,sans-serif; margin:0; min-height:100vh; }
+.clovis-local-reference main { box-sizing:border-box; max-width:850px; margin:auto; padding:28px 22px 60px; overflow-wrap:anywhere; }
+.clovis-local-reference h1,.clovis-local-reference h2,.clovis-local-reference h3 { font-family:Georgia,serif; line-height:1.2; }
+.clovis-local-reference h1 { font-size:2.1rem; }
+.clovis-local-reference h2 { margin-top:2.2rem; scroll-margin-top:20px; }
+.clovis-local-reference a { color:#225c42; text-underline-offset:3px; }
+.clovis-local-reference .eyebrow { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; }
+.clovis-local-reference .scope,.clovis-local-reference aside,.clovis-local-reference nav { background:#e6ebdb; border-radius:8px; padding:14px 20px; }
+.clovis-local-reference nav ul { columns:2; padding-left:20px; }
+.clovis-local-reference nav li { break-inside:avoid; margin:5px 0; }
+.clovis-local-reference aside { margin:24px 0; }
+.clovis-local-reference footer { margin-top:45px; border-top:1px solid #a6b6a0; }
+.clovis-local-reference code { font-size:.85rem; }
+.clovis-local-source-controls { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:10px 0; }
+.clovis-local-source-controls > p { flex-basis:100%; margin:0; }
+.clovis-local-source-controls a.atlas-secondary-button { display:inline-block; text-decoration:none; }
+@media(max-width:600px) { .clovis-local-reference { font-size:16px; } .clovis-local-reference main { padding:20px 18px 45px; } .clovis-local-reference h1 { font-size:1.75rem; } .clovis-local-reference nav ul { columns:1; } }

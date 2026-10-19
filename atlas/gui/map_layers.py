@@ -12,10 +12,10 @@ def _client_function(name: str) -> dict:
     return variable("dash_clientside", "atlas", name)
 
 
-def make_tile_layer(layer_key: str = "terrain") -> dl.TileLayer:
+def make_tile_layer(layer_key: str = "offline") -> dl.TileLayer:
     return dl.TileLayer(
         id="base-tile-layer",
-        url=TILE_URLS.get(layer_key, TILE_URLS["terrain"]),
+        url=TILE_URLS.get(layer_key, TILE_URLS["offline"]),
         attribution=TILE_ATTRIBUTIONS.get(layer_key, ""),
         maxZoom=19,
         maxNativeZoom=19,
@@ -24,6 +24,17 @@ def make_tile_layer(layer_key: str = "terrain") -> dl.TileLayer:
                        "tileerror": _client_function("tileError"),
                        "load": _client_function("tilesLoaded")},
     )
+
+
+def make_offline_land_layer():
+    from atlas.gui.published_location_ui import _land
+
+    # Below detailed tiles when selected; visible through the local transparent
+    # background otherwise. No provider tiles or invented local detail.
+    return dl.Pane(dl.GeoJSON(data=_land(), interactive=False,
+        options={"style": {"color": "#8f9f82", "weight": 1,
+                           "fillColor": "#d8e0c7", "fillOpacity": 1}}),
+        name='offline-modern-land', style={"zIndex": 190})
 
 
 def make_buffer_layer() -> dl.GeoJSON:

@@ -32,6 +32,8 @@ KINDS = {
 IDENTIFIER = re.compile(r"(site|unit|dataset|analysis|sample|chronology|control|date|observation|age):(0|[1-9][0-9]{0,11})\Z")
 NUMBER = re.compile(r"0|[1-9][0-9]{0,11}\Z")
 MAX_NARROW_ROWS = 1000
+MIN_MATERIALIZED_HITS = 1000
+MAX_MATERIALIZED_HITS = 100_000
 SCOPES = {"site_id": "site", "unit_id": "unit", "dataset_id": "dataset", "analysis_id": "analysis",
           "sample_id": "sample", "chronology_id": "chronology", "variable_id": "variable"}
 # A sample has both a dataset and an analysis-unit link. Preserve both original
@@ -103,20 +105,31 @@ def _native(connection, kind, source_id):
     return {key: row[key] for key in row.keys() if key != "source_row"} if row else None
 
 
-def _documents(kind, match):
+def _documents(kind, match, materialized=False):
+    if materialized:
+        return ("SELECT source_id FROM temp.clovis_text_matches WHERE kind=?", [kind])
     return ("SELECT d.source_id FROM search_fts JOIN search_documents d ON d.rowid=search_fts.rowid "
             "WHERE search_fts MATCH ? AND d.kind=?", [match, kind])
 
 
-def _text_condition(kind, hits, match, alias="r"):
+def _materialize_matches(connection, match):
+    """Reuse exact FTS hits in this connection without changing source databases."""
+    connection.execute("CREATE TEMP TABLE clovis_text_matches(kind TEXT,source_id TEXT)")
+    connection.execute("INSERT INTO temp.clovis_text_matches SELECT d.kind,d.source_id "
+                       "FROM search_fts JOIN search_documents d ON d.rowid=search_fts.rowid "
+                       "WHERE search_fts MATCH ?", (match,))
+    connection.execute("CREATE INDEX temp.clovis_text_match_idx ON clovis_text_matches(kind,source_id)")
+
+
+def _text_condition(kind, hits, match, alias="r", materialized=False):
     clauses, values = [], []
     if kind in hits:
-        query, parameters = _documents(kind, match)
+        query, parameters = _documents(kind, match, materialized)
         column = "variableid" if kind == "variable" else KINDS[kind][1]
         clauses.append(alias + '.' + column + ' IN (' + query + ')')
         values.extend(parameters)
     for column, parent in PARENTS.get(kind, ()):
-        child, parameters = _text_condition(parent, hits, match)
+        child, parameters = _text_condition(parent, hits, match, materialized=materialized)
         if child:
             table = "n.ndb__variables" if parent == "variable" else _table(parent)
             key = "variableid" if parent == "variable" else KINDS[parent][1]
@@ -140,17 +153,17 @@ def _scope_condition(kind, scope, value, alias="r"):
     return ('(' + ' OR '.join(clauses) + ')' if clauses else ""), values
 
 
-def _correlated_text_condition(kind, hits, match, alias="r", depth=0):
+def _correlated_text_condition(kind, hits, match, alias="r", depth=0, materialized=False):
     """Check the actual parents of bounded rows instead of all matching samples."""
     clauses, values = [], []
     if kind in hits:
-        query, parameters = _documents(kind, match)
+        query, parameters = _documents(kind, match, materialized)
         key = "variableid" if kind == "variable" else KINDS[kind][1]
         clauses.append(alias + '.' + key + ' IN (' + query + ')')
         values.extend(parameters)
     for column, parent in PARENTS.get(kind, ()):
         parent_alias = "parent_" + str(depth + 1)
-        child, parameters = _correlated_text_condition(parent, hits, match, parent_alias, depth + 1)
+        child, parameters = _correlated_text_condition(parent, hits, match, parent_alias, depth + 1, materialized)
         if child:
             table = "n.ndb__variables" if parent == "variable" else _table(parent)
             key = "variableid" if parent == "variable" else KINDS[parent][1]
@@ -161,7 +174,7 @@ def _correlated_text_condition(kind, hits, match, alias="r", depth=0):
     return ('(' + ' OR '.join(clauses) + ')' if clauses else ""), values
 
 
-def _narrow_rows(connection, kind, matches, supplement, supplement_values):
+def _narrow_rows(connection, kind, matches, supplement, supplement_values, materialized=False):
     """Return every matched ordinal when candidates fit; None means full fallback.
 
     The cap selects a query plan. It never caps search results. Both independent
@@ -169,12 +182,12 @@ def _narrow_rows(connection, kind, matches, supplement, supplement_values):
     """
     clauses, values = [], []
     for match, hits in matches[:2]:
-        clause, parameters = _text_condition(kind, hits, match)
+        clause, parameters = _text_condition(kind, hits, match, materialized=materialized)
         clauses.append(clause or "0")
         values.extend(parameters)
     tail, tail_values = [], []
     for match, hits in matches[2:]:
-        clause, parameters = _correlated_text_condition(kind, hits, match)
+        clause, parameters = _correlated_text_condition(kind, hits, match, materialized=materialized)
         tail.append(clause or "0")
         tail_values.extend(parameters)
     tail.extend(supplement)
@@ -197,24 +210,24 @@ def _narrow_rows(connection, kind, matches, supplement, supplement_values):
     return [row[0] for row in connection.execute(statement, [*rows, *tail_values])]  # nosec B608: fixed SQL compiler and bound ordinal/text values
 
 
-def _bulk_condition(hits, match):
+def _bulk_condition(hits, match, materialized=False):
     clauses, parameters = [], []
-    dataset, values = _text_condition("dataset", hits, match)
+    dataset, values = _text_condition("dataset", hits, match, materialized=materialized)
     if dataset:
         clauses.append("c.datasetid IN (SELECT r.datasetid FROM n.ndb__datasets r WHERE " + dataset + ")")  # nosec B608: fixed compiler clauses
         parameters.extend(values)
-    unit, values = _text_condition("unit", hits, match)
+    unit, values = _text_condition("unit", hits, match, materialized=materialized)
     if unit:
         clauses.append("c.analysis_collectionunitid IN (SELECT r.collectionunitid FROM n.ndb__collectionunits r WHERE " + unit + ")")  # nosec B608: fixed compiler clauses
         parameters.extend(values)
     if "variable" in hits:
-        query, values = _documents("variable", match)
+        query, values = _documents("variable", match, materialized)
         clauses.append("c.variableid IN (" + query + ")")
         parameters.extend(values)
     return ('(' + ' OR '.join(clauses) + ')' if clauses else "0"), parameters
 
 
-def _observation_count(connection, matches):
+def _observation_count(connection, matches, materialized=False):
     """Use exact repeated-context counts, then add individual text exceptions.
 
     Rows matched through both a variable and a site are counted once. A sample
@@ -223,16 +236,16 @@ def _observation_count(connection, matches):
     """
     bulk, bulk_values, full, full_values, uniform, uniform_values, extras, extra_values = [], [], [], [], [], [], [], []
     for match, hits in matches:
-        clause, values = _bulk_condition(hits, match)
+        clause, values = _bulk_condition(hits, match, materialized)
         bulk.append(clause)
         bulk_values.extend(values)
-        clause, values = _text_condition("observation", hits, match)
+        clause, values = _text_condition("observation", hits, match, materialized=materialized)
         full.append(clause or "0")
         full_values.extend(values)
-        clause, values = _text_condition("observation", hits - {"sample", "analysis"}, match)
+        clause, values = _text_condition("observation", hits - {"sample", "analysis"}, match, materialized=materialized)
         uniform.append(clause or "0")
         uniform_values.extend(values)
-        clause, values = _text_condition("observation", hits & {"sample", "analysis"}, match)
+        clause, values = _text_condition("observation", hits & {"sample", "analysis"}, match, materialized=materialized)
         if clause:
             extras.append(clause)
             extra_values.extend(values)
@@ -296,12 +309,21 @@ def _plans(query, view, record_id, scopes, paths, signature):
     terms = [] if exact else re.findall(r"\w+", query, flags=re.UNICODE)[:8]
     with closing(_connect(paths)) as connection:
         summary = _summary(connection)
+        materialized_match = ""
+        if len(terms) == 1 and not (view or exact_id or scopes):
+            match = '"' + terms[0] + '"*'
+            frequency = connection.execute("SELECT count(*) FROM search_fts WHERE search_fts MATCH ?",
+                                           (match,)).fetchone()[0]
+            if MIN_MATERIALIZED_HITS <= frequency <= MAX_MATERIALIZED_HITS:
+                materialized_match = match
+                _materialize_matches(connection, match)
         matches = []
         frequencies = {}
         for term in terms:
             match = '"' + term + '"*'
-            hits = {row[0] for row in connection.execute(
-                "SELECT DISTINCT d.kind FROM search_fts JOIN search_documents d ON d.rowid=search_fts.rowid WHERE search_fts MATCH ?", (match,))}
+            hits = ({row[0] for row in connection.execute("SELECT DISTINCT kind FROM temp.clovis_text_matches")}
+                    if materialized_match else {row[0] for row in connection.execute(
+                        "SELECT DISTINCT d.kind FROM search_fts JOIN search_documents d ON d.rowid=search_fts.rowid WHERE search_fts MATCH ?", (match,))})
             matches.append((match, hits))
             if len(terms) > 1:
                 frequencies[match] = connection.execute(
@@ -311,7 +333,7 @@ def _plans(query, view, record_id, scopes, paths, signature):
         for kind in kinds:
             clauses, parameters = [], []
             for match, hits in matches:
-                clause, values = _text_condition(kind, hits, match)
+                clause, values = _text_condition(kind, hits, match, materialized=bool(materialized_match))
                 clauses.append(clause or "0")
                 parameters.extend(values)
             text_parameters = len(parameters)
@@ -328,7 +350,8 @@ def _plans(query, view, record_id, scopes, paths, signature):
                 parameters.extend(values)
             where = " WHERE " + " AND ".join(clauses) if clauses else ""
             statement = " FROM " + _table(kind) + " r" + where
-            ordinals = (_narrow_rows(connection, kind, ordered_matches, clauses[len(matches):], parameters[text_parameters:])
+            ordinals = (_narrow_rows(connection, kind, ordered_matches, clauses[len(matches):], parameters[text_parameters:],
+                                    materialized=bool(materialized_match))
                         if len(ordered_matches) > 1 else None)
             if ordinals is not None:
                 count = len(ordinals)
@@ -336,19 +359,21 @@ def _plans(query, view, record_id, scopes, paths, signature):
                     "r.source_row IN (" + ",".join("?" for _ in ordinals) + ")" if ordinals else "0")
                 parameters = ordinals
             elif kind == "observation" and matches and not (exact_id or scopes):
-                count = _observation_count(connection, matches)
+                count = _observation_count(connection, matches, materialized=bool(materialized_match))
             else:
                 count = (connection.execute("SELECT count(*)" + statement, parameters).fetchone()[0] if clauses
                          else summary["record_counts"][kind])  # nosec B608: fixed source mapping and bound values
             counts.append(count)
             statements.append((statement, parameters))
-        return kinds, counts, statements, summary["record_counts"]
+        return kinds, counts, statements, summary["record_counts"], materialized_match
 
 
 @lru_cache(maxsize=256)
 def _search(query, page, view, record_id, scopes, paths, signature):
-    kinds, counts, statements, record_counts = _plans(query, view, record_id, scopes, paths, signature)
+    kinds, counts, statements, record_counts, materialized_match = _plans(query, view, record_id, scopes, paths, signature)
     with closing(_connect(paths)) as connection:
+        if materialized_match:
+            _materialize_matches(connection, materialized_match)
         total = sum(counts)
         pages = max(1, (total + PAGE_SIZE - 1) // PAGE_SIZE)
         page = min(page, pages)

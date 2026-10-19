@@ -25,11 +25,12 @@ you describe it and keep track of the next question.
    [town]** only when that town belongs with the object. Changing town clears
    the choice without erasing your observations. Included context survives
    downloads and backups; it is not an exact location or verified provenance.
-3. Optionally add a JPEG, PNG or WebP photo under 5 MB. Study both sides, an
+3. Optionally add a still JPEG, PNG or WebP photo under 5 MB. Study both sides, an
    existing edge and a ruler. Zoom, drag, rotate or **Fit photo** to inspect
-   details. **Remove photo** clears the app's image without changing your file
-   or written notes. The image stays in the browser, is not sent to the server
-   and is not analyzed, saved in the fieldbook or exported.
+   details and add a caption. The local Clovis server stores the original file
+   without re-encoding or analysis. **Save observation** attaches its reference
+   and caption to the dated note. Removing it from the working observation
+   leaves the original file and earlier saved notes unchanged.
 4. Read the comparison questions, then save or download your written notes.
    Record actions are above the question cards. Open **Read the full comparison
    notes & sources** for the longer guide. Photo instructions remain closed until
@@ -47,6 +48,8 @@ The authored comparisons link to [NPS artifact examples](https://www.nps.gov/yos
 [NPS fossil look-alikes](https://www.nps.gov/subjects/fossils/what-is-a-fossil.htm).
 Park-specific collection rules do not establish rights on other land. No
 source images, specimen locations or identification model are bundled here.
+The complete reviewed NPS artifact-guide text and its source edition can also
+be read locally from the glass-bottle guide without following an external link.
 
 ## Continue an investigation
 
@@ -85,8 +88,10 @@ Library search and reference saving use the bundled records locally.
 Select saved notes in **Fieldbook**, then open **Prepare a question about these
 notes**. Write a question, preview the packet and download or save it. You can
 include a possible comparison and a wanted detail without turning either into
-an identification. The packet retains the original source and observations;
-photos are not attached and no message is sent.
+an identification. The packet retains the original source and observations.
+When the saved notes have personal photos, its ZIP includes readable Markdown
+and the original files with their captions. Otherwise it downloads Markdown.
+No message is sent.
 
 Select a saved question to **Record a response to this question**. Supply a public
 institution or role, the response date and its words or your clearly attributed
@@ -94,20 +99,27 @@ summary. Record remaining uncertainty. It becomes a new entry, with the original
 notes and question preserved. **Related saved records** connects those entries.
 Clovis does not verify the respondent or their identification. The question or
 response appears first when reading, downloading or printing; source notes
-follow it. JSON exports preserve the saved snapshots exactly.
+follow it. Complete fieldbook backups preserve the saved snapshots and photo
+references; original files appear once per distinct checksum in a ZIP.
 
 ## Keep a backup
 
 The fieldbook uses local browser storage on this device and this app origin.
 Another browser, port or device has a different fieldbook. Clearing site data
-can remove it. **Download this fieldbook** exports JSON for backup; **Restore
-a fieldbook** merges valid entries and preserves existing notes. Repeated
+can remove it. Original personal photos are stored by the local app in its
+notebook database, separately from browser storage. **Download this fieldbook**
+exports JSON for notes alone or a ZIP including original photos. **Restore
+a fieldbook** merges valid entries and originals and preserves existing notes. Repeated
 identical entries are deduplicated. Limits are 50 entries and 750 KB; an import
-that exceeds them is refused without changing the existing book.
+that exceeds them is refused without changing the existing book. Photo-inclusive
+archives have a separate 100 MB / 1,024-image allowance. See [photos and portable
+notebooks](LOCAL_PHOTOS.md) for file limits, original metadata and formats.
 
 Written observations and the selected fieldbook are processed by the local
 app server during save, comparison, restore and export callbacks. The app
-does not write them to a server database or disk. The browser keeps the saved
-book; downloaded backups remain wherever you save them. Keep exact sensitive
+keeps written fieldbook notes in the browser and original photos in the local
+notebook database. Structured dig records also live in that database. Downloaded
+backups remain wherever you save them. No external service receives this work.
+Keep exact sensitive
 locations, names, account details and personal information out of shared notes.
 There is no account, cloud synchronization or public submission in this workflow.
