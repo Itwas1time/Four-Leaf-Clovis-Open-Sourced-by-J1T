@@ -1,6 +1,7 @@
 """Photo drafts, saved galleries and local-only binary transport controls."""
 import sqlite3
 from dash import ALL,Input,Output,State,callback,callback_context,clientside_callback,ClientsideFunction,html,no_update
+from atlas.gui.workspace_activation import when_opened
 from core.local_photos import PhotoStore,validate_refs,captioned_refs
 from core.dig_records import DigBook
 from atlas.gui.photo_ui import gallery
@@ -71,7 +72,7 @@ def find_photos(uploaded,remove_clicks,open_clicks,viewer_remove,photos,current,
     except (ValueError,OSError,sqlite3.Error) as error:return no_update,no_update,str(error)
 
 
-@callback(Output('find-photo-gallery','children'),Output('find-photo-preview','src'),
+@when_opened('inspect', Output('find-photo-gallery','children'),Output('find-photo-preview','src'),
     Output('find-photo-preview','style'),Output('find-photo-help','style'),
     Input('find-photo-files','data'),Input('find-photo-current','data'))
 def render_find_photos(photos,current):
@@ -83,7 +84,7 @@ def render_find_photos(photos,current):
         return html.P(str(error)), '', {'display':'none'},{}
 
 
-@callback(Output('dig-photo-files','data'),Output('dig-photo-owner','data'),Input('dig-selection','data'),
+@when_opened('notebook', Output('dig-photo-files','data'),Output('dig-photo-owner','data'),Input('dig-selection','data'),
     Input('dig-project','value'),Input('dig-new','n_clicks'))
 def load_dig_photos(selected,project,new_clicks):
     owner={'project_id':project,'id':selected.get('id') if isinstance(selected,dict) and selected.get('project_id')==project else None}
@@ -105,13 +106,13 @@ def edit_dig_photos(uploaded,remove_clicks,photos,owner,caption_ids,captions):
     except (ValueError,OSError,sqlite3.Error) as error:return no_update,str(error)
 
 
-@callback(Output('dig-photo-gallery','children'),Input('dig-photo-files','data'))
+@when_opened('notebook', Output('dig-photo-gallery','children'),Input('dig-photo-files','data'))
 def render_dig_photos(photos):
     try:return gallery(photos or [],editor='dig')
     except (ValueError,OSError,sqlite3.Error) as error:return html.P(str(error))
 
 
-@callback(Output('fieldbook-photos','children'),Input('fieldbook-store','data'),Input('fieldbook-selected','value'))
+@when_opened('notebook', Output('fieldbook-photos','children'),Input('fieldbook-store','data'),Input('fieldbook-selected','value'))
 def read_fieldbook_photos(book,selected):
     from atlas.gui.fieldbook_callbacks import selected_rows
     try:

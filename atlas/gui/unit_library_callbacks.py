@@ -2,6 +2,7 @@
 from atlas.gui.library_activation import require_section
 from urllib.parse import urlsplit
 from dash import ALL,Input,Output,State,callback,callback_context,html,no_update
+from atlas.gui.workspace_activation import when_opened
 from core.usgs_unit_library import search_units,units_for_place,get_unit
 from core.us_places import get_place,STATE_NAMES
 from core.usgs_notes import facts,reference_entry
@@ -31,7 +32,7 @@ def _citation(citation):
     return html.P([html.Span(text),html.A(' Source',href=url,target='_blank',rel='noopener noreferrer') if safe else None],className='atlas-help')
 
 
-@callback(Output('library-unit-cards','children'),Output('library-unit-count','children'),
+@when_opened('section-units', Output('library-unit-cards','children'),Output('library-unit-count','children'),
           Output('library-unit-page','data'),Output('library-unit-page-label','children'),
           Output('library-unit-previous','disabled'),Output('library-unit-next','disabled'),
           Input('library-unit-query','value'),Input('library-unit-scope','value'),
@@ -83,7 +84,7 @@ def select(clicks,query,scope,previous,next_clicks,state,geoid):
     return selected if row else no_update
 
 
-@callback(Output('library-unit-detail','children'),Input('library-unit-selected','data'),
+@when_opened('section-units', Output('library-unit-detail','children'),Input('library-unit-selected','data'),
           Input('resident-state','value'),Input('resident-place','value'))
 def read(selected,state,geoid):
     row,place=_record(selected,state,geoid)

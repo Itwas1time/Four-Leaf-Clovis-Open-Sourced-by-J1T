@@ -2,6 +2,7 @@
 from atlas.gui.library_activation import require_section
 import sqlite3
 from dash import ALL,Input,Output,State,callback,callback_context,html,no_update
+from atlas.gui.workspace_activation import when_opened
 from core.newspaper_catalog import search_titles,get_title
 from core.sanborn_catalog import census_town
 from core.us_places import get_place
@@ -17,7 +18,7 @@ def town_scope(clicks):
     return 'town' if isinstance(trigger,dict) and trigger.get('key')=='town-newspapers' and any(clicks or []) else no_update
 
 
-@callback(Output('library-newspaper-cards','children'),Output('library-newspaper-count','children'),
+@when_opened('section-newspapers', Output('library-newspaper-cards','children'),Output('library-newspaper-count','children'),
           Output('library-newspaper-page','data'),Output('library-newspaper-page-label','children'),
           Output('library-newspaper-previous','disabled'),Output('library-newspaper-next','disabled'),
           Input('library-newspaper-query','value'),Input('library-newspaper-scope','value'),
@@ -64,7 +65,7 @@ def select(clicks,*inputs):
     return row['id'] if row else no_update
 
 
-@callback(Output('library-newspaper-detail','children'),Input('library-newspaper-selected','data'))
+@when_opened('section-newspapers', Output('library-newspaper-detail','children'),Input('library-newspaper-selected','data'))
 def read(selected):
     if not isinstance(selected,str) or len(selected)>20:
         return html.P('Select a title to read its publication timeline and catalog facts.')

@@ -148,7 +148,12 @@ def search(query='', country='all', lineage='nonavian', view='occurrences', page
     clauses, parameters = [], []
     # unicode61 separates underscores; each emitted prefix is one token so
     # coded source values work with the compact column-detail index too.
-    terms = re.findall(r'[^\W_]+',query,flags=re.UNICODE)[:8]
+    collection_id=re.fullmatch(r'collection:([0-9]{1,12})',query.strip())
+    if collection_id:
+        if collection_no and collection_no!=collection_id.group(1):
+            clauses.append('0')
+        collection_no=collection_id.group(1)
+    terms = [] if collection_id else re.findall(r'[^\W_]+',query,flags=re.UNICODE)[:8]
     table = 'occurrences' if view=='occurrences' else 'taxa'
     if terms:
         clauses.append(f'r.rowid IN (SELECT rowid FROM {table}_fts WHERE {table}_fts MATCH ?)')  # nosec B608: fixed table choices

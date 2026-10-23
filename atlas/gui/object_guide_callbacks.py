@@ -1,6 +1,7 @@
 """Read the reviewed material guides with fact-level sources."""
 from atlas.gui.library_activation import require_section
 from dash import ALL,Input,Output,State,callback,callback_context,html,no_update
+from atlas.gui.workspace_activation import when_opened
 from core.object_material_guides import search_guides,get_guide,guide_stats
 from core.object_guide_notes import reference_entry
 from core.fieldbook import EMPTY_BOOK,merge_entries
@@ -9,7 +10,7 @@ from atlas.gui.library_ui import reading_nav
 from atlas.gui.offline_reference_ui import control as local_source_control
 
 
-@callback(Output('library-guide-cards','children'),Output('library-guide-count','children'),
+@when_opened('section-guides', Output('library-guide-cards','children'),Output('library-guide-count','children'),
           Output('library-guide-page','data'),Output('library-guide-page-label','children'),
           Output('library-guide-previous','disabled'),Output('library-guide-next','disabled'),
           Input('library-guide-query','value'),Input('library-guide-category','value'),
@@ -40,7 +41,7 @@ def select(clicks,*inputs):
     return guide['id'] if guide else no_update
 
 
-@callback(Output('library-guide-detail','children'),Input('library-guide-selected','data'))
+@when_opened('section-guides', Output('library-guide-detail','children'),Input('library-guide-selected','data'))
 def read(selected):
     guide=get_guide(selected)
     if not guide:

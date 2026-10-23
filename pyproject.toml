@@ -1,6 +1,6 @@
 [project]
 name = "archaeo-scan"
-version = "0.23.0"
+version = "0.26.0"
 description = "Local find context and archaeological research planning"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -50,7 +50,7 @@ build-backend = "setuptools.build_meta"
 include = ["atlas*", "citizen*", "cli*", "collectors*", "core*", "nlp*", "processors*", "tools*"]
 
 [tool.setuptools.package-data]
-"atlas.gui.data" = ["*.sqlite", "us_places_2026.csv", "data_pack_catalog.json"]
+"atlas.gui.data" = ["*.sqlite", "us_places_2026.csv", "data_pack_catalog.json", "offline-publications/*/*.json", "offline-publications/*/*.xml", "offline-publications/*/*.xlsx"]
 "atlas.gui" = ["assets/*.css", "assets/*.js", "assets/*.json", "assets/*.svg", "assets/*.png"]
 "atlas" = ["frontend/index.html", "frontend/src/*.js", "frontend/src/*.tsx", "frontend/styles/*.css"]
 

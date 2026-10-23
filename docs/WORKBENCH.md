@@ -50,6 +50,14 @@ map units can overlap; they are separate map sources, not independent finds or
 layers under your yard. Reviewed formation guides show fossil learning examples
 only for matched named formations, with their own source and limits.
 
+**Offline map** draws modern U.S. county outlines and public town labels at
+regional scales, without downloading tiles. Choose **Show regional view** if
+you have zoomed too close for these generalized outlines. The selected town
+point remains separate from the surrounding labels. County and town context
+covers U.S. Census areas; other areas retain the world land outline. Streets
+and property detail are not bundled. The online backgrounds remain optional.
+See [map coverage, editions and attribution](OFFLINE_MAP_SOURCES.md).
+
 **Words in this source** explains the material and age vocabulary beside a
 selected unit. Open a word for its meaning, an observation question and sources.
 Age cards place periods or epochs in relative older-to-younger order; the

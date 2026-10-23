@@ -75,3 +75,9 @@
 @media(max-width:700px) { #library-atlas .clovis-library-facts { grid-template-columns:130px minmax(0,1fr); } }
 .clovis-tool-library #clovis-reading-path { display:none; }
 @media(max-width:700px) { .clovis-library-split,.clovis-library-filters { grid-template-columns:1fr; } .clovis-library-list { max-height:360px; } .clovis-library-workspace { padding:18px 14px; } .clovis-library-heading { font-size:23px; } .clovis-library-image { max-height:380px; } }
+.clovis-start-panel { margin: 4px 0 14px; }
+.clovis-start-title { display:block; margin-bottom:8px; }
+.clovis-start-intents { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+.clovis-start-intent { display:flex; flex-direction:column; align-items:flex-start; gap:4px; text-align:left; padding:12px 14px; border:1px solid var(--clovis-rule,#cfd6c9); border-radius:12px; background:var(--clovis-card,#f4f6f0); color:inherit; cursor:pointer; font:inherit; }
+.clovis-start-intent:hover, .clovis-start-intent:focus-visible { border-color:var(--clovis-green,#285d45); outline:none; box-shadow:0 0 0 2px rgba(40,93,69,.25); }
+.clovis-start-intent small { color:var(--clovis-muted,#5c6658); line-height:1.35; }

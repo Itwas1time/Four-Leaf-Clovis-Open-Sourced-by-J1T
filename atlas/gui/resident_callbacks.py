@@ -60,12 +60,24 @@ def workspace_progress(token, state, geoid, history, online, mode, tool='map'):
 
 
 clientside_callback(
-    """function(header, panel) {
+    """function(header, panel, start) {
         if (!window.dash_clientside.callback_context.triggered_id) return [window.dash_clientside.no_update, window.dash_clientside.no_update];
         return ['resident', Date.now()];
     }""",
     Output('workflow-mode','value'), Output('place-focus-request','data'),
-    Input('header-place-button','n_clicks'), Input('resident-choose-place','n_clicks'), prevent_initial_call=True)
+    Input('header-place-button','n_clicks'), Input('resident-choose-place','n_clicks'), Input('start-town','n_clicks'),
+    prevent_initial_call=True)
+
+
+clientside_callback(
+    """function(clicks) {
+        const search = document.getElementById('atlas-query');
+        if (!clicks || !search) return window.dash_clientside.no_update;
+        search.scrollIntoView({block:'center', behavior:'auto'});
+        search.focus();
+        return Date.now();
+    }""",
+    Output('start-search-focus','data'), Input('start-search','n_clicks'), prevent_initial_call=True)
 
 
 clientside_callback(
@@ -79,7 +91,8 @@ clientside_callback(
                 if (controls && controls.getBoundingClientRect().height && target && !target.disabled) {
                     target.scrollIntoView({block:'center', behavior:'auto'});
                     target.focus();
-                    target.click();
+                    // Open the picker once; a reader who already opened it keeps it open.
+                    if (target.getAttribute('aria-expanded') !== 'true') target.click();
                     resolve(request);
                 } else if (++attempts < 120) requestAnimationFrame(focusPlace);
                 else resolve(window.dash_clientside.no_update);
@@ -224,7 +237,10 @@ def show_town_point(mode, geoid, state):
 def render_resident_context(clicks, state, geoid, history, online):
     if not any(item['prop_id']=='resident-build.n_clicks' for item in callback_context.triggered) or not clicks:
         status = "Select Explore this town to build your field notes." if get_place(geoid, state) else "Choose a town to begin your field notes."
-        return "", status, None, True, "", True
+        # The landing call has no report to clear. Leaving the store untouched
+        # avoids re-running every report reader before the first Atlas search;
+        # changed inputs still clear an existing report.
+        return "", status, no_update if callback_context.triggered_id is None else None, True, "", True
     try:
         input_key(state, geoid, history, online)
         report = build_context(state, geoid, history, online)

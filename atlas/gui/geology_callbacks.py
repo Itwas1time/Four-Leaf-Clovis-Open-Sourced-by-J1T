@@ -1,5 +1,6 @@
 ﻿"""Read only current server reports; tile opt-in never queries browser coordinates."""
 from dash import ALL, Input, Output, callback, callback_context
+from atlas.gui.workspace_activation import when_opened
 import dash_leaflet as dl
 from core.evidence_board import evidence_board, note_context
 from core.resident_context import current_report
@@ -7,12 +8,12 @@ from atlas.gui.geology_ui import TILE_URL, evidence_card, evidence_detail
 from atlas.gui.learning_ui import glossary_results
 
 
-@callback(Output('geology-word-results','children'), Input('geology-word-search','value'))
+@when_opened('map', Output('geology-word-results','children'), Input('geology-word-search','value'))
 def explain_geology_word(query):
     return glossary_results(query)
 
 
-@callback(Output('resident-evidence-cards', 'children'), Output('resident-evidence-status', 'children'),
+@when_opened('map', Output('resident-evidence-cards', 'children'), Output('resident-evidence-status', 'children'),
           Input('resident-report-store', 'data'), Input('resident-state', 'value'),
           Input('resident-place', 'value'), Input('resident-history', 'value'), Input('resident-online', 'value'))
 def render_evidence(token, state, geoid, history, online):
@@ -26,7 +27,7 @@ def render_evidence(token, state, geoid, history, online):
     return cards, board['status'] + checked
 
 
-@callback(Output('resident-evidence-detail', 'children'),
+@when_opened('map', Output('resident-evidence-detail', 'children'),
           Output('geology-note-context', 'data'), Output('geology-record-note', 'disabled'),
           Input({'type': 'resident-evidence-card', 'key': ALL}, 'n_clicks'),
           Input('resident-report-store', 'data'), Input('resident-state', 'value'),
@@ -40,7 +41,7 @@ def select_evidence(clicks, token, state, geoid, history, online):
     return evidence_detail(next((card for card in board['cards'] if card['id'] == key), None)), context, context is None
 
 
-@callback(Output('resident-geology-layer', 'children'), Output('resident-geology-status', 'children'),
+@when_opened('map', Output('resident-geology-layer', 'children'), Output('resident-geology-status', 'children'),
           Input('resident-geology-toggle', 'value'), Input('resident-geology-opacity', 'value'),
           Input('resident-report-store', 'data'), Input('resident-state', 'value'),
           Input('resident-place', 'value'), Input('resident-history', 'value'), Input('resident-online', 'value'),

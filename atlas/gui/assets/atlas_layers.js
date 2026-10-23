@@ -165,3 +165,11 @@ window.dash_clientside.atlas.bindFeatureLabel = function(feature, layer) {
         });
     }
 };
+
+window.dash_clientside.atlas.offlineCountyLabel = function(feature, layer) {
+    var p = feature.properties || {};
+    var label = document.createElement('span');
+    label.textContent = (p.NAMELSAD || p.NAME || 'County / equivalent') + ', ' + (p.STUSPS || '') +
+        ' · U.S. Census Bureau 2025 · generalized county outline';
+    layer.bindTooltip(label, {sticky:true, direction:'top'});
+};

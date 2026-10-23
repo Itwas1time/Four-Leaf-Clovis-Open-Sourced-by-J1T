@@ -10,6 +10,7 @@ import lzma
 import re
 import sqlite3
 import struct
+import unicodedata
 
 from core.data_packs import PackStore
 
@@ -17,7 +18,11 @@ PACK='raa-fieldwork'
 PAGE_SIZE=24
 POLICY='https://catalog.raa.se/store/1/resource/105'
 LICENSE='Public Domain dataset, as declared by Riksantikvarieämbetet; linked reports and media have separate rights'
-FIELDS={'all':'Original assignment metadata','places':'Recorded place text only','identifiers':'Original identifiers only'}
+FIELDS={'all':'Original assignment metadata','places':'Recorded place text only',
+    'municipality':'Recorded municipality (kommun) name only','county':'Recorded county (län) name only',
+    'parish':'Recorded parish (socken) name only','identifiers':'Original identifiers only'}
+# Whole original names in one native field; 'places' searches all three together.
+PLACE_FIELDS={'municipality':'kommun','county':'lan','parish':'socken'}
 GROUND={'all':'All geometry coverage','recorded':'Recorded disturbed-ground geometry','unrecorded':'No disturbed-ground geometry recorded in this snapshot'}
 TYPES={
     'Arkeologisk utredning':'Archaeological assessment',
@@ -62,7 +67,19 @@ def connect(path):
     db=sqlite3.connect(path.resolve().as_uri()+'?mode=ro&immutable=1',uri=True)
     db.row_factory=sqlite3.Row
     db.execute('PRAGMA trusted_schema=OFF')
+    db.create_function('clovis_place_names',2,_names_match,deterministic=True)
     return db
+
+
+def place_key(value):
+    """Compare whole place names as the place-text index does: ignore case and diacritics."""
+    text=unicodedata.normalize('NFKD',value)
+    return ' '.join(''.join(char for char in text if not unicodedata.combining(char)).casefold().split())
+
+
+def _names_match(value,wanted):
+    # Native multi-place values list several names separated by commas.
+    return int(isinstance(value,str) and any(place_key(name)==wanted for name in value.split(',')))
 
 
 def canonical(value):
@@ -128,8 +145,12 @@ def search(query='',page=1,method='',status='',ground='all',field='all'):
             'all':'v.rowid IN (SELECT rowid FROM variant_fts WHERE all_text MATCH ?)',
             'places':'v.rowid IN (SELECT rowid FROM variant_fts WHERE places MATCH ?)',
             'identifiers':'v.rowid IN (SELECT rowid FROM variant_fts WHERE identifiers MATCH ?)',
-        }[field])
+        }['places' if field in PLACE_FIELDS else field])
         parameters.append(expression)
+        if field in PLACE_FIELDS:
+            # The text index narrows candidates; the whole native name must then match in this field.
+            clauses.append("clovis_place_names(json_extract(v.attributes_json,'$."+PLACE_FIELDS[field]+"'),?)")
+            parameters.append(place_key(query))
     where=' WHERE '+' AND '.join(clauses) if clauses else ''
     selection=' FROM resources r JOIN variants v ON v.uuid=r.uuid'+where
     with closing(connect(path)) as db:

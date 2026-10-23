@@ -4,13 +4,14 @@ import math
 import sqlite3
 
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 
 from atlas.gui.library_ui import reading_nav
 from core.archaeology_project_catalog import PAGE_SIZE, catalog_stats, search_projects, get_project, facts, project_entry
 from core.fieldbook import EMPTY_BOOK, merge_entries
 
 
-@callback(Output('library-project-country','options'), Output('library-project-coverage','children'),
+@when_opened('section-projects', Output('library-project-country','options'), Output('library-project-coverage','children'),
           Input('library-section','value'))
 def project_coverage(section):
     if section != 'projects':
@@ -32,7 +33,7 @@ def project_coverage(section):
         return [{'label':'All country contexts','value':'all'}], 'This installation has no readable archaeology publication catalog.'
 
 
-@callback(Output('library-project-cards','children'), Output('library-project-count','children'),
+@when_opened('section-projects', Output('library-project-cards','children'), Output('library-project-count','children'),
           Output('library-project-page','data'), Output('library-project-page-label','children'),
           Output('library-project-previous','disabled'), Output('library-project-next','disabled'),
           Input('library-project-query','value'), Input('library-project-country','value'),
@@ -88,7 +89,7 @@ def current_project(selection, query, country, page):
     return next((row for row in rows if row['id'] == selection['id']), None)
 
 
-@callback(Output('library-project-detail','children'), Input('library-project-selected','data'),
+@when_opened('section-projects', Output('library-project-detail','children'), Input('library-project-selected','data'),
           Input('library-project-query','value'), Input('library-project-country','value'), Input('library-project-page','data'))
 def read_project(selection, query, country, page):
     try:

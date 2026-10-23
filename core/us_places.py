@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import csv
 from functools import lru_cache
+from math import cos, radians
 from pathlib import Path
 import re
 import unicodedata
@@ -41,6 +42,40 @@ def _places():
 
 def states() -> list[str]:
     return sorted({row["state"] for row in _places().values()})
+
+
+def places_in_bounds(bounds,selected=None,zoom=9):
+    """A bounded, spatially spread set of public place labels for offline orientation."""
+    south,west,north,east=bounds
+    chosen=_places().get(selected) if isinstance(selected,str) else None
+    latitude_scale=max(0.01,cos(radians((south+north)/2)))
+    columns=max(2,min(6,int(4*(east-west)*latitude_scale/(north-south))))
+    pixels_per_degree=256*2**zoom/360
+    cells={}
+    for row in _places().values():
+        if row['geoid']==selected or not south<=row['latitude']<=north:
+            continue
+        longitude=row['longitude']
+        longitude+=360*round(((west+east)/2-longitude)/360)
+        if not west<=longitude<=east:
+            continue
+        if chosen and abs(longitude-chosen['longitude'])*pixels_per_degree<150 and -15<(row['latitude']-chosen['latitude'])*pixels_per_degree/latitude_scale<75:
+            continue  # Leave space for the selected town's prominent label.
+        x=min(columns-1,int(columns*(longitude-west)/(east-west)))
+        y=min(3,int(4*(row['latitude']-south)/(north-south)))
+        distance=(longitude-(west+(x+0.5)*(east-west)/columns))**2+(row['latitude']-(south+(y+0.5)*(north-south)/4))**2
+        # Prefer the publisher's explicit city designation for orientation;
+        # this is a label-selection rule, not an inferred population ranking.
+        score=(not row['name'].endswith(' city'),distance)
+        if (x,y) not in cells or score<cells[x,y][0]:
+            cells[x,y]=(score,{**row,'longitude':longitude})
+    labels=[]
+    for _,row in sorted(cells.values(),key=lambda item:item[0]):
+        if any(abs(row['longitude']-other['longitude'])*pixels_per_degree<150
+               and abs(row['latitude']-other['latitude'])*pixels_per_degree/latitude_scale<24 for other in labels):
+            continue
+        labels.append(row)
+    return labels
 
 
 def _name_rank(row, search):
@@ -116,3 +151,17 @@ def search_towns(query, limit=8):
     return [{"key": 'town:' + row['geoid'], "label": row['name'] + ', ' + row['state'],
              "center": [row['latitude'], row['longitude']], "zoom": 9}
             for row in matches[:min(max(limit, 1), 30)]]
+
+
+def exact_towns(query, limit=6):
+    """Public places whose whole name (without city/town/village) equals the query, e.g. "Dayton"."""
+    if not isinstance(query, str) or not 2 <= len(query.strip()) <= 80:
+        return []
+    search, state = _query_parts(query)
+    if not search or state == "invalid":
+        return []
+    matches = [row for row in _places().values() if (not state or row['state'] == state)
+               and not _name_rank(row, search)[0]]
+    matches.sort(key=lambda row: (STATE_NAMES.get(row['state'], row['state']), row['name'], row['geoid']))
+    return [{"geoid": row['geoid'], "state": row['state'], "label": row['name'] + ', ' + row['state']}
+            for row in matches[:max(1, min(limit, 30))]]

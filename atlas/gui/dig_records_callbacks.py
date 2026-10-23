@@ -3,6 +3,7 @@ import sqlite3
 import hashlib
 import time
 from dash import ALL, Input, Output, State, callback, callback_context, dcc, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core.dig_records import (DigBook, KINDS, COMMON, EXTRA,
     MEASUREMENT_ROLES, ANALYSIS_STATUS, QUANTITY_KINDS, QUANTITY_QUALIFIERS)
 from core.fieldbook import readable_text
@@ -21,7 +22,7 @@ def _message(error):
     return str(error) if isinstance(error, ValueError) else 'The local record could not be saved. Check the project and try again.'
 
 
-@callback(Output('fieldbook-reading-controls', 'style'), Output('fieldbook-reading-workspace', 'style'),
+@when_opened('notebook', Output('fieldbook-reading-controls', 'style'), Output('fieldbook-reading-workspace', 'style'),
           Output('fieldbook-reading-inspector', 'style'), Output('dig-workspace', 'style'),
           Output('dig-inspector', 'style'), Output('dig-controls-help', 'style'),
           Output('dig-workspace', 'data-notebook-visible'), Input('fieldbook-section', 'value'))
@@ -30,7 +31,7 @@ def notebook_section(section):
     return (hide, hide, hide, show, show, show, 'true') if section == 'dig' else (show, show, show, hide, hide, hide, 'false')
 
 
-@callback(Output('dig-project', 'options'), Output('dig-project', 'value'),
+@when_opened('notebook', Output('dig-project', 'options'), Output('dig-project', 'value'),
           Input('dig-refresh', 'data'), Input('dig-project-request', 'data'), State('dig-project', 'value'))
 def project_options(_refresh, requested, selected):
     try:
@@ -64,7 +65,7 @@ def open_requested_source(request, project, handled):
     return no_update,no_update
 
 
-@callback(Output('dig-project-picker', 'style'), Output('dig-project-records', 'style'),
+@when_opened('notebook', Output('dig-project-picker', 'style'), Output('dig-project-records', 'style'),
           Output('dig-export', 'style'), Output('dig-project-start', 'open'),
           Output('dig-project-prompt', 'children'), Output('dig-project-prompt', 'style'),
           Output('dig-workspace', 'data-project-ready'),
@@ -144,7 +145,7 @@ def captured_raa_download(clicks,selected,project):
         return no_update
 
 
-@callback(Output('dig-record-list', 'children'), Output('dig-record-count', 'children'), Output('dig-page', 'data'),
+@when_opened('notebook', Output('dig-record-list', 'children'), Output('dig-record-count', 'children'), Output('dig-page', 'data'),
           Output('dig-page-label', 'children'), Output('dig-prev', 'disabled'), Output('dig-next', 'disabled'),
           Input('dig-project', 'value'), Input('dig-query', 'value'), Input('dig-refresh', 'data'),
           Input('dig-prev', 'n_clicks'), Input('dig-next', 'n_clicks'), State('dig-page', 'data'))
@@ -166,7 +167,7 @@ def record_list(project, query, _refresh, _previous, _next, page):
         return [], _message(error), 1, '', True, True
 
 
-@callback(Output('dig-selection', 'data'), Output('dig-edit-label', 'children'),
+@when_opened('notebook', Output('dig-selection', 'data'), Output('dig-edit-label', 'children'),
           *[Output('dig-' + field, 'value') for field in FIELDS],
           Input({'type': 'dig-record-open', 'index': ALL}, 'n_clicks'), Input('dig-project', 'value'),
           Input('dig-new', 'n_clicks'), Input('dig-saved-selection', 'data'),
@@ -263,7 +264,7 @@ def save_record(_clicks, project, selected, *values):
         return no_update, _message(error), no_update
 
 
-@callback(*[Output(identifier, 'style') for identifier in ('dig-unit-field', 'dig-context-field', 'dig-context-type-field',
+@when_opened('notebook', *[Output(identifier, 'style') for identifier in ('dig-unit-field', 'dig-context-field', 'dig-context-type-field',
                                                          'dig-find-fields', 'dig-bag-field', 'dig-sample-fields', 'dig-depth-fields', 'dig-source-fields',
                                                          'dig-material-field','dig-method-field','dig-measurement-fields')],
           Input('dig-kind', 'value'))
@@ -274,7 +275,7 @@ def record_fields(kind):
 
 
 def register_picker(identifier, kind, multiple=False):
-    @callback(Output(identifier, 'options'), Input(identifier, 'search_value'), Input('dig-project', 'value'),
+    @when_opened('notebook', Output(identifier, 'options'), Input(identifier, 'search_value'), Input('dig-project', 'value'),
               Input('dig-refresh', 'data'), Input('dig-selection', 'data'), State(identifier, 'value'))
     def options(query, project, _refresh, _selected, value):
         try:
@@ -299,7 +300,7 @@ register_picker('dig-sources', 'source', True)
 register_picker('dig-sample', 'sample')
 
 
-@callback(Output('dig-measurement-page','data'),
+@when_opened('notebook', Output('dig-measurement-page','data'),
           Input({'type':'dig-measurements-page','sample':ALL,'index':ALL},'n_clicks'),
           Input('dig-selection','data'),Input('dig-project','value'))
 def measurement_page(clicks,selected,project):
@@ -354,7 +355,7 @@ def _sample_measurements(book,project,row,page):
             button('Next',result['page']+1,result['page']>=result['pages'])],className='clovis-library-pagination')])
 
 
-@callback(Output('dig-record-detail', 'children'), Input('dig-selection', 'data'), Input('dig-refresh', 'data'), State('dig-project', 'value'),
+@when_opened('notebook', Output('dig-record-detail', 'children'), Input('dig-selection', 'data'), Input('dig-refresh', 'data'), State('dig-project', 'value'),
           Input('dig-measurement-page','data'))
 def record_detail(selected, _refresh, project, measurement_page=None):
     try:
@@ -418,7 +419,7 @@ def record_detail(selected, _refresh, project, measurement_page=None):
         return html.P(_message(error))
 
 
-@callback(Output('dig-relations', 'children'), Output('dig-relation-void-id', 'options'), Input('dig-project', 'value'), Input('dig-refresh', 'data'), Input('dig-relation-query', 'value'))
+@when_opened('notebook', Output('dig-relations', 'children'), Output('dig-relation-void-id', 'options'), Input('dig-project', 'value'), Input('dig-refresh', 'data'), Input('dig-relation-query', 'value'))
 def show_relations(project, _refresh, query):
     try:
         if not project:

@@ -14,4 +14,11 @@
 .clovis-local-source-controls { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:10px 0; }
 .clovis-local-source-controls > p { flex-basis:100%; margin:0; }
 .clovis-local-source-controls a.atlas-secondary-button { display:inline-block; text-decoration:none; }
+.clovis-source-table { max-width:100%; overflow:auto; margin:18px 0; border:1px solid #a6b6a0; background:white; max-height:72vh; }
+.clovis-source-table table { border-collapse:separate; border-spacing:0; font:14px/1.4 system-ui,sans-serif; white-space:pre-wrap; }
+.clovis-source-table th,.clovis-source-table td { border-right:1px solid #cbd4c6; border-bottom:1px solid #cbd4c6; padding:7px 10px; min-width:96px; max-width:360px; overflow-wrap:normal; }
+.clovis-source-table th { background:#e6ebdb; }
+.clovis-source-table thead th { position:sticky; top:0; z-index:1; }
+.clovis-source-table th[scope=row] { position:sticky; left:0; min-width:28px; }
+.clovis-source-table:focus { outline:3px solid #315e48; outline-offset:2px; }
 @media(max-width:600px) { .clovis-local-reference { font-size:16px; } .clovis-local-reference main { padding:20px 18px 45px; } .clovis-local-reference h1 { font-size:1.75rem; } .clovis-local-reference nav ul { columns:1; } }

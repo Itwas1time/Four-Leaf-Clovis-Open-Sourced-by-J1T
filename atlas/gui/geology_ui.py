@@ -33,7 +33,7 @@ def make_geology_board():
         glossary(),
         html.Div(id='resident-evidence-cards', className='evidence-grid'),
         html.Div(id='resident-evidence-detail', className='evidence-detail', **{'aria-live': 'polite'}),
-        dcc.Store(id='geology-note-context', data=None, storage_type='memory'),
+        dcc.Store(id='geology-note-context', storage_type='memory'),
         html.Button('Start a rock comparison from this unit', id='geology-record-note', n_clicks=0,
                     disabled=True, className='atlas-primary-button'),
     ])])

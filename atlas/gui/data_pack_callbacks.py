@@ -1,5 +1,6 @@
 from atlas.gui.library_activation import require_section
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core.data_packs import PackStore
 from core import data_pack_jobs, data_pack_uploads
 
@@ -14,7 +15,10 @@ LIBRARIES = {'radiocarbon-world': ('atlas', 'Explore in atlas'),
              'ancient-places': ('atlas', 'Explore in atlas'),
              'ads-research-metadata': ('atlas', 'Explore in atlas'),
              'amcr-native-metadata': ('atlas', 'Explore in atlas'),
-             'dans-archaeology-metadata': ('atlas', 'Explore in atlas')}
+             'dans-archaeology-metadata': ('atlas', 'Explore in atlas'),
+             'raa-fieldwork': ('atlas', 'Explore in atlas'),
+             'france-fieldwork': ('atlas', 'Explore in atlas'),
+             'finland-antiquities': ('atlas', 'Explore in atlas')}
 
 
 @callback(Output('library-workspace', 'className'), Input('library-section', 'value'))
@@ -22,7 +26,7 @@ def collection_scroll_context(section):
     return 'clovis-library-workspace' + (' clovis-collection-workspace' if section == 'packs' else '')
 
 
-@callback(Output("data-pack-cards", "children"), Input("data-pack-refresh", "data"), Input("library-section", "value"))
+@when_opened('section-packs', Output("data-pack-cards", "children"), Input("data-pack-refresh", "data"), Input("library-section", "value"))
 def cards(_refresh, section="packs"):
     require_section(section, "packs")
     try:

@@ -1,10 +1,11 @@
 """Observation callbacks use bounded photo references, never raw image bodies."""
 from dash import Input, Output, State, callback, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core.find_inspection import FEATURES, FEATURE_QUESTIONS, GUIDES, inspect_find
 from core.us_places import get_place
 
 
-@callback(Output('find-town','options'), Output('find-town','value'), Output('find-town-note','children'),
+@when_opened('inspect', Output('find-town','options'), Output('find-town','value'), Output('find-town-note','children'),
           Input('resident-state','value'), Input('resident-place','value'))
 def find_town_option(state, geoid):
     place = get_place(geoid, state)
@@ -14,13 +15,13 @@ def find_town_option(state, geoid):
          'Use Change town in the header to choose broad context, then return here. No town is required.')
 
 
-@callback(Output('find-features','options'), Output('find-features','value'), Input('find-material','value'))
+@when_opened('inspect', Output('find-features','options'), Output('find-features','value'), Input('find-material','value'))
 def feature_choices(material):
     guide = GUIDES.get(material) if isinstance(material,str) else None
     return ([{'label':FEATURES[f],'value':f} for f in guide['features']] if guide else []), []
 
 
-@callback(Output('find-care','children'), Input('find-material','value'))
+@when_opened('inspect', Output('find-care','children'), Input('find-material','value'))
 def find_care(material):
     if material != 'bone':
         return []
@@ -29,7 +30,7 @@ def find_care(material):
         className='atlas-status-card clovis-find-care')
 
 
-@callback(Output('find-guide','children'), Output('find-status','children'), Output('find-download-button','disabled'), Output('find-save','disabled'),
+@when_opened('inspect', Output('find-guide','children'), Output('find-status','children'), Output('find-download-button','disabled'), Output('find-save','disabled'),
           Output('find-next-questions','children'),
           Input('find-material','value'), Input('find-features','value'), Input('find-setting','value'),
           Input('find-size','value'), Input('find-notes','value'), Input('find-town','value'),

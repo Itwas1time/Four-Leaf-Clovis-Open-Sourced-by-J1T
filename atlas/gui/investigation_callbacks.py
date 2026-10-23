@@ -1,5 +1,6 @@
 """Connect in-app evidence tools to guided observations and the existing fieldbook."""
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core.evidence_board import evidence_board, note_contexts as geological_note_contexts
 from core.fieldbook import EMPTY_BOOK, merge_entries, validate_book
 from core.historical_maps import validated_note_context
@@ -71,7 +72,7 @@ def show_example(saved,state,geoid,mode):
     ],className='clovis-example-guidance',key=example['id'])]
 
 
-@callback(Output('resident-evidence-overview','children'),
+@when_opened(('map', 'archive', 'missions'), Output('resident-evidence-overview','children'),
           Input('resident-report-store','data'), Input('resident-state','value'), Input('resident-place','value'),
           Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'))
 def report_overview(token,state,geoid,history,online,mode):
@@ -151,7 +152,7 @@ def start_investigation(clicks,archive_clicks,geology_clicks,archive_context,geo
     return empty
 
 
-@callback(Output('mission-evidence','children'),Output('mission-steps','options'),Output('mission-steps','value'),
+@when_opened('missions', Output('mission-evidence','children'),Output('mission-steps','options'),Output('mission-steps','value'),
           Output('mission-notes','placeholder'), Input('mission-type','value'),
           Input('resident-report-store','data'),Input('resident-state','value'),Input('resident-place','value'),
           Input('resident-history','value'),Input('resident-online','value'))
@@ -173,7 +174,7 @@ def investigation_guide(mission,token,state,geoid,history,online):
     return evidence, [{'label':step,'value':i} for i,step in enumerate(guide['steps'])],[],guide['prompt']
 
 
-@callback(Output('mission-save','disabled'),Input('mission-notes','value'),Input('resident-state','value'),Input('resident-place','value'))
+@when_opened('missions', Output('mission-save','disabled'),Input('mission-notes','value'),Input('resident-state','value'),Input('resident-place','value'))
 def can_save_investigation(notes,state,geoid):
     return not (get_place(geoid,state) and isinstance(notes,str) and notes.strip())
 
@@ -194,7 +195,7 @@ def save_investigation(clicks,book,mission,state,geoid,source,date,notes,outcome
         return no_update,str(exc)
 
 
-@callback(Output('fieldbook-metrics','children'),Input('fieldbook-store','data'))
+@when_opened('notebook', Output('fieldbook-metrics','children'),Input('fieldbook-store','data'))
 def fieldbook_progress(book):
     try:
         rows = validate_book(book or EMPTY_BOOK)['entries']

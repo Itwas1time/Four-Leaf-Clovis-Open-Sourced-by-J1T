@@ -1,6 +1,7 @@
 from atlas.gui.library_activation import require_section
 import sqlite3
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core import dinosaur_catalog as catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
 from atlas.gui.library_ui import reading_nav
@@ -16,7 +17,7 @@ def parameters(query,country,lineage,view,scope,state='all'):
     return result
 
 
-@callback(Output('dinosaur-state','options'),Output('dinosaur-state','value'),
+@when_opened('section-dinosaurs', Output('dinosaur-state','options'),Output('dinosaur-state','value'),
           Input('dinosaur-country','value'),Input('dinosaur-lineage','value'),
           Input('data-pack-refresh','data'),Input('library-section','value'),State('dinosaur-state','value'))
 def regions(country,lineage,_refresh,section,state):
@@ -30,7 +31,7 @@ def regions(country,lineage,_refresh,section,state):
     except (ValueError,OSError,sqlite3.Error,TypeError):
         return base,'all'
 
-@callback(Output('dinosaur-country','options'),Input('data-pack-refresh','data'), Input("library-section", "value"),Input('dinosaur-lineage','value'))
+@when_opened('section-dinosaurs', Output('dinosaur-country','options'),Input('data-pack-refresh','data'), Input("library-section", "value"),Input('dinosaur-lineage','value'))
 def countries(_refresh, section="dinosaurs",lineage='nonavian'):
     require_section(section, "dinosaurs")
     try:
@@ -39,7 +40,7 @@ def countries(_refresh, section="dinosaurs",lineage='nonavian'):
     except (ValueError,OSError,KeyError,sqlite3.Error):
         return [{'label':'All recorded countries','value':'all'}]
 
-@callback(Output('dinosaur-cards','children'),Output('dinosaur-count','children'),Output('dinosaur-page','data'),
+@when_opened('section-dinosaurs', Output('dinosaur-cards','children'),Output('dinosaur-count','children'),Output('dinosaur-page','data'),
           Output('dinosaur-page-label','children'),Output('dinosaur-previous','disabled'),Output('dinosaur-next','disabled'),
           Output('dinosaur-coverage','children'),Input('dinosaur-query','value'),Input('dinosaur-country','value'),
           Input('dinosaur-lineage','value'),Input('dinosaur-view','value'),Input('dinosaur-scope','value'),Input('dinosaur-previous','n_clicks'),
@@ -77,7 +78,7 @@ def results(query,country,lineage,view,scope,_previous,_next,_refresh,page, sect
     except (ValueError,OSError,sqlite3.Error,TypeError):
         return html.P('The installed collection could not be read. Check it in Data collections.'),'Search unavailable',1,'',True,True,''
 
-@callback(Output('dinosaur-selected','data'),Input({'type':'dinosaur-open','index':ALL},'n_clicks'),
+@when_opened('section-dinosaurs', Output('dinosaur-selected','data'),Input({'type':'dinosaur-open','index':ALL},'n_clicks'),
           Input('dinosaur-query','value'),Input('dinosaur-country','value'),Input('dinosaur-lineage','value'),
           Input('dinosaur-view','value'),Input('dinosaur-scope','value'),Input('dinosaur-page','data'),Input('data-pack-refresh','data'),Input('dinosaur-state','value'))
 def select(clicks,query,country,lineage,view,scope,page,_refresh,state='all'):
@@ -100,7 +101,7 @@ def current(selected,query,country,lineage,view,scope,page,state='all'):
     result = catalog.search(page=page,**values)
     return catalog.get_record(selected.get('id')) if any(row['id']==selected.get('id') for row in result['rows']) else None
 
-@callback(Output('dinosaur-detail','children'),Input('dinosaur-selected','data'),Input('dinosaur-query','value'),
+@when_opened('section-dinosaurs', Output('dinosaur-detail','children'),Input('dinosaur-selected','data'),Input('dinosaur-query','value'),
           Input('dinosaur-country','value'),Input('dinosaur-lineage','value'),Input('dinosaur-view','value'),
           Input('dinosaur-scope','value'),Input('dinosaur-page','data'),Input('data-pack-refresh','data'),Input('dinosaur-state','value'))
 def reader(selected,query,country,lineage,view,scope,page,_refresh,state='all'):

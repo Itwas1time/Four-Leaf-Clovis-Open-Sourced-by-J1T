@@ -5,3 +5,5 @@ atlas/gui/assets/00-leaflet*.css -text whitespace=cr-at-eol
 atlas/gui/assets/leaflet-* -text whitespace=cr-at-eol
 atlas/gui/assets/natural-earth-land-110m.json -text whitespace=cr-at-eol
 atlas/gui/assets/offline-map-sources.json -text whitespace=cr-at-eol
+# Published manuscript and source workbooks retain their original bytes.
+atlas/gui/data/offline-publications/** -text whitespace=cr-at-eol

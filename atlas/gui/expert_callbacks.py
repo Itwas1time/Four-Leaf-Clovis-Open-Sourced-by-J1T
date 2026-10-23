@@ -1,6 +1,7 @@
 """Local question packets and attributed responses; no sending integration."""
 import re
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core.fieldbook import EMPTY_BOOK, validate_book, merge_entries, readable_text
 from core.expert_questions import prepare_question, response_entry, question_first_markdown
 
@@ -50,7 +51,7 @@ def related_records(book, selected):
     ], className='clovis-expert-disclosure')
 
 
-@callback(Output('expert-tools','style'), Output('expert-source-title','children'),
+@when_opened('notebook', Output('expert-tools','style'), Output('expert-source-title','children'),
           Output('expert-response-panel','style'), Output('expert-question-panel','style'), Output('expert-related-records','children'),
           Input('fieldbook-store','data'), Input('fieldbook-selected','value'))
 def expert_selection(book, selected):
@@ -78,7 +79,7 @@ def open_related(clicks, book):
         return no_update
 
 
-@callback(Output('expert-question-preview','children'), Output('expert-question-draft','data'),
+@when_opened('notebook', Output('expert-question-preview','children'), Output('expert-question-draft','data'),
           Output('expert-question-status','children'), Output('expert-download','disabled'), Output('expert-save','disabled'),
           Input('expert-prepare','n_clicks'), Input('fieldbook-store','data'), Input('fieldbook-selected','value'),
           Input('expert-question','value'), Input('expert-comparison','value'), Input('expert-detail','value'))

@@ -2,6 +2,7 @@
 from atlas.gui.library_activation import require_section
 from urllib.parse import urlsplit
 from dash import ALL, MATCH, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 
 from core.reference_catalog import catalog_stats, search_objects, get_object, facts, collection_key, MET_GROUPS, SI_GROUPS
 from core.state_fossil_library import state_reading
@@ -23,7 +24,7 @@ def _url(value, hosts):
         return ''
 
 
-@callback(Output('library-object-material','options'),Output('library-object-material','value'),
+@when_opened('section-objects', Output('library-object-material','options'),Output('library-object-material','value'),
           Output('library-object-era','disabled'),Output('library-object-group-label','children'),
           Input('library-object-collection','value'))
 def collection_filters(collection):
@@ -47,12 +48,12 @@ def open_state_chapter(clicks):
     return destination.get(trigger.get('key'),no_update) if isinstance(trigger,dict) and isinstance(clicks,list) and any(type(n) is int and n>0 for n in clicks) else no_update
 
 
-@callback(Output('library-state','value'), Input('resident-state','value'))
+@when_opened('section-states', Output('library-state','value'), Input('resident-state','value'))
 def follow_selected_state(state):
     return state if isinstance(state,str) and state in STATE_NAMES else no_update
 
 
-@callback(Output('library-state-reading','children'), Input('library-state','value'))
+@when_opened('section-states', Output('library-state-reading','children'), Input('library-state','value'))
 def read_state(state):
     if not isinstance(state,str) or state not in STATE_NAMES:
         return html.P('Choose a state for its fossil groups, geological setting and recorded examples.',className='atlas-help')
@@ -77,7 +78,7 @@ def read_state(state):
             html.P('Statewide learning context · Sources reviewed '+reading.get('reviewed',''),className='atlas-help')]
 
 
-@callback(Output('library-object-cards','children'),Output('library-object-count','children'),
+@when_opened('section-objects', Output('library-object-cards','children'),Output('library-object-count','children'),
           Output('library-object-page','data'),Output('library-object-page-label','children'),
           Output('library-object-previous','disabled'),Output('library-object-next','disabled'),
           Output('library-object-source','children'),
@@ -125,7 +126,7 @@ def choose_object(clicks,query,category,previous,next_clicks,era,collection):
     return record['id'] if record and record['id'].startswith(collection_key(collection)+':') else no_update
 
 
-@callback(Output('library-object-detail','children'),Input('library-object-selected','data'))
+@when_opened('section-objects', Output('library-object-detail','children'),Input('library-object-selected','data'))
 def read_object(selected):
     if not isinstance(selected,str) or len(selected)>123:
         return html.P('Choose a record to read its materials, date and dimensions. These are museum reference objects, not records of finds at your town.')

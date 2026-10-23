@@ -3,6 +3,7 @@ from atlas.gui.library_activation import require_section
 import sqlite3
 from urllib.parse import urlsplit
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 
 from core import mineral_property_catalog as catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
@@ -21,7 +22,7 @@ def source_link(value, label):
     return html.A(label,href=value,target='_blank',rel='noopener noreferrer') if safe else html.Span(label+' · Link unavailable')
 
 
-@callback(Output('library-mineral-cards','children'),Output('library-mineral-count','children'),
+@when_opened('section-minerals', Output('library-mineral-cards','children'),Output('library-mineral-count','children'),
           Output('library-mineral-page','data'),Output('library-mineral-page-label','children'),
           Output('library-mineral-previous','disabled'),Output('library-mineral-next','disabled'),
           Output('library-mineral-coverage','children'),Input('library-mineral-query','value'),
@@ -65,7 +66,7 @@ def current_record(selected, query, page):
     return catalog.get_mineral(identifier) if identifier else None
 
 
-@callback(Output('library-mineral-detail','children'),Input('library-mineral-selected','data'),
+@when_opened('section-minerals', Output('library-mineral-detail','children'),Input('library-mineral-selected','data'),
           Input('library-mineral-query','value'),Input('library-mineral-page','data'))
 def read(selected, query, page):
     try:

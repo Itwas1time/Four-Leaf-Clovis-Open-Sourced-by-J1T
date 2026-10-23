@@ -14,6 +14,8 @@ from core import ads_metadata_catalog
 from core import amcr_catalog
 from core import dans_metadata_catalog
 from core import raa_fieldwork_catalog
+from core import france_fieldwork_catalog
+from core import finland_register_catalog
 from core.dig_records import DigBook
 from core.atlas_search_ideas import chosen_query
 from atlas.gui.atlas_ui import search_help
@@ -26,7 +28,70 @@ PACK_SOURCES = {"radiocarbon-world": "dates", "dinosaur-sites": "dinosaurs", "ne
                 "excavations-surveys": "contexts", "dated-environments": "environments", "anatolian-zooarchaeology": "specimens",
                 "excavation-assemblages": "field_assemblages", "north-american-sites": "site_registers", "ancient-places": "places",
                 'ads-research-metadata': 'ads', 'amcr-native-metadata': 'amcr',
-                'dans-archaeology-metadata': 'dans', 'raa-fieldwork':'raa'}
+                'dans-archaeology-metadata': 'dans', 'raa-fieldwork':'raa', 'france-fieldwork':'france',
+                'finland-antiquities':'finland'}
+
+
+@callback(Output('atlas-france-filters','style'),Output('atlas-france-method','options'),
+          Output('atlas-france-method','value'),Output('atlas-france-field','value'),
+          Output('atlas-context','data',allow_duplicate=True),Output('atlas-france-status','children'),
+          Input('atlas-source','value'),Input('atlas-kind','value'),Input('atlas-france-method','value'),
+          Input('atlas-france-field','value'),Input('atlas-clear-context','n_clicks'),
+          Input('data-pack-refresh','data'),State('atlas-context','data'),prevent_initial_call=True)
+def france_filters(source,kind,method,field,_clear,_refresh,context):
+    options=[{'label':'All original categories','value':''},
+        {'label':france_fieldwork_catalog.EXCAVATION_LABEL,'value':'excavation'}]
+    if source!='france' or kind not in ('all','archaeology'):
+        return {'display':'none'},options,no_update,no_update,no_update,''
+    try:
+        clear=callback_context.triggered_id=='atlas-clear-context'
+        method,field=('', 'all') if clear else (method or '',field or 'all')
+        france_fieldwork_catalog.validate_parameters(method=method,field=field)
+        options.extend({'label':row['label']+f" · {row['records']:,}",'value':row['value']}
+            for row in france_fieldwork_catalog.choices())
+        parameters={'collection':'france','field':field}
+        if method:parameters['method']=method
+        label=france_fieldwork_catalog.EXCAVATION_LABEL if method=='excavation' else method or 'All original categories'
+        value={'parameters':parameters,'label':'France · regional operations · '+label+' · '+france_fieldwork_catalog.FIELDS[field]}
+        return {},options,'' if clear else no_update,'all' if clear else no_update,no_update if context==value else value,''
+    except ERRORS:
+        return {},options,no_update,no_update,no_update,'The French operation collection could not be read. Check Manage offline collections.'
+
+
+@callback(Output('atlas-finland-filters','style'),Output('atlas-finland-class','options'),Output('atlas-finland-dating','options'),
+          Output('atlas-finland-class','value'),Output('atlas-finland-dating','value'),Output('atlas-finland-field','value'),
+          Output('atlas-context','data',allow_duplicate=True),Output('atlas-finland-status','children'),
+          Input('atlas-source','value'),Input('atlas-kind','value'),Input('atlas-finland-class','value'),
+          Input('atlas-finland-dating','value'),Input('atlas-finland-field','value'),Input('atlas-clear-context','n_clicks'),
+          Input('data-pack-refresh','data'),State('atlas-context','data'),prevent_initial_call=True)
+def finland_filters(source,kind,site_class,dating,field,_clear,_refresh,context):
+    classes=[{'label':'All original classes','value':''}]
+    datings=[{'label':'All original dating values','value':''}]
+    if source!='finland' or kind not in ('all','archaeology'):
+        return {'display':'none'},classes,datings,no_update,no_update,no_update,no_update,''
+    try:
+        clear=callback_context.triggered_id=='atlas-clear-context'
+        site_class,dating,field=('','','all') if clear else (site_class or '',dating or '',field or 'all')
+        finland_register_catalog.validate_parameters(site_class=site_class,dating=dating,field=field)
+        known=[]
+        message=''
+        for column,selected,options in (('site_class',site_class,classes),('dating',dating,datings)):
+            rows=finland_register_catalog.choices(column)
+            options.extend({'label':row['label']+f" · {row['records']:,}",'value':row['value']} for row in rows if row['value'])
+            if selected:
+                known.append(selected)
+                if selected not in {row['value'] for row in rows}:
+                    options.append({'label':'Original value absent from this snapshot · '+selected,'value':selected})
+                    message='A selected original value is absent from this snapshot. Results have not been broadened.'
+        parameters={'collection':'finland','field':field}
+        if site_class:parameters['site_class']=site_class
+        if dating:parameters['dating']=dating
+        value={'parameters':parameters,'label':'Finland · Antiquities Record · '+finland_register_catalog.FIELDS[field]
+            +(' · '+' · '.join(known) if known else '')}
+        return ({},classes,datings,'' if clear else no_update,'' if clear else no_update,'all' if clear else no_update,
+                no_update if context==value else value,message)
+    except ERRORS:
+        return {},classes,datings,no_update,no_update,no_update,no_update,'The Finnish register collection could not be read. Check Manage offline collections.'
 
 
 @callback(Output('atlas-raa-filters','style'),Output('atlas-raa-method','options'),Output('atlas-raa-state','options'),
@@ -189,9 +254,9 @@ def navigate(_return, _manage):
 
 
 @callback(Output("resident-tool", "value", allow_duplicate=True), Input("header-place-button", "n_clicks"),
-          State("resident-tool", "value"), prevent_initial_call=True)
-def choose_town(clicks, tool):
-    return "map" if clicks and tool == "library" else no_update
+          State("resident-tool", "value"), Input("start-town", "n_clicks"), prevent_initial_call=True)
+def choose_town(clicks, tool, start=None):
+    return "map" if (clicks or start) and tool == "library" else no_update
 
 
 def _parameters(query, kind, source, context):
@@ -203,6 +268,43 @@ def _parameters(query, kind, source, context):
           prevent_initial_call=True)
 def query_ideas(query):
     return search_help(query)
+
+
+@callback(Output('atlas-town-hint','children'), Input('atlas-query','value'), prevent_initial_call=True)
+def town_hint(query):
+    """A town name is better answered by its offline town report than by records that mention the word."""
+    from core.us_places import exact_towns
+    towns = exact_towns(query, limit=13)
+    if not towns:
+        return []
+    shown = towns[:12]
+    note = ('Add a state to narrow the list, for example "' + query.strip() + ', Ohio".' if len(towns) > 12
+            else 'The report uses public town points and maps, not property or find locations.')
+    return html.Div([
+        html.P(['"', query.strip(), '" is also a US town name. Open its offline town report for mapped geology, '
+                'historical maps and published evidence:'], className='atlas-help'),
+        html.Div([html.Button(town['label'], id={'type': 'atlas-town', 'index': town['geoid']}, n_clicks=0,
+                              className='atlas-secondary-button') for town in shown], className='clovis-pack-actions'),
+        html.P(note, className='atlas-help')], className='clovis-atlas-town-hint')
+
+
+@callback(Output('workflow-mode','value',allow_duplicate=True), Output('resident-tool','value',allow_duplicate=True),
+          Output('resident-state','value',allow_duplicate=True), Output('resident-place','options',allow_duplicate=True),
+          Output('resident-place','disabled',allow_duplicate=True), Output('resident-place','value',allow_duplicate=True),
+          Output('resident-build','n_clicks',allow_duplicate=True),
+          Input({'type':'atlas-town','index':ALL},'n_clicks'), State('resident-build','n_clicks'), prevent_initial_call=True)
+def open_town_report(clicks, built):
+    from core.us_places import get_place, STATE_NAMES
+    trigger = callback_context.triggered_id
+    if not isinstance(trigger, dict) or not any(type(value) is int and value > 0 for value in clicks or []):
+        return (no_update,) * 7
+    geoid = trigger.get('index')
+    place = next((get_place(geoid, state) for state in STATE_NAMES if get_place(geoid, state)), None)
+    if place is None:
+        return (no_update,) * 7
+    option = {'label': place['name'] + ', ' + place['state'], 'value': place['geoid']}
+    previous = built if type(built) is int and built >= 0 else 0
+    return 'resident', 'map', place['state'], [option], False, place['geoid'], previous + 1
 
 
 @callback(Output('atlas-query','value',allow_duplicate=True),
@@ -251,7 +353,11 @@ def results(query, kind, source, context, _previous, _next, _refresh, page):
                              className="clovis-library-record") for row in result["rows"]]
         if not cards:
             limits = context.get('parameters', {}) if isinstance(context, dict) else {}
-            if source == 'raa':
+            if source == 'finland':
+                cards=[html.P('No register sites match these class, dating and text limits. The register is incomplete; a missing site does not establish an absence of archaeology. Try another original field, a whole municipality name, or clear these limits.')]
+            elif source == 'france':
+                cards=[html.P('No operation-table rows match these category and text limits. This regional table is incomplete; missing place names do not establish an absence of archaeology. Try another original field or clear these limits.')]
+            elif source == 'raa':
                 cards=[html.P('No assignment editions match these original type, status, geometry and text limits. Coverage is incomplete. Missing geometry or place text does not establish no archaeology. Clear these limits or search another original field.')]
             elif source == 'dans':
                 cards = [html.P('No DOI metadata resources match these limits. Missing subjects, place fields or untranslated source wording do not establish an absence of archaeology. Try another text field or original subject, or clear these limits.')]
@@ -313,6 +419,29 @@ def _facts(rows):
 
 
 def _reading_facts(record):
+    if record['source']=='finland':
+        # Every original row's attributes remain in the register-rows disclosure
+        # and the saved citation; lead with the site summary.
+        return [(label,value) for label,value in record['facts'] if ' · fid ' not in label]
+    if record['source']=='france':
+        # Lead with the operation evidence. Complete provenance and exact field
+        # names remain in the edition disclosure and unchanged saved citation.
+        native=dict(zip(record['original']['original']['headers'],record['original']['original']['values'],strict=True))
+        names=[("Type d'autorisation",'Operation category'),('Commune','Recorded municipality'),
+            ('Lieu-dit','Recorded place'),('Date demarrage','Recorded start date'),('Date fin','Recorded end date'),
+            ('Date remise RFO','Recorded report submission'),('Annee','Original realization year'),
+            ('numero SDA','Local SDA operation code'),('numero SRA','Original SRA code'),
+            ('Emprise m²','Original stated project area (m²)'),('Date prescription','Prescription date'),
+            ('Date reception prescription','Prescription received'),('Amenageur - Maitre d\'ouvrage','Original developer'),
+            ('Type amenageur','Developer type'),('Statut amenageur (public/privé)','Developer status'),
+            ('Nature amenagement','Original development type')]
+        rows=[]
+        for key,label in names:
+            value=native[key] if native[key]!='' else 'Not recorded (empty source field)'
+            if key=="Type d'autorisation":
+                value+=' · '+france_fieldwork_catalog.TYPES.get(value,'Original value')
+            rows.append((label+' · '+key,value))
+        return rows
     if record["source"] == "site_registers":
         # Complete identifiers, rights and locators remain in the edition
         # disclosures and saved citation; lead with the site's recorded evidence.
@@ -348,6 +477,11 @@ def reader(selected, query, kind, source, context, page, _refresh):
             return html.P("Choose a result to read its evidence, context and source.")
         children = [reading_nav("atlas-query"), html.P(row["evidence"], className="clovis-atlas-evidence"),
                     html.H3(row["title"]), html.P(row["source_label"], className="atlas-help"), _facts(_reading_facts(row))]
+        if row['source']=='publications':
+            children.append(html.A('Read complete source offline',href='/reference/publication/'+row['original']['id'],
+                target='_blank',rel='noopener noreferrer',className='atlas-secondary-button'))
+            children.append(html.A('Download complete study for offline reading',href='/reference/publication/panama-0335678/bundle',
+                className='atlas-secondary-button'))
         if row['source']=='guides':
             for guide_source in row['original']['sources']:
                 children.extend(local_source_control(guide_source['url'],'atlas-guide'))
@@ -400,6 +534,20 @@ def reader(selected, query, kind, source, context, page, _refresh):
                 html.Button('Download original metadata', id='atlas-' + row['source'] + '-original', n_clicks=0, className='atlas-secondary-button'),
                 _source_link('https://api.datacite.org/dois/' + original['doi'], 'Open current DataCite metadata (online)'),
                 html.Pre(json.dumps(original['source'], ensure_ascii=False, indent=2))]))
+        elif row['source']=='finland':
+            original=row['original']['original']
+            children.append(html.Details([html.Summary('Original register rows, geometry and export edition'),
+                html.P('Every original point, area and sub-site row, with its GeoPackage geometry bytes, remains in the saved citation. The unchanged national export ZIP is retained in the offline collection.',className='atlas-help'),
+                location_control(row['id'],'Show published register geometry'),
+                _facts([('Export edition',original['source']['receipt']['last_modified']+' · retrieved '+original['source']['receipt']['retrieved_utc']),
+                    ('Original export SHA-256',original['source']['receipt']['sha256']),
+                    ('Rows',', '.join(feature['layer']+' fid '+str(feature['fid']) for feature in original['features']))]),
+                html.Pre(json.dumps([feature['attributes'] for feature in original['features']],ensure_ascii=False,indent=2))]))
+        elif row['source']=='france':
+            children.append(html.Details([html.Summary('Complete original row and catalog edition'),
+                html.P('Every original CSV field, row ordinal, source receipt and native catalog response remain in saved citations. Original CSV bytes are retained in the offline collection. No report or image is bundled.',className='atlas-help'),
+                _facts(row['facts'][:7]),
+                html.Pre(json.dumps(row['original']['original'],ensure_ascii=False,indent=2))]))
         elif row['source']=='raa':
             original=row['original']
             payload=original['original']
@@ -633,7 +781,7 @@ def published_map(clicks, selected, query, kind, source, context, page, button):
 def associated(clicks, _clear, kind, source, selected, query, context, page):
     trigger = callback_context.triggered_id
     if trigger in ("atlas-clear-context", "atlas-kind", "atlas-source"):
-        if source in ('ads', 'amcr', 'dans','raa'):
+        if source in ('ads', 'amcr', 'dans','raa','france','finland'):
             # Source controls reset their visible values and limits together.
             return no_update, no_update
         return None, no_update

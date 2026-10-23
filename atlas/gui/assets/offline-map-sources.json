@@ -74,5 +74,19 @@
     "license": "Public domain",
     "license_url": "https://www.naturalearthdata.com/about/terms-of-use/",
     "purpose": "Modern land outline for offline orientation; not ancient geography or a site boundary."
+  },
+  {
+    "project": "U.S. Census Bureau cartographic boundaries",
+    "edition": "2025",
+    "source": "https://www2.census.gov/geo/tiger/GENZ2025/shp/cb_2025_us_county_500k.zip",
+    "source_sha256": "aa976c00b181939755d0da757f4c7c2dc0103c3b3b4530fb2a91c2bb62fc777c",
+    "file": "atlas/gui/data/offline_counties_2025.sqlite",
+    "sha256": "a41a561c77fabdfea42dd2fe3ee654bbe567d3d3d97af2f288ff990f9a20fc87",
+    "records": 3235,
+    "scale": "1:500,000",
+    "changes": "NAD83 to WGS 84 display transformation; six-decimal display coordinates; compressed per-county GeoJSON retaining all original attributes and identifiers.",
+    "reuse": "Native metadata permits product/publication reuse with U.S. Census Bureau acknowledgment.",
+    "use_constraints": "Use at the intended 1:500,000 or smaller display scale. Not for geocoding, precise geographic relationships, area or perimeter analysis.",
+    "purpose": "Modern county/equivalent outlines for offline orientation; not archaeological, historic or property boundaries. Does not add archaeological records."
   }
 ]

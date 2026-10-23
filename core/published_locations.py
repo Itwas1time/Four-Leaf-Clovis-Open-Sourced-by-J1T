@@ -19,6 +19,9 @@ def locations(record):
     if record.get('source')=='raa':
         from core.raa_fieldwork_catalog import published_geometries
         return published_geometries(original)
+    if record.get('source')=='finland':
+        from core.finland_register_catalog import published_geometries
+        return published_geometries(original)
     if record.get('source') in ('ads', 'dans'):
         attributes = original.get('source', {}).get('attributes', {})
         for index, location in enumerate(attributes.get('geoLocations') or [], 1):

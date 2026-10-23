@@ -4,7 +4,10 @@ The maintained interface is the Dash place-context and research planner.
 Python 3.11 or newer is required. The town lookup, directory and planner need
 no API keys. The app opens on Atlas search. Town reports start with online
 rock maps off; select the option when wanted. The online request runs only
-when Explore is pressed. The map starts with a bundled offline world outline.
+when Explore is pressed. The map starts offline, with a world land outline
+and regional U.S. county outlines and public town labels. **Show regional view**
+recovers county context after a close zoom. Streets and property detail are
+not bundled. See [map sources and coverage](OFFLINE_MAP_SOURCES.md).
 
 ## Windows PowerShell
 

@@ -8,6 +8,7 @@ from atlas.gui.resident_ui import controls as resident_controls, report_panel as
 from atlas.gui.inspection_ui import controls as inspection_controls
 from atlas.gui.fieldbook_ui import controls as fieldbook_controls, inspector as fieldbook_inspector
 from atlas.gui.theme_ui import theme_toggle
+from atlas.gui.workspace_activation import stores as workspace_stores
 from atlas.gui.styles import BG_PANEL, BORDER, PANEL_STYLE, SECTION_HEADER_STYLE, TEXT_DIM, TEXT_PRIMARY, TEXT_SECONDARY
 
 _CURRENT_LEADS = matching_leads()
@@ -394,23 +395,24 @@ def build_inspector_panel() -> html.Aside:
 def build_stores() -> html.Div:
     return html.Div(
         [
-            dcc.Store(id="aoi-store", data=None),
-            dcc.Store(id="analysis-store", data=None),
-            dcc.Store(id="candidate-results-store", data=None),
-            dcc.Store(id="candidate-file-store", data=None),
-            dcc.Store(id="selected-map-feature-store", data=None),
+            dcc.Store(id="aoi-store"),
+            dcc.Store(id="analysis-store"),
+            dcc.Store(id="candidate-results-store"),
+            dcc.Store(id="candidate-file-store"),
+            dcc.Store(id="selected-map-feature-store"),
             dcc.Store(id="selected-lead-store", data=_INITIAL_LEAD["id"] if _INITIAL_LEAD else None),
             dcc.Store(id="filtered-lead-store", data=[lead["id"] for lead in _CURRENT_LEADS]),
             dcc.Store(id="search-result-store", data=[]),
             dcc.Store(id="catalog-page-store", data=1),
-            dcc.Store(id="catalog-selected-store", data=None),
+            dcc.Store(id="catalog-selected-store"),
             dcc.Download(id="brief-download"),
-            dcc.Store(id="resident-report-store", data=None),
-            dcc.Store(id="place-focus-request", data=None),
-            dcc.Store(id="place-focus-complete", data=None),
-            dcc.Store(id="resident-panel-position", data=None),
+            dcc.Store(id="resident-report-store"),
+            dcc.Store(id="place-focus-request"),
+            dcc.Store(id="place-focus-complete"),
+            dcc.Store(id="resident-panel-position"),
             dcc.Store(id='fieldbook-store',storage_type='local',data={'version':1,'entries':[]}),
             dcc.Download(id="resident-download"),
+            *workspace_stores(),
         ],
         style={"display": "none"},
     )

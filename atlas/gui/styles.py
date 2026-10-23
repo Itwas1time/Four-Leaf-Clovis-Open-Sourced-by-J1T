@@ -44,7 +44,7 @@ TILE_URLS = {
 }
 
 TILE_ATTRIBUTIONS = {
-    "offline": 'Offline modern land outline: <a href="https://www.naturalearthdata.com/">Natural Earth</a> · 1:110 million; no roads or property detail',
+    "offline": 'Land: <a href="https://www.naturalearthdata.com/">Natural Earth</a> · County/place context: <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.2025.html">U.S. Census Bureau (2025)</a>',
     "satellite": 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
     "topographic": 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, SRTM | Map style &copy; <a href="https://opentopomap.org/">OpenTopoMap</a> (CC-BY-SA)',
     "terrain": '&copy; <a href="https://stadiamaps.com/attribution/">Stadia Maps</a> &copy; <a href="https://stamen.com/">Stamen Design</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',

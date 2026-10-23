@@ -180,11 +180,11 @@ _FILE_READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-pac
 
 
 @lru_cache(maxsize=2048)
-def _file_matches(path, size, modified, changed, expected):
+def _file_matches(path, size, modified, changed, expected, identity=()):
     return _hash(Path(path)) == expected
 
 
-def _verified_file(path, size, modified, changed, expected):
+def _verified_file(path, size, modified, changed, expected, identity=()):
     # Initial Dash callbacks can request the same multi-gigabyte collection
     # concurrently. Share its first full checksum; never replace it with a
     # file-stat-only acceptance or use one file's result for another.
@@ -194,35 +194,67 @@ def _verified_file(path, size, modified, changed, expected):
             lock = Lock()
             _HASH_LOCKS[path] = lock
     with lock:
-        return _file_matches(path, size, modified, changed, expected)
+        return _file_matches(path, size, modified, changed, expected, identity)
 
 
-_verified_file.cache_clear = _file_matches.cache_clear
+def _clear_verification_cache():
+    _file_matches.cache_clear()
+    _checked_snapshot.cache_clear()
+
+
+_verified_file.cache_clear = _clear_verification_cache
 _verified_file.cache_info = _file_matches.cache_info
+
+
+@lru_cache(maxsize=256)
+def _checked_snapshot(directory, members):
+    root = Path(directory)
+    for _ in _FILE_READERS.map(
+            lambda member: _check_member(root, {'name': member[0], 'bytes': member[1], 'sha256': member[2]},
+                                         resolved_root=root), members):
+        pass
 
 
 def _check_files(root, pack, *, database_checks=False):
     expected = {row["name"] for row in pack["files"]}
     if not root.is_dir() or root.is_symlink() or {path.name for path in root.iterdir()} != expected:
         raise ValueError("The installed collection is incomplete or contains unexpected files.")
+    resolved_root = root.resolve()
     if database_checks:
         # Installation owns temporary files. Finish each integrity check before
         # returning or cleaning those files; live first-use hashes are read-only.
         for row in pack["files"]:
-            _check_member(root, row, database_checks=True)
+            _check_member(root, row, database_checks=True, resolved_root=resolved_root)
     else:
-        for _ in _FILE_READERS.map(lambda row: _check_member(root, row), pack["files"]):
-            pass
+        # Recheck every member and the complete directory on every use. Cache
+        # the successful full verification only for this exact file snapshot;
+        # changed bytes, times, file identity, target directory or trusted
+        # publisher definition all force verification again. This avoids
+        # resolving each unchanged path several times on Windows.
+        members = []
+        for row in pack['files']:
+            details = (root / row['name']).lstat()
+            if not stat.S_ISREG(details.st_mode):
+                raise ValueError('A collection member must be a regular file, not a link or directory.')
+            if details.st_size != row['bytes']:
+                raise ValueError('A collection file does not match its published checksum.')
+            members.append((row['name'], row['bytes'], row['sha256'], details.st_size,
+                            details.st_mtime_ns, details.st_ctime_ns, details.st_ino, details.st_dev))
+        _checked_snapshot(str(resolved_root), tuple(members))
 
 
-def _check_member(root, row, *, database_checks=False):
-    path = _inside(root, root / row["name"])
+def _check_member(root, row, *, database_checks=False, resolved_root=None):
+    path = root / row["name"]
+    resolved = path.resolve()
+    if not resolved.is_relative_to(resolved_root if resolved_root is not None else root.resolve()) or path.is_symlink():
+        raise ValueError("A collection path leaves its local storage folder.")
     details = path.stat()
     if (details.st_size != row["bytes"] or not _verified_file(
-            str(path.resolve()), details.st_size, details.st_mtime_ns, details.st_ctime_ns, row["sha256"])):
+            str(resolved), details.st_size, details.st_mtime_ns, details.st_ctime_ns, row["sha256"],
+            (details.st_ino, details.st_dev))):
         raise ValueError("A collection file does not match its published checksum.")
     if database_checks and path.suffix == ".sqlite":
-        with closing(sqlite3.connect(path.resolve().as_uri() + "?mode=ro&immutable=1", uri=True)) as connection:
+        with closing(sqlite3.connect(resolved.as_uri() + "?mode=ro&immutable=1", uri=True)) as connection:
             if connection.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
                 raise ValueError("The collection database failed its integrity check.")
             if connection.execute("PRAGMA user_version").fetchone()[0] != row["user_version"]:

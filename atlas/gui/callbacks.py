@@ -6,6 +6,7 @@ import math
 import re
 
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 
 from atlas.gui.data.fieldwork_leads import LEADS_BY_ID
 from atlas.gui.data.institution_locations import CURATED_INSTITUTION_LOCATIONS
@@ -108,7 +109,7 @@ NATIONAL_RULE_STARTERS = {
 }
 
 
-@callback(
+@when_opened('research', 
     Output("brief-step-guide", "children"),
     Output("brief-status", "children"),
     Output("brief-preview", "children"),
@@ -175,33 +176,33 @@ def download_research_brief(_clicks, mode, lead_id, analysis, aoi_data, area_lab
     return {"content": markdown, "filename": f"clovis-research-brief-{slug}.md", "type": "text/markdown"}
 
 
-@callback(Output("aoi-controls-section", "open"), Input("brief-mode", "value"))
+@when_opened('research', Output("aoi-controls-section", "open"), Input("brief-mode", "value"))
 def reveal_area_controls(mode):
     return mode == "area"
 
 
-@callback(Output("catalog-detail-section", "open"), Input("catalog-selected-store", "data"))
+@when_opened('research', Output("catalog-detail-section", "open"), Input("catalog-selected-store", "data"))
 def reveal_selected_record(record_id):
     return bool(record_id)
 
 
-@callback(Output("local-review-section", "open"), Input("analysis-store", "data"))
+@when_opened('research', Output("local-review-section", "open"), Input("analysis-store", "data"))
 def reveal_local_review(analysis):
     return bool(analysis)
 
 
-@callback(Output("candidate-review-section", "open"), Input("candidate-results-store", "data"))
+@when_opened('research', Output("candidate-review-section", "open"), Input("candidate-results-store", "data"))
 def reveal_candidate_comparison(results):
     return bool(results)
 
 
-@callback(Output("map-inspector-section", "open"),
+@when_opened('research', Output("map-inspector-section", "open"),
           Input("selected-map-feature-store", "data"), Input("analysis-store", "data"))
 def reveal_map_inspector(selection, analysis):
     return bool(selection and analysis)
 
 
-@callback(
+@when_opened('research', 
     Output("catalog-page-store", "data"),
     Input("catalog-kind", "value"),
     Input("catalog-search", "value"),
@@ -220,7 +221,7 @@ def change_catalog_page(_kind, _query, _source, _country, _prev, _next, page):
     return 1
 
 
-@callback(
+@when_opened('research', 
     Output("catalog-results", "children"),
     Output("catalog-status", "children"),
     Output("catalog-page-label", "children"),
@@ -306,7 +307,7 @@ def clear_catalog_selection(_kind, _query, _source, _country):
     return None
 
 
-@callback(
+@when_opened('research', 
     Output({"type": "catalog-record", "index": ALL}, "className"),
     Input("catalog-selected-store", "data"),
     Input({"type": "catalog-record", "index": ALL}, "id"),
@@ -318,7 +319,7 @@ def highlight_catalog_record(selected_id, button_ids):
     ]
 
 
-@callback(Output("catalog-detail", "children"), Input("catalog-selected-store", "data"))
+@when_opened('research', Output("catalog-detail", "children"), Input("catalog-selected-store", "data"))
 def render_catalog_record(record_id):
     row = get_record(record_id)
     if not row:
@@ -414,7 +415,7 @@ def _feature_card(title: str, items: list[str], tone: str = "normal") -> html.Di
     )
 
 
-@callback(
+@when_opened('research', 
     Output("field-lead-list", "children"),
     Output("lead-results-status", "children"),
     Output("filtered-lead-store", "data"),
@@ -476,7 +477,7 @@ def select_field_lead(clicks, button_ids):
     return lead["id"], {"center": lead["center"], "zoom": lead["zoom"], "transition": "setView"}, None
 
 
-@callback(
+@when_opened('research', 
     Output({"type": "field-lead-button", "index": ALL}, "className"),
     Input("selected-lead-store", "data"),
     Input({"type": "field-lead-button", "index": ALL}, "id"),
@@ -505,7 +506,7 @@ def select_first_visible_lead(visible_ids, selected_id):
     return lead["id"], {"center": lead["center"], "zoom": lead["zoom"], "transition": "setView"}, None
 
 
-@callback(
+@when_opened('research', 
     Output("field-lead-detail", "children"),
     Input("selected-lead-store", "data"),
 )
@@ -658,7 +659,7 @@ def show_selected_region(selected_id, mode="research", geoid=None, state=None):
     return f"{lead['name']} · fieldwork lead" if lead else "No current fieldwork lead"
 
 
-@callback(
+@when_opened('research', 
     Output("aoi-store", "data"),
     Output("analysis-status", "children"),
     Input("draw-control", "geojson"),
@@ -733,7 +734,7 @@ def run_local_analysis(_clicks, aoi_data, buffer_km):
     return analysis, status
 
 
-@callback(
+@when_opened('research', 
     Output("analysis-metrics", "children"),
     Input("analysis-store", "data"),
 )
@@ -768,7 +769,7 @@ def switch_basemap(value, mode='resident', tool='library'):
     return TILE_URLS[key], TILE_ATTRIBUTIONS[key], 17 if key == "topographic" else 19
 
 
-@callback(
+@when_opened('research', 
     Output("aoi-layer", "data"),
     Output("buffer-layer", "data"),
     Output("scored-cells-layer", "data"),
@@ -810,7 +811,7 @@ def render_layers(analysis, visible_layers):
     )
 
 
-@callback(
+@when_opened('research', 
     Output("summary-panel", "children"),
     Input("analysis-store", "data"),
 )
@@ -884,7 +885,7 @@ def load_candidate_areas(file_data):
     return results, f"Loaded {len(results)} {noun} from {filename}; {ranked} {verb} enough user-supplied evidence for research ranking."
 
 
-@callback(
+@when_opened('research', 
     Output("candidate-panel", "children"),
     Input("candidate-results-store", "data"),
 )
@@ -909,7 +910,7 @@ def render_candidate_areas(results):
     return html.Div([html.Div("Research area comparison", className="atlas-panel-title")] + cards)
 
 
-@callback(
+@when_opened('research', 
     Output("inspector-content", "children"),
     Input("selected-map-feature-store", "data"),
     Input("analysis-store", "data"),

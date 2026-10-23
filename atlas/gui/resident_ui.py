@@ -58,6 +58,8 @@ def report_panel():
             html.P("Explore a town to start a source-linked record. Saved notes stay in your browser."),
         ], id="resident-empty-state", className="atlas-empty-state"),
         html.Div(id='resident-evidence-overview', className='clovis-evidence-overview'),
+        html.Section(id='resident-nearby', className='clovis-nearby', **{'aria-live': 'polite'}),
+        dcc.Interval(id='resident-nearby-poll', interval=3000, disabled=True),
         html.Div([
             html.Button('Record an exposed object →', id={'type':'workbench-action','target':'inspect','key':'inspector-mission'}, n_clicks=0, className='atlas-primary-button'),
         ], className='clovis-inspector-tools'),

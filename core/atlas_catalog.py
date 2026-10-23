@@ -2,8 +2,10 @@
 from copy import deepcopy
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
+import re
 import sqlite3
 from threading import Lock
+import unicodedata
 from weakref import WeakValueDictionary
 
 from core import archaeology_project_catalog as projects
@@ -26,6 +28,9 @@ from core import ads_metadata_catalog as ads
 from core import amcr_catalog as amcr
 from core import dans_metadata_catalog as dans
 from core import raa_fieldwork_catalog as raa
+from core import france_fieldwork_catalog as france
+from core import finland_register_catalog as finland
+from core import publication_catalog as publications
 
 PAGE_SIZE = 24
 SOURCES = {
@@ -44,16 +49,21 @@ SOURCES = {
     "amcr": "AMCR · native fieldwork & sites",
     "dans": "DANS · archaeology DOI metadata",
     "raa": "Sweden · RAÄ fieldwork assignments",
+    "france": "France · regional archaeological operations",
+    "finland": "Finland · Antiquities Record sites",
+    "publications": "Full research papers & original tables",
 }
 KINDS = {"all": "All evidence", "archaeology": "Archaeology & objects", "fossils": "Fossils",
          "history": "Historical documents", "earth": "Geology & minerals"}
-GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "field_assemblages", "site_registers", "places", "projects", "dates", "met", "si", "guides", "ads", "amcr", "dans", "raa"),
+GROUPS = {"all": tuple(SOURCES), "archaeology": ("assemblages", "contexts", "environments", "specimens", "field_assemblages", "site_registers", "places", "projects", "dates", "met", "si", "guides", "ads", "amcr", "dans", "raa", "france", "finland", "publications"),
           "fossils": ("fossils", "dinosaurs"), "history": ("newspapers",), "earth": ("geology", "minerals")}
 OPTIONAL = {"assemblages": assemblages, "dates": dates, "dinosaurs": dinosaurs, "contexts": contexts, "environments": environments, "specimens": specimens, "field_assemblages": field_assemblages, "site_registers": site_registers, "places": places}
 OPTIONAL['ads'] = ads
 OPTIONAL['amcr'] = amcr
 OPTIONAL['dans'] = dans
 OPTIONAL['raa'] = raa
+OPTIONAL['france'] = france
+OPTIONAL['finland'] = finland
 _READERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas")
 _VERIFIERS = ThreadPoolExecutor(max_workers=4, thread_name_prefix="clovis-atlas-verification")
 _FIRST_PAGE_LOCKS = WeakValueDictionary()
@@ -64,7 +74,7 @@ def available_sources():
     # A private candidate is offered only when its trusted catalog is supplied.
     # Do not leave an unpublished source with no installation route in the UI.
     offered = {}
-    for key, module in (('ads', ads), ('amcr', amcr), ('dans', dans), ('raa', raa)):
+    for key, module in (('places', places), ('ads', ads), ('amcr', amcr), ('dans', dans), ('raa', raa), ('france', france), ('finland', finland)):
         try:
             offered[key] = module.advertised()
         except (ValueError, OSError):
@@ -91,6 +101,16 @@ def _signature(sources=None):
 
 
 def _native(source, query, page, context=()):
+    if source == 'publications':
+        return publications.search(query=query,page=page),publications.PAGE_SIZE
+    if source == 'finland':
+        parameters=dict(context)
+        parameters.pop('collection',None)
+        return finland.search(query=query,page=page,**parameters),finland.PAGE_SIZE
+    if source == 'france':
+        parameters=dict(context)
+        parameters.pop('collection',None)
+        return france.search(query=query,page=page,**parameters),france.PAGE_SIZE
     if source == 'raa':
         parameters=dict(context)
         parameters.pop('collection',None)
@@ -232,7 +252,7 @@ def _card(source, row):
                 "fossils": "Fossil specimen", "dinosaurs": "Published fossil occurrence",
                 "dates": "Radiocarbon determination", "geology": "Mapped geological unit",
                 "minerals": "Mineral reference", "newspapers": "Newspaper title", "guides": "Material guide"}.get(source)
-    if source in ("environments", "specimens", "field_assemblages", "site_registers", "places", "ads", "amcr", "dans", "raa"):
+    if source in ("environments", "specimens", "field_assemblages", "site_registers", "places", "ads", "amcr", "dans", "raa", "france", "finland", "publications"):
         evidence, subtitle = row["category"], row["subtitle"]
     elif source == "contexts":
         evidence = row["category"]
@@ -263,7 +283,15 @@ def _parameters(query, kind, source, context):
                    or any(ord(char) < 32 or 0xD800 <= ord(char) <= 0xDFFF for char in value) for value in context.values())):
         raise ValueError("Choose a published evidence association.")
     collection = context.get("collection", "assemblages")
-    if collection == 'raa':
+    if collection == 'finland':
+        if set(context)-{'collection','site_class','dating','field'}:
+            raise ValueError('Choose Finnish native register classes, dating and text fields.')
+        finland.validate_parameters(**{key:value for key,value in context.items() if key!='collection'})
+    elif collection == 'france':
+        if set(context)-{'collection','method','field'}:
+            raise ValueError('Choose French native operation categories and text fields.')
+        france.validate_parameters(**{key:value for key,value in context.items() if key!='collection'})
+    elif collection == 'raa':
         if set(context)-{'collection','method','status','ground','field'}:
             raise ValueError('Choose original Swedish assignment types, status and geometry coverage.')
         raa.validate_parameters(**{key:value for key,value in context.items() if key!='collection'})
@@ -317,6 +345,62 @@ def _parameters(query, kind, source, context):
     return query.strip(), sources, tuple(sorted(context.items()))
 
 
+def _words(text):
+    folded = unicodedata.normalize("NFKD", str(text or ""))
+    folded = "".join(char for char in folded if not unicodedata.combining(char)).casefold()
+    return re.findall(r"[^\W_]+", folded)
+
+
+def _relevance(words, phrase, card):
+    """Whole-word matches in what a reader sees first; substrings such as 'daytonense' do not count."""
+    title = _words(card["title"])
+    subtitle = _words(card["subtitle"])
+    if not words:
+        return 0
+    title_set, subtitle_set = set(title), set(subtitle)
+    in_title = sum(word in title_set for word in words) / len(words)
+    in_subtitle = sum(word in subtitle_set for word in words) / len(words)
+    score = 60 * in_title + 15 * in_subtitle
+    if len(words) > 1 and phrase in " ".join(title):
+        score += 40
+    if title[:len(words)] == words:
+        score += 10
+    return score
+
+
+def _ranked_first_pages(available, counts, query):
+    """Order every source's first-page records by visible relevance; later records keep fair interleaving."""
+    first = [min(count, len(result["rows"])) for count, (_, result, _) in zip(counts, available)]
+    baseline = _positions(first, 0, sum(first))
+    words = _words(query)
+    phrase = " ".join(words)
+    order = {key: rank for rank, key in enumerate(baseline)}
+    scores = {}
+    queues = {}
+    for index, position in baseline:
+        source = available[index][0]
+        # Newspaper titles often contain a query word as a name (e.g. "Arrowhead Leader").
+        try:
+            score = _relevance(words, phrase, _card(source, available[index][1]["rows"][position]))
+        except (KeyError, TypeError, ValueError):
+            score = 0  # Ranking never removes or breaks a record that cannot be scored.
+        scores[(index, position)] = score - (12 if source == "newspapers" else 0)
+        queues.setdefault(index, []).append((index, position))
+    for keys in queues.values():
+        keys.sort(key=lambda key: (-scores[key], order[key]))
+    # Diminishing returns per source keep the strongest matches from several
+    # collections on the first page instead of one collection's near-duplicates.
+    picked = dict.fromkeys(queues, 0)
+    ranked = []
+    while queues:
+        index = max(queues, key=lambda item: (scores[queues[item][0]] - 8 * picked[item], -order[queues[item][0]]))
+        ranked.append(queues[index].pop(0))
+        picked[index] += 1
+        if not queues[index]:
+            del queues[index]
+    return ranked, first
+
+
 def search(query="", kind="all", source="all", page=1, context=None):
     if type(page) is not int or not 1 <= page <= 1_000_000:
         raise ValueError("Choose a valid atlas page.")
@@ -327,7 +411,17 @@ def search(query="", kind="all", source="all", page=1, context=None):
     total = sum(counts)
     pages = max(1, (total + PAGE_SIZE - 1) // PAGE_SIZE)
     page = min(page, pages)
-    wanted = _positions(counts, (page - 1) * PAGE_SIZE, PAGE_SIZE)
+    offset = (page - 1) * PAGE_SIZE
+    if _words(query) and len(available) > 1:
+        # Best whole-word matches from all first pages lead; every later record
+        # still appears exactly once in fair interleaving, so paging never drops one.
+        ranked, first = _ranked_first_pages(available, counts, query)
+        wanted = ranked[offset:offset + PAGE_SIZE]
+        remaining = [count - shown for count, shown in zip(counts, first)]
+        wanted += [(index, first[index] + position) for index, position in
+                   _positions(remaining, max(0, offset - len(ranked)), PAGE_SIZE - len(wanted))]
+    else:
+        wanted = _positions(counts, offset, PAGE_SIZE)
     native_pages = {(index, 1): result for index, (_, result, _) in enumerate(available)}
     rows = []
     for index, position in wanted:
@@ -355,7 +449,25 @@ def get_record(identifier):
     source, key = _identifier(identifier)
     if source is None:
         return None
-    if source == 'raa':
+    if source == 'publications':
+        row=publications.get_record(key)
+        if row is None:
+            return None
+        facts,url=publications.fields(row),'https://doi.org/'+row['native_id']
+        notes,description,license_text=list(publications.NOTES),row['description'],row['rights']['label']
+    elif source == 'finland':
+        row=finland.get_record(key)
+        if row is None:
+            return None
+        facts,url=finland.fields(row),row['source_url']
+        notes,description,license_text=list(finland.NOTES),'',finland.LICENSE
+    elif source == 'france':
+        row=france.get_record(key)
+        if row is None:
+            return None
+        facts,url=france.fields(row),row['source_url']
+        notes,description,license_text=list(france.NOTES),'',france.LICENSE
+    elif source == 'raa':
         row=raa.get_record(key)
         if row is None:
             return None
@@ -526,6 +638,12 @@ def reference_entry(identifier):
     row = get_record(identifier)
     if row is None:
         raise ValueError("Choose a current atlas record to save.")
+    if source == 'publications':
+        return publications.reference_entry(key)
+    if source == 'finland':
+        return finland.reference_entry(key)
+    if source == 'france':
+        return france.reference_entry(key)
     if source == 'raa':
         return raa.reference_entry(key)
     if source == 'dans':

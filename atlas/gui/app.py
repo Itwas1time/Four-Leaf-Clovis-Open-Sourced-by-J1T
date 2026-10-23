@@ -59,6 +59,8 @@ from core.reference_media import register_image_routes
 register_image_routes(server)
 from core.offline_references import register_routes as register_local_reference_routes
 register_local_reference_routes(server)
+from core.publication_catalog import register_routes as register_publication_routes
+register_publication_routes(server)
 from core.pleiades_catalog import register_source_routes
 register_source_routes(server)
 from core.data_pack_uploads import register_routes as register_collection_upload_routes
@@ -76,12 +78,13 @@ def _build_map() -> html.Div:
         children=[
             html.Div([
             html.Div([dcc.RadioItems(id="basemap-selector", options=[
-                {"label": "Offline outline", "value": "offline"},
+                {"label": "Offline map", "value": "offline"},
                 {"label": "Terrain (online)", "value": "terrain"},
                 {"label": "Topographic (online)", "value": "topographic"},
                 {"label": "Satellite (online)", "value": "satellite"},
             ], value="offline", className="atlas-map-switch", inline=True),
-            html.Small('Offline outline: coastlines only; no streets or property detail.', className='atlas-offline-map-note'),
+            html.Small('Offline county outlines and public town points; no streets or property detail.', id='offline-context-note', className='atlas-offline-map-note'),
+            html.Button('Show regional view',id='offline-regional-view',n_clicks=0,className='atlas-secondary-button clovis-regional-view'),
             ], className="atlas-map-switch-wrap"),
             html.Div("The background map could not load. Try another map above; your town report still works.",
                      id="map-network-status", className="atlas-map-network-status", hidden=True, role="status"),
@@ -96,6 +99,7 @@ def _build_map() -> html.Div:
                 style={"width": "100%", "height": "100%", "background": BG_PRIMARY},
                 children=[
                     make_offline_land_layer(),
+                    dl.LayerGroup(id='offline-local-context'),
                     make_tile_layer("offline"),
                     make_geology_layer(),
                     dl.LayerGroup(id="resident-town-point"),
@@ -204,6 +208,8 @@ import atlas.gui.data_pack_callbacks  # noqa: E402,F401
 import atlas.gui.radiocarbon_library_callbacks  # noqa: E402,F401
 import atlas.gui.dinosaur_library_callbacks  # noqa: E402,F401
 import atlas.gui.atlas_callbacks  # noqa: E402,F401
+import atlas.gui.nearby_callbacks  # noqa: E402,F401
+import atlas.gui.offline_map_callbacks  # noqa: E402,F401
 
 
 def _open_browser(url: str) -> None:

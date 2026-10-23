@@ -1,18 +1,19 @@
 """Archive callbacks: uploaded image content is used only by a client callback."""
 import sqlite3
 from dash import ALL, Input, Output, State, callback, clientside_callback, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core.historical_maps import search_maps, map_sheets, public_url, remember_archive, current_archive
 from core.us_places import get_place
 from core.sanborn_catalog import search_catalog, catalog_stats, census_town
 
 
-@callback(Output('archive-town','children'),Output('archive-search','disabled'),Input('resident-state','value'),Input('resident-place','value'))
+@when_opened('archive', Output('archive-town','children'),Output('archive-search','disabled'),Input('resident-state','value'),Input('resident-place','value'))
 def town_label(state, geoid):
     town=get_place(geoid,state)
     return (f"{town['name']}, {town['state']}" if town else 'Choose a town in the place controls'), not bool(town)
 
 
-@callback(Output('archive-results','data'),Output('archive-status','children'),Output('archive-cards','children'),Output('archive-record','options'),Output('archive-record','value'),
+@when_opened('archive', Output('archive-results','data'),Output('archive-status','children'),Output('archive-cards','children'),Output('archive-record','options'),Output('archive-record','value'),
           Output('archive-catalog-page','data'),Output('archive-catalog-page-label','children'),Output('archive-catalog-prev','disabled'),Output('archive-catalog-next','disabled'),Output('archive-catalog-coverage','children'),
           Input('archive-search','n_clicks'),Input('resident-state','value'),Input('resident-place','value'),Input('archive-catalog-scope','value'),Input('archive-catalog-order','value'),Input('archive-catalog-prev','n_clicks'),Input('archive-catalog-next','n_clicks'),Input('archive-catalog-bundled','n_clicks'),State('archive-catalog-page','data'))
 def find_maps(clicks,state,geoid,scope='town',order='oldest',previous=0,next_click=0,bundled=0,page=0):
@@ -51,7 +52,7 @@ def find_maps(clicks,state,geoid,scope='town',order='oldest',previous=0,next_cli
     return (remember_archive(rows,state,geoid),result['message'],cards,[{'label':r['title']+' · '+r['date'],'value':r['id']} for r in rows],rows[0]['id'] if online and rows else None,*paging)
 
 
-@callback(Output('archive-selected','data'),Output('archive-sheets','data'),Output('archive-sheet','options'),Output('archive-sheet','value'),Output('archive-sheet-status','children'),Output('archive-source-record','children'),
+@when_opened('archive', Output('archive-selected','data'),Output('archive-sheets','data'),Output('archive-sheet','options'),Output('archive-sheet','value'),Output('archive-sheet-status','children'),Output('archive-source-record','children'),
           Input('archive-record','value'),State('archive-results','data'),State('resident-state','value'),State('resident-place','value'))
 def select_record(item_id,token,state,geoid):
     rows=current_archive(token,state,geoid)
@@ -79,7 +80,7 @@ def _open_record(row,state,geoid,online=False):
     return {'token':remember_archive(selected,state,geoid)},sheets,[{'label':s['label'],'value':i} for i,s in enumerate(sheets)],0 if sheets else None,status+rights,source
 
 
-@callback(Output('archive-load-sheets','disabled'),Input('archive-selected','data'),Input('resident-state','value'),Input('resident-place','value'))
+@when_opened('archive', Output('archive-load-sheets','disabled'),Input('archive-selected','data'),Input('resident-state','value'),Input('resident-place','value'))
 def sheets_button(selected,state,geoid):
     row=current_archive(selected.get('token'),state,geoid) if isinstance(selected,dict) else None
     return not isinstance(row,dict) or not row.get('id')
@@ -93,7 +94,7 @@ def load_selected_sheets(clicks,selected,state,geoid):
     return _open_record(row,state,geoid,online=True)
 
 
-@callback(Output('archive-note-context','data'),Input('archive-selected','data'),Input('archive-notes','value'),Input('archive-local-title','value'),Input('resident-state','value'),Input('resident-place','value'),Input('archive-source-mode','data'),Input('archive-sheet','value'))
+@when_opened('archive', Output('archive-note-context','data'),Input('archive-selected','data'),Input('archive-notes','value'),Input('archive-local-title','value'),Input('resident-state','value'),Input('resident-place','value'),Input('archive-source-mode','data'),Input('archive-sheet','value'))
 def note_context(selected,notes,local,state,geoid,mode,sheet=None):
     place=get_place(geoid,state)
     if not place: return None

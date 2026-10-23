@@ -1,5 +1,6 @@
 import sqlite3
 from dash import ALL, Input, Output, State, callback, callback_context, clientside_callback, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core.fieldbook import EMPTY_BOOK, validate_book, merge_entries, new_entry, follow_up_entry, readable_text
 from core.find_inspection import inspect_find
 from core.expert_questions import question_first_markdown
@@ -64,7 +65,7 @@ def save_notes(resident_clicks,find_clicks,imported,followup_clicks,book,token,s
         return no_update,str(exc),str(exc) if callback_context.triggered_id=='resident-save' else no_update,str(exc) if callback_context.triggered_id=='find-save' else no_update
 
 
-@callback(Output('fieldbook-selected','options'),Output('fieldbook-compare','options'),
+@when_opened('notebook', Output('fieldbook-selected','options'),Output('fieldbook-compare','options'),
           Output('fieldbook-list','children'),Input('fieldbook-store','data'))
 def list_notes(book):
     try: rows=validate_book(book or EMPTY_BOOK)['entries']
@@ -82,16 +83,22 @@ def list_notes(book):
         labels.append(label)
     options=[{'label':('note ' + row['id'][:8] + ' · ' if labels.count(label)>1 else '') + label,
               'value':row['id']} for row,label in zip(rows,labels)]
-    cards=[html.Button([html.Strong(row['title']),html.P(row['created'][:10]+' · '+_note_label(row)),
+    cards=[html.Button([html.Strong(row['title']),html.P('Saved '+row['created'][:10]+' · '+_note_label(row)),
                          html.P(' · '.join(summary_text(key,value) for key,value in row['summary'].items() if key!='place')[:400])],id={'type':'fieldbook-open','index':row['id']},n_clicks=0,className='atlas-fieldbook-card') for row in rows]
     return options,options,cards or html.P('Explore a town or Inspect a find, then choose Save to fieldbook. Your investigations will appear here.',className='atlas-resident-intro')
 
 
 def _note_label(row):
+    if row['summary'].get('follow_up'):
+        return 'Follow-up note'
     source=row['summary'].get('source')
     if isinstance(source,str) and source.startswith(('ADS via DataCite · ', 'DANS via DataCite · ')):
         return 'Metadata reference'
     mission=row['summary'].get('mission')
+    if mission=='Published research source':
+        return 'Published research reference'
+    if isinstance(mission,str) and mission.startswith('Published ') and mission.endswith(' reference'):
+        return mission
     if mission in ('Expert question','Expert response','Museum reference','Fossil reference','Newspaper reference','Geology reference','Object guide','Archaeology publication','Mineral reference','Government source reference'):
         return mission
     return {'town':'Town context','find':'Object observations','investigation':'Guided investigation'}[row['kind']]
@@ -113,7 +120,7 @@ def selected_rows(book,selected,other=None):
     return next((r for r in rows if r['id']==selected),None),next((r for r in rows if r['id']==other),None)
 
 
-@callback(Output('fieldbook-title','children'),Output('fieldbook-text','children'),Output('fieldbook-comparison','children'),
+@when_opened('notebook', Output('fieldbook-title','children'),Output('fieldbook-text','children'),Output('fieldbook-comparison','children'),
           Output('fieldbook-print','disabled'),Output('fieldbook-note-download','disabled'),
           Output('fieldbook-read-full','disabled'),
           Input('fieldbook-store','data'),Input('fieldbook-selected','value'),Input('fieldbook-compare','value'))
@@ -128,7 +135,9 @@ def read_notes(book,selected,other):
             html.Table([html.Thead(html.Tr([html.Th('Observation'),html.Th(row['title']),html.Th(compare['title'])])),
                         html.Tbody([html.Tr([html.Th(key.capitalize()),html.Td(summary_text(key,row['summary'].get(key,'Not recorded'))),html.Td(summary_text(key,compare['summary'].get(key,'Not recorded')))]) for key in fields])]),
             html.P('These are recorded observations and report snapshots, not verified identities or independent confirmations.',className='atlas-help')],className='atlas-fieldbook-compare')
-    return row['title'],readable_text(question_first_markdown(row)),table,False,False,False
+    from core.publication_catalog import saved_reading
+    reading=saved_reading(row)
+    return row['title'],reading if reading is not None else readable_text(question_first_markdown(row)),table,False,False,False
 
 
 @callback(Output('fieldbook-download','data'),Input('fieldbook-note-download','n_clicks'),

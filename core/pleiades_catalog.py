@@ -26,6 +26,10 @@ def name_key(value):
                             if not unicodedata.combining(character)).split())
 
 
+def advertised():
+    return PACK in {row['id'] for row in PackStore().definitions}
+
+
 def database():
     store = PackStore()
     if PACK not in {row['id'] for row in store.definitions}:

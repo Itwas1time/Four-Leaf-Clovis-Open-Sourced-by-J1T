@@ -1,6 +1,7 @@
 from atlas.gui.library_activation import require_section
 import sqlite3
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
+from atlas.gui.workspace_activation import when_opened
 from core import radiocarbon_catalog as catalog
 from core.fieldbook import EMPTY_BOOK, merge_entries
 from atlas.gui.library_ui import reading_nav
@@ -19,7 +20,7 @@ def _parameters(query, country, minimum, maximum):
             "min_age": _age(minimum), "max_age": _age(maximum)}
 
 
-@callback(Output("radiocarbon-country", "options"), Input("data-pack-refresh", "data"), Input("library-section", "value"))
+@when_opened('section-radiocarbon', Output("radiocarbon-country", "options"), Input("data-pack-refresh", "data"), Input("library-section", "value"))
 def countries(_refresh, section="radiocarbon"):
     require_section(section, "radiocarbon")
     try:
@@ -29,7 +30,7 @@ def countries(_refresh, section="radiocarbon"):
         return [{"label": "All recorded countries", "value": "all"}]
 
 
-@callback(Output("radiocarbon-cards", "children"), Output("radiocarbon-count", "children"),
+@when_opened('section-radiocarbon', Output("radiocarbon-cards", "children"), Output("radiocarbon-count", "children"),
           Output("radiocarbon-page", "data"), Output("radiocarbon-page-label", "children"),
           Output("radiocarbon-previous", "disabled"), Output("radiocarbon-next", "disabled"),
           Output("radiocarbon-coverage", "children"),
@@ -60,7 +61,7 @@ def results(query, country, minimum, maximum, _previous, _next, _refresh, page, 
         return [], message, 1, "", True, True, ""
 
 
-@callback(Output("radiocarbon-selected", "data"), Input({"type": "radiocarbon-open", "index": ALL}, "n_clicks"),
+@when_opened('section-radiocarbon', Output("radiocarbon-selected", "data"), Input({"type": "radiocarbon-open", "index": ALL}, "n_clicks"),
           Input("radiocarbon-query", "value"), Input("radiocarbon-country", "value"),
           Input("radiocarbon-min-age", "value"), Input("radiocarbon-max-age", "value"),
           Input("radiocarbon-page", "data"), Input("data-pack-refresh", "data"))
@@ -88,7 +89,7 @@ def current(selected, query, country, minimum, maximum, page):
     return catalog.get_date(identifier) if any(row["id"] == identifier for row in result["rows"]) else None
 
 
-@callback(Output("radiocarbon-detail", "children"), Input("radiocarbon-selected", "data"),
+@when_opened('section-radiocarbon', Output("radiocarbon-detail", "children"), Input("radiocarbon-selected", "data"),
           Input("radiocarbon-query", "value"), Input("radiocarbon-country", "value"),
           Input("radiocarbon-min-age", "value"), Input("radiocarbon-max-age", "value"),
           Input("radiocarbon-page", "data"), Input("data-pack-refresh", "data"))

@@ -2,6 +2,7 @@
 from atlas.gui.library_activation import require_section
 from functools import lru_cache
 from dash import ALL,MATCH,Input,Output,State,callback,callback_context,html,no_update
+from atlas.gui.workspace_activation import when_opened
 from core.fossil_reference_catalog import catalog_stats,search_taxa,search_fossils,get_fossil
 from core.fossil_notes import facts,reference_entry,text
 from core.fieldbook import EMPTY_BOOK,merge_entries
@@ -15,7 +16,7 @@ def stats():
     return catalog_stats()
 
 
-@callback(Output('library-fossil-cards','children'),Output('library-fossil-count','children'),
+@when_opened('section-fossils', Output('library-fossil-cards','children'),Output('library-fossil-count','children'),
           Output('library-fossil-page','data'),Output('library-fossil-page-label','children'),
           Output('library-fossil-previous','disabled'),Output('library-fossil-next','disabled'),Output('library-fossil-source','children'),
           Input('library-fossil-query','value'),Input('library-fossil-view','value'),
@@ -57,7 +58,7 @@ def select(clicks,query,view,previous,next_clicks):
     return row['id'] if row else no_update
 
 
-@callback(Output('library-fossil-detail','children'),Input('library-fossil-selected','data'))
+@when_opened('section-fossils', Output('library-fossil-detail','children'),Input('library-fossil-selected','data'))
 def read(selected):
     if not isinstance(selected,str) or len(selected)>166:
         return html.P('Select a taxon to read a sample specimen, or choose an individual specimen record.')
