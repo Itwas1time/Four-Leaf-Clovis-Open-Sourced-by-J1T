@@ -57,12 +57,12 @@ The existing museum, newspaper, map, geology and mineral catalogs remain
 bundled. These additional collections are optional; the initial application
 still includes those existing large catalogs.
 
-The bundled **Full research papers & original tables** source also contains
-the complete Panama isotope paper (2025), its methods and main tables, and all
-ten original supplementary workbooks. It adds one publication and ten source
-tables, not eleven excavations or new specimens. Read them offline, save
-selected complete components to a fieldbook, or download the whole study as one
-portable ZIP. See [the reading workflow and source qualifications](OFFLINE_RESEARCH_PAPERS.md).
+The bundled **Full research papers & original tables** source contains the
+Panama isotope paper (2025) and a Cambodia/Thailand ceramic-analysis paper
+(2019), with their methods, main tables and fourteen original supplementary
+workbooks. These are two publications and fourteen source components, not
+sixteen excavations or newly enumerated finds. Read them offline, save selected
+components, or download either complete study as a portable ZIP. See [the reading workflow and source qualifications](OFFLINE_RESEARCH_PAPERS.md).
 
 This edition lists released collections above. Record totals mix source
 types and overlapping editions; they are not unique finds or excavations.

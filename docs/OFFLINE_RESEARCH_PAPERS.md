@@ -3,13 +3,12 @@
 # Full research papers and original tables
 
 In **Atlas**, open **Limit to a source** and choose **Full research papers &
-original tables**. Search `Panama`, `Cerro Juan Díaz`, or an original DOI such as
+original tables**. Search `Cambodia`, `Longvek`, `Panama`, `Cerro Juan Díaz`, or an original DOI such as
 `10.1371/journal.pone.0335678.s009`. An exact DOI opens only that source component.
 The paper and its supporting tables have separate records and citations.
 
-**Read complete source offline** opens the full reading edition. The paper has
-a contents list, methods, references and both original main tables. Each of the
-ten supplementary tables has a readable sheet with original cell addresses,
+**Read complete source offline** opens the full reading edition. Each paper has
+a contents list, methods, references and its original main tables. Each supporting workbook has readable sheets with original cell addresses,
 units, number formats and publisher highlights. Wide tables scroll sideways;
 cell details expose the literal numeric token and source number format.
 Long notes occupying a single source cell appear above the grid with their
@@ -18,22 +17,23 @@ Formulas retain their original formulas and cached results and are not
 recalculated. Blank cells remain blank.
 
 **Download complete study for offline reading** produces one ZIP containing
-the full reading edition, all ten unchanged XLSX originals, the original XML,
+the full reading edition, unchanged XLSX originals, the original XML,
 readable text and source-edition metadata. Extract it and open `index.html` in
-a browser on another device. All reading links and styles are local. Figure
-captions are retained; figure images are not bundled.
+a browser on another device. All reading links and styles are local. The
+Panama figure captions are retained without images. The Cambodia study includes
+its publisher analytical figures 4-7; figures 1-3 are not bundled.
 
 **Save source to fieldbook** retains the complete selected component, source ID,
-edition, attribution, original values and reading projection. Saved components
-also retain the exact native original: compressed XML for the paper and original
-XLSX bytes for a selected table. This keeps source text readable while avoiding
-a second copy of the article's full text tree. Save the paper
+edition, attribution and original values. Saved components
+retain the exact native original: compressed XML for the paper and original
+XLSX bytes for a selected table. The largest workbook rebuilds its readable projection from the retained XLSX;
+other components retain their reading projections alongside the original. Save the paper
 and the tables relevant to your question, then add a follow-up with the question,
 filters, findings and uncertainties. Export the fieldbook to reopen those saved
 readings. The complete study ZIP preserves every native workbook, including its
 layout and metadata, separately from the fieldbook's selected readings.
 
-## Included edition and scope
+## Panama edition and scope
 
 Sharpe, Ashley E.; Smith-Guzmán, Nicole E.; Díaz Pérez, Claudia Patricia;
 Sánchez Herrera, Luis Alberto; Carvajal-Contreras, Diana; Curtis, Jason;
@@ -65,3 +65,40 @@ described adjustment to modern plant values. Preserve those qualifications
 when using it. S7 coordinates locate modern river-water sampling, not
 archaeological finds or properties. Missing records in this study do not
 establish missing archaeology elsewhere in Panama.
+
+
+## Cambodia edition and scope
+
+Polkinghorne, Martin; Morton, Catherine Amy; Roberts, Amy; Popelka-Filcoff,
+Rachel S.; Sato, Yuni; Vuthy, Voeun; Thammapreechakorn, Pariwat; Stopic, Attila;
+Grave, Peter; Hein, Don; and Vitou, Leng. (2019). *Consumption and exchange in
+Early Modern Cambodia: NAA of brown-glaze stoneware from Longvek, 15th-17th
+centuries*. PLOS One 14(5), e0216895.
+[Original publication](https://doi.org/10.1371/journal.pone.0216895).
+
+The publisher manuscript and four supporting workbooks were acquired on
+28 October 2026. The manuscript XML SHA-256 is
+`7a607c5c792ee7044a5b711d57d4826aa1efca3a67d538244ab3c4ec0bbd913b`. The
+publisher applies the [CC0 dedication](https://creativecommons.org/publicdomain/zero/1.0/)
+and states that the relevant data are in the paper and supporting files. The
+full article, its main table, sample list, raw neutron-activation data,
+principal-component summary and group summary are available offline. Four
+publisher analytical figures are included; figure captions for 1-3
+remain, but those images are not bundled. Included figures travel in the
+complete study ZIP rather than a saved fieldbook note.
+
+The paper describes 102 sherd samples, including reference material from Thai
+production centres as well as material from Longvek. The original sample IDs,
+context references, source categories, units, numeric tokens and reported
+uncertainties are retained. The raw data workbook notes report mg/kg, two
+standard deviations for uncertainties and detection limits even when no
+concentration was determined; uranium is reported for U-238 only. Separate
+measurements and tables overlap and are not additional specimens or excavations.
+Study geography does not establish a private-property location or identify an
+object. Missing or undetermined measurements do not establish absence.
+
+The largest workbook opens one sheet at a time. A saved copy retains the exact
+XLSX and reconstructs its complete readable cells locally when opened; formulas
+are never recalculated. Use **Download complete workspace** to carry selected
+readings and project records together, or download the study ZIP to carry every
+source component and included figure.

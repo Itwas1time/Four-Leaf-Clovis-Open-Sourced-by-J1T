@@ -219,9 +219,16 @@ def export_notes(note_clicks,book,selected):
         row,_=selected_rows(book,selected)
         if not row: return no_update
         content=question_first_markdown(row)
+        if '## Complete native workbook snapshot JSON' in row['markdown']:
+            from core.publication_catalog import saved_reading
+            content=saved_reading(row)+'\n\n## Original retained snapshot\n\n'+content
         sources, missing=linked_sources(book,row)
         for source in sources:
-            content += '\n\n## Original saved source\n\n' + question_first_markdown(source)
+            source_text=question_first_markdown(source)
+            if '## Complete native workbook snapshot JSON' in source['markdown']:
+                from core.publication_catalog import saved_reading
+                source_text=saved_reading(source)+'\n\n## Original retained snapshot\n\n'+source_text
+            content += '\n\n## Original saved source\n\n' + source_text
         if missing:
             content += '\n\nA linked source is missing or circular; restore its complete backup.\n'
         return {'content':content,'filename':'clovis-saved-notes.md','type':'text/markdown'}

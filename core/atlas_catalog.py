@@ -184,7 +184,9 @@ def _cached_first_pages(query, sources, context, signature):
             result, size = _page(source, query, 1, context, signature)
             if result.get("installed") is False:
                 return None, (source, "Collection not installed")
-            return (source, result, size), None
+            warnings=result.get('missing_editions',[])
+            warning=(source,' '.join(warnings)) if warnings else None
+            return (source, result, size), warning
         except (ValueError, OSError, sqlite3.Error):
             return None, (source, "Collection could not be read")
     available, missing = [], []
@@ -454,7 +456,7 @@ def get_record(identifier):
         if row is None:
             return None
         facts,url=publications.fields(row),'https://doi.org/'+row['native_id']
-        notes,description,license_text=list(publications.NOTES),row['description'],row['rights']['label']
+        notes,description,license_text=publications.notes_for(row),row['description'],row['rights']['label']
     elif source == 'finland':
         row=finland.get_record(key)
         if row is None:
