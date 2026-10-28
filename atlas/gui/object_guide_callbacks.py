@@ -4,7 +4,8 @@ from dash import ALL,Input,Output,State,callback,callback_context,html,no_update
 from atlas.gui.workspace_activation import when_opened
 from core.object_material_guides import search_guides,get_guide,guide_stats
 from core.object_guide_notes import reference_entry
-from core.fieldbook import EMPTY_BOOK,merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 from atlas.gui.library_callbacks import _url
 from atlas.gui.library_ui import reading_nav
 from atlas.gui.offline_reference_ui import control as local_source_control

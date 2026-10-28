@@ -2,7 +2,8 @@
 import re
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
 from atlas.gui.workspace_activation import when_opened
-from core.fieldbook import EMPTY_BOOK, validate_book, merge_entries, readable_text
+from core.fieldbook import EMPTY_BOOK, validate_book, readable_text
+from atlas.gui.reading_merge import merge_entries
 from core.expert_questions import prepare_question, response_entry, question_first_markdown
 
 
@@ -11,7 +12,8 @@ def source_row(book, selected):
     row = next((item for item in rows if item['id'] == selected), None)
     if row is None:
         raise ValueError('Select saved notes before preparing a question.')
-    return row
+    from core.workspace_storage import WorkspaceStorage
+    return WorkspaceStorage().resolve_reading(row)
 
 
 def current_packet(book, selected, question, comparison, detail, draft):
@@ -28,6 +30,11 @@ def related_records(book, selected):
     links = {}
     for row in rows:
         if row['summary'].get('mission') not in ('Expert question', 'Expert response'):
+            continue
+        try:
+            from core.workspace_storage import WorkspaceStorage
+            row = WorkspaceStorage().resolve_reading(row)
+        except ValueError:
             continue
         parents = re.findall(r'^### Preserved saved snapshot fields\n\nParent record: ([a-f0-9]{24})\n\nOriginal title:', row['markdown'], re.M)
         if parents:

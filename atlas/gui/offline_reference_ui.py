@@ -2,7 +2,8 @@
 from dash import MATCH, Input, Output, State, callback, html, no_update
 
 from core import offline_references as references
-from core.fieldbook import EMPTY_BOOK, merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 
 
 def control(url, area):

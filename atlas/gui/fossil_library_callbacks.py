@@ -5,7 +5,8 @@ from dash import ALL,MATCH,Input,Output,State,callback,callback_context,html,no_
 from atlas.gui.workspace_activation import when_opened
 from core.fossil_reference_catalog import catalog_stats,search_taxa,search_fossils,get_fossil
 from core.fossil_notes import facts,reference_entry,text
-from core.fieldbook import EMPTY_BOOK,merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 from atlas.gui.library_callbacks import _url
 from core.reference_media import smithsonian_image
 from atlas.gui.library_ui import reading_nav

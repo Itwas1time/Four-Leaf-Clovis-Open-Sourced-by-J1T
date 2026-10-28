@@ -8,7 +8,8 @@ from atlas.gui.workspace_activation import when_opened
 
 from atlas.gui.library_ui import reading_nav
 from core.archaeology_project_catalog import PAGE_SIZE, catalog_stats, search_projects, get_project, facts, project_entry
-from core.fieldbook import EMPTY_BOOK, merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 
 
 @when_opened('section-projects', Output('library-project-country','options'), Output('library-project-coverage','children'),

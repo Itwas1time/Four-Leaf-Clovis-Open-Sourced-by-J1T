@@ -20,6 +20,17 @@ clientside_callback(ClientsideFunction(namespace='clovisLocalPhotos',function_na
 clientside_callback(ClientsideFunction(namespace='clovisLocalPhotos',function_name='restoreBook'),
     Output('fieldbook-imported','data'),Output('fieldbook-transfer-status','children',allow_duplicate=True),
     Input('fieldbook-import','n_clicks'),State('fieldbook-store','data'),prevent_initial_call=True)
+clientside_callback(ClientsideFunction(namespace='clovisLocalPhotos',function_name='autosyncWorkspaceReadings'),
+    Output('workspace-autosync-status','children'),Input('fieldbook-store','data'))
+clientside_callback(ClientsideFunction(namespace='clovisLocalPhotos',function_name='syncWorkspaceReadings'),
+    Output('fieldbook-reconciled','data',allow_duplicate=True),Output('workspace-transfer-status','children',allow_duplicate=True),
+    Input('workspace-sync','n_clicks'),State('fieldbook-store','data'),prevent_initial_call=True)
+clientside_callback(ClientsideFunction(namespace='clovisLocalPhotos',function_name='downloadWorkspace'),
+    Output('workspace-transfer-status','children'),Input('workspace-export','n_clicks'),
+    State('fieldbook-store','data'),prevent_initial_call=True)
+clientside_callback(ClientsideFunction(namespace='clovisLocalPhotos',function_name='restoreWorkspace'),
+    Output('fieldbook-reconciled','data',allow_duplicate=True),Output('workspace-transfer-status','children',allow_duplicate=True),
+    Input('workspace-import','n_clicks'),State('fieldbook-store','data'),prevent_initial_call=True)
 clientside_callback(ClientsideFunction(namespace='clovisLocalPhotos',function_name='downloadQuestionPhotos'),
     Output('expert-photo-download-status','children'),Input('expert-download','n_clicks'),
     State('fieldbook-store','data'),State('fieldbook-selected','value'),State('expert-question','value'),

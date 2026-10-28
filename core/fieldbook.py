@@ -95,7 +95,7 @@ def merge_entries(book,entries):
     known={row['id'] for row in current['entries']}
     old={row['id']:row for row in current['entries']}
     for row in entries:
-        if row['id'] in old and ('photos' in row or 'photos' in old[row['id']]):
+        if row['id'] in old:
             if {k:v for k,v in row.items() if k!='created'}!={k:v for k,v in old[row['id']].items() if k!='created'}:
                 raise ValueError('A saved investigation has conflicting notes or photos under the same identifier.')
     merged={'version':max(current['version'],incoming['version']),'entries':[*current['entries'],*[row for row in incoming['entries'] if row['id'] not in known]]}
@@ -109,7 +109,14 @@ def follow_up_entry(row, notes):
     if not isinstance(notes,str) or not notes.strip() or len(notes)>1500:
         raise ValueError('Write a follow-up note of up to 1,500 characters.')
     updated=json.loads(json.dumps(row))
-    updated['markdown'] += '\n\n## Your follow-up note\n\n' + _md(notes.strip()) + '\n\nUser-recorded observations; Clovis has not verified this source or interpretation.\n'
+    if len(row['markdown'].encode('utf-8')) > 50_000 or re.search(r'\nClovis source entry: [a-f0-9]{24}\n\Z', row['markdown']):
+        # Link a large source already retained in the same fieldbook instead of
+        # duplicating its body and native-original snapshot on every follow-up.
+        updated['markdown'] = ('## Your follow-up note\n\n' + _md(notes.strip())
+            + '\n\nUser-recorded observations; Clovis has not verified this source or interpretation.\n'
+            + '\nClovis source entry: ' + row['id'] + '\n')
+    else:
+        updated['markdown'] += '\n\n## Your follow-up note\n\n' + _md(notes.strip()) + '\n\nUser-recorded observations; Clovis has not verified this source or interpretation.\n'
     updated['summary']['follow_up']=notes.strip().encode('utf-8')[:1500].decode('utf-8','ignore')
     updated['id']=hashlib.sha256((row['kind']+updated['markdown']).encode()).hexdigest()[:24]
     if updated.get('photos'):

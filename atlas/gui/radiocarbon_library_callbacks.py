@@ -3,7 +3,8 @@ import sqlite3
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
 from atlas.gui.workspace_activation import when_opened
 from core import radiocarbon_catalog as catalog
-from core.fieldbook import EMPTY_BOOK, merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 from atlas.gui.library_ui import reading_nav
 
 

@@ -128,11 +128,13 @@ Use **Related saved records** to navigate the source, question and responses.
 Original notes and attached personal photos remain intact. A question packet
 with photos downloads as readable Markdown and originals in a ZIP. Clovis sends
 no messages. Print selected note text or use the browser's Save as PDF option.
-Download the complete fieldbook as JSON for notes alone, or ZIP with original
-photos. Restore merges valid notes and originals with existing work.
-Limits are 50 entries / 750 KB of note metadata and 100 MB of original photos.
-Browser storage is specific to the device
-and app origin. See [observations and fieldbook](OBSERVATIONS.md).
+Download a complete workspace ZIP to move readings, projects, revisions and
+original photos. Restore merges compatible work and refuses conflicts. Up to
+50 readings and 20 MB of full reading data are supported; browser notes and
+references are bounded to 750 KB. Original photos have a separate 100 MB
+allowance. The older fieldbook JSON and photo ZIP remain usable when the
+expanded readings fit their original limits. The local workspace is on this
+computer, not cloud storage. See [observations and fieldbook](OBSERVATIONS.md).
 
 For structured recording select **Fieldbook → Dig records**. Keep named local
 projects, units, contexts, finds, samples and source documents connected.

@@ -83,6 +83,60 @@
     if (result.error) return [noUpdate(),result.error];
     return [{book:result.book,nonce:crypto.randomUUID()},'Restored the fieldbook and its original photos on this computer.'];
   }
+  let readingSyncGeneration=0;
+  async function autosyncWorkspaceReadings(book) {
+    const generation=++readingSyncGeneration;
+    if (!book || !Array.isArray(book.entries)) return noUpdate();
+    window.dash_clientside.set_props('workspace-autosync-status',{children:'Checking saved readings...'});
+    try {
+      const result=await responseJSON(await fetch('/clovis/workspace/sync-readings',{method:'POST',credentials:'same-origin',
+        headers:{'Content-Type':'application/json','X-Clovis-Workspace':'1'},body:JSON.stringify(book)}));
+      if (generation!==readingSyncGeneration) return noUpdate();
+      const known=new Map(book.entries.map(row => [row.id,row]));
+      if (result.book.entries.some(row => !known.has(row.id) || known.get(row.id).markdown !== row.markdown)) {
+        window.dash_clientside.set_props('fieldbook-reconciled',{data:{book:result.book,nonce:crypto.randomUUID()}});
+        return 'Reopening readings saved in the local workspace...';
+      }
+      return result.book.entries.length?'Readings also saved in the local workspace.':'No readings saved yet.';
+    } catch(error) {
+      return generation===readingSyncGeneration?'Local workspace copy failed: '+(error.message || 'try Sync saved readings.')+' The browser copy remains.':noUpdate();
+    }
+  }
+  async function syncWorkspaceReadings(clicks,book) {
+    if (!clicks) return [noUpdate(),noUpdate()];
+    window.dash_clientside.set_props('workspace-transfer-status',{children:'Merging saved readings...'});
+    try {
+      const result=await responseJSON(await fetch('/clovis/workspace/sync-readings',{method:'POST',credentials:'same-origin',
+        headers:{'Content-Type':'application/json','X-Clovis-Workspace':'1'},body:JSON.stringify(book)}));
+      return [{book:result.book,nonce:crypto.randomUUID()},'Readings saved in the local app. Check the fieldbook status for the browser merge.'];
+    } catch(error) {return [noUpdate(),error.message || 'Readings could not be synced.'];}
+  }
+  async function downloadWorkspace(clicks,book) {
+    if (!clicks) return noUpdate();
+    window.dash_clientside.set_props('workspace-transfer-status',{children:'Preparing complete workspace backup...'});
+    try {
+      const response=await fetch('/clovis/workspace/backup',{method:'POST',credentials:'same-origin',
+        headers:{'Content-Type':'application/json','X-Clovis-Workspace':'1'},body:JSON.stringify(book)});
+      if (!response.ok) await responseJSON(response);
+      const url=URL.createObjectURL(await response.blob()), link=document.createElement('a');
+      link.href=url; link.download='clovis-workspace.zip'; document.body.append(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url),10000);
+      return 'Downloaded the complete workspace backup. Keep a copy on another device.';
+    } catch(error) {return error.message || 'The workspace could not be backed up.';}
+  }
+  async function restoreWorkspace(clicks,book) {
+    if (!clicks) return [noUpdate(),noUpdate()];
+    const result=await chooser('.zip,application/zip',async file => {
+      window.dash_clientside.set_props('workspace-transfer-status',{children:'Checking the complete workspace backup...'});
+      const body=new FormData(); body.append('backup',file); body.append('current',JSON.stringify(book));
+      return responseJSON(await fetch('/clovis/workspace/restore',{method:'POST',credentials:'same-origin',
+        headers:{'X-Clovis-Workspace':'1'},body}));
+    });
+    if (!result) return [noUpdate(),'Restore cancelled.'];
+    if (result.error) return [noUpdate(),result.error];
+    window.dash_clientside.set_props('dig-refresh',{data:Date.now()});
+    return [{book:result.book,nonce:crypto.randomUUID()},'Workspace restored. Choose a project in Dig records; readings are also retained by the local app.'];
+  }
   async function downloadQuestionPhotos(clicks,book,selected,question,comparison,detail,draft) {
     if (!clicks || !book?.entries?.find(row => row.id===selected)?.photos?.length) return noUpdate();
     try {
@@ -101,7 +155,7 @@
     clovisLocalPhotos:{
       chooseFindPhoto:clicks => choosePhoto(clicks,'find',null),
       chooseDigPhoto:(clicks,project,selected) => choosePhoto(clicks,'dig',{project_id:project,id:selected?.id || null}),
-      downloadBook,restoreBook,downloadQuestionPhotos
+      downloadBook,restoreBook,autosyncWorkspaceReadings,syncWorkspaceReadings,downloadWorkspace,restoreWorkspace,downloadQuestionPhotos
     }
   });
 })();

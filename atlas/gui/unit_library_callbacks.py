@@ -6,7 +6,8 @@ from atlas.gui.workspace_activation import when_opened
 from core.usgs_unit_library import search_units,units_for_place,get_unit
 from core.us_places import get_place,STATE_NAMES
 from core.usgs_notes import facts,reference_entry
-from core.fieldbook import EMPTY_BOOK,merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 from atlas.gui.library_ui import reading_nav
 
 

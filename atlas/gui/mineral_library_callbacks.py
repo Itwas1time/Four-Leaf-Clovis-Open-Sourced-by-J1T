@@ -6,7 +6,8 @@ from dash import ALL, Input, Output, State, callback, callback_context, html, no
 from atlas.gui.workspace_activation import when_opened
 
 from core import mineral_property_catalog as catalog
-from core.fieldbook import EMPTY_BOOK, merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 from core.mineral_notes import MAX_PROPERTIES, property_notes, reference_entry, value_text
 from atlas.gui.library_ui import reading_nav
 

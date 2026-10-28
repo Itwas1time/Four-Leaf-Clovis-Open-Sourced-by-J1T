@@ -1,7 +1,9 @@
 import sqlite3
+import re
 from dash import ALL, Input, Output, State, callback, callback_context, clientside_callback, html, no_update
 from atlas.gui.workspace_activation import when_opened
-from core.fieldbook import EMPTY_BOOK, validate_book, merge_entries, new_entry, follow_up_entry, readable_text
+from core.fieldbook import EMPTY_BOOK, validate_book, new_entry, follow_up_entry, readable_text
+from atlas.gui.reading_merge import merge_entries
 from core.find_inspection import inspect_find
 from core.expert_questions import question_first_markdown
 from core.resident_context import current_report
@@ -54,7 +56,7 @@ def save_notes(resident_clicks,find_clicks,imported,followup_clicks,book,token,s
             restored=validate_book(imported['book'])
             rows=restored['entries']
         elif trigger=='fieldbook-followup-save':
-            row=next((r for r in book['entries'] if r['id']==selected),None)
+            row,_=selected_rows(book,selected)
             if not row: raise ValueError('Select saved notes before adding a follow-up.')
             rows=[follow_up_entry(row,followup)]
         else: return no_update,no_update,no_update,no_update
@@ -63,6 +65,42 @@ def save_notes(resident_clicks,find_clicks,imported,followup_clicks,book,token,s
         return merged,message,message if trigger=='resident-save' else no_update,message if trigger=='find-save' else no_update
     except (ValueError,TypeError,UnicodeError,RecursionError,OSError,sqlite3.Error) as exc:
         return no_update,str(exc),str(exc) if callback_context.triggered_id=='resident-save' else no_update,str(exc) if callback_context.triggered_id=='find-save' else no_update
+
+
+@callback(Output('fieldbook-store','data',allow_duplicate=True),
+          Output('fieldbook-status','children',allow_duplicate=True),
+          Input('fieldbook-reconciled','data'),State('fieldbook-store','data'),prevent_initial_call=True)
+def reconcile_workspace(imported, current):
+    """Replace browser copies only when they match committed workspace originals."""
+    try:
+        from core.workspace_storage import WorkspaceStorage
+        from core.large_readings import is_reference
+        if not isinstance(imported,dict) or set(imported) != {'book','nonce'}:
+            raise ValueError('The workspace response could not be read.')
+        current=validate_book(current or EMPTY_BOOK)
+        incoming=validate_book(imported['book'])
+        store=WorkspaceStorage()
+        by_id={row['id']:row for row in incoming['entries']}
+        rows=[]
+        for old in current['entries']:
+            new=by_id.pop(old['id'],None)
+            if new is None:
+                rows.append(old)
+                continue
+            old_full=store.resolve_reading(old)
+            new_full=store.resolve_reading(new)
+            if {k:v for k,v in old_full.items() if k!='created'} != {k:v for k,v in new_full.items() if k!='created'}:
+                raise ValueError('A reading changed while the workspace was syncing. Your browser copy was preserved.')
+            rows.append({**new,'created':old['created']} if is_reference(new) else old)
+        for row in by_id.values():
+            store.resolve_reading(row)
+            rows.append(row)
+        result=validate_book({'version':max(current['version'],incoming['version']),'entries':rows})
+        if result == current:
+            return no_update,no_update
+        return result,'Readings synchronized with the local workspace.'
+    except (ValueError,TypeError,UnicodeError,RecursionError,OSError,sqlite3.Error) as exc:
+        return no_update,str(exc)
 
 
 @when_opened('notebook', Output('fieldbook-selected','options'),Output('fieldbook-compare','options'),
@@ -117,7 +155,30 @@ def open_note(clicks,book):
 
 def selected_rows(book,selected,other=None):
     rows=validate_book(book or EMPTY_BOOK)['entries']
-    return next((r for r in rows if r['id']==selected),None),next((r for r in rows if r['id']==other),None)
+    from core.workspace_storage import WorkspaceStorage
+    store=WorkspaceStorage()
+    first=next((r for r in rows if r['id']==selected),None)
+    second=next((r for r in rows if r['id']==other),None)
+    return (store.resolve_reading(first) if first else None,
+            store.resolve_reading(second) if second else None)
+
+
+def linked_sources(book, row):
+    """Resolve compact follow-ups while bounding malformed or cyclic links."""
+    by_id={item['id']: item for item in book['entries']}
+    seen={row['id']}
+    sources=[]
+    while True:
+        match=re.search(r'\nClovis source entry: ([a-f0-9]{24})\n\Z', row['markdown'])
+        if not match:
+            return sources, False
+        identifier=match.group(1)
+        if identifier in seen or identifier not in by_id:
+            return sources, True
+        seen.add(identifier)
+        from core.workspace_storage import WorkspaceStorage
+        row=WorkspaceStorage().resolve_reading(by_id[identifier])
+        sources.append(row)
 
 
 @when_opened('notebook', Output('fieldbook-title','children'),Output('fieldbook-text','children'),Output('fieldbook-comparison','children'),
@@ -126,7 +187,7 @@ def selected_rows(book,selected,other=None):
           Input('fieldbook-store','data'),Input('fieldbook-selected','value'),Input('fieldbook-compare','value'))
 def read_notes(book,selected,other):
     try: row,compare=selected_rows(book,selected,other)
-    except ValueError: return 'Choose an investigation.','',[],True,True,True
+    except (ValueError,OSError,sqlite3.Error): return 'This saved reading is unavailable. Restore its complete workspace backup.','',[],True,True,True
     if not row: return 'Choose an investigation.','',[],True,True,True
     table=[]
     if compare and compare['id']!=row['id']:
@@ -137,7 +198,17 @@ def read_notes(book,selected,other):
             html.P('These are recorded observations and report snapshots, not verified identities or independent confirmations.',className='atlas-help')],className='atlas-fieldbook-compare')
     from core.publication_catalog import saved_reading
     reading=saved_reading(row)
-    return row['title'],reading if reading is not None else readable_text(question_first_markdown(row)),table,False,False,False
+    text=reading if reading is not None else readable_text(question_first_markdown(row))
+    try:
+        sources, missing=linked_sources(book,row)
+    except (ValueError,OSError,sqlite3.Error):
+        sources, missing=[], True
+    for source in sources:
+        source_text=saved_reading(source) or readable_text(question_first_markdown(source))
+        text += '\n\nOriginal saved source: ' + source['title'] + '\n\n' + source_text
+    if missing:
+        text += '\n\nA linked source is missing or circular. Restore its complete backup.'
+    return row['title'],text,table,False,False,False
 
 
 @callback(Output('fieldbook-download','data'),Input('fieldbook-note-download','n_clicks'),
@@ -146,8 +217,15 @@ def export_notes(note_clicks,book,selected):
     try:
         book=validate_book(book or EMPTY_BOOK)
         row,_=selected_rows(book,selected)
-        return {'content':question_first_markdown(row),'filename':'clovis-saved-notes.md','type':'text/markdown'} if row else no_update
-    except ValueError: return no_update
+        if not row: return no_update
+        content=question_first_markdown(row)
+        sources, missing=linked_sources(book,row)
+        for source in sources:
+            content += '\n\n## Original saved source\n\n' + question_first_markdown(source)
+        if missing:
+            content += '\n\nA linked source is missing or circular; restore its complete backup.\n'
+        return {'content':content,'filename':'clovis-saved-notes.md','type':'text/markdown'}
+    except (ValueError,OSError,sqlite3.Error): return no_update
 
 
 clientside_callback(

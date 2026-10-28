@@ -3,7 +3,7 @@
 User records live outside the installed package. Nothing here contacts a
 publisher or turns a museum/reference record into an observed find.
 """
-from contextlib import closing, contextmanager
+from contextlib import closing, contextmanager, nullcontext
 from datetime import date, datetime, timezone
 from decimal import Decimal, InvalidOperation
 import json
@@ -269,12 +269,16 @@ class DigBook:
                     PRAGMA user_version=1;
                 ''')
                 version = 1
-            if version not in (1,2,3,4):
+            if version not in (1,2,3,4,5,6):
                 raise ValueError('This dig record database uses an unsupported version.')
-            if version==4:
+            if version>=4:
                 from core.local_photos import PHOTO_COLUMNS
                 if tuple(row[1] for row in connection.execute('PRAGMA table_info(photos)'))!=PHOTO_COLUMNS:
                     raise ValueError('This photo notebook has an unsupported database layout.')
+            if version>=5:
+                from core.workspace_storage import READING_COLUMNS
+                if tuple(row[1] for row in connection.execute('PRAGMA table_info(fieldbooks)')) != READING_COLUMNS:
+                    raise ValueError('This saved-reading notebook has an unsupported database layout.')
             if write:
                 # A user_version number is shared by unrelated SQLite formats.
                 # Confirm the existing notebook layout before any migration or
@@ -288,13 +292,18 @@ class DigBook:
                     # Keep existing snapshots
                     # byte-for-byte while preventing an older app from editing
                     # records whose fields or captured citations it cannot understand.
-                    if minimum_version==4:
+                    if minimum_version>=4:
                         from core.local_photos import PHOTO_COLUMNS
                         connection.execute('CREATE TABLE IF NOT EXISTS photos(sha256 TEXT PRIMARY KEY,media_type TEXT NOT NULL,bytes INTEGER NOT NULL,width INTEGER NOT NULL,height INTEGER NOT NULL,original BLOB NOT NULL)')
                         if tuple(row[1] for row in connection.execute('PRAGMA table_info(photos)'))!=PHOTO_COLUMNS:
                             connection.rollback()
                             raise ValueError('This photo notebook has an unsupported database layout.')
-                    connection.execute({2:'PRAGMA user_version=2',3:'PRAGMA user_version=3',4:'PRAGMA user_version=4'}[minimum_version])
+                    if minimum_version>=5:
+                        from core.workspace_storage import READING_COLUMNS
+                        connection.execute('CREATE TABLE IF NOT EXISTS fieldbooks(id TEXT PRIMARY KEY, snapshot TEXT NOT NULL)')
+                        if tuple(row[1] for row in connection.execute('PRAGMA table_info(fieldbooks)')) != READING_COLUMNS:
+                            raise ValueError('This saved-reading notebook has an unsupported database layout.')
+                    connection.execute({2:'PRAGMA user_version=2',3:'PRAGMA user_version=3',4:'PRAGMA user_version=4',5:'PRAGMA user_version=5',6:'PRAGMA user_version=6'}[minimum_version])
             try:
                 yield connection
                 if write:
@@ -505,20 +514,24 @@ class DigBook:
     def export(self, project):
         with self._connection() as connection:
             connection.execute('BEGIN')
-            bundle = {'format': 'clovis-dig-records', 'version': 1, 'project': self._project(connection, project),
-                      'records': list(self._records(connection, project).values()),
-                      'revisions': [json.loads(row[0]) for row in connection.execute('SELECT v.snapshot FROM revisions v JOIN records r ON r.id=v.record_id WHERE r.project_id=? ORDER BY v.record_id,v.revision', (project,))],
-                      'relations': self._relations(connection, project, False)}
-            if any(row['data']['kind']=='measurement' for row in bundle['records']):
-                bundle['version']=2
-            if any('atlas_reference' in row['data'] for rows in (bundle['records'],bundle['revisions']) for row in rows):
-                bundle['version']=3
-            if any('photos' in row['data'] for rows in (bundle['records'],bundle['revisions']) for row in rows):
-                bundle['version']=4
-            encoded = json.dumps(bundle, ensure_ascii=False, allow_nan=False, indent=2)
-            if len(encoded.encode('utf-8')) > MAX_BACKUP_BYTES:
-                raise ValueError('This full revision backup exceeds 32 MB. Preserve the local database and start a separate project for further records.')
-            return encoded
+            return self._export(connection, project)
+
+    def _export(self, connection, project):
+        """Export from an existing consistent database snapshot."""
+        bundle = {'format': 'clovis-dig-records', 'version': 1, 'project': self._project(connection, project),
+                  'records': list(self._records(connection, project).values()),
+                  'revisions': [json.loads(row[0]) for row in connection.execute('SELECT v.snapshot FROM revisions v JOIN records r ON r.id=v.record_id WHERE r.project_id=? ORDER BY v.record_id,v.revision', (project,))],
+                  'relations': self._relations(connection, project, False)}
+        if any(row['data']['kind']=='measurement' for row in bundle['records']):
+            bundle['version']=2
+        if any('atlas_reference' in row['data'] for rows in (bundle['records'],bundle['revisions']) for row in rows):
+            bundle['version']=3
+        if any('photos' in row['data'] for rows in (bundle['records'],bundle['revisions']) for row in rows):
+            bundle['version']=4
+        encoded = json.dumps(bundle, ensure_ascii=False, allow_nan=False, indent=2)
+        if len(encoded.encode('utf-8')) > MAX_BACKUP_BYTES:
+            raise ValueError('This full revision backup exceeds 32 MB. Preserve the local database and start a separate project for further records.')
+        return encoded
 
     def backup_bytes(self, project):
         from core.local_photos import referenced_photos,archive_bytes,PhotoStore
@@ -535,7 +548,7 @@ class DigBook:
         text,photos=read_archive(data,'dig-records.json',MAX_BACKUP_BYTES)
         return self.restore(text,_photos=photos)
 
-    def restore(self, encoded,*,_photos=None):
+    def restore(self, encoded,*,_photos=None,_connection=None):
         """Merge a checked shared revision prefix atomically; reject divergence."""
         if not isinstance(encoded, str) or len(encoded.encode('utf-8')) > MAX_BACKUP_BYTES:
             raise ValueError('Use a dig-record backup of up to 32 MB.')
@@ -624,7 +637,8 @@ class DigBook:
             raise ValueError('Restore a photo-inclusive project ZIP containing every original photo.')
         check_archive_references(references,_photos or {})
         added = advanced = 0
-        with self._connection(True, bundle['version']) as connection:
+        manager = nullcontext(_connection) if _connection is not None else self._connection(True, bundle['version'])
+        with manager as connection:
             if _photos:
                 insert_photos(connection,_photos)
             existing = connection.execute('SELECT id,code,title,created FROM projects WHERE id=?', (project['id'],)).fetchone()

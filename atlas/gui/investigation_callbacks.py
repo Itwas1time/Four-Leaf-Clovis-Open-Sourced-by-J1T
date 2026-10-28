@@ -2,7 +2,8 @@
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
 from atlas.gui.workspace_activation import when_opened
 from core.evidence_board import evidence_board, note_contexts as geological_note_contexts
-from core.fieldbook import EMPTY_BOOK, merge_entries, validate_book
+from core.fieldbook import EMPTY_BOOK, validate_book
+from atlas.gui.reading_merge import merge_entries
 from core.historical_maps import validated_note_context
 from core.investigations import MISSIONS, investigation_entry
 from core.resident_context import current_report

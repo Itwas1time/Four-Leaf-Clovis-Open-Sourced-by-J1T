@@ -8,7 +8,8 @@ from core.reference_catalog import catalog_stats, search_objects, get_object, fa
 from core.state_fossil_library import state_reading
 from core.reference_media import museum_image
 from core.reference_notes import reference_entry
-from core.fieldbook import EMPTY_BOOK, merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 from core.us_places import STATE_NAMES
 from atlas.gui.library_ui import reading_nav
 

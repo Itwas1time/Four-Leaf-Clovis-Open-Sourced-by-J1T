@@ -51,6 +51,8 @@ app.index_string = app.index_string.replace(
 configure_local_flask(server)
 from core.local_photo_routes import register_routes as register_local_photo_routes
 register_local_photo_routes(server)
+from core.workspace_routes import register_routes as register_workspace_routes
+register_workspace_routes(server)
 from core.dig_backup_uploads import register_routes as register_project_backup_routes
 register_project_backup_routes(server)
 from core.atlas_preparation import register_browser_preparation

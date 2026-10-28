@@ -7,7 +7,8 @@ from core.newspaper_catalog import search_titles,get_title
 from core.sanborn_catalog import census_town
 from core.us_places import get_place
 from core.newspaper_notes import facts,reference_entry
-from core.fieldbook import EMPTY_BOOK,merge_entries
+from core.fieldbook import EMPTY_BOOK
+from atlas.gui.reading_merge import merge_entries
 from atlas.gui.library_callbacks import _url
 from atlas.gui.library_ui import reading_nav
 

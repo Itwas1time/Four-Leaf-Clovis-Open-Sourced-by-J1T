@@ -65,7 +65,8 @@ the original text and capture time. This snapshot is independent of the installe
 collection: it remains readable after that collection is removed or replaced.
 It contains the citation text, not a copy of the source database or attachments.
 Project captures allow up to 2 MB of citation text, separately from browser
-fieldbook readings, whose individual text and total limits remain 500 KB and
+fieldbook readings, which allow 500 KB per reading and 20 MB of full reading
+data in the local workspace. Browser notes and references remain bounded to
 750 KB. An oversized citation is refused rather than shortened. Older builds
 can reject larger citations; reopen these exports with the newer build.
 The ordinary citation label, description and interpretation remain editable;

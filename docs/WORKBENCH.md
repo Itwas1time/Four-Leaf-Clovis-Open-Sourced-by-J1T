@@ -223,9 +223,10 @@ Possible-bone guidance appears next to the material selector immediately.
 
 **Fieldbook** keeps town reports, guided investigations and object
 observations together. Open a card, compare another record or add a dated
-follow-up. The original remains intact. Print selected notes or export JSON to
-back them up or move devices. Restore merges valid entries. Limits remain 50
-entries and 750 KB. Older Clovis versions that do not know guided investigations
+follow-up. The original remains intact. Print selected notes or download a complete workspace ZIP to back up readings,
+projects, revisions and original photos. Restore merges compatible entries.
+The workspace supports 50 readings and 20 MB of full reading data; browser
+notes and references remain bounded to 750 KB. Older Clovis versions that do not know guided investigations
 cannot read those new entries; use this version or newer to restore them.
 
 For structured field observations choose **Fieldbook → Dig records**. Create a

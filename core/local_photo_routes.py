@@ -5,7 +5,7 @@ from threading import BoundedSemaphore
 from urllib.parse import unquote
 
 from core.local_photos import PhotoStore,MAX_PHOTO_BYTES,photo_name
-from core.fieldbook import MAX_BYTES
+from core.fieldbook import MAX_BYTES,validate_book
 from core.fieldbook_backups import export_book,restore_book,parse_book,MAX_ZIP_BYTES
 
 _READERS=BoundedSemaphore(2)
@@ -58,6 +58,10 @@ def register_routes(server):
             return jsonify(error='Use Download this fieldbook.'),415
         try:
             book=parse_book(request.get_data())
+            from core.workspace_storage import WorkspaceStorage
+            book=WorkspaceStorage().expand_browser_readings(book)
+            try: validate_book(book)
+            except ValueError: raise ValueError('This reading collection is too large for the older fieldbook format. Use Download complete workspace.') from None
             data,media,name=export_book(book,PhotoStore())
             return send_file(BytesIO(data),mimetype=media,as_attachment=True,download_name=name)
         except (ValueError,OSError,sqlite3.Error) as error:
@@ -75,6 +79,10 @@ def register_routes(server):
                     or set(request.form)!={'current'} or len(request.form.getlist('current'))!=1):
                 raise ValueError('Choose one fieldbook backup.')
             current=parse_book(request.form['current'])
+            from core.workspace_storage import WorkspaceStorage
+            current=WorkspaceStorage().expand_browser_readings(current)
+            try: validate_book(current)
+            except ValueError: raise ValueError('This reading collection is too large for the older fieldbook format. Use Restore complete workspace.') from None
             data=request.files['backup'].stream.read(MAX_ZIP_BYTES+1)
             merged=restore_book(data,current,PhotoStore())
             return jsonify(book=merged)
@@ -97,6 +105,8 @@ def register_routes(server):
             book=validate_book(value['book'])
             row=next((row for row in book['entries'] if row['id']==value['selected']),None)
             if row is None:raise ValueError('Choose saved notes for this question.')
+            from core.workspace_storage import WorkspaceStorage
+            row=WorkspaceStorage().resolve_reading(row)
             packet=prepare_question(row,value['question'],value['comparison'],value['detail'])
             if value['draft']!={'source_id':row['id'],'packet_id':packet['id']}:
                 raise ValueError('Preview the current question before downloading it.')

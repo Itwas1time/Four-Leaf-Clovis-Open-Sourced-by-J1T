@@ -6,7 +6,8 @@ from uuid import uuid4
 from urllib.parse import urlsplit
 from dash import ALL, MATCH, Input, Output, State, callback, callback_context, dcc, html, no_update
 from core import atlas_catalog as catalog, excavation_catalog, environment_catalog, zooarchaeology_catalog, assemblage_catalog, site_register_catalog
-from core.fieldbook import EMPTY_BOOK, MAX_ENTRY_BYTES, merge_entries
+from core.fieldbook import EMPTY_BOOK, MAX_ENTRY_BYTES
+from atlas.gui.reading_merge import merge_entries
 from core.data_packs import PackStore
 from core import pleiades_catalog
 from core import project_references

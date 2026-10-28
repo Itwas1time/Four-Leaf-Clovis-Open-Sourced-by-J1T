@@ -104,22 +104,29 @@ references; original files appear once per distinct checksum in a ZIP.
 
 ## Keep a backup
 
-The fieldbook uses local browser storage on this device and this app origin.
-Another browser, port or device has a different fieldbook. Clearing site data
-can remove it. Original personal photos are stored by the local app in its
-notebook database, separately from browser storage. **Download this fieldbook**
-exports JSON for notes alone or a ZIP including original photos. **Restore
-a fieldbook** merges valid entries and originals and preserves existing notes. Repeated
-identical entries are deduplicated. Limits are 50 entries and 750 KB; an import
-that exceeds them is refused without changing the existing book. Photo-inclusive
-archives have a separate 100 MB / 1,024-image allowance. See [photos and portable
-notebooks](LOCAL_PHOTOS.md) for file limits, original metadata and formats.
+Readings are kept in this browser and also merged into the local Clovis
+workspace. The status in Fieldbook shows whether the local workspace copy has
+finished; if it fails, the browser copy remains. Another browser on this computer
+can reopen the local workspace's readings. **Sync saved readings** retries the
+merge. Conflicting entries are refused rather than overwritten.
 
-Written observations and the selected fieldbook are processed by the local
-app server during save, comparison, restore and export callbacks. The app
-keeps written fieldbook notes in the browser and original photos in the local
-notebook database. Structured dig records also live in that database. Downloaded
-backups remain wherever you save them. No external service receives this work.
-Keep exact sensitive
+**Download complete workspace** creates one ZIP with saved readings, every
+local dig project, all revisions and their original photos. **Restore complete
+workspace** merges compatible histories in the local database and refuses
+conflicts. Save a copy on another device; this is not cloud synchronization.
+The older **Download this fieldbook** and **Restore a fieldbook** controls remain
+available for compatible JSON and photo ZIP files. When the expanded readings
+exceed the old format's limit, use the complete workspace ZIP.
+
+A workspace holds up to 50 readings, 500 KB per reading and 20 MB of full
+reading data. The browser carries compact references for large saved readings;
+its notes and references remain bounded to 750 KB. Portable workspace notes and
+project revisions share a 64 MB allowance, with up to 100 MB / 1,024 original
+photos. Older Clovis releases cannot open the upgraded local database; retain a
+complete backup and use the current release to restore it.
+
+Written observations and selected readings are processed by the local app.
+Downloaded backups remain wherever you save them. No external service receives
+this work. Keep exact sensitive
 locations, names, account details and personal information out of shared notes.
 There is no account, cloud synchronization or public submission in this workflow.
