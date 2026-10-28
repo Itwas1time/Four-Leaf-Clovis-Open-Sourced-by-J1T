@@ -102,7 +102,7 @@ def _signature(sources=None):
 
 def _native(source, query, page, context=()):
     if source == 'publications':
-        return publications.search(query=query,page=page),publications.PAGE_SIZE
+        return publications.search(query=query,page=page,summary=True),publications.PAGE_SIZE
     if source == 'finland':
         parameters=dict(context)
         parameters.pop('collection',None)
@@ -452,7 +452,7 @@ def get_record(identifier):
     if source is None:
         return None
     if source == 'publications':
-        row=publications.get_record(key)
+        row=publications.get_summary(key)
         if row is None:
             return None
         facts,url=publications.fields(row),'https://doi.org/'+row['native_id']

@@ -902,9 +902,13 @@ def save(clicks, selected, query, kind, source, context, page, book):
             return no_update, "Choose a record from the current search."
         entry = catalog.reference_entry(row["id"])
         if len(entry['markdown'].encode('utf-8')) > MAX_ENTRY_BYTES:
-            return no_update, ('This complete citation is too large for the browser fieldbook. '
-                'Open Use in a dig project, choose a saved project and use Save and open project source. '
-                'Create a project in Fieldbook → Dig records if needed.')
+            from core.large_readings import MAX_STORED_ENTRY_BYTES
+            if len(entry['markdown'].encode('utf-8')) > MAX_STORED_ENTRY_BYTES:
+                return no_update, ('This complete citation is too large for saved readings. '
+                    'Open Use in a dig project, choose a saved project and use Save and open project source. '
+                    'Create a project in Fieldbook → Dig records if needed.')
+            from core.workspace_storage import WorkspaceStorage
+            return WorkspaceStorage().save_large_reading(EMPTY_BOOK if book is None else book, entry), "Source reference saved to fieldbook."
         return merge_entries(EMPTY_BOOK if book is None else book, [entry]), "Source reference saved to fieldbook."
     except (*ERRORS, UnicodeError):
         return no_update, "The source could not be saved. Check the selected record and fieldbook capacity."

@@ -105,7 +105,8 @@ def merge_entries(book,entries):
 def follow_up_entry(row, notes):
     """Keep the original snapshot and create a separately dated follow-up."""
     from core.resident_context import _md
-    validate_book(entry_book([row]))
+    from core.large_readings import validate_readings
+    validate_readings(entry_book([row]))
     if not isinstance(notes,str) or not notes.strip() or len(notes)>1500:
         raise ValueError('Write a follow-up note of up to 1,500 characters.')
     updated=json.loads(json.dumps(row))

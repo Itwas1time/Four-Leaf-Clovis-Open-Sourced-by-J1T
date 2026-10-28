@@ -3,7 +3,7 @@
 # Full research papers and original tables
 
 In **Atlas**, open **Limit to a source** and choose **Full research papers &
-original tables**. Search `Cambodia`, `Longvek`, `Panama`, `Cerro Juan Díaz`, or an original DOI such as
+original tables**. Search `Senegal`, `Ravin Blanc X`, `Cambodia`, `Longvek`, `Panama`, `Cerro Juan Díaz`, or an original DOI such as
 `10.1371/journal.pone.0335678.s009`. An exact DOI opens only that source component.
 The paper and its supporting tables have separate records and citations.
 
@@ -97,8 +97,28 @@ measurements and tables overlap and are not additional specimens or excavations.
 Study geography does not establish a private-property location or identify an
 object. Missing or undetermined measurements do not establish absence.
 
-The largest workbook opens one sheet at a time. A saved copy retains the exact
+Large workbooks open one sheet at a time; exceptionally large sheets are divided
+into row ranges, with column headings in the first range. A saved copy retains the exact
 XLSX and reconstructs its complete readable cells locally when opened; formulas
 are never recalculated. Use **Download complete workspace** to carry selected
 readings and project records together, or download the study ZIP to carry every
 source component and included figure.
+
+## Senegal edition and scope
+
+Pruvost and colleagues (2025), *A Later Stone Age quartz knapping workshop and
+fireplace dated to the Early Holocene in Senegal: The Ravin Blanc X site (RBX)*,
+PLOS One 20(9), e0329824. [Original publication](https://doi.org/10.1371/journal.pone.0329824).
+The source edition retains all thirteen authors and the publisher's
+[CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/). Its manuscript
+XML SHA-256 is `714894a023362da1200b1c7e0196cdce227ac632eb89ff4897cde38ed3b5096d`.
+
+The full article and its 14 main tables describe excavations at Ravin Blanc X;
+the S1 workbook contains the published detailed inventory of lithic material
+from layer 2 of RBX-1. Original inventory labels, categories, French remarks,
+measurements and cells remain intact. Some rows describe fragments or refits;
+rows are not an additional count of unique objects or excavations. The portable
+study also includes the publisher's inclusivity questionnaire as its original
+DOCX. Figure captions are retained, but the figure images are not bundled.
+Published site locations do not identify private property or new finds, and an
+absence from this study does not establish an absence of archaeology elsewhere.

@@ -20,6 +20,10 @@ EDITION_SHA256 = '66c3971aa0dee23e8b115d2cca5336d97f833e35a97503497ae8302641c97a
 CAMBODIA = 'cambodia-0216895'
 CAMBODIA_DIRECTORY = DIRECTORY.parent/CAMBODIA
 CAMBODIA_SHA256 = '1e3979cf72ecd5496519bc8bcc30df92c61107cc188236ce8cf933e2379001bc'
+SENEGAL = 'senegal-0329824'
+SENEGAL_DIRECTORY = DIRECTORY.parent/SENEGAL
+SENEGAL_SHA256 = 'c3f09b47b116f7eafa8b9fbe676d908cfa14162123441491b32b25b8e4b711ee'
+SENEGAL_STUDY_SHA256 = '85ea362b1fc5fd4ca4dcd19ef15df8c3296870c6bb26e725432b8f9aea0ef473'
 PAGE_SIZE = 24
 NOTES = [
     'One publication and its ten supporting tables. These are source components, not eleven excavations.',
@@ -29,15 +33,16 @@ NOTES = [
 ]
 
 
-@lru_cache(maxsize=2)
+@lru_cache(maxsize=3)
 def _edition(identifier=EDITION):
     definitions={EDITION:(DIRECTORY,EDITION_SHA256,'10.1371/journal.pone.0335678'),
-                 CAMBODIA:(CAMBODIA_DIRECTORY,CAMBODIA_SHA256,'10.1371/journal.pone.0216895')}
+                 CAMBODIA:(CAMBODIA_DIRECTORY,CAMBODIA_SHA256,'10.1371/journal.pone.0216895'),
+                 SENEGAL:(SENEGAL_DIRECTORY,SENEGAL_SHA256,'10.1371/journal.pone.0329824')}
     if identifier not in definitions:
         raise ValueError('The publication edition is unavailable.')
     directory,checksum,doi=definitions[identifier]
     raw=(directory/'edition.json').read_bytes().replace(b'\r\n',b'\n')
-    if len(raw)>2_000_000 or hashlib.sha256(raw).hexdigest()!=checksum:
+    if len(raw)>4_000_000 or hashlib.sha256(raw).hexdigest()!=checksum:
         raise ValueError('The bundled publication differs from its reviewed edition.')
     result=json.loads(raw)
     if result.get('schema')!=1 or result.get('id')!=identifier or result.get('doi')!=doi:
@@ -46,6 +51,11 @@ def _edition(identifier=EDITION):
 
 
 def notes_for(row):
+    if row.get('edition') == SENEGAL:
+        return ['One published study and its lithic inventory; source components are not new excavations.',
+            'Inventory rows include fragments and refits and should not be counted as newly recorded finds.',
+            'The original spreadsheet retains its source identifiers, categories, measurements and remarks.',
+            'The published site location does not locate a private property or a newly observed object.']
     if row.get('edition') != CAMBODIA:
         return list(NOTES)
     return [
@@ -92,10 +102,25 @@ def _cambodia_records():
     return (published,*supporting)
 
 
+def _senegal_records():
+    edition = _edition(SENEGAL)
+    metadata = {key: edition[key] for key in ('doi','authors','publisher','published','citation','scope','rights','content_note')}
+    inventory = [{key:value for key,value in item.items() if key != 'workbook'} for item in edition['supplements']]
+    article = {**metadata,'edition':SENEGAL,'id':SENEGAL,'native_id':edition['doi'],'title':edition['title'],
+        'category':'Research publication','subtitle':'Senegal - Ravin Blanc X - full text offline',
+        'description':edition['content_note'],'file':edition['manuscript']['file'],'receipt':edition['manuscript']['receipt'],
+        'blocks':edition['blocks'],'supplements':inventory}
+    tables = [{**metadata,**item,'edition':SENEGAL,'category':'Supporting source table',
+        'title':item['label']+' - '+item['caption'].split('. ',1)[0].rstrip('.'),
+        'subtitle':'Senegal - Ravin Blanc X - original lithic inventory offline',
+        'description':item['caption'],'parent':SENEGAL} for item in edition['supplements'] if item['included']]
+    return (article,*tables)
+
+
 @lru_cache(maxsize=1)
 def _records():
     rows=[]
-    for loader in (_panama_records,_cambodia_records):
+    for loader in (_panama_records,_cambodia_records,_senegal_records):
         try:
             rows.extend(loader())
         except (OSError,ValueError,KeyError,TypeError):
@@ -110,7 +135,14 @@ def get_record(identifier):
         return None
 
 
-def search(query='',page=1):
+def get_summary(identifier):
+    """Return catalogue facts without copying the publication or workbook body."""
+    if not isinstance(identifier,str): return None
+    row=next((row for row in _records() if row['id']==identifier),None)
+    return deepcopy({key:value for key,value in row.items() if key not in ('workbook','blocks')}) if row else None
+
+
+def search(query='',page=1,*,summary=False):
     if not isinstance(query,str) or len(query)>120 or type(page) is not int or page<1:
         raise ValueError('Use a publication search of up to 120 characters and a positive page.')
     words = _normalize(query).split()
@@ -121,7 +153,11 @@ def search(query='',page=1):
     missing=[]
     if EDITION not in available: missing.append('Panama edition unavailable. Restore the application files and restart.')
     if CAMBODIA not in available: missing.append('Cambodia edition unavailable. Restore the application files and restart.')
-    return {'total':len(rows),'page':page,'rows':deepcopy(rows[(page-1)*PAGE_SIZE:page*PAGE_SIZE]),'missing_editions':missing}
+    if SENEGAL not in available: missing.append('Senegal edition unavailable. Restore the application files and restart.')
+    selected=rows[(page-1)*PAGE_SIZE:page*PAGE_SIZE]
+    if summary:
+        selected=[{key:value for key,value in row.items() if key not in ('workbook','blocks')} for row in selected]
+    return {'total':len(rows),'page':page,'rows':deepcopy(selected),'missing_editions':missing}
 
 
 @lru_cache(maxsize=1)
@@ -173,9 +209,11 @@ def reference_entry(identifier):
     row = get_record(identifier)
     if row is None: raise ValueError('Choose an available publication or original source table.')
     literal = lambda value:'\n'.join(_md(line) for line in value.split('\n'))
-    markdown = '# Published research source\n\n'+literal(reading_text(row))
-    snapshot=deepcopy(row)
-    raw,name=original_bytes(identifier)
+    raw,name=_original_bytes_for(row)
+    # Large originals cannot fit alongside their cell projection. Avoid first
+    # constructing and escaping a huge projection that will be discarded.
+    compact_workbook = 'workbook' in row and (len(raw)*4//3) > MAX_ENTRY_BYTES-10_000
+    snapshot=deepcopy({k:v for k,v in row.items() if not (compact_workbook and k=='workbook')})
     # The visible reading already carries the complete article text. Retaining
     # the exact native XML in compressed form avoids a second, larger text tree.
     # Table projections keep their cell-level fields and the exact XLSX original.
@@ -186,11 +224,13 @@ def reference_entry(identifier):
         payload,encoding=raw,'base64'
     snapshot['native_original']={'file':name,'encoding':encoding,'bytes':len(raw),
         'sha256':row['receipt']['sha256'],'data':base64.b64encode(payload).decode('ascii')}
-    markdown += '\n\n## Complete source snapshot JSON\n\n'+literal(json.dumps(snapshot,ensure_ascii=False,separators=(',',':')))
-    if len(markdown.encode('utf-8')) > MAX_ENTRY_BYTES and 'workbook' in snapshot:
+    markdown = '' if compact_workbook else '# Published research source\n\n'+literal(reading_text(row))
+    if not compact_workbook:
+        markdown += '\n\n## Complete source snapshot JSON\n\n'+literal(json.dumps(snapshot,ensure_ascii=False,separators=(',',':')))
+    if compact_workbook or (len(markdown.encode('utf-8')) > MAX_ENTRY_BYTES and 'workbook' in snapshot):
         # Keep the original workbook once. Its complete cell projection is
         # rebuilt from the bounded, checksummed XLSX when the saved note opens.
-        snapshot.pop('workbook')
+        snapshot.pop('workbook',None)
         markdown = ('# Published research source\n\n'+literal(row['title'])+'\n\n'+literal(row['citation'])
             +'\n\n'+literal(row['scope'])+'\n\n## Complete native workbook snapshot JSON\n\n'
             +literal(json.dumps(snapshot,ensure_ascii=False,separators=(',',':'))))
@@ -200,7 +240,8 @@ def reference_entry(identifier):
         'summary':{'mission':'Published research source','source':row['citation'],
             'date':row['published'],'outcome':row['category']+'; original source evidence, not a new field observation'},
         'markdown':markdown}
-    validate_book({'version':1,'entries':[entry]})
+    from core.fieldbook import validate_citation_entry
+    validate_citation_entry(entry)
     return entry
 
 
@@ -236,10 +277,14 @@ def saved_reading(entry):
 def original_bytes(identifier):
     row = get_record(identifier)
     if row is None: raise ValueError('This source original is unavailable.')
+    return _original_bytes_for(row)
+
+
+def _original_bytes_for(row):
     name = row['file']
     if name not in ('manuscript.xml',*('s%03d.xlsx'%i for i in range(1,17))):
         raise ValueError('This source file is outside the reviewed edition.')
-    directory=DIRECTORY if row.get('edition',EDITION)==EDITION else CAMBODIA_DIRECTORY
+    directory={EDITION:DIRECTORY,CAMBODIA:CAMBODIA_DIRECTORY,SENEGAL:SENEGAL_DIRECTORY}[row.get('edition',EDITION)]
     raw = (directory/name).read_bytes()
     if len(raw)!=row['receipt']['bytes'] or hashlib.sha256(raw).hexdigest()!=row['receipt']['sha256']:
         raise ValueError('This source original differs from its reviewed edition.')
@@ -292,7 +337,7 @@ def _display(cell,style):
     return value
 
 
-def _workbook_html(workbook):
+def _workbook_html(workbook, start_row=1, end_row=None):
     parts = ['<p>'+escape(workbook['projection_note'])+'</p>']
     for sheet in workbook['sheets']:
         coordinates = [_coordinate(address) for address in sheet['cells']]
@@ -305,7 +350,9 @@ def _workbook_html(workbook):
             and items[0][1][0] in ('s','inlineStr') and len(_cell_text(items[0][1]))>160}
         parts.extend(['<h2>'+escape(sheet['name'])+'</h2>',
             '<p>Source sheet '+escape(sheet['dimension'])+'. Scroll the table sideways for further columns. General-format numbers display at up to 15 significant digits; cell details retain the exact original numeric token and number format. Source colors retain the publisher highlights.</p>'])
+        end = min(max_row, end_row if end_row is not None else max_row)
         for _r,(address,cell) in sorted(notes.items()):
+            if not start_row <= _r <= end: continue
             parts.append('<aside class="clovis-source-cell-note"><strong>Source note from cell '+address+'</strong><p>'+escape(_cell_text(cell))+'</p></aside>')
         parts.append('<div class="clovis-source-table" tabindex="0" role="region" aria-label="'+escape(sheet['name'],quote=True)+'"><table><thead><tr><th>Cell</th>')
         parts.extend('<th scope="col">'+_column(c)+'</th>' for c in range(1,max_column+1))
@@ -314,15 +361,18 @@ def _workbook_html(workbook):
         for span in sheet['merged']:
             first,last = span.split(':') if ':' in span else (span,span)
             r1,c1 = _coordinate(first); r2,c2 = _coordinate(last)
-            merged[(r1,c1)] = (r2-r1+1,c2-c1+1)
-            covered.update((r,c) for r in range(r1,r2+1) for c in range(c1,c2+1) if (r,c)!=(r1,c1))
-        for r in range(1,max_row+1):
+            if r2 < start_row or r1 > end: continue
+            first_visible,last_visible=max(r1,start_row),min(r2,end)
+            merged[(first_visible,c1)] = (last_visible-first_visible+1,c2-c1+1,first)
+            covered.update((r,c) for r in range(first_visible,last_visible+1) for c in range(c1,c2+1) if (r,c)!=(first_visible,c1))
+        for r in range(start_row,end+1):
             if r in notes: continue
             parts.append('<tr><th scope="row">'+str(r)+'</th>')
             for c in range(1,max_column+1):
                 if (r,c) in covered: continue
                 address = _column(c)+str(r)
-                cell = sheet['cells'].get(address,['n',None,0])
+                rowspan,colspan,original_address = merged.get((r,c),(1,1,address))
+                cell = sheet['cells'].get(original_address,['n',None,0])
                 style = workbook['styles'][cell[2]]
                 css = []
                 for attr,key in (('background-color','fill'),('color','color')):
@@ -330,9 +380,8 @@ def _workbook_html(workbook):
                     if re.fullmatch(r'[A-Fa-f0-9]{8}',color): css.append(attr+':#'+color[-6:])
                 if style['bold']: css.append('font-weight:700')
                 if style['italic']: css.append('font-style:italic')
-                title = address+' · Source value: '+_cell_text(cell)+' · Format: '+style['number_format']
+                title = original_address+' · Source value: '+_cell_text(cell)+' · Format: '+style['number_format']
                 if len(cell)>3: title+=' · Source formula (not recalculated): '+cell[3]['text']
-                rowspan,colspan = merged.get((r,c),(1,1))
                 parts.append('<td rowspan="'+str(rowspan)+'" colspan="'+str(colspan)+'" title="'+escape(title,quote=True)+'" style="'+(';'.join(css))+'">'+escape(_display(cell,style))+'</td>')
             parts.append('</tr>')
         parts.append('</tbody></table></div>')
@@ -395,23 +444,47 @@ def render_html(row):
     return ''.join(parts)
 
 
-def render_sheet(row, index):
+ROWS_PER_PAGE = 50
+SHEET_PAGE_CELL_THRESHOLD = 50_000
+
+
+def render_sheet(row, index, page=None):
     if 'workbook' not in row or type(index) is not int or not 0 <= index < len(row['workbook']['sheets']):
         raise ValueError('Choose an available original workbook sheet.')
     sheet=row['workbook']['sheets'][index]
     subset={'sheets':[sheet],'styles':row['workbook']['styles'], 'projection_note':row['workbook']['projection_note']}
+    last_row=max(_coordinate(address)[0] for address in sheet['cells'])
+    large=len(sheet['cells'])>SHEET_PAGE_CELL_THRESHOLD
+    if page is not None and (type(page) is not int or page < 1 or not large or (page-1)*ROWS_PER_PAGE >= last_row):
+        raise ValueError('Choose an available row range.')
+    if large and page is None:
+        body='<p>This large source sheet is divided into row ranges. The first range contains the column headings.</p><ul>'
+        body+=''.join('<li><a href="/reference/publication/'+row['id']+'/sheet/'+str(index)+'/rows/'+str(p)+'">Rows '+str((p-1)*ROWS_PER_PAGE+1)+'–'+str(min(p*ROWS_PER_PAGE,last_row))+'</a></li>' for p in range(1,(last_row+ROWS_PER_PAGE-1)//ROWS_PER_PAGE+1))+'</ul>'
+    else:
+        body=_workbook_html(subset, (page-1)*ROWS_PER_PAGE+1 if page else 1, page*ROWS_PER_PAGE if page else None)
+        if page:
+            base='/reference/publication/'+row['id']+'/sheet/'+str(index)
+            nav='<nav aria-label="Workbook row ranges"><a href="'+base+'">All row ranges</a>'
+            if page>1: nav+=' · <a href="'+base+'/rows/'+str(page-1)+'">Previous rows</a>'
+            if page*ROWS_PER_PAGE<last_row: nav+=' · <a href="'+base+'/rows/'+str(page+1)+'">Next rows</a>'
+            body=nav+'</nav>'+body
     return ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
         '<title>'+escape(sheet['name'])+' - Clovis source</title><link rel="stylesheet" href="/assets/offline_reference.css"></head>'
         '<body class="clovis-local-reference"><main><p class="eyebrow">Clovis - Published evidence offline</p>'
         '<h1>'+escape(row['title'])+' - '+escape(sheet['name'])+'</h1><p>'+escape(row['citation'])+'</p>'
         '<p><a href="/reference/publication/'+row['id']+'">Return to the original workbook</a></p>'
-        +_workbook_html(subset)+'</main></body></html>')
+        +body+'</main></body></html>')
 
 
-def bundle_bytes(identifier=EDITION):
+def bundle_bytes(identifier=EDITION, *, prepared=True):
     """One portable study, with relative readers and unchanged native originals."""
+    if identifier == SENEGAL and prepared:
+        raw=(SENEGAL_DIRECTORY/'study.zip').read_bytes()
+        if len(raw)>3_000_000 or hashlib.sha256(raw).hexdigest()!=SENEGAL_STUDY_SHA256:
+            raise ValueError('The prepared study differs from its reviewed edition.')
+        return raw
     rows = tuple(row for row in _records() if row.get('edition',EDITION)==identifier)
-    if not rows or identifier not in (EDITION,CAMBODIA): raise ValueError('The publication edition is unavailable.')
+    if not rows or identifier not in (EDITION,CAMBODIA,SENEGAL): raise ValueError('The publication edition is unavailable.')
     output = BytesIO()
     routes = {row['id']:('index.html' if row['id']==identifier else row['id']+'.html') for row in rows}
     with ZipFile(output,'w',compression=ZIP_DEFLATED,compresslevel=6) as archive:
@@ -421,6 +494,12 @@ def bundle_bytes(identifier=EDITION):
             for figure in _edition(identifier)['figures']:
                 raw,name=figure_bytes(identifier,figure['id'])
                 archive.writestr('originals/'+name,raw)
+        if identifier == SENEGAL:
+            supplement=next(item for item in _edition(identifier)['supplements'] if item['native_id'].endswith('.s002'))
+            raw=(SENEGAL_DIRECTORY/supplement['file']).read_bytes()
+            if len(raw)!=supplement['receipt']['bytes'] or hashlib.sha256(raw).hexdigest()!=supplement['receipt']['sha256']:
+                raise ValueError('The original supporting file differs from its reviewed edition.')
+            archive.writestr('originals/'+supplement['file'],raw)
         for row in rows:
             raw,name = original_bytes(row['id'])
             archive.writestr('originals/'+name,raw)
@@ -435,6 +514,17 @@ def bundle_bytes(identifier=EDITION):
                     sheet_name=row['id']+'-sheet-'+str(index)+'.html'
                     document=document.replace('/reference/publication/'+row['id']+'/sheet/'+str(index),sheet_name)
                     sheet_html=render_sheet(row,index).replace('/assets/offline_reference.css','source.css')
+                    if len(_sheet['cells'])>SHEET_PAGE_CELL_THRESHOLD:
+                        last=max(_coordinate(address)[0] for address in _sheet['cells'])
+                        for page in range(1,(last+ROWS_PER_PAGE-1)//ROWS_PER_PAGE+1):
+                            page_name=row['id']+'-sheet-'+str(index)+'-rows-'+str(page)+'.html'
+                            sheet_html=sheet_html.replace('/reference/publication/'+row['id']+'/sheet/'+str(index)+'/rows/'+str(page)+'"',page_name+'"')
+                            page_html=render_sheet(row,index,page).replace('/assets/offline_reference.css','source.css')
+                            for linked in (page-1,page+1):
+                                page_html=page_html.replace('/reference/publication/'+row['id']+'/sheet/'+str(index)+'/rows/'+str(linked)+'"',row['id']+'-sheet-'+str(index)+'-rows-'+str(linked)+'.html"')
+                            page_html=page_html.replace('/reference/publication/'+row['id']+'/sheet/'+str(index)+'"',sheet_name+'"')
+                            page_html=page_html.replace('/reference/publication/'+row['id'],routes[row['id']])
+                            archive.writestr(page_name,page_html)
                     sheet_html=sheet_html.replace('/reference/publication/'+row['id'],routes[row['id']])
                     archive.writestr(sheet_name,sheet_html)
             for source_id,target in routes.items():
@@ -465,11 +555,18 @@ def register_routes(server):
         try: return Response(render_sheet(row,index),mimetype='text/html',headers=headers)
         except (ValueError,KeyError,TypeError): return Response('This workbook sheet is unavailable.',status=404,mimetype='text/plain')
 
+    @server.get('/reference/publication/<identifier>/sheet/<int:index>/rows/<int:page>')
+    def publication_sheet_rows(identifier,index,page):
+        row=get_record(identifier)
+        if row is None: return Response('This offline source is unavailable.',status=404,mimetype='text/plain')
+        try: return Response(render_sheet(row,index,page),mimetype='text/html',headers=headers)
+        except (ValueError,KeyError,TypeError): return Response('This workbook row range is unavailable.',status=404,mimetype='text/plain')
+
     @server.get('/reference/publication/<identifier>')
     @server.get('/reference/publication/<identifier>/<operation>')
     def publication_source(identifier,operation=None):
         row = get_record(identifier)
-        if row is None or operation not in (None,'text','original','bundle') or operation=='bundle' and identifier not in (EDITION,CAMBODIA):
+        if row is None or operation not in (None,'text','original','bundle') or operation=='bundle' and identifier not in (EDITION,CAMBODIA,SENEGAL):
             return Response('This offline source is unavailable.',status=404,mimetype='text/plain')
         if operation=='bundle':
             try: raw=bundle_bytes(identifier)

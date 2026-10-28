@@ -58,11 +58,12 @@ bundled. These additional collections are optional; the initial application
 still includes those existing large catalogs.
 
 The bundled **Full research papers & original tables** source contains the
-Panama isotope paper (2025) and a Cambodia/Thailand ceramic-analysis paper
-(2019), with their methods, main tables and fourteen original supplementary
-workbooks. These are two publications and fourteen source components, not
-sixteen excavations or newly enumerated finds. Read them offline, save selected
-components, or download either complete study as a portable ZIP. See [the reading workflow and source qualifications](OFFLINE_RESEARCH_PAPERS.md).
+Panama isotope paper (2025), a Cambodia/Thailand ceramic-analysis paper (2019),
+and a Senegal Ravin Blanc X excavation study (2025), with their methods, main
+tables and fifteen original supplementary workbooks. These are three
+publications and fifteen workbook components, not eighteen excavations or newly
+enumerated finds. Read them offline, save selected components, or download a
+complete study as a portable ZIP. See [the reading workflow and source qualifications](OFFLINE_RESEARCH_PAPERS.md).
 
 This edition lists released collections above. Record totals mix source
 types and overlapping editions; they are not unique finds or excavations.

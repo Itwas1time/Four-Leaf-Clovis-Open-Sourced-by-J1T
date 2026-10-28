@@ -148,6 +148,20 @@ class WorkspaceStorage:
             _save(connection, merged)
             return merged
 
+    def save_large_reading(self, current, entry):
+        """Commit a large source before returning only its compact browser reference."""
+        validate_book(current)
+        validate_readings({'version': 1, 'entries': [entry]})
+        with self.book._connection(True, 6) as connection:
+            merged = _strict_merge(_readings(connection), current)
+            merged = _strict_merge(merged, {'version': 1, 'entries': [entry]})
+            compact = validate_book(compact_book(merged))
+            for digest, reference in referenced_photos(merged['entries']).items():
+                facts, _ = read_photo(connection, digest)
+                check_reference(reference, facts)
+            _save(connection, merged)
+            return compact
+
     def backup_bytes(self, current=None):
         if not self.book.path.is_file():
             readings = expand_book(validate_book(current or dict(EMPTY_BOOK, entries=[])), dict(EMPTY_BOOK, entries=[]))

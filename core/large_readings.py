@@ -3,15 +3,16 @@ import hashlib
 import json
 import re
 
-from core.fieldbook import MAX_ENTRY_BYTES, _validate_book
+from core.fieldbook import _validate_book
 
 MAX_READING_BYTES = 20_000_000
+MAX_STORED_ENTRY_BYTES = 1_000_000
 REFERENCE_THRESHOLD = 40_000
 _REFERENCE = re.compile(r'Clovis workspace reading SHA256: ([a-f0-9]{64})\Z')
 
 
 def validate_readings(book):
-    return _validate_book(book, MAX_READING_BYTES, MAX_ENTRY_BYTES)
+    return _validate_book(book, MAX_READING_BYTES, MAX_STORED_ENTRY_BYTES)
 
 
 def _digest(row):
