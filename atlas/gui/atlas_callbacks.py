@@ -481,7 +481,7 @@ def reader(selected, query, kind, source, context, page, _refresh):
         if row['source']=='publications':
             children.append(html.A('Read complete source offline',href='/reference/publication/'+row['original']['id'],
                 target='_blank',rel='noopener noreferrer',className='atlas-secondary-button'))
-            children.append(html.A('Download complete study for offline reading',href='/reference/publication/panama-0335678/bundle',
+            children.append(html.A('Download complete study for offline reading',href='/reference/publication/'+row['original'].get('edition','panama-0335678')+'/bundle',
                 className='atlas-secondary-button'))
         if row['source']=='guides':
             for guide_source in row['original']['sources']:
