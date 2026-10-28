@@ -37,6 +37,13 @@ def library():
                                    className="atlas-filter-dropdown")]),
         ], className="clovis-library-filters clovis-atlas-filters"),
         html.P('Press Enter to search. Choose a result to read its evidence and source.', className='atlas-help'),
+        html.Details([
+            html.Summary('Prepare offline search before fieldwork'),
+            html.P('Preparing checks installed collections in the background. The first all-source search can otherwise take longer. You can keep using Clovis while preparation runs.', className='atlas-help'),
+            html.Button('Prepare all sources', id='atlas-prepare', n_clicks=0, className='atlas-secondary-button'),
+            html.P(id='atlas-prepare-running', role='status', className='atlas-help'),
+            html.P(id='atlas-prepare-status', role='status', className='atlas-help'),
+        ]),
         html.P(initial_note, id='atlas-search-note', className='atlas-help'),
         html.Div(initial_help, id='atlas-search-ideas', **{'aria-live':'polite'}),
         html.Div(id='atlas-town-hint', className='atlas-town-hint', **{'aria-live':'polite'}),

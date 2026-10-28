@@ -76,3 +76,27 @@
 - **Source:** Composite from published reconstructions
 - **License:** Academic (cite source papers)
 - **Rationale:** Constrains when areas became habitable after deglaciation
+
+## Finding candidates for future collections
+
+Start with a known useful native source, publication or specialist catalog as a
+seed. Follow its citations, project pages, repository links and original data
+attachments to find related sources; search native names and languages as well
+as English. A catalog entry or a translated description is a lead, not proof
+that its linked data is available, reusable or suitable for an offline pack.
+
+Examine promising candidates individually. Follow a lead back to the publisher
+and record the exact source URL and identifier, edition or version, retrieval
+date, available files, coverage and evidence type. Inspect the original tables,
+field definitions and methods where available, and note gaps, uncertainty,
+overlap and sensitive location restrictions. Check rights separately for metadata,
+data, reports and images; an aggregator's terms do not establish rights for
+linked material. Preserve original language and fields alongside any translation
+or interpretation.
+
+Keep a short, ranked list of leads and unanswered questions as research proceeds;
+new citations or source relationships can suggest the next focused search.
+Prioritize candidates with useful native evidence, clear provenance and a viable
+local reading or data path. An entry remains a candidate until its source and
+rights have been reviewed and its content acquired and verified; discovery alone
+does not add records to Clovis or establish unique sites, excavations or finds.

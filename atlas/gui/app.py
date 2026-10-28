@@ -55,8 +55,6 @@ from core.workspace_routes import register_routes as register_workspace_routes
 register_workspace_routes(server)
 from core.dig_backup_uploads import register_routes as register_project_backup_routes
 register_project_backup_routes(server)
-from core.atlas_preparation import register_browser_preparation
-register_browser_preparation(server)
 from core.reference_media import register_image_routes
 register_image_routes(server)
 from core.offline_references import register_routes as register_local_reference_routes

@@ -335,6 +335,22 @@ def _source_link(url, label):
     return None
 
 
+@callback(Output('atlas-prepare-status','children'), Input('atlas-prepare','n_clicks'),
+          prevent_initial_call=True,
+          running=[(Output('atlas-prepare','disabled'), True, False),
+                   (Output('atlas-prepare-running','children'), 'Preparing installed sources; you can continue working…', '')])
+def prepare_atlas(clicks):
+    if not clicks:
+        return no_update
+    try:
+        result=catalog.search()
+        missing=len(result['missing'])
+        return ('Preparation finished. '+(f'{missing} collection(s) unavailable; check search coverage.'
+                if missing else 'Installed sources are ready until the app restarts or collections change.'))
+    except ERRORS:
+        return 'Preparation could not finish. You can still search individual sources.'
+
+
 @callback(Output("atlas-cards", "children"), Output("atlas-count", "children"), Output("atlas-page", "data"),
           Output("atlas-page-label", "children"), Output("atlas-previous", "disabled"), Output("atlas-next", "disabled"),
           Output("atlas-coverage", "children"), Output("atlas-context-label", "children"), Output("atlas-context-banner", "style"),
@@ -346,6 +362,9 @@ def results(query, kind, source, context, _previous, _next, _refresh, page):
     try:
         page = page if type(page) is int and page >= 1 else 1
         trigger = callback_context.triggered_id
+        if trigger is None and not (query or '').strip() and kind == 'all' and source == 'all' and not context:
+            return ([html.P('Search or choose a source to browse offline evidence.')],
+                    'Enter a search or choose a source.', 1, '', True, True, [], '', {'display':'none'})
         page = max(1, page - 1) if trigger == "atlas-previous" else page + 1 if trigger == "atlas-next" else 1
         result = catalog.search(page=page, **_parameters(query, kind, source, context))
         cards = [html.Button([html.Small(row["evidence"], className="clovis-atlas-evidence"),
