@@ -31,6 +31,7 @@ from core import raa_fieldwork_catalog as raa
 from core import france_fieldwork_catalog as france
 from core import finland_register_catalog as finland
 from core import publication_catalog as publications
+from core import data_packs
 
 PAGE_SIZE = 24
 SOURCES = {
@@ -97,7 +98,7 @@ def _signature(sources=None):
     # Full checksum verification remains mandatory. Independent collections can
     # wait on the bounded pack-file verifiers together, preserving source order.
     # A separate pool avoids nesting verification inside the catalog query pool.
-    return tuple(_VERIFIERS.map(verify,selected))
+    return tuple(_VERIFIERS.map(data_packs.in_request(verify),selected))
 
 
 def _native(source, query, page, context=()):
@@ -190,7 +191,7 @@ def _cached_first_pages(query, sources, context, signature):
         except (ValueError, OSError, sqlite3.Error):
             return None, (source, "Collection could not be read")
     available, missing = [], []
-    for result, unavailable in _READERS.map(read, sources):
+    for result, unavailable in _READERS.map(data_packs.in_request(read), sources):
         if result is not None:
             available.append(result)
         if unavailable is not None:

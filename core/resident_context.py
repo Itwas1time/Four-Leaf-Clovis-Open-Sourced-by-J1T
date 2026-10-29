@@ -135,6 +135,10 @@ def _past_lines(state):
     lines = ["## Who lived here before you", "",
              entry["intro"] + " " + entry.get("lead_in", "The National Park Service summarizes the periods archaeologists use:"), ""]
     lines += [f"- **{_md(name)}.** {_md(text)}" for name, text in periods]
+    if entry.get("periods"):  # one park page per period, each readable offline
+        pages = ", ".join(f"[{_md(name)}](/reference/local/{reference})" for name, reference, _ in entry["periods"])
+        return lines + ["", f"Quoted from the NPS pages of {entry['source_label']} (public domain): {pages}. "
+                        + entry["report_note"], ""]
     lines += ["", f"Quoted from the NPS *{_md(article['title'])}* ({entry['source_label']}, updated "
               f"{article['source_updated']}; public domain). [{entry['link_label']}](/reference/local/{article['id']}). "
               + entry["report_note"], ""]

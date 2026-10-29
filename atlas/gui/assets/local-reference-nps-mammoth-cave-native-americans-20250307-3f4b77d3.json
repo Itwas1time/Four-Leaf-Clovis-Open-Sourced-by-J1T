@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "id": "nps-mammoth-cave-native-americans",
+  "title": "Native Americans",
+  "publisher": "National Park Service · Mammoth Cave National Park",
+  "source_url": "https://www.nps.gov/maca/learn/historyculture/native-americans.htm",
+  "source_updated": "2025-03-07",
+  "receipt": {
+    "url": "https://www.nps.gov/maca/learn/historyculture/native-americans.htm",
+    "status": 200,
+    "retrieved_utc": "2026-10-29T22:14:34.793500+00:00",
+    "bytes": 42727,
+    "sha256": "9754f7a859506cd7e6f4310dc22799f663160d21096fabcfde1af7f5c7154bd5",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "policy_receipt": {
+    "url": "https://www.nps.gov/aboutus/disclaimer.htm",
+    "status": 200,
+    "retrieved_utc": "2026-10-29T22:14:35.658800+00:00",
+    "bytes": 38448,
+    "sha256": "1b3b523964301d1c30ec8d6243cc551e99cac340b187c8883b356d93bea5e363",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "attribution": "National Park Service, Mammoth Cave National Park. No claim to original U.S. Government works.",
+  "rights_basis": "NPS ownership policy: NPS-created text is generally public domain unless otherwise indicated. Photographs, maps and artwork carry their own credits and are not reproduced.",
+  "scope": "Written about the Mammoth Cave area of south-central Kentucky; not a statewide sequence. Approximate, and not a history of any particular property.",
+  "content_note": "Complete article text, headings, lists and image descriptions. Images are not bundled. Site navigation and branding are excluded.",
+  "component_count": 3,
+  "visible_text_sha256": "e1276a41b659838b0fcb065d933a1a05000c4be05336f3df5a636a909222ba52",
+  "original_visible_text": "A fragment of a river cane torch found in Mammoth Cave. NPS Photo Early Native Americans The human history of the Mammoth Cave area began by 12,000 years ago with the exploration of Mammoth Cave itself dating back between 5,000 to 4,000 years ago. Prehistoric people from the Late Archaic and Early Woodland period once inhabited the forests and plains of Kentucky, with a focus on the river valleys and their abundant resources. Their hunter-gatherer lifestyle eventually led them to discover Mammoth Cave thousands of years before the arrival of European settlers. By 1200 BCE (before common era) prehistoric people mined gypsum, mirabilite, epsomite, and other related minerals from the passageways of Mammoth Cave and other caves found in the region. They used mussel shells gathered from the Green River to scrape the relatively soft mineral crusts off the walls into containers they carried with them. Evidence of this activity can still be seen in thousands of artifacts that are found littered throughout the cave passages. Torches made from river cane were used to light their way. Unused caches of these artifacts can still be seen near the tour trails. Other artifacts, such as woven fiber sandals, gourd bowls, and even prehistoric cave art such as petroglyphs (carved line glyphs) and pictographs (charcoal pigment drawn glyphs) are visible on the underground routes used for their gypsum mining. Numerous petroglyphs and pictographs have been found in the cave system. NPS Photo These prehistoric explorers visited the upper three levels of Mammoth Cave and discovered over 19 miles of cave passageways within Mammoth Cave National Park. The minerals collected from the cave were obviously important resources to Early Woodland people. Yet, there is no direct evidence to explain what they were using these minerals for. The minerals are highly soluble and do not preserve outside of the dry cave environment. Archeologists that study cave artifacts and preserved paleofeces have determined that the minerals could have been used in medicine, agriculture, trade, and ritual activity. After 200 BCE, the mining and exploration of the cave declined. This may have been a result of changing beliefs and traditions. In the last 220 years, burials and the remains of desiccated (naturally “mummified”) bodies have been identified in the caves. The funerary objects associated with the burials indicate a careful attention and respect for the dead. The tools and clothing found on the remains proved that prehistoric people were experienced in cave exploration. Today, the park has consulted with tribal partners so that the deceased have a safe and secure resting place in locations away from cave tours. Modern Native American Tribes Today’s modern tribal organizations are composed of Native Americans that have indigenous ties to the Southeastern Woodlands that include Kentucky and the Mammoth Cave area. Park staff continue to consult with members of seven nations that have been shown to be traditionally affiliated with the park lands: the Eastern Band of Cherokee Indians, Cherokee Nation, United Keetoowah Band of Cherokee Indians, Shawnee Tribe, Eastern Shawnee Tribe of Oklahoma, Absentee Shawnee Tribe, and the Chickasaw Nation. Explore the links below to visit and learn more on the official websites of the tribes associated with the park. Eastern Band of Cherokee Indians Cherokee Nation United Keetoowah Band of Cherokee Indians Shawnee Tribe Eastern Shawnee Tribe of Oklahoma Absentee Shawnee Tribe Chickasaw Nation",
+  "original_text_leaves": [
+    "A fragment of a river cane torch found in Mammoth Cave.",
+    "NPS Photo",
+    "Early Native Americans",
+    "The human history of the Mammoth Cave area began by 12,000 years ago with the exploration of Mammoth Cave itself dating back between 5,000 to 4,000 years ago. Prehistoric people from the Late Archaic and Early Woodland period once inhabited the forests and plains of Kentucky, with a focus on the river valleys and their abundant resources. Their hunter-gatherer lifestyle eventually led them to discover Mammoth Cave thousands of years before the arrival of European settlers.",
+    "By 1200 BCE (before common era) prehistoric people mined gypsum, mirabilite, epsomite, and other related minerals from the passageways of Mammoth Cave and other caves found in the region. They used mussel shells gathered from the Green River to scrape the relatively soft mineral crusts off the walls into containers they carried with them. Evidence of this activity can still be seen in thousands of artifacts that are found littered throughout the cave passages. Torches made from river cane were used to light their way. Unused caches of these artifacts can still be seen near the tour trails. Other artifacts, such as woven fiber sandals, gourd bowls, and even prehistoric cave art such as petroglyphs (carved line glyphs) and pictographs (charcoal pigment drawn glyphs) are visible on the underground routes used for their gypsum mining.",
+    "Numerous petroglyphs and pictographs have been found in the cave system.",
+    "NPS Photo",
+    "These prehistoric explorers visited the upper three levels of Mammoth Cave and discovered over 19 miles of cave passageways within Mammoth Cave National Park. The minerals collected from the cave were obviously important resources to Early Woodland people. Yet, there is no direct evidence to explain what they were using these minerals for. The minerals are highly soluble and do not preserve outside of the dry cave environment. Archeologists that study cave artifacts and preserved paleofeces have determined that the minerals could have been used in medicine, agriculture, trade, and ritual activity. After 200 BCE, the mining and exploration of the cave declined. This may have been a result of changing beliefs and traditions.",
+    "In the last 220 years,",
+    "burials and the remains",
+    "of desiccated (naturally “mummified”) bodies have been identified in the caves. The funerary objects associated with the burials indicate a careful attention and respect for the dead. The tools and clothing found on the remains proved that prehistoric people were experienced in cave exploration. Today, the park has consulted with tribal partners so that the deceased have a safe and secure resting place in locations away from cave tours.",
+    "Modern Native American Tribes",
+    "Today’s modern tribal organizations are composed of Native Americans that have indigenous ties to the Southeastern Woodlands that include Kentucky and the Mammoth Cave area. Park staff continue to consult with members of seven nations that have been shown to be traditionally affiliated with the park lands: the Eastern Band of Cherokee Indians, Cherokee Nation, United Keetoowah Band of Cherokee Indians, Shawnee Tribe, Eastern Shawnee Tribe of Oklahoma, Absentee Shawnee Tribe, and the Chickasaw Nation.",
+    "Explore the links below to visit and learn more on the official websites of the tribes associated with the park.",
+    "Eastern Band of Cherokee Indians",
+    "Cherokee Nation",
+    "United Keetoowah Band of Cherokee Indians",
+    "Shawnee Tribe",
+    "Eastern Shawnee Tribe of Oklahoma",
+    "Absentee Shawnee Tribe",
+    "Chickasaw Nation"
+  ],
+  "blocks": [
+    {
+      "type": "figure-description",
+      "alt": "A bundle of small sticks.",
+      "caption": "A fragment of a river cane torch found in Mammoth Cave. NPS Photo",
+      "source_image_url": "https://www.nps.gov/maca/learn/historyculture/images/DSCN0301.JPG?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Early Native Americans"
+    },
+    {
+      "type": "paragraph",
+      "text": "The human history of the Mammoth Cave area began by 12,000 years ago with the exploration of Mammoth Cave itself dating back between 5,000 to 4,000 years ago. Prehistoric people from the Late Archaic and Early Woodland period once inhabited the forests and plains of Kentucky, with a focus on the river valleys and their abundant resources. Their hunter-gatherer lifestyle eventually led them to discover Mammoth Cave thousands of years before the arrival of European settlers."
+    },
+    {
+      "type": "paragraph",
+      "text": "By 1200 BCE (before common era) prehistoric people mined gypsum, mirabilite, epsomite, and other related minerals from the passageways of Mammoth Cave and other caves found in the region. They used mussel shells gathered from the Green River to scrape the relatively soft mineral crusts off the walls into containers they carried with them. Evidence of this activity can still be seen in thousands of artifacts that are found littered throughout the cave passages. Torches made from river cane were used to light their way. Unused caches of these artifacts can still be seen near the tour trails. Other artifacts, such as woven fiber sandals, gourd bowls, and even prehistoric cave art such as petroglyphs (carved line glyphs) and pictographs (charcoal pigment drawn glyphs) are visible on the underground routes used for their gypsum mining."
+    },
+    {
+      "type": "figure-description",
+      "alt": "a charcoal drawing on a cave wall",
+      "caption": "Numerous petroglyphs and pictographs have been found in the cave system. NPS Photo",
+      "source_image_url": "https://www.nps.gov/maca/learn/historyculture/images/Long-Cave-Ky.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "paragraph",
+      "text": "These prehistoric explorers visited the upper three levels of Mammoth Cave and discovered over 19 miles of cave passageways within Mammoth Cave National Park. The minerals collected from the cave were obviously important resources to Early Woodland people. Yet, there is no direct evidence to explain what they were using these minerals for. The minerals are highly soluble and do not preserve outside of the dry cave environment. Archeologists that study cave artifacts and preserved paleofeces have determined that the minerals could have been used in medicine, agriculture, trade, and ritual activity. After 200 BCE, the mining and exploration of the cave declined. This may have been a result of changing beliefs and traditions."
+    },
+    {
+      "type": "paragraph",
+      "text": "In the last 220 years, burials and the remains of desiccated (naturally “mummified”) bodies have been identified in the caves. The funerary objects associated with the burials indicate a careful attention and respect for the dead. The tools and clothing found on the remains proved that prehistoric people were experienced in cave exploration. Today, the park has consulted with tribal partners so that the deceased have a safe and secure resting place in locations away from cave tours."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Modern Native American Tribes"
+    },
+    {
+      "type": "paragraph",
+      "text": "Today’s modern tribal organizations are composed of Native Americans that have indigenous ties to the Southeastern Woodlands that include Kentucky and the Mammoth Cave area. Park staff continue to consult with members of seven nations that have been shown to be traditionally affiliated with the park lands: the Eastern Band of Cherokee Indians, Cherokee Nation, United Keetoowah Band of Cherokee Indians, Shawnee Tribe, Eastern Shawnee Tribe of Oklahoma, Absentee Shawnee Tribe, and the Chickasaw Nation."
+    },
+    {
+      "type": "paragraph",
+      "text": "Explore the links below to visit and learn more on the official websites of the tribes associated with the park."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Eastern Band of Cherokee Indians",
+        "Cherokee Nation",
+        "United Keetoowah Band of Cherokee Indians",
+        "Shawnee Tribe",
+        "Eastern Shawnee Tribe of Oklahoma"
+      ]
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Absentee Shawnee Tribe",
+        "Chickasaw Nation"
+      ]
+    }
+  ],
+  "original_links": [
+    {
+      "text": "burials and the remains",
+      "href_original": "/articles/000/prehistoric-cave-discoveries.htm",
+      "url": "https://www.nps.gov/articles/000/prehistoric-cave-discoveries.htm"
+    },
+    {
+      "text": "Eastern Band of Cherokee Indians",
+      "href_original": "https://ebci.com/",
+      "url": "https://ebci.com/"
+    },
+    {
+      "text": "Cherokee Nation",
+      "href_original": "https://www.cherokee.org/",
+      "url": "https://www.cherokee.org/"
+    },
+    {
+      "text": "United Keetoowah Band of Cherokee Indians",
+      "href_original": "https://www.ukb-nsn.gov/",
+      "url": "https://www.ukb-nsn.gov/"
+    },
+    {
+      "text": "Shawnee Tribe",
+      "href_original": "https://www.shawnee-tribe.org/",
+      "url": "https://www.shawnee-tribe.org/"
+    },
+    {
+      "text": "Eastern Shawnee Tribe of Oklahoma",
+      "href_original": "https://estoo-nsn.gov/",
+      "url": "https://estoo-nsn.gov/"
+    },
+    {
+      "text": "Absentee Shawnee Tribe",
+      "href_original": "https://www.astribe.com/",
+      "url": "https://www.astribe.com/"
+    },
+    {
+      "text": "Chickasaw Nation",
+      "href_original": "https://chickasaw.net/",
+      "url": "https://chickasaw.net/"
+    }
+  ],
+  "excavation_events_added": 0
+}

@@ -79,10 +79,7 @@ def places_in_bounds(bounds,selected=None,zoom=9):
 
 
 def _name_rank(row, search):
-    base=re.sub(r' (?:city and borough|city|town|village|borough|municipio|CDP|zona urbana)(?: \(balance\))?$', '', row['name'], flags=re.I)
-    base=re.sub(r'[,.;]+',' ',_fold(base))
-    base=re.sub(r'\s+',' ',base).strip()
-    return (base != search, not _fold(row['name']).startswith(search), row['name'])
+    return (_base_name(row) != search, not _fold(row['name']).startswith(search), row['name'])
 
 
 def get_place(geoid, state):
@@ -153,6 +150,34 @@ def search_towns(query, limit=8):
             for row in matches[:min(max(limit, 1), 30)]]
 
 
+@lru_cache(maxsize=1)
+def _places_by_base_name():
+    # Built once: the Atlas checks every typed query against town names, and scanning all
+    # 32,000 places per query (0.2 s) competed with the search itself.
+    index = {}
+    for row in _places().values():
+        index.setdefault(_base_name(row), []).append(row)
+        city = _consolidated_city(row)
+        if city:
+            index.setdefault(city, []).append(row)
+    return index
+
+
+def _consolidated_city(row):
+    """'Macon-Bibb County' and 'Nashville-Davidson metropolitan government (balance)' are found as Macon and Nashville."""
+    name = row['name']
+    match = re.match(r'([^-/,]+)[-/,]', name)
+    if not match or not re.search(r'county|government|\(balance\)', name, re.I) or match.group(1).endswith(' County'):
+        return None
+    return re.sub(r'\s+', ' ', _fold(match.group(1))).strip()
+
+
+def _base_name(row):
+    base=re.sub(r' (?:city and borough|city|town|village|borough|municipio|CDP|zona urbana)(?: \(balance\))?$', '', row['name'], flags=re.I)
+    base=re.sub(r'[,.;]+',' ',_fold(base))
+    return re.sub(r'\s+',' ',base).strip()
+
+
 def exact_towns(query, limit=6):
     """Public places whose whole name (without city/town/village) equals the query, e.g. "Dayton"."""
     if not isinstance(query, str) or not 2 <= len(query.strip()) <= 80:
@@ -160,8 +185,7 @@ def exact_towns(query, limit=6):
     search, state = _query_parts(query)
     if not search or state == "invalid":
         return []
-    matches = [row for row in _places().values() if (not state or row['state'] == state)
-               and not _name_rank(row, search)[0]]
+    matches = [row for row in _places_by_base_name().get(search, []) if not state or row['state'] == state]
     matches.sort(key=lambda row: (STATE_NAMES.get(row['state'], row['state']), row['name'], row['geoid']))
     return [{"geoid": row['geoid'], "state": row['state'], "label": row['name'] + ', ' + row['state']}
             for row in matches[:max(1, min(limit, 30))]]

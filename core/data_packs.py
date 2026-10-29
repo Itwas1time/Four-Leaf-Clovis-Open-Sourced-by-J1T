@@ -1,8 +1,9 @@
 """Install named, publisher-verified local collections without touching notebooks."""
 from __future__ import annotations
 
-from contextlib import closing
+from contextlib import closing, contextmanager
 from concurrent.futures import ThreadPoolExecutor
+from contextvars import ContextVar
 from functools import lru_cache
 import hashlib
 import json
@@ -154,10 +155,67 @@ def _catalog(path, modified, size):
     return document["packs"]
 
 
-def catalog_definitions(path=None):
+_REQUEST_CHECKS = ContextVar("clovis_request_pack_checks", default=None)
+
+
+@contextmanager
+def request_checks():
+    """Let one request reuse a collection check it has already completed.
+
+    Every request still checks every installed file it uses, but only once: a single search had
+    re-checked all fifteen collections three or more times (~0.4 s each on 29 Oct 2026). Nothing
+    is shared between requests, and failed checks are never remembered.
+    """
+    token = _REQUEST_CHECKS.set({}) if _REQUEST_CHECKS.get() is None else None
+    try:
+        yield
+    finally:
+        if token is not None:
+            _REQUEST_CHECKS.reset(token)
+
+
+def in_request(function):
+    """Carry the calling request's completed checks into a worker thread."""
+    checks = _REQUEST_CHECKS.get()
+
+    def run(*args):
+        token = _REQUEST_CHECKS.set(checks)
+        try:
+            return function(*args)
+        finally:
+            _REQUEST_CHECKS.reset(token)
+    return run
+
+
+class RequestChecks:
+    """WSGI wrapper giving each HTTP request its own completed checks, never another request's."""
+
+    def __init__(self, application):
+        self.application = application
+
+    def __call__(self, environ, start_response):
+        with request_checks():
+            return self.application(environ, start_response)
+
+
+def _catalog_key(path=None):
     path = Path(CATALOG if path is None else path).resolve()
     attributes = path.stat()
-    return json.loads(json.dumps(_catalog(str(path), attributes.st_mtime_ns, attributes.st_size)))
+    return str(path), attributes.st_mtime_ns, attributes.st_size
+
+
+def _definitions(key):
+    checks = _REQUEST_CHECKS.get()
+    if checks is not None and ("catalog", key) in checks:
+        return list(checks["catalog", key])
+    definitions = json.loads(json.dumps(_catalog(*key)))
+    if checks is not None:
+        checks["catalog", key] = definitions
+    return list(definitions)
+
+
+def catalog_definitions(path=None):
+    return _definitions(_catalog_key(path))
 
 
 def _hash(path):
@@ -282,7 +340,8 @@ def _open_download(request, timeout):
 class PackStore:
     def __init__(self, root=None, catalog_path=None):
         self.root = Path(root or os.environ.get("CLOVIS_PACKS_PATH") or Path.home() / "Clovis Local" / "packs").resolve()
-        self.definitions = catalog_definitions(catalog_path)
+        self.catalog_key = _catalog_key(catalog_path)
+        self.definitions = _definitions(self.catalog_key)
 
     def definition(self, identifier):
         if not isinstance(identifier, str) or not ID.fullmatch(identifier):
@@ -308,6 +367,10 @@ class PackStore:
         return matches[0]
 
     def resolve_file(self, identifier, filename):
+        checks = _REQUEST_CHECKS.get()
+        key = ("file", str(self.root), self.catalog_key, identifier, filename)
+        if checks is not None and key in checks:
+            return checks[key]
         pack = self.installed_definition(identifier)
         if pack is None:
             return None
@@ -315,7 +378,10 @@ class PackStore:
             raise ValueError("Choose a file in the installed collection.")
         directory = _inside(self.root, self.root / identifier / pack["archive_sha256"])
         _check_files(directory, pack)
-        return _inside(self.root, directory / filename)
+        resolved = _inside(self.root, directory / filename)
+        if checks is not None:
+            checks[key] = resolved
+        return resolved
 
     def status(self, identifier):
         latest = self.definition(identifier)

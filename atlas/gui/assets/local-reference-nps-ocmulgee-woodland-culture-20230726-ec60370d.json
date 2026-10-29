@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "id": "nps-ocmulgee-woodland-culture",
+  "title": "Woodland Culture",
+  "publisher": "National Park Service · Ocmulgee Mounds National Historical Park",
+  "source_url": "https://www.nps.gov/ocmu/learn/historyculture/woodland-culture.htm",
+  "source_updated": "2023-07-26",
+  "receipt": {
+    "url": "https://www.nps.gov/ocmu/learn/historyculture/woodland-culture.htm",
+    "status": 200,
+    "retrieved_utc": "2026-10-29T22:05:55.737782+00:00",
+    "bytes": 41046,
+    "sha256": "5c1597655e17fb820f42fbfdb8980a0c9f3cc480d4e0f0ef271f3b41400a7ce7",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "policy_receipt": {
+    "url": "https://www.nps.gov/aboutus/disclaimer.htm",
+    "status": 200,
+    "retrieved_utc": "2026-10-29T22:05:56.803245+00:00",
+    "bytes": 38448,
+    "sha256": "1b3b523964301d1c30ec8d6243cc551e99cac340b187c8883b356d93bea5e363",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "attribution": "National Park Service, Ocmulgee Mounds National Historical Park. No claim to original U.S. Government works.",
+  "rights_basis": "NPS ownership policy: NPS-created text is generally public domain unless otherwise indicated. Photographs and artwork carry their own credits and are not reproduced.",
+  "scope": "Written by Ocmulgee Mounds National Historical Park about the Macon Plateau in central Georgia. It is a park summary, approximate, and not a history of any particular property.",
+  "content_note": "Complete article text, headings, lists and image descriptions. Images are not bundled. Site navigation and branding are excluded.",
+  "component_count": 2,
+  "visible_text_sha256": "d35d2f51cf319781f32455d76281abc59f701d1c003a68f06b389c7ebfa3719a",
+  "original_visible_text": "Woodland Time Period Dean Quigley The Woodland Indians made several crucial advancements in their society that helped them flourish from 1,000 BCE – 900 CE. One major advancement was creating permanent settlements. Up until the Woodland Period, people lived nomadically as they followed their food sources of mammoths in the Paleo Indian period and deer in the Archaic period. The Woodland Indians, on the other hand, were able to successfully sustain horticulture, allowing them to have a more reliable source of food in one location. The plants that they planted were starchy seed plants such as grasses and sunflowers. This huge step in civilization allowed the Woodland Indians to create more permanent tools, buildings, and art, along with developing an extensive trading system that spread from the southeast westward as far as the Rocky Mountains and north as far as the Great Lakes. Sand-tempered pottery sherd from the Early Woodland Subperiod NPS Early Woodland Subperiod (1,000 BCE - 300 CE) Think of your favorite recipe. What cooking gear do you use in order to make it, and what materials are they made of? Oftentimes we take for granted that the pots and pans we use to make food are reusable. In both the Paleo Indian and Archaic time periods, people relied upon stone tools since clay was too weak for cooking in a hot fire and cracked after one use. But the Early Woodland Indians discovered that if they tempered their pots with sand or grit, the pottery became much stronger and more reliable for long-term use. Since clay was much easier to shape than stone, the Woodland Indians were able to create pots and other tools much easier than previous time periods. This new technology originated in Georgia and rapidly spread north into the Carolinas and south into Florida. In addition to developing stronger pottery, the Early Woodland Indians also built isolated mortuary sites with grave offerings. Some of the best examples of earthen enclosures and burial mounds date to the Early Woodland Adena Complex (circa 500 BCE) that were identified in the Ohio River Valley of Kentucky. Middle Woodland Subperiod (300 - 600 CE) As more Woodland Indians began establishing settlements, trade between villages also increased. Archaeologists investigating Middle Woodland mound graves have found remnants of elite individuals buried with exotic gifts. Many of these gifts were items not local to the southeastern United States, hinting at an extensive trade system that expanded beyond the southeast during the Middle Woodland period. Since many clans or villages would have limited access to certain food or raw resources, this trading system was essential for their survival. The Middle Woodland Indians living in the southeast appear to have supplied mica, quartz crystals, chlorite, marine shells, and shark and alligator teeth. In exchange, they received galena from Missouri, flint from Illinois, grizzly bear teeth, obsidian and chalcedony from the Rockies, and copper from the Great Lakes. Late Woodland Subperiod (600 - 900 CE) Around 1,500 years ago, the archeological record reveals a sharp decline in the construction of Middle Woodland burial mounds, along with a disruption of the long-distance trading that had previously thrived. The reasons for why this decline occurred remains a mystery. It may have been because population sizes reached carrying capacities and settlements resorted to raiding instead of trading for goods and resources. Or perhaps as the Woodland Indians improved their hunting technology that they overhunted the animals in the area, making settlements break into smaller units to survive on more localized food sources. No matter how it occurred, the decline has led some archaeologists to believe that the Late Woodland period was a time of cultural poverty. But if one looks closer, there is evidence that the Late Woodland period was more dynamic than it first appears. One important technology invented during this subperiod was the creation of the bow and arrow – a very useful tool for hunting small game and swift deer. New varieties of maize, beans, and squash were introduced and rapidly gained economic importance. Lastly, there have been far more Late Woodland sites discovered than Middle Woodland sites, hinting at a population increase. These factors all point to the Late Woodland period being a time of expansion, not collapse.",
+  "original_text_leaves": [
+    "Woodland Time Period",
+    "Dean Quigley",
+    "The Woodland Indians made several crucial advancements in their society that helped them flourish from 1,000 BCE – 900 CE. One major advancement was creating permanent settlements. Up until the Woodland Period, people lived nomadically as they followed their food sources of mammoths in the",
+    "Paleo Indian",
+    "period and deer in the",
+    "Archaic",
+    "period. The Woodland Indians, on the other hand, were able to successfully sustain horticulture, allowing them to have a more reliable source of food in one location. The plants that they planted were starchy seed plants such as grasses and sunflowers. This huge step in civilization allowed the Woodland Indians to create more permanent tools, buildings, and art, along with developing an extensive trading system that spread from the southeast westward as far as the Rocky Mountains and north as far as the Great Lakes.",
+    "Sand-tempered pottery sherd from the Early Woodland Subperiod",
+    "NPS",
+    "Early Woodland Subperiod (1,000 BCE - 300 CE)",
+    "Think of your favorite recipe. What cooking gear do you use in order to make it, and what materials are they made of? Oftentimes we take for granted that the pots and pans we use to make food are reusable. In both the Paleo Indian and Archaic time periods, people relied upon stone tools since clay was too weak for cooking in a hot fire and cracked after one use. But the Early Woodland Indians discovered that if they tempered their pots with sand or grit, the pottery became much stronger and more reliable for long-term use. Since clay was much easier to shape than stone, the Woodland Indians were able to create pots and other tools much easier than previous time periods. This new technology originated in Georgia and rapidly spread north into the Carolinas and south into Florida. In addition to developing stronger pottery, the Early Woodland Indians also built isolated mortuary sites with grave offerings. Some of the best examples of earthen enclosures and burial mounds date to the Early Woodland Adena Complex (circa 500 BCE) that were identified in the Ohio River Valley of Kentucky.",
+    "Middle Woodland Subperiod (300 - 600 CE)",
+    "As more Woodland Indians began establishing settlements, trade between villages also increased. Archaeologists investigating Middle Woodland mound graves have found remnants of elite individuals buried with exotic gifts. Many of these gifts were items not local to the southeastern United States, hinting at an extensive trade system that expanded beyond the southeast during the Middle Woodland period. Since many clans or villages would have limited access to certain food or raw resources, this trading system was essential for their survival. The Middle Woodland Indians living in the southeast appear to have supplied mica, quartz crystals, chlorite, marine shells, and shark and alligator teeth. In exchange, they received galena from Missouri, flint from Illinois, grizzly bear teeth, obsidian and chalcedony from the Rockies, and copper from the Great Lakes.",
+    "Late Woodland Subperiod (600 - 900 CE)",
+    "Around 1,500 years ago, the archeological record reveals a sharp decline in the construction of Middle Woodland burial mounds, along with a disruption of the long-distance trading that had previously thrived. The reasons for why this decline occurred remains a mystery. It may have been because population sizes reached carrying capacities and settlements resorted to raiding instead of trading for goods and resources. Or perhaps as the Woodland Indians improved their hunting technology that they overhunted the animals in the area, making settlements break into smaller units to survive on more localized food sources. No matter how it occurred, the decline has led some archaeologists to believe that the Late Woodland period was a time of cultural poverty.",
+    "But if one looks closer, there is evidence that the Late Woodland period was more dynamic than it first appears. One important technology invented during this subperiod was the creation of the bow and arrow – a very useful tool for hunting small game and swift deer. New varieties of maize, beans, and squash were introduced and rapidly gained economic importance. Lastly, there have been far more Late Woodland sites discovered than Middle Woodland sites, hinting at a population increase. These factors all point to the Late Woodland period being a time of expansion, not collapse."
+  ],
+  "blocks": [
+    {
+      "type": "figure-description",
+      "alt": "A painting of a Woodland family standing outside of their wigwam home",
+      "caption": "Woodland Time Period Dean Quigley",
+      "source_image_url": "https://www.nps.gov/ocmu/learn/historyculture/images/Woodland-Painting-JPG-test.JPG?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "paragraph",
+      "text": "The Woodland Indians made several crucial advancements in their society that helped them flourish from 1,000 BCE – 900 CE. One major advancement was creating permanent settlements. Up until the Woodland Period, people lived nomadically as they followed their food sources of mammoths in the Paleo Indian period and deer in the Archaic period. The Woodland Indians, on the other hand, were able to successfully sustain horticulture, allowing them to have a more reliable source of food in one location. The plants that they planted were starchy seed plants such as grasses and sunflowers. This huge step in civilization allowed the Woodland Indians to create more permanent tools, buildings, and art, along with developing an extensive trading system that spread from the southeast westward as far as the Rocky Mountains and north as far as the Great Lakes."
+    },
+    {
+      "type": "figure-description",
+      "alt": "A pottery sherd from the Early Woodland subperiod",
+      "caption": "Sand-tempered pottery sherd from the Early Woodland Subperiod NPS",
+      "source_image_url": "https://www.nps.gov/ocmu/learn/historyculture/images/Woodland-pottery-jpg-test.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "paragraph",
+      "text": "Early Woodland Subperiod (1,000 BCE - 300 CE) Think of your favorite recipe. What cooking gear do you use in order to make it, and what materials are they made of? Oftentimes we take for granted that the pots and pans we use to make food are reusable. In both the Paleo Indian and Archaic time periods, people relied upon stone tools since clay was too weak for cooking in a hot fire and cracked after one use. But the Early Woodland Indians discovered that if they tempered their pots with sand or grit, the pottery became much stronger and more reliable for long-term use. Since clay was much easier to shape than stone, the Woodland Indians were able to create pots and other tools much easier than previous time periods. This new technology originated in Georgia and rapidly spread north into the Carolinas and south into Florida. In addition to developing stronger pottery, the Early Woodland Indians also built isolated mortuary sites with grave offerings. Some of the best examples of earthen enclosures and burial mounds date to the Early Woodland Adena Complex (circa 500 BCE) that were identified in the Ohio River Valley of Kentucky. Middle Woodland Subperiod (300 - 600 CE) As more Woodland Indians began establishing settlements, trade between villages also increased. Archaeologists investigating Middle Woodland mound graves have found remnants of elite individuals buried with exotic gifts. Many of these gifts were items not local to the southeastern United States, hinting at an extensive trade system that expanded beyond the southeast during the Middle Woodland period. Since many clans or villages would have limited access to certain food or raw resources, this trading system was essential for their survival. The Middle Woodland Indians living in the southeast appear to have supplied mica, quartz crystals, chlorite, marine shells, and shark and alligator teeth. In exchange, they received galena from Missouri, flint from Illinois, grizzly bear teeth, obsidian and chalcedony from the Rockies, and copper from the Great Lakes. Late Woodland Subperiod (600 - 900 CE) Around 1,500 years ago, the archeological record reveals a sharp decline in the construction of Middle Woodland burial mounds, along with a disruption of the long-distance trading that had previously thrived. The reasons for why this decline occurred remains a mystery. It may have been because population sizes reached carrying capacities and settlements resorted to raiding instead of trading for goods and resources. Or perhaps as the Woodland Indians improved their hunting technology that they overhunted the animals in the area, making settlements break into smaller units to survive on more localized food sources. No matter how it occurred, the decline has led some archaeologists to believe that the Late Woodland period was a time of cultural poverty. But if one looks closer, there is evidence that the Late Woodland period was more dynamic than it first appears. One important technology invented during this subperiod was the creation of the bow and arrow – a very useful tool for hunting small game and swift deer. New varieties of maize, beans, and squash were introduced and rapidly gained economic importance. Lastly, there have been far more Late Woodland sites discovered than Middle Woodland sites, hinting at a population increase. These factors all point to the Late Woodland period being a time of expansion, not collapse."
+    }
+  ],
+  "original_links": [
+    {
+      "text": "Paleo Indian",
+      "href_original": "/ocmu/learn/historyculture/paleo-indian-culture.htm",
+      "url": "https://www.nps.gov/ocmu/learn/historyculture/paleo-indian-culture.htm"
+    },
+    {
+      "text": "Archaic",
+      "href_original": "/ocmu/learn/historyculture/archaic-culture.htm",
+      "url": "https://www.nps.gov/ocmu/learn/historyculture/archaic-culture.htm"
+    }
+  ],
+  "excavation_events_added": 0
+}

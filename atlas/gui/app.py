@@ -47,6 +47,8 @@ app = dash.Dash(
     assets_folder=str(Path(__file__).resolve().parent / "assets"),
 )
 server = app.server
+from core.data_packs import RequestChecks
+server.wsgi_app = RequestChecks(server.wsgi_app)  # one completed collection check per request
 app.index_string = app.index_string.replace(
     "{%favicon%}", '<link rel="icon" type="image/svg+xml" href="/assets/clovis-bone-clover.svg">')
 configure_local_flask(server)

@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "id": "nps-ocmulgee-lamar-culture",
+  "title": "Lamar Culture",
+  "publisher": "National Park Service · Ocmulgee Mounds National Historical Park",
+  "source_url": "https://www.nps.gov/ocmu/learn/historyculture/lamar-culture.htm",
+  "source_updated": "2023-07-26",
+  "receipt": {
+    "url": "https://www.nps.gov/ocmu/learn/historyculture/lamar-culture.htm",
+    "status": 200,
+    "retrieved_utc": "2026-10-29T22:06:01.063079+00:00",
+    "bytes": 39464,
+    "sha256": "be19c09bccfe9c0b7993ae6b3318347b8d7b759fd80ab2eebf95136e93d1ea53",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "policy_receipt": {
+    "url": "https://www.nps.gov/aboutus/disclaimer.htm",
+    "status": 200,
+    "retrieved_utc": "2026-10-29T22:06:01.687793+00:00",
+    "bytes": 38448,
+    "sha256": "1b3b523964301d1c30ec8d6243cc551e99cac340b187c8883b356d93bea5e363",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "attribution": "National Park Service, Ocmulgee Mounds National Historical Park. No claim to original U.S. Government works.",
+  "rights_basis": "NPS ownership policy: NPS-created text is generally public domain unless otherwise indicated. Photographs and artwork carry their own credits and are not reproduced.",
+  "scope": "Written by Ocmulgee Mounds National Historical Park about the Macon Plateau in central Georgia. It is a park summary, approximate, and not a history of any particular property.",
+  "content_note": "Complete article text, headings, lists and image descriptions. Images are not bundled. Site navigation and branding are excluded.",
+  "component_count": 2,
+  "visible_text_sha256": "b20121537d0109cdbc2a6dd4d975ba7b3286cd36967fc77e864f091db0ef986b",
+  "original_visible_text": "Lamar Mound Joseph Coke This important prehistoric town is located in the river floodplain about 2 ½ miles south of Ocmulgee Mounds National Historical Park’s main unit. The site was named for an early landowner and, in turn, lends its name to a distinctive Late Mississippian Period Culture that was first recognized here. The Lamar Culture blanketed Georgia and portions of five neighboring states from about 1300 CE until at least 1650 CE. This particular site was established by 1350 CE. The material culture of the people associated with the Lamar site included a pottery that incorporated decorative elements of both the ancient Woodland complicated stamping tradition and later traits such as incised designs on the shoulder of “cazuela” bowl forms. Aside from its unique ceramics, the culture is characterized by numerous compact towns with paired mounds separated by open courts, and certain artifacts that are diagnostic of the Southeastern Ceremonial Complex, which reached its zenith around 1250 CE. The Lamar village was set up near the river and fortified by a stockade of upright logs. Swamps surrounded it and the inhabitants cultivated agricultural fields throughout the floodplain. Here the people built two mounds for their temples, facing each other across a central plaza. Lamar’s spiral mound is unique in all of America. The ramp to the summit of the mound circles counterclockwise in four complete traverses. They also built rectangular houses grouped about the mounds and nearby court. The house construction consisted of a framework of light poles interlaced with cane, which was plastered with clay and roofed with a variety of grass thatch or sometimes covered with sod. Some homes, possibly those of the headmen or rulers, were raised on low earthen platforms. Lamar cultural life continued in an uninterrupted fashion until the arrival of Spaniard Hernando de Soto’s expedition into the interior of the southeast in 1540. This exposure to foreigners left a legacy of depopulation among native inhabitants. It is believed that epidemic diseases introduced by the Europeans decimated as much as three-fourths of the original Lamar population. The survivors of this catastrophe and their descendants banded together to form the groups that historically were known to the early English settlers as the Ochese Creeks and today are known as Muscogee Creeks. Aerial view of the Lamar site Joseph Coke Presently, the Lamar site is undeveloped and closed to the general public. This is both for the protection of the site and the average visitor. The site lies within the floodplain river swamp and is annually flooded during the rains of late winter and early spring. This condition leaves the area strewn with debris deposited by the receding floodwaters. Annual floods also increase soil fertility, and the area is densely populated with undergrowth throughout the forest. Low areas with standing pools of water provide many breeding places for mosquitoes and other insects that call the swamp their home.",
+  "original_text_leaves": [
+    "Lamar Mound",
+    "Joseph Coke",
+    "This important prehistoric town is located in the river floodplain about 2 ½ miles south of Ocmulgee Mounds National Historical Park’s main unit. The site was named for an early landowner and, in turn, lends its name to a distinctive Late",
+    "Mississippian",
+    "Period Culture that was first recognized here. The Lamar Culture blanketed Georgia and portions of five neighboring states from about 1300 CE until at least 1650 CE. This particular site was established by 1350 CE.",
+    "The material culture of the people associated with the Lamar site included a pottery that incorporated decorative elements of both the ancient Woodland complicated stamping tradition and later traits such as incised designs on the shoulder of “cazuela” bowl forms. Aside from its unique ceramics, the culture is characterized by numerous compact towns with paired mounds separated by open courts, and certain artifacts that are diagnostic of the Southeastern Ceremonial Complex, which reached its zenith around 1250 CE.",
+    "The Lamar village was set up near the river and fortified by a stockade of upright logs. Swamps surrounded it and the inhabitants cultivated agricultural fields throughout the floodplain. Here the people built two mounds for their temples, facing each other across a central plaza. Lamar’s spiral mound is unique in all of America. The ramp to the summit of the mound circles counterclockwise in four complete traverses. They also built rectangular houses grouped about the mounds and nearby court. The house construction consisted of a framework of light poles interlaced with cane, which was plastered with clay and roofed with a variety of grass thatch or sometimes covered with sod. Some homes, possibly those of the headmen or rulers, were raised on low earthen platforms.",
+    "Lamar cultural life continued in an uninterrupted fashion until the arrival of Spaniard",
+    "Hernando de Soto",
+    "’s expedition into the interior of the southeast in 1540. This exposure to foreigners left a legacy of depopulation among native inhabitants. It is believed that epidemic diseases introduced by the Europeans decimated as much as three-fourths of the original Lamar population. The survivors of this catastrophe and their descendants banded together to form the groups that historically were known to the early English settlers as the Ochese Creeks and today are known as Muscogee Creeks.",
+    "Aerial view of the Lamar site",
+    "Joseph Coke",
+    "Presently, the Lamar site is undeveloped and closed to the general public. This is both for the protection of the site and the average visitor. The site lies within the floodplain river swamp and is annually flooded during the rains of late winter and early spring. This condition leaves the area strewn with debris deposited by the receding floodwaters. Annual floods also increase soil fertility, and the area is densely populated with undergrowth throughout the forest. Low areas with standing pools of water provide many breeding places for mosquitoes and other insects that call the swamp their home."
+  ],
+  "blocks": [
+    {
+      "type": "figure-description",
+      "alt": "A historic photo of one of the two mounds at the Lamar site",
+      "caption": "Lamar Mound Joseph Coke",
+      "source_image_url": "https://www.nps.gov/ocmu/learn/historyculture/images/Lamar38_2.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "paragraph",
+      "text": "This important prehistoric town is located in the river floodplain about 2 ½ miles south of Ocmulgee Mounds National Historical Park’s main unit. The site was named for an early landowner and, in turn, lends its name to a distinctive Late Mississippian Period Culture that was first recognized here. The Lamar Culture blanketed Georgia and portions of five neighboring states from about 1300 CE until at least 1650 CE. This particular site was established by 1350 CE. The material culture of the people associated with the Lamar site included a pottery that incorporated decorative elements of both the ancient Woodland complicated stamping tradition and later traits such as incised designs on the shoulder of “cazuela” bowl forms. Aside from its unique ceramics, the culture is characterized by numerous compact towns with paired mounds separated by open courts, and certain artifacts that are diagnostic of the Southeastern Ceremonial Complex, which reached its zenith around 1250 CE. The Lamar village was set up near the river and fortified by a stockade of upright logs. Swamps surrounded it and the inhabitants cultivated agricultural fields throughout the floodplain. Here the people built two mounds for their temples, facing each other across a central plaza. Lamar’s spiral mound is unique in all of America. The ramp to the summit of the mound circles counterclockwise in four complete traverses. They also built rectangular houses grouped about the mounds and nearby court. The house construction consisted of a framework of light poles interlaced with cane, which was plastered with clay and roofed with a variety of grass thatch or sometimes covered with sod. Some homes, possibly those of the headmen or rulers, were raised on low earthen platforms. Lamar cultural life continued in an uninterrupted fashion until the arrival of Spaniard Hernando de Soto’s expedition into the interior of the southeast in 1540. This exposure to foreigners left a legacy of depopulation among native inhabitants. It is believed that epidemic diseases introduced by the Europeans decimated as much as three-fourths of the original Lamar population. The survivors of this catastrophe and their descendants banded together to form the groups that historically were known to the early English settlers as the Ochese Creeks and today are known as Muscogee Creeks."
+    },
+    {
+      "type": "figure-description",
+      "alt": "Historic aerial photo of the two mounds of the Lamar site",
+      "caption": "Aerial view of the Lamar site Joseph Coke",
+      "source_image_url": "https://www.nps.gov/ocmu/learn/historyculture/images/Lamar56bw_2.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "paragraph",
+      "text": "Presently, the Lamar site is undeveloped and closed to the general public. This is both for the protection of the site and the average visitor. The site lies within the floodplain river swamp and is annually flooded during the rains of late winter and early spring. This condition leaves the area strewn with debris deposited by the receding floodwaters. Annual floods also increase soil fertility, and the area is densely populated with undergrowth throughout the forest. Low areas with standing pools of water provide many breeding places for mosquitoes and other insects that call the swamp their home."
+    }
+  ],
+  "original_links": [
+    {
+      "text": "Mississippian",
+      "href_original": "/ocmu/learn/historyculture/mississippian-culture.htm",
+      "url": "https://www.nps.gov/ocmu/learn/historyculture/mississippian-culture.htm"
+    },
+    {
+      "text": "Hernando de Soto",
+      "href_original": "/ocmu/learn/historyculture/hernando-de-soto.htm",
+      "url": "https://www.nps.gov/ocmu/learn/historyculture/hernando-de-soto.htm"
+    }
+  ],
+  "excavation_events_added": 0
+}
