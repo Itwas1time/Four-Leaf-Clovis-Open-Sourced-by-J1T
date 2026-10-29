@@ -17,28 +17,8 @@ def reading_nav(query):
     return html.Button('Change search ↑',type='button',className='clovis-library-back',**{'data-library-back':query})
 
 
-def start_intents():
-    """Plain-language starting points for a first visit; each opens an existing tool."""
-    def choice(label, detail, **button):
-        return html.Button([html.Strong(label), html.Small(detail)], n_clicks=0, className='clovis-start-intent', **button)
-    return html.Nav([
-        html.Strong('What would you like to do?', className='clovis-start-title'),
-        html.Div([
-            choice('I found something', 'Describe what you can see and get questions to check. Clovis never guesses an identification.',
-                   id={'type': 'workbench-action', 'target': 'inspect', 'key': 'start-found'}),
-            choice('Learn about my town', 'Mapped geology, dated maps, newspapers and published evidence for a US town.', id='start-town'),
-            choice('Look up published evidence', 'Search museum objects, sites, dates and reports below, then read each source.',
-                   id='start-search'),
-            choice('Continue my notes', 'Saved notes, dig projects, corrections and backups on this computer.',
-                   id={'type': 'workbench-action', 'target': 'notebook', 'key': 'start-notes'}),
-        ], className='clovis-start-intents'),
-        dcc.Store(id='start-search-focus'),
-    ], className='clovis-start-panel', **{'aria-label': 'Starting points'})
-
-
 def workspace():
     return html.Section([
-        start_intents(),
         html.P('Explore published places, objects, assemblages and fossils. Search once, read the evidence and follow its source.', className='atlas-help'),
         html.Div([html.Button('Atlas search', id='atlas-return', n_clicks=0, className='atlas-secondary-button'),
                   html.Button('Manage offline collections', id='atlas-manage-packs', n_clicks=0, className='atlas-secondary-button')],

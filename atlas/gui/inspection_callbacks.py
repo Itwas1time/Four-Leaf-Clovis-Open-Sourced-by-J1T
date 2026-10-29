@@ -1,6 +1,8 @@
 """Observation callbacks use bounded photo references, never raw image bodies."""
 from dash import Input, Output, State, callback, html, no_update
 from atlas.gui.workspace_activation import when_opened
+from atlas.gui.answer_card_ui import answer_card
+from core import town_cards
 from core.find_inspection import FEATURES, FEATURE_QUESTIONS, GUIDES, inspect_find
 from core.us_places import get_place
 
@@ -25,9 +27,11 @@ def feature_choices(material):
 def find_care(material):
     if material != 'bone':
         return []
-    return html.Div([html.Strong('Leave possible bone in place.'),
-        html.P('If human remains are possible, stop disturbing the area and contact local authorities. Clovis cannot distinguish human from animal remains.')],
-        className='atlas-status-card clovis-find-care')
+    # Inform, never warn pre-emptively (owner rule, 29 Oct 2026): the law appears only on the explicit feature.
+    return html.Div([html.Strong('Most bone found in yards and fields is animal.'),
+        html.P('Butchery marks and cut ends usually mean food waste. If you know the bone is human, or you are digging in '
+               'a known burial ground, tick that feature below to see what the law asks.')],
+        className='atlas-help clovis-find-care')
 
 
 @when_opened('inspect', Output('find-guide','children'), Output('find-status','children'), Output('find-download-button','disabled'), Output('find-save','disabled'),
@@ -50,7 +54,9 @@ def render_find(material, features, setting, size, notes, town_context, state, g
     dating = [html.H3('How old might it be?'), html.Ul([html.Li(clue) for clue in clues]),
               html.P('National Park Service guidance (public domain): approximate ranges, not an identification. '
                      'All clues are in the full notes.', className='atlas-help')] if clues else []
-    questions = dating + [html.H3('What to look at next'), html.Div([
+    law = [answer_card(town_cards.law_summary(state), 'Read the official text →')] if state else [
+        html.P('Choose a town to see what the law asks where you are.', className='atlas-help')]
+    questions = dating + law + [html.H3('What to look at next'), html.Div([
         html.Article([html.Small(label), html.P(question),
                       html.A('Record this detail →', href='#find-notes', className='clovis-record-detail')],
                      className='clovis-find-detail-card') for label, question in prompts

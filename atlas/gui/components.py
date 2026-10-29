@@ -34,11 +34,12 @@ def build_header() -> html.Header:
                 ], className="atlas-brand"
             ),
             dcc.RadioItems(id="workflow-mode", options=[
+                {"label": "Home", "value": "home"},
                 {"label": "Explore", "value": "resident"},
                 {"label": "Inspect a find", "value": "inspect"},
                 {"label": "Fieldbook", "value": "notebook"},
                 {"label": "Research", "value": "research"},
-            ], value="resident", className="atlas-workflow-mode atlas-primary-nav"),
+            ], value="home", className="atlas-workflow-mode atlas-primary-nav"),
             html.Div([
                 html.Span(id="header-region", children="No town selected"),
                 html.Button("Choose town ↗", id="header-place-button", n_clicks=0,

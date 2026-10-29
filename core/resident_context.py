@@ -152,6 +152,25 @@ def _past_lines(state):
     return lines
 
 
+def _topo_lines(place):
+    """Every USGS historical topographic sheet covering the town point, with its online scan."""
+    from core import historical_topos
+    try:
+        sheets = historical_topos.covering(place['latitude'], place['longitude'])
+    except (OSError, ValueError, KeyError, TypeError):
+        return []
+    if not sheets:
+        return []
+    lines = ["## Old topographic maps of this place", "",
+             f"USGS lists **{len(sheets)}** historical topographic sheets covering the public town point:", ""]
+    lines += [f"- {_md(sheet['date'] or 'Undated')} · {_md(sheet['name'])}, 1:{sheet['scale']:,} "
+              f"([map]({sheet['pdf_url']}))" for sheet in sheets]
+    lines += ["", "Source: U.S. Geological Survey, Historical Topographic Map Collection (public domain). The list is "
+              "offline; the scanned maps open online. A sheet covering this point does not show that any feature or "
+              "find is on your land.", ""]
+    return lines
+
+
 def _law_lines(state):
     """What the law asks of someone digging in this state: verified rules where reviewed, honest pointers elsewhere."""
     from atlas.gui.data.archaeology_laws import SHPO_DIRECTORY, get_archaeology_laws
@@ -301,6 +320,7 @@ def build_context(state, geoid, context="unknown", online=None):
               "- Permission and applicable local/state rules; this report does not verify collection rights.", "",
               *_past_lines(state),
               *cemetery_lines(place, _md),
+              *_topo_lines(place),
               *_law_lines(state),
               "## If you dig or find something", "",
               "Before you dig, have buried utilities marked through [811](https://www.transportation.gov/content/call-811-you-dig-1); "

@@ -9,3 +9,4 @@ atlas/gui/assets/offline-map-sources.json -text whitespace=cr-at-eol
 atlas/gui/data/offline-publications/** -text whitespace=cr-at-eol
 # The GNIS cemetery index keeps its reviewed bytes (pinned in the public export).
 atlas/gui/data/us_cemeteries_gnis_2021.sqlite -text
+atlas/gui/data/us_historical_topo_index.sqlite -text

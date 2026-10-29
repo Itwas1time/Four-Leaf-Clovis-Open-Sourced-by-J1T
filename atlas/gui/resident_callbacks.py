@@ -46,7 +46,7 @@ def place_actions(state, geoid, online, tool='map'):
 def workspace_progress(token, state, geoid, history, online, mode, tool='map'):
     place = get_place(geoid, state)
     report = current_report(token, state, geoid, history, online)
-    mode = mode if mode in ('resident','inspect','notebook','research') else 'resident'
+    mode = mode if mode in ('home','resident','inspect','notebook','research') else 'resident'
     stage = 'clovis-has-report' if report else 'clovis-has-place' if place else 'clovis-start'
     labels = ('Place selected' if place else 'Choose a place',
               'Evidence ready' if report else 'Explore its evidence', 'Keep a field note')
@@ -69,15 +69,6 @@ clientside_callback(
     prevent_initial_call=True)
 
 
-clientside_callback(
-    """function(clicks) {
-        const search = document.getElementById('atlas-query');
-        if (!clicks || !search) return window.dash_clientside.no_update;
-        search.scrollIntoView({block:'center', behavior:'auto'});
-        search.focus();
-        return Date.now();
-    }""",
-    Output('start-search-focus','data'), Input('start-search','n_clicks'), prevent_initial_call=True)
 
 
 clientside_callback(
@@ -149,9 +140,16 @@ def clear_mismatched_place(state, geoid):
           Output('fieldbook-controls','style'), Output('fieldbook-inspector','style'), Output('fieldbook-workspace','style'),
           Output('archive-workspace','style'), Output('mission-workspace','style'),
           Output('resident-workbench','style'), Output('resident-workbench-bar','style'),
-          Output('library-workspace','style'),
+          Output('library-workspace','style'), Output('home-workspace','style'),
           Input("workflow-mode", "value"), Input('resident-tool','value'))
 def workflow_sections(mode, tool='map'):
+    hide = {"display": "none"}
+    if mode == 'home':
+        return (*[hide] * 16, {'display': 'flex'})
+    return (*_mode_sections(mode, tool), hide)
+
+
+def _mode_sections(mode, tool):
     show, hide = {"display": "block"}, {"display": "none"}
     map_show={'display':'flex','flexDirection':'column','height':'100%','width':'100%','position':'relative','flex':'1','minHeight':'0'}
     workbench_show={'display':'flex','flexDirection':'column','height':'100%','minHeight':'0'}

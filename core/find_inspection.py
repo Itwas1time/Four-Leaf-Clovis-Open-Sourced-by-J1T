@@ -199,7 +199,7 @@ def inspect_find(material, features, setting, size, notes, *, town_context=None,
     if setting == 'fill':
         lines += ['Imported fill separates the object from its original location. Town geology cannot establish where it came from.', '']
     lines += ['## Make a useful photo record', '',
-              'Photograph the whole object, both sides and important details beside a ruler. Use steady light and a plain background when that can be done without moving a find. Keep an in-place context photograph. Do not scrape, break or chemically test an uncertain find for this guide.', '',
+              'Photograph the whole object, both sides and important details beside a ruler. Use steady light and a plain background when that can be done without moving a find. Keep an in-place context photograph. Cleaning, scraping or breaking can remove the surface marks and residues that help date a find, so photograph it first.', '',
               f"[{guide['source'][0]}]({guide['source'][1]}). Use the guide to compare features and prepare questions for a museum or geological survey. "
               "The NPS examples come from a park context; its collecting rules are not a permission determination for another location.", '',
               '**Still unknown:** exact identity, age, provenance, ownership and collection rights. Record an expert opinion separately from these observations.', '']

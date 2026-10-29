@@ -335,6 +335,14 @@ def _source_link(url, label):
     return None
 
 
+def missing_note(missing):
+    """Say plainly which collections are optional and not installed, and which could not be read."""
+    absent = sum(row.get('reason') == 'Collection not installed' for row in missing)
+    failed = len(missing) - absent
+    parts = ([f'{absent} optional collection(s) not installed (Manage offline collections)'] if absent else []) +             ([f'{failed} collection(s) could not be read; see Search coverage'] if failed else [])
+    return ''.join(' · ' + part for part in parts)
+
+
 @callback(Output('atlas-prepare-status','children'), Input('atlas-prepare','n_clicks'),
           prevent_initial_call=True,
           running=[(Output('atlas-prepare','disabled'), True, False),
@@ -345,7 +353,7 @@ def prepare_atlas(clicks):
     try:
         result=catalog.search()
         missing=len(result['missing'])
-        return ('Preparation finished. '+(f'{missing} collection(s) unavailable; check search coverage.'
+        return ('Preparation finished. '+(missing_note(result['missing']).lstrip(' ·') + '.'
                 if missing else 'Installed sources are ready until the app restarts or collections change.'))
     except ERRORS:
         return 'Preparation could not finish. You can still search individual sources.'
@@ -397,7 +405,7 @@ def results(query, kind, source, context, _previous, _next, _refresh, page):
             coverage.append(html.Ul([html.Li(row["label"] + ": " + row["reason"]) for row in result["missing"]]))
         label = f'{result["total"]:,} matching source records'
         if result["missing"]:
-            label += f' · {len(result["missing"])} collection(s) unavailable; see Search coverage'
+            label += missing_note(result["missing"])
         return (cards or [html.P("No records match. Try a shorter name or broaden the evidence or source.")], label,
                 result["page"], f'{result["page"]:,} of {result["pages"]:,}', result["page"] <= 1,
                 result["page"] >= result["pages"], coverage,

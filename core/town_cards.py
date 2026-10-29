@@ -54,3 +54,20 @@ def law_summary(state):
     return {'title': f'The law where you are · {name}',
             'items': [], 'note': f'Clovis has not yet reviewed {name} law. Your State Historic Preservation Office can tell you what applies.',
             'href': SHPO_DIRECTORY}
+
+
+def old_topo_maps(place):
+    """USGS historical topographic sheets covering the town point (index offline, images online)."""
+    from core import historical_topos
+    try:
+        found = historical_topos.summary(place['latitude'], place['longitude'])
+    except (OSError, sqlite3.Error, ValueError, KeyError, TypeError):
+        return None
+    if not found['total']:
+        return None
+    span = f"{found['earliest']}–{found['latest']}" if found['earliest'] else 'undated'
+    return {'title': f"{found['total']} old USGS topographic maps · {span}",
+            'text': 'Sheets that cover the town point, oldest first:',
+            'items': [f"{sheet['date'] or 'Undated'} · {sheet['name']} (1:{sheet['scale']:,})" for sheet in found['oldest']],
+            'note': 'USGS Historical Topographic Map Collection (public domain). The list is offline; the map images open online.',
+            'href': found['oldest'][0]['pdf_url']}

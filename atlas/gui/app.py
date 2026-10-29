@@ -33,6 +33,7 @@ from atlas.gui.map_layers import (
 from atlas.gui.styles import BG_PRIMARY, MAP_CONTAINER_STYLE
 from atlas.gui.inspection_ui import workspace as inspection_workspace
 from atlas.gui.fieldbook_ui import workspace as fieldbook_workspace
+from atlas.gui.home_ui import home_workspace
 from atlas.gui.archive_ui import workspace as archive_workspace
 from atlas.gui.investigation_ui import workspace as mission_workspace, example_panel
 from atlas.gui.geology_ui import make_geology_board, make_geology_layer
@@ -168,7 +169,7 @@ app.layout = html.Div(
         html.Div(
             [
                 build_layer_panel(),
-                html.Div([_build_workbench(), inspection_workspace(), fieldbook_workspace()], style=MAP_CONTAINER_STYLE, className="atlas-map-shell"),
+                html.Div([home_workspace(), _build_workbench(), inspection_workspace(), fieldbook_workspace()], style=MAP_CONTAINER_STYLE, className="atlas-map-shell"),
                 build_inspector_panel(),
             ],
             style={"display": "flex", "flex": "1", "minHeight": "0", "overflow": "hidden"},
@@ -183,7 +184,7 @@ app.layout = html.Div(
         "width": "100vw",
         "overflow": "hidden",
     },
-    id='clovis-app', className="atlas-app-shell clovis-mode-resident clovis-start clovis-tool-library",
+    id='clovis-app', className="atlas-app-shell clovis-mode-home clovis-start clovis-tool-library",
 )
 
 

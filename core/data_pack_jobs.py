@@ -1,6 +1,7 @@
 """One collection transfer or installation at a time; requests stay responsive."""
 from threading import Lock, Thread
 from uuid import uuid4
+import traceback
 import time
 from core.data_packs import PackStore
 
@@ -45,7 +46,11 @@ def start(identifier):
                                   message="Collection installed and verified. Open its library to read the records.",
                                   finished=time.time_ns())
         except Exception as error:
-            message = str(error) if isinstance(error, ValueError) else "Download interrupted. Retry to resume. Existing collections and dig records were preserved."
+            # Keep the cause: it goes to the server log, and the person sees what kind of failure it was.
+            traceback.print_exc()
+            message = str(error) if isinstance(error, ValueError) else (
+                f"Download stopped ({type(error).__name__}: {str(error)[:160]}). "
+                "Retry to resume. Existing collections and dig records were preserved.")
             with _lock:
                 _jobs[key].update(state="failed", phase="Download stopped", message=message,
                                   finished=time.time_ns())

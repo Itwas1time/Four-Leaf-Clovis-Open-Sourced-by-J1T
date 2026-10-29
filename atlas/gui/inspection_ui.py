@@ -23,7 +23,7 @@ def controls():
         html.P(id='find-town-note', className='atlas-help'),
         html.Label('Your observations', htmlFor='find-notes', className='atlas-small-label'),
         dcc.Textarea(id='find-notes', value='', maxLength=1500, placeholder='Color, pattern, readable markings, what is missing…', className='atlas-find-notes'),
-        html.P('Keep exact locations and personal details out of shared notes.', className='atlas-help'),
+        html.P('Your notes and any location stay on this computer unless you export them.', className='atlas-help'),
     ], id='inspection-controls', className='atlas-resident-controls', style={'display':'none'})
 
 
@@ -32,8 +32,9 @@ def workspace():
         html.Div('LOOK · COMPARE · RECORD', className='atlas-lead-eyebrow'),
         html.H2('Follow the details.', className='atlas-brief-heading'),
         html.P('Your selected features shape the questions below. A photo is optional.', className='atlas-resident-intro'),
-        report_panel(),
+        # Answers first, then the record actions (persona testing, 29 Oct 2026).
         html.Div(id='find-next-questions', className='clovis-find-questions', **{'aria-live':'polite'}),
+        report_panel(),
         html.Button('Read object guides →',id={'type':'workbench-action','target':'library','key':'object-guides'},n_clicks=0,className='atlas-secondary-button'),
         html.Button('Add a photo',id='find-photo-add',n_clicks=0,className='atlas-primary-button'),
         html.P('Original files are copied to this computer. Save the observation to attach them; fieldbook backups include the photos and embedded camera metadata.',className='atlas-help'),
