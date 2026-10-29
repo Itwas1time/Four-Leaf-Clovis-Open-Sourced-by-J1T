@@ -226,6 +226,8 @@ def main() -> None:
     url = f"http://localhost:{port}"
     print(f"Clovis Local Atlas starting on {url}")
     Timer(1.5, _open_browser, args=[url]).start()
+    from core import warmup
+    warmup.start()
     app.run(debug=False, port=port, host="127.0.0.1")
 
 

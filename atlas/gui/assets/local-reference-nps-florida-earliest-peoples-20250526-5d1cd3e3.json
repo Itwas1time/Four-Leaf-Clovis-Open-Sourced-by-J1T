@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "id": "nps-florida-earliest-peoples",
+  "title": "Florida's Earliest Peoples",
+  "publisher": "National Park Service · Castillo de San Marcos National Monument",
+  "source_url": "https://www.nps.gov/casa/learn/historyculture/florida-s-earliest-peoples.htm",
+  "source_updated": "2025-05-26",
+  "receipt": {
+    "url": "https://www.nps.gov/casa/learn/historyculture/florida-s-earliest-peoples.htm",
+    "status": 200,
+    "retrieved_utc": "2026-10-29T18:55:19.590461+00:00",
+    "bytes": 39051,
+    "sha256": "5d1cd3e34d44d2b82f5b181b5c08b5b3f61d0b5937d0660a7d15a99983939d23",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "policy_receipt": {
+    "url": "https://www.nps.gov/aboutus/disclaimer.htm",
+    "status": 200,
+    "retrieved_utc": "2026-10-29T18:55:19.856789+00:00",
+    "bytes": 38448,
+    "sha256": "1b3b523964301d1c30ec8d6243cc551e99cac340b187c8883b356d93bea5e363",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "attribution": "National Park Service, Castillo de San Marcos National Monument. No claim to original U.S. Government works.",
+  "rights_basis": "NPS ownership policy: NPS-created text is generally public domain unless otherwise indicated.",
+  "scope": "A park summary of Florida prehistory. Its dates are approximate, as the page says, and it names only some of Florida's peoples.",
+  "content_note": "Complete article text, headings, lists and image descriptions. Images are not bundled. Site navigation and branding are excluded.",
+  "component_count": 1,
+  "visible_text_sha256": "823fd96a4402e323dcf435c4e24f411ce957b5492fd8debeb8b22eb9241db53b",
+  "original_visible_text": "About 12,000 years ago, when Florida was much larger and drier than now, wandering hunter-gatherers arrived. They lived a simple life, following the great herds of mammoths and other mega-fauna and gathering the wild grains, nuts, and berries they found in their seasonal wanderings. They made no pottery, used no bows and arrows. Instead they hunted with spears and cooked in leather bags, heating the contents with hot stones. No one knows what these people called themselves, but to archaeologists, they are known as Paleo-Indians. Archaic Period: Orange Culture 4000-1000 BC (Dates are approximate) Around 4000 BC, as more of the ice caps melted, the land became more like the Florida of today: wetter, with extensive salt marshes along the coasts. New technologies entered the lives of the people. They found that spears could be thrown farther and with more power and accuracy with the use of an atlatl, a stick that was fitted into the shaft of a spear. Perhaps this technology contributed to the disappearance of the large game animals about this same time. As the large prey died out, these people turned to the vast water resources. Fish, shellfish, turtles, and alligators became major parts of their diet. Hollowed-out log canoes enabled them to travel the many rivers. Another important technological invention was pottery. The type created in this time was a soft and porous pottery with an orange color, hence the name “Orange Period”. This pottery was tempered with Tillandsia usneoides (Spanish moss) that burned away as the pottery was fired. Woodland Period: Regional Cultures 1000 BC – 1500 AD (Dates are approximate) About 2500 years ago, as the various groups of archaic people began to settled more in one place, each group began to develop a distinct regional culture while maintaining several customs in common. All of these cultures celebrated the Black Drink Ceremony. They produced artwork as evidenced by carved masks and animal images and incised designs on shells and copper plates worn as jewelry. The evidence of grave goods in burials suggests a belief in an afterlife. They began to use traps and bows and arrows. The people who settled in the rich hills near present-day Tallahassee even began agriculture, growing a small-eared corn. Specialized tools, such as awls, drills, knives, and needles were made of bone or shell. Their pottery also changed. Sand was used as a temper, and the pots were made by coils that were smoothed instead of forming a pot from a single glob of clay. They also began to decorate their pottery with stamped and incised designs with each group or village having its favorite motifs. Calusa By the time the Europeans arrived in the early 1500s, the regional cultures were well established and differentiated. The group living along the Caloosahatchie River and the coast south of Tampa Bay became known as the Calusa. They were a powerful, fierce people who exacted tribute from less powerful groups in the region. The archaeological site at Marco Island, south of Naples, FL, shows a typical village with built up shell islands connected by canals. Beautifully painted and carved wooden masks were found at this site. They had a well-established religion and practiced human sacrifice. Temples were built on mounds. They believed that people had three souls—in one’s eye, one’s shadow, and one’s reflection in water. Some people believe that the Calusa traveled to Cuba in their canoes and may even have traded with the Mayan of the Yucatan. There is evidence that they had had experience with Europeans before Juan Ponce de Leon arrived in 1513. The Spanish were never able to missionize them as they did with the other Florida natives. Apalachee The Apalachee lived in the uplands of the panhandle and north-central Florida. The soil was good there, and the Apalachee developed agriculture and extensive trade networks. This group’s territory was so extensive at one time that the Appalachian Mountains were named after them. The Apalachee played a type of ball game with up to 50 men on a team, and it was so rough that it was known as “the Little Brother of War”. Besides providing a social gathering in which news could be exchanged and young people find mates, the ball game kept the men fit for battle and also eased tensions and arguments between villages. The Apalachee were thoroughly missionized by the Spanish. Mission San Luis, a state historical site in Tallahassee, is a good example of an Apalachee-Spanish mission with a reconstructed church and priests’ house on one side of the central plaza and the tribal council house and Chief’s house on the other side. The council house could hold several thousand people.",
+  "original_text_leaves": [
+    "About 12,000 years ago, when Florida was much larger and drier than now, wandering hunter-gatherers arrived. They lived a simple life, following the great herds of mammoths and other mega-fauna and gathering the wild grains, nuts, and berries they found in their seasonal wanderings. They made no pottery, used no bows and arrows. Instead they hunted with spears and cooked in leather bags, heating the contents with hot stones. No one knows what these people called themselves, but to archaeologists, they are known as Paleo-Indians.",
+    "Archaic Period: Orange Culture",
+    "4000-1000 BC (Dates are approximate)",
+    "Around 4000 BC, as more of the ice caps melted, the land became more like the Florida of today: wetter, with extensive salt marshes along the coasts. New technologies entered the lives of the people. They found that spears could be thrown farther and with more power and accuracy with the use of an atlatl, a stick that was fitted into the shaft of a spear. Perhaps this technology contributed to the disappearance of the large game animals about this same time. As the large prey died out, these people turned to the vast water resources. Fish, shellfish, turtles, and alligators became major parts of their diet. Hollowed-out log canoes enabled them to travel the many rivers. Another important technological invention was pottery. The type created in this time was a soft and porous pottery with an orange color, hence the name “Orange Period”. This pottery was tempered with Tillandsia usneoides (Spanish moss) that burned away as the pottery was fired.",
+    "Woodland Period: Regional Cultures",
+    "1000 BC – 1500 AD (Dates are approximate)",
+    "About 2500 years ago, as the various groups of archaic people began to settled more in one place, each group began to develop a distinct regional culture while maintaining several customs in common. All of these cultures celebrated the Black Drink Ceremony. They produced artwork as evidenced by carved masks and animal images and incised designs on shells and copper plates worn as jewelry. The evidence of grave goods in burials suggests a belief in an afterlife. They began to use traps and bows and arrows. The people who settled in the rich hills near present-day Tallahassee even began agriculture, growing a small-eared corn. Specialized tools, such as awls, drills, knives, and needles were made of bone or shell. Their pottery also changed. Sand was used as a temper, and the pots were made by coils that were smoothed instead of forming a pot from a single glob of clay. They also began to decorate their pottery with stamped and incised designs with each group or village having its favorite motifs.",
+    "Calusa",
+    "By the time the Europeans arrived in the early 1500s, the regional cultures were well established and differentiated. The group living along the Caloosahatchie River and the coast south of Tampa Bay became known as the Calusa. They were a powerful, fierce people who exacted tribute from less powerful groups in the region. The archaeological site at Marco Island, south of Naples, FL, shows a typical village with built up shell islands connected by canals. Beautifully painted and carved wooden masks were found at this site. They had a well-established religion and practiced human sacrifice. Temples were built on mounds. They believed that people had three souls—in one’s eye, one’s shadow, and one’s reflection in water. Some people believe that the Calusa traveled to Cuba in their canoes and may even have traded with the Mayan of the Yucatan. There is evidence that they had had experience with Europeans before Juan Ponce de Leon arrived in 1513. The Spanish were never able to missionize them as they did with the other Florida natives.",
+    "Apalachee",
+    "The Apalachee lived in the uplands of the panhandle and north-central Florida. The soil was good there, and the Apalachee developed agriculture and extensive trade networks. This group’s territory was so extensive at one time that the Appalachian Mountains were named after them. The Apalachee played a type of ball game with up to 50 men on a team, and it was so rough that it was known as “the Little Brother of War”. Besides providing a social gathering in which news could be exchanged and young people find mates, the ball game kept the men fit for battle and also eased tensions and arguments between villages. The Apalachee were thoroughly missionized by the Spanish. Mission San Luis, a state historical site in Tallahassee, is a good example of an Apalachee-Spanish mission with a reconstructed church and priests’ house on one side of the central plaza and the tribal council house and Chief’s house on the other side. The council house could hold several thousand people."
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "About 12,000 years ago, when Florida was much larger and drier than now, wandering hunter-gatherers arrived. They lived a simple life, following the great herds of mammoths and other mega-fauna and gathering the wild grains, nuts, and berries they found in their seasonal wanderings. They made no pottery, used no bows and arrows. Instead they hunted with spears and cooked in leather bags, heating the contents with hot stones. No one knows what these people called themselves, but to archaeologists, they are known as Paleo-Indians."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Archaic Period: Orange Culture"
+    },
+    {
+      "type": "paragraph",
+      "text": "4000-1000 BC (Dates are approximate) Around 4000 BC, as more of the ice caps melted, the land became more like the Florida of today: wetter, with extensive salt marshes along the coasts. New technologies entered the lives of the people. They found that spears could be thrown farther and with more power and accuracy with the use of an atlatl, a stick that was fitted into the shaft of a spear. Perhaps this technology contributed to the disappearance of the large game animals about this same time. As the large prey died out, these people turned to the vast water resources. Fish, shellfish, turtles, and alligators became major parts of their diet. Hollowed-out log canoes enabled them to travel the many rivers. Another important technological invention was pottery. The type created in this time was a soft and porous pottery with an orange color, hence the name “Orange Period”. This pottery was tempered with Tillandsia usneoides (Spanish moss) that burned away as the pottery was fired."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Woodland Period: Regional Cultures"
+    },
+    {
+      "type": "paragraph",
+      "text": "1000 BC – 1500 AD (Dates are approximate) About 2500 years ago, as the various groups of archaic people began to settled more in one place, each group began to develop a distinct regional culture while maintaining several customs in common. All of these cultures celebrated the Black Drink Ceremony. They produced artwork as evidenced by carved masks and animal images and incised designs on shells and copper plates worn as jewelry. The evidence of grave goods in burials suggests a belief in an afterlife. They began to use traps and bows and arrows. The people who settled in the rich hills near present-day Tallahassee even began agriculture, growing a small-eared corn. Specialized tools, such as awls, drills, knives, and needles were made of bone or shell. Their pottery also changed. Sand was used as a temper, and the pots were made by coils that were smoothed instead of forming a pot from a single glob of clay. They also began to decorate their pottery with stamped and incised designs with each group or village having its favorite motifs."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Calusa"
+    },
+    {
+      "type": "paragraph",
+      "text": "By the time the Europeans arrived in the early 1500s, the regional cultures were well established and differentiated. The group living along the Caloosahatchie River and the coast south of Tampa Bay became known as the Calusa. They were a powerful, fierce people who exacted tribute from less powerful groups in the region. The archaeological site at Marco Island, south of Naples, FL, shows a typical village with built up shell islands connected by canals. Beautifully painted and carved wooden masks were found at this site. They had a well-established religion and practiced human sacrifice. Temples were built on mounds. They believed that people had three souls—in one’s eye, one’s shadow, and one’s reflection in water. Some people believe that the Calusa traveled to Cuba in their canoes and may even have traded with the Mayan of the Yucatan. There is evidence that they had had experience with Europeans before Juan Ponce de Leon arrived in 1513. The Spanish were never able to missionize them as they did with the other Florida natives."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Apalachee"
+    },
+    {
+      "type": "paragraph",
+      "text": "The Apalachee lived in the uplands of the panhandle and north-central Florida. The soil was good there, and the Apalachee developed agriculture and extensive trade networks. This group’s territory was so extensive at one time that the Appalachian Mountains were named after them. The Apalachee played a type of ball game with up to 50 men on a team, and it was so rough that it was known as “the Little Brother of War”. Besides providing a social gathering in which news could be exchanged and young people find mates, the ball game kept the men fit for battle and also eased tensions and arguments between villages. The Apalachee were thoroughly missionized by the Spanish. Mission San Luis, a state historical site in Tallahassee, is a good example of an Apalachee-Spanish mission with a reconstructed church and priests’ house on one side of the central plaza and the tribal council house and Chief’s house on the other side. The council house could hold several thousand people."
+    }
+  ],
+  "original_links": [],
+  "excavation_events_added": 0
+}

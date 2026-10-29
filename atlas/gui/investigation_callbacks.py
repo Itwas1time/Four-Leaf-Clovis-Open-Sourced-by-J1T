@@ -88,7 +88,7 @@ def report_overview(token,state,geoid,history,online,mode):
     stats=knowledge['maps']
     regional=knowledge['regional_maps']
     children=[answer_card(card,label) for card,label in (
-        (town_cards.who_lived_here(state),'Read the timeline offline →'),
+        (town_cards.who_lived_here(state),None),  # each region names its own source link
         (town_cards.burial_grounds(place),None),
         (town_cards.old_topo_maps(place),'Open the oldest map (online) →'),
         (town_cards.law_summary(state),'Read the official text →'),

@@ -694,6 +694,8 @@ def serve(
 
     try:
         from atlas.gui.app import app as dash_app
+        from core import warmup
+        warmup.start()
         dash_app.run(host=host, port=port, debug=debug)
     except ImportError as e:
         console.print(f"[red]Failed to import Atlas GUI: {e}[/red]")

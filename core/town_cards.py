@@ -10,19 +10,14 @@ from core import known_cemeteries, offline_references
 
 
 def who_lived_here(state):
-    """Ohio: the NPS timeline periods; elsewhere None until a reviewed regional source exists."""
-    if state != 'OH':
+    """The reviewed regional summary's periods; None until a reviewed source exists for the state."""
+    from core import regional_history
+    found = regional_history.summary(state)
+    if found is None:
         return None
-    article = offline_references.get(offline_references.TIMELINE)
-    if article is None:
-        return None
-    periods = [block['text'] for block in article['blocks'] if block['type'] == 'heading']
-    return {'title': 'Who lived here before you',
-            'text': 'Indigenous peoples have lived in what is now Ohio for at least 13,000 years.',
-            'items': periods,
-            'note': 'NPS timeline written for Northeast Ohio. In southwest Ohio the late prehistoric people are known '
-                    'as Fort Ancient, as at SunWatch Village in Dayton.',
-            'href': '/reference/local/' + article['id']}
+    entry, article, periods = found
+    return {'title': 'Who lived here before you', 'text': entry['intro'], 'items': [name for name, _ in periods],
+            'note': entry['card_note'], 'href': '/reference/local/' + article['id'], 'link': entry['link_label'] + ' →'}
 
 
 def burial_grounds(place):
@@ -40,6 +35,11 @@ def burial_grounds(place):
             'note': 'USGS GNIS, 2021. Unmarked, family and Native burials are often unrecorded.'}
 
 
+def citation_label(citation):
+    """'ORC 2921.22(C), (K) (effective ...)' -> 'ORC 2921.22'; 'Fla. Stat. 556.105, 556.108 (2026 edition)' kept."""
+    return re.sub(r'\([A-Za-z0-9]+\)', '', citation.split(' (')[0]).rstrip(', ')
+
+
 def law_summary(state):
     """Verified digger rules where reviewed; otherwise an honest pointer to the state office."""
     from atlas.gui.data.archaeology_laws import SHPO_DIRECTORY, get_archaeology_laws
@@ -48,7 +48,7 @@ def law_summary(state):
     rules = reference.get('digger_rules')
     if rules:
         return {'title': f'The law where you are · {name}',
-                'items': [f"{rule['topic']} ({re.match(r'[A-Z]+ [0-9.]+', rule['citation']).group()})" for rule in rules],
+                'items': [f"{rule['topic']} ({citation_label(rule['citation'])})" for rule in rules],
                 'note': f"Read on the official code {reference['checked_on']}; information, not legal advice.",
                 'href': rules[0]['url']}
     return {'title': f'The law where you are · {name}',

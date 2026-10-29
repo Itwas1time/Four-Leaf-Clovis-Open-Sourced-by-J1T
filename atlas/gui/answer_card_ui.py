@@ -12,7 +12,7 @@ def answer_card(card, link_label=None):
         parts.append(html.Small(card['note']))
     if card.get('href'):
         # A block-level link: an inline anchor styled as a button overlapped the note above it.
-        parts.append(html.A(link_label if card.get('items') else 'Find your state office →', href=card['href'],
+        parts.append(html.A((link_label or card.get('link')) if card.get('items') else 'Find your state office →', href=card['href'],
                             target='_blank', rel='noopener noreferrer', className='atlas-secondary-button',
                             style={'display': 'block', 'marginTop': '0.6rem', 'textAlign': 'center'}))
     return html.Div(parts, className='clovis-town-catalog')

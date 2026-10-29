@@ -24,6 +24,16 @@ REFERENCES = {
         'asset':'local-reference-nps-native-cultures-20260515-9ca34248.json',
         'sha256':'767811cf4eb0b3c5ba88d7205745d7e51a9935482e6c73038ff0c2f8696c3cef',
         'download_name':'clovis-nps-native-cultures-timeline.txt'},
+    'nps-florida-earliest-peoples': {
+        'source_url':'https://www.nps.gov/casa/learn/historyculture/florida-s-earliest-peoples.htm',
+        'asset':'local-reference-nps-florida-earliest-peoples-20250526-5d1cd3e3.json',
+        'sha256':'62ea2c9f297637695e36270503896baef74838285ca1e100ef808042f04bfc28',
+        'download_name':'clovis-nps-florida-earliest-peoples.txt'},
+    'nps-big-bend-first-inhabitants': {
+        'source_url':'https://www.nps.gov/bibe/learn/historyculture/archeology.htm',
+        'asset':'local-reference-nps-big-bend-first-inhabitants-20230616-6f1fb687.json',
+        'sha256':'b61f80455d45f4e51500ac8ba96dd43aa5412b64b22b4d93e25044e3b8337723',
+        'download_name':'clovis-nps-big-bend-first-inhabitants.txt'},
 }
 TIMELINE = 'nps-native-american-cultures-timeline'
 # Bundled file per reference; tests replace an entry to simulate a damaged or missing edition.
@@ -113,11 +123,15 @@ def render_html(article):
         '<link rel="stylesheet" href="/assets/offline_reference.css"></head><body class="clovis-local-reference"><main>',
         '<p class="eyebrow">Clovis · Local source text</p><h1>'+title+'</h1>',
         '<p>'+esc(article['publisher'])+'</p><p class="scope">'+esc(article['scope'])+'</p>',
-        '<p>'+esc(article['content_note'])+'</p>',
-        '<nav aria-label="Source sections"><ul>']
-    parts.extend('<li><a href="#'+_anchor(b['text'])+'">'+esc(b['text'])+'</a></li>'
-        for b in article['blocks'] if b['type']=='heading' and b['level']==2)
-    parts.extend(['</ul></nav>','<article aria-label="Original NPS article text">'])
+        '<p>'+esc(article['content_note'])+'</p>']
+    # Index the page's top heading level, whichever it is; a page without headings gets no empty box.
+    headings=[b for b in article['blocks'] if b['type']=='heading']
+    top=min((b['level'] for b in headings),default=None)
+    if top is not None:
+        parts.append('<nav aria-label="Source sections"><ul>')
+        parts.extend('<li><a href="#'+_anchor(b['text'])+'">'+esc(b['text'])+'</a></li>' for b in headings if b['level']==top)
+        parts.append('</ul></nav>')
+    parts.append('<article aria-label="Original NPS article text">')
     for block in article['blocks']:
         kind=block['type']
         if kind=='heading':

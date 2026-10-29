@@ -126,29 +126,18 @@ def _next_steps(place, context):
 
 
 def _past_lines(state):
-    """Who lived here before you: the NPS summary of Ohio prehistory, quoted from the bundled edition."""
-    if state != "OH":
+    """Who lived here before you: a reviewed public-domain regional summary, quoted from the bundled edition."""
+    from core import regional_history
+    found = regional_history.summary(state)
+    if found is None:
         return []
-    from core import offline_references
-    article = offline_references.get(offline_references.TIMELINE)
-    if article is None:
-        return []
-    periods, heading = [], None
-    for block in article["blocks"]:
-        if block["type"] == "heading":
-            heading = block["text"]
-        elif heading and block["type"] == "paragraph":
-            periods.append((heading, block["text"]))
-            heading = None
+    entry, article, periods = found
     lines = ["## Who lived here before you", "",
-             "Indigenous peoples have lived in what is now Ohio for at least 13,000 years. The National Park Service "
-             "summarizes the periods archaeologists use:", ""]
+             entry["intro"] + " " + entry.get("lead_in", "The National Park Service summarizes the periods archaeologists use:"), ""]
     lines += [f"- **{_md(name)}.** {_md(text)}" for name, text in periods]
-    lines += ["", f"Quoted from the NPS *{_md(article['title'])}* (Cuyahoga Valley National Park, updated "
-              f"{article['source_updated']}; public domain). [Read the full timeline offline](/reference/local/{article['id']}). "
-              "It was written for Northeast Ohio, where the late prehistoric people were the Whittlesey. In southwest "
-              "Ohio they are known as Fort Ancient: SunWatch Village in Dayton preserves the remains of a 12th-century "
-              "Fort Ancient settlement ([Dayton Society of Natural History](https://boonshoft.org/sunwatch/)).", ""]
+    lines += ["", f"Quoted from the NPS *{_md(article['title'])}* ({entry['source_label']}, updated "
+              f"{article['source_updated']}; public domain). [{entry['link_label']}](/reference/local/{article['id']}). "
+              + entry["report_note"], ""]
     return lines
 
 
@@ -181,7 +170,7 @@ def _law_lines(state):
     if reference.get("digger_rules"):
         for rule in reference["digger_rules"]:
             lines += [f"**{_md(rule['topic'])}.** {_md(rule['rule'])} [{_md(rule['citation'])}]({rule['url']})", ""]
-        lines += [f"Checked on {reference['checked_on']} against the official Ohio code. Laws change; follow the links "
+        lines += [f"Checked on {reference['checked_on']} against the official state code. Laws change; follow the links "
                   "for the current text. This is information, not legal advice.", ""]
     elif reference.get("source_url", "").startswith("https://") and reference.get("source_url") != SHPO_DIRECTORY:
         lines += [f"{_md(reference['state_law'])} [Official text]({reference['source_url']})", ""]
