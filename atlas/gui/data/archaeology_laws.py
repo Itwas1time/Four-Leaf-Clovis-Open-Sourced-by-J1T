@@ -85,6 +85,28 @@ _LAWS["WA"].update({
     "source_url": "https://app.leg.wa.gov/rcw/default.aspx?cite=27.53.060",
     "additional_url": "https://dahp.wa.gov/archaeology/archaeological-permitting",
 })
+# Rules a person digging in Ohio should know. Each was read verbatim on codes.ohio.gov on the
+# checked date; paraphrases keep the statute's scope. Add a state only after the same review.
+_LAWS["OH"].update({
+    "state_law": "Ohio's archaeological permit law covers land owned, controlled or administered by the state or a political subdivision, and dedicated archaeological preserves (ORC 149.54).",
+    "source_url": "https://codes.ohio.gov/ohio-revised-code/section-149.54",
+    "digger_rules": [
+        {"topic": "Your own private land",
+         "rule": "Ohio's archaeological survey and salvage permit (written permission of the director of the Ohio History Connection) is required on land owned, controlled or administered by the state or a political subdivision, and at dedicated archaeological preserves. That permit law does not cover ordinary private land; you still need the landowner's permission, and the rules below still apply.",
+         "citation": "ORC 149.54 (effective 29 Sep 2015)", "url": "https://codes.ohio.gov/ohio-revised-code/section-149.54"},
+        {"topic": "Mounds, earthworks and burial places",
+         "rule": "No one may, without privilege, purposely deface, damage or otherwise physically mistreat an Indian mound or earthwork, a cemetery, or a site of great historical or archaeological interest. \"Cemetery\" means any place of burial, including sites with American Indian burial objects or remains. A violation is desecration, a second-degree misdemeanor.",
+         "citation": "ORC 2927.11 (effective 20 Sep 1999)", "url": "https://codes.ohio.gov/ohio-revised-code/section-2927.11"},
+        {"topic": "If you find human remains",
+         "rule": "Anyone who discovers a body must report it immediately to a law enforcement officer, an ambulance service, an emergency squad or the coroner where it was found. Failing to report is a fourth-degree misdemeanor.",
+         "citation": "ORC 2921.22(C), (K) (effective 21 Mar 2025)", "url": "https://codes.ohio.gov/ohio-revised-code/section-2921.22"},
+        {"topic": "Before you dig: buried utilities",
+         "rule": "An excavator must notify the utility protection service (call 811) at least two working days, not counting the day of the call, and no more than 16 calendar days before digging. An owner digging their own property must do so where there is a utility easement, a public right-of-way or utility lines serving the property, which covers most house lots. The call is free.",
+         "citation": "ORC 3781.28(A), (F)(2) (effective 9 Jun 2026)", "url": "https://codes.ohio.gov/ohio-revised-code/section-3781.28"},
+    ],
+    "checked_on": "2026-10-29",
+    "verification_status": "Ohio statutes read verbatim on codes.ohio.gov on 2026-10-29; not legal advice",
+})
 _LAWS["FEDERAL"] = {
     "description": "Official federal archaeology references; determine applicability with the responsible federal land manager and relevant Tribal authority.",
     "permit_required": None,

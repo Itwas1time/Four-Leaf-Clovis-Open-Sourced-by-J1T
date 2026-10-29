@@ -70,7 +70,9 @@ def new_entry(kind,report,photos=None):
         summary={'place':title,'history':CONTEXTS[report['key'][2]],
                  'maps':(report['geology_status'] + ': ' + '; '.join(report['mapped_units'])).encode('utf-8')[:1500].decode('utf-8','ignore')}
     else:
-        title=MATERIALS[report['material']] + ' observation'
+        # Name a find from the person's own words when they wrote any.
+        first=' '.join((report.get('notes') or '').split())
+        title=MATERIALS[report['material']] + (': ' + (first[:57] + '…' if len(first) > 60 else first) if first else ' observation')
         summary={'material':MATERIALS[report['material']],'setting':SETTINGS[report['setting']],
                  'features':', '.join(FEATURES[f] for f in report['features']) or 'Not recorded',
                  'size':report['size'] or 'Not recorded'}

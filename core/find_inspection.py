@@ -19,6 +19,9 @@ FEATURES = {
     'branch': 'A flat branching pattern', 'holes': 'Regular holes or worked edges',
     'rust': 'Rust or other corrosion', 'porous': 'Pores or a hollow interior',
     'human': 'I know it is human, or this is a known burial ground',
+    'aqua': 'Pale blue-green (aqua) tint', 'amethyst': 'Purple or amethyst tint',
+    'bubbles': 'Many small bubbles in the glass', 'pontil': 'A round scar on the base',
+    'can': 'Part of a tin can', 'decorated': 'Painted, printed or raised decoration',
 }
 FEATURE_QUESTIONS = {
     'transparent': 'Where does light pass through it: the whole object or only a thin edge?',
@@ -34,6 +37,12 @@ FEATURE_QUESTIONS = {
     'rust': 'What outline remains visible through the corrosion? Photograph it without scraping.',
     'porous': 'Are the openings similar or varied? Show an existing surface without breaking the object.',
     'human': 'Who identified the remains as human, or which known burial ground is this? Note the source.',
+    'aqua': 'Is the tint even through the glass, or only visible at thick edges? Look in daylight against white paper.',
+    'amethyst': 'Is the purple tint even? Compare a clean break with the outer surface in daylight.',
+    'bubbles': 'Are the bubbles round or stretched, and where are they? Photograph them against the light.',
+    'pontil': 'Is the base scar rough or smooth, and is anything embossed on the base?',
+    'can': 'Is the side seam soldered or folded, and how was the can opened? Photograph the lid and seam.',
+    'decorated': 'Is the decoration painted on, printed in fine lines or dots, or raised? Photograph any mark on the base.',
 }
 # Dating clues quoted verbatim from the bundled, hash-checked NPS Yosemite pocket guide
 # (public domain). Each fragment selects one whole source sentence; nothing is paraphrased.
@@ -45,6 +54,22 @@ NPS_DATING_CLUES = {
     'ceramic': ('Identifying marks on the bottoms', 'Victorian monochrome', 'vitreous or vitrified ironstone',
                 'Art Nouveau style', 'Naturalistic multi-color', 'Simple geometric designs'),
 }
+
+
+# Which clues speak to each selected feature, so the visible panel answers what the person saw.
+CLUE_FEATURES = {
+    'glass': {'seam': ('applied lip finishes', 'thin side mold seam'), 'aqua': ('Aqua-colored glass',),
+              'amethyst': ('amethyst or purple tint',), 'bubbles': ('Many bubbles in the glass',),
+              'pontil': ('circular scar',), 'transparent': ('Truly colorless glass',)},
+    'metal': {'can': NPS_DATING_CLUES['metal'], 'seam': ('soldered with lead', 'crimped or double-locking')},
+    'ceramic': {'decorated': NPS_DATING_CLUES['ceramic'][1:], 'mark': ('Identifying marks on the bottoms',)},
+}
+
+
+def matched_clues(material, features):
+    """NPS clues that speak to the selected features, in the guide's order."""
+    wanted = {fragment for feature in features for fragment in CLUE_FEATURES.get(material, {}).get(feature, ())}
+    return [clue for clue in dating_clues(material) if any(fragment in clue for fragment in wanted)]
 
 
 def dating_clues(material):
@@ -72,7 +97,7 @@ GUIDES = {
                       'Are markings part of the object, or a coating on its surface?'],
         'source': ('NPS recognition examples','https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm')},
     'glass': {
-        'title': 'Compare glass form and manufacturing clues', 'features': ['transparent','curved','seam','mark','holes'],
+        'title': 'Compare glass form and manufacturing clues', 'features': ['transparent','curved','seam','mark','holes','aqua','amethyst','bubbles','pontil'],
         'comparisons': ['Container fragment: look for a curved wall, base, neck or rim.',
                         'Flat glass: photograph the edges and thickness; shape alone does not establish its original use.',
                         'Natural glass or another shiny material: an irregular fragment needs expert comparison.'],
@@ -80,7 +105,7 @@ GUIDES = {
                       'Which part is present: body, rim, neck, base, or only a fragment?'],
         'source': ('SHA / BLM historic bottle identification','https://secure-sha.org/bottle/')},
     'ceramic': {
-        'title': 'Compare the body, surface and shape', 'features': ['curved','mark','glaze','grain','holes'],
+        'title': 'Compare the body, surface and shape', 'features': ['curved','mark','glaze','grain','holes','decorated'],
         'comparisons': ['Vessel or dish fragment: look for a rim, foot, handle or decoration.',
                         'Brick or other building material: record the body and any regular faces or holes.',
                         'Natural rock resembling pottery: photograph an existing edge and surface; avoid breaking it to check.'],
@@ -88,7 +113,7 @@ GUIDES = {
                       'Can the shape be described without guessing a date?'],
         'source': ('NPS ceramic recognition examples','https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm')},
     'metal': {
-        'title': 'Compare the original shape and construction', 'features': ['curved','seam','mark','holes','rust'],
+        'title': 'Compare the original shape and construction', 'features': ['curved','seam','mark','holes','rust','can'],
         'comparisons': ['Building hardware or fastener: record head, shaft and holes.',
                         'Container or sheet metal: record seams, joins and openings.',
                         'Unidentified corroded object: corrosion can hide the original shape.'],
@@ -180,4 +205,4 @@ def inspect_find(material, features, setting, size, notes, *, town_context=None,
               '**Still unknown:** exact identity, age, provenance, ownership and collection rights. Record an expert opinion separately from these observations.', '']
     return {'material':material,'features':selected,'setting':setting,'size':size,'notes':notes,
             'place': f"{place['name']}, {place['state']}" if place else '',
-            'markdown':'\n'.join(lines),'title':guide['title']}
+            'markdown':'\n'.join(lines),'title':guide['title'],'dating_clues':matched_clues(material,selected)}

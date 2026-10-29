@@ -46,7 +46,11 @@ def render_find(material, features, setting, size, notes, town_context, state, g
     prompts = [(FEATURES[feature], FEATURE_QUESTIONS[feature]) for feature in report['features']]
     if not prompts:
         prompts = [('Start with a detail', question) for question in GUIDES[material]['questions'][:2]]
-    questions = [html.H3('What to look at next'), html.Div([
+    clues = report.get('dating_clues') or []
+    dating = [html.H3('How old might it be?'), html.Ul([html.Li(clue) for clue in clues]),
+              html.P('National Park Service guidance (public domain): approximate ranges, not an identification. '
+                     'All clues are in the full notes.', className='atlas-help')] if clues else []
+    questions = dating + [html.H3('What to look at next'), html.Div([
         html.Article([html.Small(label), html.P(question),
                       html.A('Record this detail →', href='#find-notes', className='clovis-record-detail')],
                      className='clovis-find-detail-card') for label, question in prompts

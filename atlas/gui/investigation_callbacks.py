@@ -10,6 +10,7 @@ from core.resident_context import current_report
 from core.us_places import get_place
 from core.example_catalog import get_example, pick_example
 from core.town_knowledge import knowledge_for_place
+from core import town_cards
 
 
 @callback(Output('workflow-mode','value',allow_duplicate=True), Output('resident-tool','value'),
@@ -73,6 +74,22 @@ def show_example(saved,state,geoid,mode):
     ],className='clovis-example-guidance',key=example['id'])]
 
 
+def _town_card(card, link_label=None):
+    parts=[html.Strong(card['title'])]
+    if card.get('text'):
+        parts.append(html.P(card['text']))
+    if card.get('items'):
+        parts.append(html.Ul([html.Li(item) for item in card['items']]))
+    if card.get('note'):
+        parts.append(html.Small(card['note']))
+    if card.get('href'):
+        # A block-level link: an inline anchor styled as a button overlapped the note above it.
+        parts.append(html.A(link_label if card.get('items') else 'Find your state office →',href=card['href'],
+            target='_blank',rel='noopener noreferrer',className='atlas-secondary-button',
+            style={'display':'block','marginTop':'0.6rem','textAlign':'center'}))
+    return html.Div(parts,className='clovis-town-catalog')
+
+
 @when_opened(('map', 'archive', 'missions'), Output('resident-evidence-overview','children'),
           Input('resident-report-store','data'), Input('resident-state','value'), Input('resident-place','value'),
           Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'))
@@ -85,11 +102,17 @@ def report_overview(token,state,geoid,history,online,mode):
     knowledge=knowledge if isinstance(knowledge,dict) else knowledge_for_place(place)
     stats=knowledge['maps']
     regional=knowledge['regional_maps']
-    children=[]
+    children=[_town_card(card,label) for card,label in (
+        (town_cards.who_lived_here(state),'Read the timeline offline →'),
+        (town_cards.burial_grounds(place),None),
+        (town_cards.law_summary(state),'Read the official text →'),
+    ) if card]
     offline_units=knowledge.get('usgs_units',[])
+    # Two map units can share a name and description; show each distinct description once.
+    distinct=list({(u['name'],u.get('age',''),u.get('geomaterial','')):u for u in offline_units}.values())
     if offline_units:
         children.append(html.Div([html.Strong('Regional geology · Offline USGS map'),
-            *[html.P([html.Strong(unit['name']+': '),' · '.join(v for v in (unit.get('age',''),unit.get('geomaterial','')) if v)]) for unit in offline_units[:2]],
+            *[html.P([html.Strong(unit['name']+': '),' · '.join(v for v in (unit.get('age',''),unit.get('geomaterial','')) if v)]) for unit in distinct[:2]],
             html.Button('Read mapped units →',id={'type':'workbench-action','target':'library','key':'town-units'},n_clicks=0,className='atlas-secondary-button')],className='clovis-town-catalog'))
     if stats['maps']:
         label=f"{stats['maps']:,} dated town maps"

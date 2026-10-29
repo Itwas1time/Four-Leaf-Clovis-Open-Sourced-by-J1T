@@ -11,37 +11,57 @@ import re
 from core.fieldbook import validate_book
 from core.resident_context import _md
 
+# Reviewed local source editions. To add one: capture it with tools/acquire_nps_yosemite_reference.py,
+# review it, then pin its asset hash here and in the public export allowlist.
+REFERENCES = {
+    'nps-yosemite-artifacts': {
+        'source_url':'https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm',
+        'asset':'local-reference-nps-yosemite-20250925-6c068bf4.json',
+        'sha256':'bd40897255f5c368b44b2cf4684949e221d21ecb84dd9eb5806482a6c70de94f',
+        'download_name':'clovis-nps-yosemite-source.txt'},
+    'nps-native-american-cultures-timeline': {
+        'source_url':'https://www.nps.gov/articles/000/timeline-of-native-american-cultures.htm',
+        'asset':'local-reference-nps-native-cultures-20260515-9ca34248.json',
+        'sha256':'767811cf4eb0b3c5ba88d7205745d7e51a9935482e6c73038ff0c2f8696c3cef',
+        'download_name':'clovis-nps-native-cultures-timeline.txt'},
+}
+TIMELINE = 'nps-native-american-cultures-timeline'
+# Bundled file per reference; tests replace an entry to simulate a damaged or missing edition.
+ASSETS = {identifier: Path(__file__).resolve().parents[1]/'atlas/gui/assets'/row['asset']
+          for identifier,row in REFERENCES.items()}
 REFERENCE = 'nps-yosemite-artifacts'
-SOURCE_URL = 'https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm'
-ASSET = Path(__file__).resolve().parents[1]/'atlas/gui/assets/local-reference-nps-yosemite-20250925-6c068bf4.json'
-ASSET_SHA256 = 'bd40897255f5c368b44b2cf4684949e221d21ecb84dd9eb5806482a6c70de94f'
+SOURCE_URL = REFERENCES[REFERENCE]['source_url']
+ASSET = ASSETS[REFERENCE]
+ASSET_SHA256 = REFERENCES[REFERENCE]['sha256']
 
 
-@lru_cache(maxsize=1)
-def _load():
+@lru_cache(maxsize=None)
+def _load(identifier=REFERENCE):
     # Review JSON uses canonical LF; Git checkouts may use CRLF. This does not
     # normalize the separately retained original HTTP entity or its receipt.
-    raw = ASSET.read_bytes().replace(b'\r\n',b'\n')
-    if len(raw)>250_000 or hashlib.sha256(raw).hexdigest()!=ASSET_SHA256:
+    reviewed = REFERENCES[identifier]
+    raw = ASSETS[identifier].read_bytes().replace(b'\r\n',b'\n')
+    if len(raw)>250_000 or hashlib.sha256(raw).hexdigest()!=reviewed['sha256']:
         raise ValueError('The bundled source edition differs from its reviewed copy.')
     article = json.loads(raw)
-    if (article.get('schema')!=1 or article.get('id')!=REFERENCE or article.get('source_url')!=SOURCE_URL
+    if (article.get('schema')!=1 or article.get('id')!=identifier or article.get('source_url')!=reviewed['source_url']
             or hashlib.sha256(article['original_visible_text'].encode()).hexdigest()!=article['visible_text_sha256']):
         raise ValueError('The bundled source edition needs review.')
     return article
 
 
 def get(identifier):
-    if identifier != REFERENCE or not isinstance(identifier,str):
+    if not isinstance(identifier,str) or identifier not in REFERENCES:
         return None
     try:
-        return deepcopy(_load())
+        return deepcopy(_load(identifier))
     except (OSError,ValueError,KeyError,TypeError):
         return None
 
 
 def for_url(url):
-    return get(REFERENCE) if isinstance(url,str) and url==SOURCE_URL else None
+    match = next((identifier for identifier,row in REFERENCES.items() if row['source_url']==url),None) if isinstance(url,str) else None
+    return get(match) if match else None
 
 
 def reading_text(article):
@@ -115,7 +135,7 @@ def render_html(article):
         '<p>'+esc(article['attribution'])+'</p><p>'+esc(article['rights_basis'])+'</p>',
         '<p>Original HTML SHA-256: <code>'+article['receipt']['sha256']+'</code></p>',
         '<p><a href="'+esc(article['source_url'],quote=True)+'" target="_blank" rel="noopener noreferrer">View current NPS page (online)</a></p>',
-        '<p><a href="/reference/local/'+REFERENCE+'/text">Download this source text</a></p>',
+        '<p><a href="/reference/local/'+article['id']+'/text">Download this source text</a></p>',
         '<p>Return to your Clovis tab to keep investigating or save the complete source to your fieldbook.</p>',
         '</footer></main></body></html>'])
     return ''.join(parts)
@@ -139,5 +159,5 @@ def register_routes(server):
         if article is None:
             return Response('This local source is not available.',status=404,mimetype='text/plain')
         return Response(reading_text(article),mimetype='text/plain',headers={
-            'Content-Disposition':'attachment; filename="clovis-nps-yosemite-source.txt"',
+            'Content-Disposition':'attachment; filename="'+REFERENCES[identifier]['download_name']+'"',
             'X-Content-Type-Options':'nosniff'})

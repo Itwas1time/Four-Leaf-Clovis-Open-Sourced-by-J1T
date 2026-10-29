@@ -125,6 +125,55 @@ def _next_steps(place, context):
     ]
 
 
+def _past_lines(state):
+    """Who lived here before you: the NPS summary of Ohio prehistory, quoted from the bundled edition."""
+    if state != "OH":
+        return []
+    from core import offline_references
+    article = offline_references.get(offline_references.TIMELINE)
+    if article is None:
+        return []
+    periods, heading = [], None
+    for block in article["blocks"]:
+        if block["type"] == "heading":
+            heading = block["text"]
+        elif heading and block["type"] == "paragraph":
+            periods.append((heading, block["text"]))
+            heading = None
+    lines = ["## Who lived here before you", "",
+             "Indigenous peoples have lived in what is now Ohio for at least 13,000 years. The National Park Service "
+             "summarizes the periods archaeologists use:", ""]
+    lines += [f"- **{_md(name)}.** {_md(text)}" for name, text in periods]
+    lines += ["", f"Quoted from the NPS *{_md(article['title'])}* (Cuyahoga Valley National Park, updated "
+              f"{article['source_updated']}; public domain). [Read the full timeline offline](/reference/local/{article['id']}). "
+              "It was written for Northeast Ohio, where the late prehistoric people were the Whittlesey. In southwest "
+              "Ohio they are known as Fort Ancient: SunWatch Village in Dayton preserves the remains of a 12th-century "
+              "Fort Ancient settlement ([Dayton Society of Natural History](https://boonshoft.org/sunwatch/)).", ""]
+    return lines
+
+
+def _law_lines(state):
+    """What the law asks of someone digging in this state: verified rules where reviewed, honest pointers elsewhere."""
+    from atlas.gui.data.archaeology_laws import SHPO_DIRECTORY, get_archaeology_laws
+    laws = get_archaeology_laws()
+    reference, federal = laws.get(state, {}), laws["FEDERAL"]
+    name = reference.get("state_name", state)
+    lines = [f"## The law where you are: {_md(name)}", ""]
+    if reference.get("digger_rules"):
+        for rule in reference["digger_rules"]:
+            lines += [f"**{_md(rule['topic'])}.** {_md(rule['rule'])} [{_md(rule['citation'])}]({rule['url']})", ""]
+        lines += [f"Checked on {reference['checked_on']} against the official Ohio code. Laws change; follow the links "
+                  "for the current text. This is information, not legal advice.", ""]
+    elif reference.get("source_url", "").startswith("https://") and reference.get("source_url") != SHPO_DIRECTORY:
+        lines += [f"{_md(reference['state_law'])} [Official text]({reference['source_url']})", ""]
+    else:
+        lines += [f"Clovis has not yet reviewed {_md(name)}'s archaeology, burial and digging laws. Your State Historic "
+                  f"Preservation Office can tell you what applies; find it in the [official directory]({SHPO_DIRECTORY}).", ""]
+    lines += ["On federal or tribal land, federal law also applies: " + "; ".join(
+        f"[{_md(row['name'])}]({row['source_url']})" for row in federal["key_regulations"]) + ".", ""]
+    return lines
+
+
 def build_context(state, geoid, context="unknown", online=None):
     from core.town_knowledge import knowledge_markdown
     from core.known_cemeteries import report_lines as cemetery_lines
@@ -250,7 +299,9 @@ def build_context(state, geoid, context="unknown", online=None):
               "- A representative survey recording searched area, depth and methods, with all positive and negative "
               "outcomes. Even an observed survey frequency needs validation before predicting a new property.",
               "- Permission and applicable local/state rules; this report does not verify collection rights.", "",
+              *_past_lines(state),
               *cemetery_lines(place, _md),
+              *_law_lines(state),
               "## If you dig or find something", "",
               "Before you dig, have buried utilities marked through [811](https://www.transportation.gov/content/call-811-you-dig-1); "
               "it is free, and most states require it before excavation. "

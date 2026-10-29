@@ -301,6 +301,10 @@ def build_layer_panel() -> html.Aside:
     directory_title, directory_section, lead_title, lead_section, *map_sections = panel.children
     panel.children = [
         html.Div("Start with a published project or draw a local U.S. study area.", className="atlas-workflow-hint"),
+        # Research here plans fieldwork; people looking for published evidence need the Atlas search.
+        html.Button("Looking for published evidence? Search the Atlas →", n_clicks=0,
+                    id={"type": "workbench-action", "target": "library", "key": "research-evidence"},
+                    className="atlas-secondary-button"),
         lead_title, lead_section, map_sections[2], directory_title, directory_section,
         *map_sections[3:],
     ]
