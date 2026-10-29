@@ -7,3 +7,5 @@ atlas/gui/assets/natural-earth-land-110m.json -text whitespace=cr-at-eol
 atlas/gui/assets/offline-map-sources.json -text whitespace=cr-at-eol
 # Published manuscript and source workbooks retain their original bytes.
 atlas/gui/data/offline-publications/** -text whitespace=cr-at-eol
+# The GNIS cemetery index keeps its reviewed bytes (pinned in the public export).
+atlas/gui/data/us_cemeteries_gnis_2021.sqlite -text

@@ -59,11 +59,17 @@ still includes those existing large catalogs.
 
 The bundled **Full research papers & original tables** source contains the
 Panama isotope paper (2025), a Cambodia/Thailand ceramic-analysis paper (2019),
-and a Senegal Ravin Blanc X excavation study (2025), with their methods, main
-tables and fifteen original supplementary workbooks. These are three
-publications and fifteen workbook components, not eighteen excavations or newly
-enumerated finds. Read them offline, save selected components, or download a
-complete study as a portable ZIP. See [the reading workflow and source qualifications](OFFLINE_RESEARCH_PAPERS.md).
+a Senegal Ravin Blanc X excavation study (2025) and a Kakapel Rockshelter study
+from western Kenya (2025), with their methods, main tables and sixteen original
+supplementary workbooks. These are four publications and sixteen workbook
+components, not twenty excavations or newly enumerated finds. Read them offline,
+save selected components, or download a complete study as a portable ZIP. See [the reading workflow and source qualifications](OFFLINE_RESEARCH_PAPERS.md).
+
+**Known cemeteries.** Town reports list the named cemeteries USGS GNIS records within 8 km of the
+public town point (147,249 placed cemeteries nationwide; 7,118 GNIS records without coordinates are
+excluded and counted). The source is the legacy GNIS national file of 25 August 2021, which USGS no
+longer refreshes; it is public domain. Family, abandoned, unmarked and Native burial places are often
+missing, so a missing record does not mean there are no burials.
 
 This edition lists released collections above. Record totals mix source
 types and overlapping editions; they are not unique finds or excavations.

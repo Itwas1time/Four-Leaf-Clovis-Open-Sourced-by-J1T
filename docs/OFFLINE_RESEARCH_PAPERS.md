@@ -3,7 +3,7 @@
 # Full research papers and original tables
 
 In **Atlas**, open **Limit to a source** and choose **Full research papers &
-original tables**. Search `Senegal`, `Ravin Blanc X`, `Cambodia`, `Longvek`, `Panama`, `Cerro Juan Díaz`, or an original DOI such as
+original tables**. Search `Kakapel`, `Kenya`, `Senegal`, `Ravin Blanc X`, `Cambodia`, `Longvek`, `Panama`, `Cerro Juan Díaz`, or an original DOI such as
 `10.1371/journal.pone.0335678.s009`. An exact DOI opens only that source component.
 The paper and its supporting tables have separate records and citations.
 
@@ -121,4 +121,26 @@ rows are not an additional count of unique objects or excavations. The portable
 study also includes the publisher's inclusivity questionnaire as its original
 DOCX. Figure captions are retained, but the figure images are not bundled.
 Published site locations do not identify private property or new finds, and an
+absence from this study does not establish an absence of archaeology elsewhere.
+
+## Kakapel Rockshelter edition and scope
+
+Goldstein and colleagues (2025), *Cultural, economic, and settlement shifts over
+the last 9,000 years at Kakapel Rockshelter, Western Kenya*, PLOS One 20(8),
+e0328805. [Original publication](https://doi.org/10.1371/journal.pone.0328805).
+The source edition retains all seventeen authors and the publisher's
+[CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
+
+The full article and its five main tables report excavation, a survey of 14 rock
+shelters in the Chelelemuk Hills (Busia County), radiocarbon dates, ceramics,
+chipped stone and raw materials. The S1 Table workbook holds the published
+measurements and attributes of the shell-bead assemblage, with its trench,
+context and identifier labels (including the authors' own question marks). The
+portable study also carries S1 Text, the excavators' descriptions of the
+archaeological contexts, as its original DOCX; its context numbers correspond
+to the radiocarbon table. Figure captions are retained, but figure images and the
+three supplementary TIFF figures are not bundled. Radiocarbon, phase and
+assemblage tables overlap and are not independent finds or events, and bead rows
+are an assemblage sample, not a count of excavations. Published shelter
+coordinates do not identify private property or a newly observed object, and an
 absence from this study does not establish an absence of archaeology elsewhere.

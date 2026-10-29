@@ -14,118 +14,132 @@ import re
 import unicodedata
 from zipfile import ZipFile, ZIP_DEFLATED, BadZipFile
 
-EDITION = 'panama-0335678'
-DIRECTORY = Path(__file__).resolve().parents[1]/'atlas/gui/data/offline-publications'/EDITION
-EDITION_SHA256 = '66c3971aa0dee23e8b115d2cca5336d97f833e35a97503497ae8302641c97a3d'
-CAMBODIA = 'cambodia-0216895'
-CAMBODIA_DIRECTORY = DIRECTORY.parent/CAMBODIA
-CAMBODIA_SHA256 = '1e3979cf72ecd5496519bc8bcc30df92c61107cc188236ce8cf933e2379001bc'
-SENEGAL = 'senegal-0329824'
-SENEGAL_DIRECTORY = DIRECTORY.parent/SENEGAL
-SENEGAL_SHA256 = 'c3f09b47b116f7eafa8b9fbe676d908cfa14162123441491b32b25b8e4b711ee'
-SENEGAL_STUDY_SHA256 = '85ea362b1fc5fd4ca4dcd19ef15df8c3296870c6bb26e725432b8f9aea0ef473'
+OFFLINE_PUBLICATIONS = Path(__file__).resolve().parents[1]/'atlas/gui/data/offline-publications'
 PAGE_SIZE = 24
-NOTES = [
-    'One publication and its ten supporting tables. These are source components, not eleven excavations.',
-    'Earlier published measurements remain identified in the source captions and yellow workbook highlights. Overlapping rows are not new individuals or specimens.',
-    'Source numbers, units, blanks, native categories, formulas and cached formula values are retained. Clovis does not recalculate the publisher workbooks.',
-    'S7 Table describes modern river-water samples. Its coordinates do not locate archaeological finds.',
-]
+METADATA = ('doi','authors','publisher','published','citation','scope','rights','content_note')
+
+# Reviewed offline studies. To add one: build its folder with its acquisition tool, review the
+# edition, then add an entry here (its pinned edition hash is the review gate) together with
+# its public export allowlist entry in tools/build_public_release.py and a test.
+#   tag_rows: rows carry an 'edition' field (the first study predates it and stays untagged)
+#   article_description: None uses the edition's content note
+#   figures: reviewed figure image files bundled with the study
+#   prepared_study_sha256: a reviewed prebuilt study ZIP served instead of building one
+STUDIES = {
+    'panama-0335678': {
+        'name':'Panama','doi':'10.1371/journal.pone.0335678',
+        'sha256':'66c3971aa0dee23e8b115d2cca5336d97f833e35a97503497ae8302641c97a3d',
+        'article_subtitle':'Panama · Cerro Juan Díaz · Full text and methods offline',
+        'table_subtitle':'Panama · Cerro Juan Díaz · Original table offline',
+        'article_description':'Complete paper text and two main tables, with ten separately readable supporting workbooks.',
+        'separator':' · ','tag_rows':False,
+        'notes':[
+            'One publication and its ten supporting tables. These are source components, not eleven excavations.',
+            'Earlier published measurements remain identified in the source captions and yellow workbook highlights. Overlapping rows are not new individuals or specimens.',
+            'Source numbers, units, blanks, native categories, formulas and cached formula values are retained. Clovis does not recalculate the publisher workbooks.',
+            'S7 Table describes modern river-water samples. Its coordinates do not locate archaeological finds.',
+        ]},
+    'cambodia-0216895': {
+        'name':'Cambodia','doi':'10.1371/journal.pone.0216895',
+        'sha256':'1e3979cf72ecd5496519bc8bcc30df92c61107cc188236ce8cf933e2379001bc',
+        'article_subtitle':'Cambodia - Longvek and Thai reference samples - full text offline',
+        'table_subtitle':'Cambodia - Longvek and Thai reference samples - original table offline',
+        'article_description':None,'separator':' - ','tag_rows':True,
+        'figures':('g004.png','g005.png','g006.png','g007.png'),
+        'notes':[
+            'One publication and four supporting source workbooks; these are not five excavations.',
+            'The study includes 102 sherd samples, including Thai reference material. Workbook rows and analyses overlap and are not additional finds.',
+            'Measurements, units, native sample identifiers and uncertainty remain as published; Clovis does not recalculate the workbooks.',
+            'Locations describe the published study and reference groups; they do not locate a private property or newly observed object.',
+        ]},
+    'senegal-0329824': {
+        'name':'Senegal','doi':'10.1371/journal.pone.0329824',
+        'sha256':'c3f09b47b116f7eafa8b9fbe676d908cfa14162123441491b32b25b8e4b711ee',
+        'prepared_study_sha256':'85ea362b1fc5fd4ca4dcd19ef15df8c3296870c6bb26e725432b8f9aea0ef473',
+        'article_subtitle':'Senegal - Ravin Blanc X - full text offline',
+        'table_subtitle':'Senegal - Ravin Blanc X - original lithic inventory offline',
+        'article_description':None,'separator':' - ','tag_rows':True,
+        'notes':[
+            'One published study and its lithic inventory; source components are not new excavations.',
+            'Inventory rows include fragments and refits and should not be counted as newly recorded finds.',
+            'The original spreadsheet retains its source identifiers, categories, measurements and remarks.',
+            'The published site location does not locate a private property or a newly observed object.',
+        ]},
+    'kakapel-0328805': {
+        'name':'Kakapel','doi':'10.1371/journal.pone.0328805',
+        'sha256':'ae51ac3c23084b62663229f8de21d412425cf9320ab3d0e31f3907b9546330dd',
+        'article_subtitle':'Kenya - Kakapel Rockshelter - full text offline',
+        'table_subtitle':'Kenya - Kakapel Rockshelter - original shell-bead table offline',
+        'article_description':None,'separator':' - ','tag_rows':True,
+        'notes':[
+            'One published study, its shell-bead workbook and its excavation-context descriptions; these are source components, not separate excavations.',
+            'The paper summarizes assemblages by phase and context. Radiocarbon, phase and assemblage tables overlap and are not independent finds or events.',
+            'Bead rows, measurements, context numbers and radiocarbon rows keep the publisher identifiers and units; Clovis does not recalculate them.',
+            'Published coordinates locate the surveyed rock shelters, not a private property or a newly observed object. Missing records do not show an absence of archaeology.',
+        ]},
+}
+EDITION, CAMBODIA, SENEGAL, KAKAPEL = STUDIES
+# Folder per study; tests replace an entry to simulate a missing edition.
+DIRECTORIES = {identifier: OFFLINE_PUBLICATIONS/identifier for identifier in STUDIES}
+DIRECTORY, CAMBODIA_DIRECTORY, SENEGAL_DIRECTORY, KAKAPEL_DIRECTORY = DIRECTORIES.values()
+NOTES = STUDIES[EDITION]['notes']
 
 
-@lru_cache(maxsize=3)
+def _directory(identifier):
+    return DIRECTORIES[identifier]
+
+
+@lru_cache(maxsize=len(STUDIES))
 def _edition(identifier=EDITION):
-    definitions={EDITION:(DIRECTORY,EDITION_SHA256,'10.1371/journal.pone.0335678'),
-                 CAMBODIA:(CAMBODIA_DIRECTORY,CAMBODIA_SHA256,'10.1371/journal.pone.0216895'),
-                 SENEGAL:(SENEGAL_DIRECTORY,SENEGAL_SHA256,'10.1371/journal.pone.0329824')}
-    if identifier not in definitions:
+    study = STUDIES.get(identifier)
+    if study is None:
         raise ValueError('The publication edition is unavailable.')
-    directory,checksum,doi=definitions[identifier]
-    raw=(directory/'edition.json').read_bytes().replace(b'\r\n',b'\n')
-    if len(raw)>4_000_000 or hashlib.sha256(raw).hexdigest()!=checksum:
+    raw=(_directory(identifier)/'edition.json').read_bytes().replace(b'\r\n',b'\n')
+    if len(raw)>4_000_000 or hashlib.sha256(raw).hexdigest()!=study['sha256']:
         raise ValueError('The bundled publication differs from its reviewed edition.')
     result=json.loads(raw)
-    if result.get('schema')!=1 or result.get('id')!=identifier or result.get('doi')!=doi:
+    if result.get('schema')!=1 or result.get('id')!=identifier or result.get('doi')!=study['doi']:
         raise ValueError('The bundled publication needs review.')
     return result
 
 
 def notes_for(row):
-    if row.get('edition') == SENEGAL:
-        return ['One published study and its lithic inventory; source components are not new excavations.',
-            'Inventory rows include fragments and refits and should not be counted as newly recorded finds.',
-            'The original spreadsheet retains its source identifiers, categories, measurements and remarks.',
-            'The published site location does not locate a private property or a newly observed object.']
-    if row.get('edition') != CAMBODIA:
-        return list(NOTES)
-    return [
-        'One publication and four supporting source workbooks; these are not five excavations.',
-        'The study includes 102 sherd samples, including Thai reference material. Workbook rows and analyses overlap and are not additional finds.',
-        'Measurements, units, native sample identifiers and uncertainty remain as published; Clovis does not recalculate the workbooks.',
-        'Locations describe the published study and reference groups; they do not locate a private property or newly observed object.',
-    ]
+    return list(STUDIES.get(row.get('edition'), STUDIES[EDITION])['notes'])
 
 
 def _normalize(value):
     return ''.join(c for c in unicodedata.normalize('NFKD',value.casefold()) if not unicodedata.combining(c))
 
 
-def _panama_records():
-    edition = _edition()
-    metadata = {key:edition[key] for key in ('doi','authors','publisher','published','citation','scope','rights','content_note')}
+def _study_records(identifier):
+    study, edition = STUDIES[identifier], _edition(identifier)
+    metadata = {key:edition[key] for key in METADATA}
+    tag = {'edition':identifier} if study['tag_rows'] else {}
     inventory = [{key:value for key,value in item.items() if key!='workbook'} for item in edition['supplements']]
-    article = {**metadata,'id':EDITION,'native_id':edition['doi'],'title':edition['title'],
-        'category':'Research publication','subtitle':'Panama · Cerro Juan Díaz · Full text and methods offline',
-        'description':'Complete paper text and two main tables, with ten separately readable supporting workbooks.',
+    article = {**metadata,**tag,'id':identifier,'native_id':edition['doi'],'title':edition['title'],
+        'category':'Research publication','subtitle':study['article_subtitle'],
+        'description':study['article_description'] or edition['content_note'],
         'file':edition['manuscript']['file'],'receipt':edition['manuscript']['receipt'],
         'blocks':edition['blocks'],'supplements':inventory}
-    tables = [{**metadata,**item,'category':'Supporting source table',
-        'title':item['label']+' · '+item['caption'].split('. ',1)[0].rstrip('.'),
-        'subtitle':'Panama · Cerro Juan Díaz · Original table offline',
-        'description':item['caption'],'parent':EDITION}
+    if study.get('figures'):
+        article['figures'] = edition['figures']
+    tables = [{**metadata,**item,**tag,'category':'Supporting source table',
+        'title':item['label']+study['separator']+item['caption'].split('. ',1)[0].rstrip('.'),
+        'subtitle':study['table_subtitle'],'description':item['caption'],'parent':identifier}
         for item in edition['supplements'] if item['included']]
-    return (article,*tables)
-
-
-def _cambodia_records():
-    other=_edition(CAMBODIA)
-    metadata={key:other[key] for key in ('doi','authors','publisher','published','citation','scope','rights','content_note')}
-    inventory=[{key:value for key,value in item.items() if key!='workbook'} for item in other['supplements']]
-    published={**metadata,'edition':CAMBODIA,'id':CAMBODIA,'native_id':other['doi'],'title':other['title'],
-        'category':'Research publication','subtitle':'Cambodia - Longvek and Thai reference samples - full text offline',
-        'description':other['content_note'],'file':other['manuscript']['file'],'receipt':other['manuscript']['receipt'],
-        'blocks':other['blocks'],'supplements':inventory,'figures':other['figures']}
-    supporting=[{**metadata,**item,'edition':CAMBODIA,'category':'Supporting source table',
-        'title':item['label']+' - '+item['caption'].split('. ',1)[0].rstrip('.'),
-        'subtitle':'Cambodia - Longvek and Thai reference samples - original table offline',
-        'description':item['caption'],'parent':CAMBODIA} for item in other['supplements'] if item['included']]
-    return (published,*supporting)
-
-
-def _senegal_records():
-    edition = _edition(SENEGAL)
-    metadata = {key: edition[key] for key in ('doi','authors','publisher','published','citation','scope','rights','content_note')}
-    inventory = [{key:value for key,value in item.items() if key != 'workbook'} for item in edition['supplements']]
-    article = {**metadata,'edition':SENEGAL,'id':SENEGAL,'native_id':edition['doi'],'title':edition['title'],
-        'category':'Research publication','subtitle':'Senegal - Ravin Blanc X - full text offline',
-        'description':edition['content_note'],'file':edition['manuscript']['file'],'receipt':edition['manuscript']['receipt'],
-        'blocks':edition['blocks'],'supplements':inventory}
-    tables = [{**metadata,**item,'edition':SENEGAL,'category':'Supporting source table',
-        'title':item['label']+' - '+item['caption'].split('. ',1)[0].rstrip('.'),
-        'subtitle':'Senegal - Ravin Blanc X - original lithic inventory offline',
-        'description':item['caption'],'parent':SENEGAL} for item in edition['supplements'] if item['included']]
     return (article,*tables)
 
 
 @lru_cache(maxsize=1)
 def _records():
     rows=[]
-    for loader in (_panama_records,_cambodia_records,_senegal_records):
+    for identifier in STUDIES:
         try:
-            rows.extend(loader())
+            rows.extend(_study_records(identifier))
         except (OSError,ValueError,KeyError,TypeError):
             continue
     return tuple(rows)
+
 
 def get_record(identifier):
     if not isinstance(identifier,str): return None
@@ -150,10 +164,8 @@ def search(query='',page=1,*,summary=False):
     direct = [row for row in _records() if exact in (_normalize(row['id']),_normalize(row['native_id']))]
     rows = direct or [row for row,haystack in _search_rows() if all(word in haystack for word in words)]
     available={row['id'] for row in _records()}
-    missing=[]
-    if EDITION not in available: missing.append('Panama edition unavailable. Restore the application files and restart.')
-    if CAMBODIA not in available: missing.append('Cambodia edition unavailable. Restore the application files and restart.')
-    if SENEGAL not in available: missing.append('Senegal edition unavailable. Restore the application files and restart.')
+    missing=[study['name']+' edition unavailable. Restore the application files and restart.'
+             for identifier,study in STUDIES.items() if identifier not in available]
     selected=rows[(page-1)*PAGE_SIZE:page*PAGE_SIZE]
     if summary:
         selected=[{key:value for key,value in row.items() if key not in ('workbook','blocks')} for row in selected]
@@ -284,7 +296,7 @@ def _original_bytes_for(row):
     name = row['file']
     if name not in ('manuscript.xml',*('s%03d.xlsx'%i for i in range(1,17))):
         raise ValueError('This source file is outside the reviewed edition.')
-    directory={EDITION:DIRECTORY,CAMBODIA:CAMBODIA_DIRECTORY,SENEGAL:SENEGAL_DIRECTORY}[row.get('edition',EDITION)]
+    directory=_directory(row.get('edition',EDITION))
     raw = (directory/name).read_bytes()
     if len(raw)!=row['receipt']['bytes'] or hashlib.sha256(raw).hexdigest()!=row['receipt']['sha256']:
         raise ValueError('This source original differs from its reviewed edition.')
@@ -292,12 +304,13 @@ def _original_bytes_for(row):
 
 
 def figure_bytes(identifier, figure_id):
-    if identifier != CAMBODIA or not isinstance(figure_id,str):
+    reviewed=STUDIES.get(identifier,{}).get('figures',()) if isinstance(identifier,str) else ()
+    if not reviewed or not isinstance(figure_id,str):
         raise ValueError('The reviewed figure is unavailable.')
     figure=next((item for item in _edition(identifier).get('figures',[]) if item['id']==figure_id),None)
-    if not figure or figure['file'] not in ('g004.png','g005.png','g006.png','g007.png'):
+    if not figure or figure['file'] not in reviewed:
         raise ValueError('The reviewed figure is unavailable.')
-    raw=(CAMBODIA_DIRECTORY/figure['file']).read_bytes()
+    raw=(_directory(identifier)/figure['file']).read_bytes()
     if len(raw)!=figure['bytes'] or hashlib.sha256(raw).hexdigest()!=figure['sha256']:
         raise ValueError('The reviewed figure differs from its publisher file.')
     return raw,figure['file']
@@ -478,25 +491,26 @@ def render_sheet(row, index, page=None):
 
 def bundle_bytes(identifier=EDITION, *, prepared=True):
     """One portable study, with relative readers and unchanged native originals."""
-    if identifier == SENEGAL and prepared:
-        raw=(SENEGAL_DIRECTORY/'study.zip').read_bytes()
-        if len(raw)>3_000_000 or hashlib.sha256(raw).hexdigest()!=SENEGAL_STUDY_SHA256:
+    study=STUDIES.get(identifier) if isinstance(identifier,str) else None
+    if study and study.get('prepared_study_sha256') and prepared:
+        raw=(_directory(identifier)/'study.zip').read_bytes()
+        if len(raw)>3_000_000 or hashlib.sha256(raw).hexdigest()!=study['prepared_study_sha256']:
             raise ValueError('The prepared study differs from its reviewed edition.')
         return raw
     rows = tuple(row for row in _records() if row.get('edition',EDITION)==identifier)
-    if not rows or identifier not in (EDITION,CAMBODIA,SENEGAL): raise ValueError('The publication edition is unavailable.')
+    if not rows or study is None: raise ValueError('The publication edition is unavailable.')
     output = BytesIO()
     routes = {row['id']:('index.html' if row['id']==identifier else row['id']+'.html') for row in rows}
     with ZipFile(output,'w',compression=ZIP_DEFLATED,compresslevel=6) as archive:
-        archive.writestr('source.css',(DIRECTORY.parents[2]/'assets/offline_reference.css').read_bytes())
+        archive.writestr('source.css',(OFFLINE_PUBLICATIONS.parents[1]/'assets/offline_reference.css').read_bytes())
         archive.writestr('source-edition.json',json.dumps(_edition(identifier),ensure_ascii=False,separators=(',',':')))
-        if identifier == CAMBODIA:
+        if study.get('figures'):
             for figure in _edition(identifier)['figures']:
                 raw,name=figure_bytes(identifier,figure['id'])
                 archive.writestr('originals/'+name,raw)
-        if identifier == SENEGAL:
-            supplement=next(item for item in _edition(identifier)['supplements'] if item['native_id'].endswith('.s002'))
-            raw=(SENEGAL_DIRECTORY/supplement['file']).read_bytes()
+        # Retained originals that are not records of their own (for example a context DOCX).
+        for supplement in (item for item in _edition(identifier)['supplements'] if not item['included'] and 'file' in item):
+            raw=(_directory(identifier)/supplement['file']).read_bytes()
             if len(raw)!=supplement['receipt']['bytes'] or hashlib.sha256(raw).hexdigest()!=supplement['receipt']['sha256']:
                 raise ValueError('The original supporting file differs from its reviewed edition.')
             archive.writestr('originals/'+supplement['file'],raw)
@@ -506,7 +520,7 @@ def bundle_bytes(identifier=EDITION, *, prepared=True):
             archive.writestr(row['id']+'.txt',reading_text(row))
             document = render_html(row).replace('/assets/offline_reference.css','source.css')
             document = document.replace('/reference/publication/'+identifier+'/bundle','index.html')
-            if identifier == CAMBODIA:
+            if study.get('figures'):
                 for figure in _edition(identifier)['figures']:
                     document=document.replace('/reference/publication/'+identifier+'/figure/'+figure['id'],'originals/'+figure['file'])
             if 'workbook' in row and sum(len(sheet['cells']) for sheet in row['workbook']['sheets']) > 10_000:
@@ -566,7 +580,7 @@ def register_routes(server):
     @server.get('/reference/publication/<identifier>/<operation>')
     def publication_source(identifier,operation=None):
         row = get_record(identifier)
-        if row is None or operation not in (None,'text','original','bundle') or operation=='bundle' and identifier not in (EDITION,CAMBODIA,SENEGAL):
+        if row is None or operation not in (None,'text','original','bundle') or operation=='bundle' and identifier not in STUDIES:
             return Response('This offline source is unavailable.',status=404,mimetype='text/plain')
         if operation=='bundle':
             try: raw=bundle_bytes(identifier)

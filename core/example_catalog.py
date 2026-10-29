@@ -48,7 +48,7 @@ HISTORY_QUESTIONS = (
 )
 ROCK_QUESTIONS = (
     ('Rock materials', 'What materials do the maps describe around {town}?',
-     'Select a Local evidence card. Record its materials and original reference, then compare only with something already exposed.'),
+     'Select a Local evidence card. Record its materials and original reference, then compare them with what you find, exposed or dug.'),
     ('Deep time', 'What geological ages are mapped around {town}?',
      'Select a Local evidence card and inspect its interval. Rock age provides context; it does not date a loose object or prove fossil occurrence.'),
     ('Fossil clues', 'Is there sourced fossil context for {town}\'s mapped rocks?',

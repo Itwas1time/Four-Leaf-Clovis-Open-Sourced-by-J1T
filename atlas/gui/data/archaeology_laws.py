@@ -70,7 +70,7 @@ def _state_reference(name: str) -> dict:
         "section_106_notes": "Determine whether a federal undertaking triggers Section 106 review; a directory listing alone does not resolve this.",
         "arrowhead_collecting": "Permission has not been assessed. Owner consent alone does not establish that collecting is lawful; resource protection, burial, and other rules may apply on private land.",
         "metal_detecting": "Permission has not been assessed. Confirm the particular place, activity, resource, and any required consents before using equipment.",
-        "reporting_requirements": "Leave possible remains and sensitive finds undisturbed; contact the responsible authority to determine reporting and work-stoppage requirements.",
+        "reporting_requirements": "If you find human remains, or dig in a known burial ground, state law asks you to stop and contact law enforcement or the coroner and the State Historic Preservation Office. For other finds, confirm any reporting duty with the responsible authority.",
         "key_regulations": deepcopy(_FEDERAL_REGULATIONS),
         "practical_notes": "Use this contact starting point to request a site-specific review. No land access, collecting right, permit, or partnership has been verified.",
         "verification_status": "official reference pointers; site-specific legal review required",

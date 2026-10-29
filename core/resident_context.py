@@ -118,14 +118,16 @@ def _next_steps(place, context):
         f"2. **Rocks and fossils:** [Open USGS geological maps around this town]({geology}). "
         "Compare its legend, date and scale with these unit names. "
         "Coverage varies; mapped rock does not confirm an exposure or a fossil.", "",
-        "3. **Something already exposed?** Photograph it with a ruler; note its material and whether it was in fill or attached to rock. "
+        "3. **Found something?** Photograph it with a ruler where it lay; note its material, its depth if you dug it, "
+        "and whether it was in fill, a soil layer or attached to rock. "
         "Ask a survey or museum about identification; survey links are in the full notes. "
-        "Clovis cannot identify a specimen. No digging is needed to start.", "",
+        "Clovis cannot identify a specimen.", "",
     ]
 
 
 def build_context(state, geoid, context="unknown", online=None):
     from core.town_knowledge import knowledge_markdown
+    from core.known_cemeteries import report_lines as cemetery_lines
     key = input_key(state, geoid, context, [] if online is None else online)
     place = get_place(geoid, state)
     geology = geology_for_place(place) if key[3] else {
@@ -248,11 +250,14 @@ def build_context(state, geoid, context="unknown", online=None):
               "- A representative survey recording searched area, depth and methods, with all positive and negative "
               "outcomes. Even an observed survey frequency needs validation before predicting a new property.",
               "- Permission and applicable local/state rules; this report does not verify collection rights.", "",
-              "## If you encounter something", "",
-              "Before ground disturbance, use [811 utility marking](https://www.transportation.gov/content/call-811-you-dig-1). "
-              "Photograph an exposed find with its context and ask a local museum, archaeologist or geological survey "
-              "for identification. Avoid publishing precise sensitive locations. If you suspect human remains, "
-              "stop disturbing the area and contact local authorities.", "",
+              *cemetery_lines(place, _md),
+              "## If you dig or find something", "",
+              "Before you dig, have buried utilities marked through [811](https://www.transportation.gov/content/call-811-you-dig-1); "
+              "it is free, and most states require it before excavation. "
+              "Photograph a find where it lay, beside a scale, and note its depth, the soil layer and anything found with it. "
+              "A local museum, archaeologist or geological survey can help identify it. "
+              "If you have found human remains, or you are digging in a known burial ground or cemetery, the law asks you "
+              "to stop there and contact local authorities.", "",
               "## Sources and privacy", "",
               f"- U.S. Census Bureau, 2026 Places Gazetteer: [place names and representative points]({SOURCE}). "
               "The lookup is a public place catalogue, not archaeology or household data.",

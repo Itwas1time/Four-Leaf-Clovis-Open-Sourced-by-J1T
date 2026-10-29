@@ -61,7 +61,7 @@ def report_panel():
         html.Section(id='resident-nearby', className='clovis-nearby', **{'aria-live': 'polite'}),
         dcc.Interval(id='resident-nearby-poll', interval=3000, disabled=True),
         html.Div([
-            html.Button('Record an exposed object →', id={'type':'workbench-action','target':'inspect','key':'inspector-mission'}, n_clicks=0, className='atlas-primary-button'),
+            html.Button('Record what you found →', id={'type':'workbench-action','target':'inspect','key':'inspector-mission'}, n_clicks=0, className='atlas-primary-button'),
         ], className='clovis-inspector-tools'),
         html.Div([
         html.Button('Save town context',id='resident-save',n_clicks=0,className='atlas-secondary-button'),

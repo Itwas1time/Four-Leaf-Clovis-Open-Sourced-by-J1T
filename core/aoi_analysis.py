@@ -345,11 +345,11 @@ class AOIAnalysisEngine:
         evidence_lines.append("Existing site records and fossil records are not independent signals of a new archaeological discovery.")
 
         legal_caution = (
-            "Tribal or Native context overlaps this area. Do not dig, collect, or publicize exact locations. Consultation with Tribes, land managers, and the SHPO is appropriate before any ground disturbance."
+            "Tribal or Native context overlaps this area. Tribal and federal law can apply here (for example NAGPRA, and ARPA on tribal or federal land), and Tribes may set their own terms for sites and exact locations. Check the land status and ask the Tribe, the land manager or the SHPO what the rules are for digging and collecting."
             if native_hits or tribal_hits
-            else "Public archaeological records occur nearby. Treat this as a caution zone and verify land ownership and state or federal law before any collecting or disturbance."
+            else "Public archaeological records occur nearby, so finds here may belong to a recorded site. Check land ownership and the state or federal rules for digging and collecting, and record what you find and where."
             if nearby_sites
-            else "No indexed archaeological records or territory context were returned. Coverage is incomplete; verify land ownership, relevant communities, and state or federal requirements before any fieldwork."
+            else "No indexed archaeological records or territory context were returned. Coverage is incomplete, so no record does not mean no archaeology. Check land ownership and the state or federal rules that apply to your dig."
         )
 
         known_sites_fc = {

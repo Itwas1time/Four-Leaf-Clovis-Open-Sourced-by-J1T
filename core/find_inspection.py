@@ -9,7 +9,7 @@ MATERIALS = {
     'bone': 'Possible bone or tooth',
 }
 SETTINGS = {'unknown': 'I do not know', 'surface': 'Already exposed on the surface',
-            'fill': 'Loose or imported soil / gravel', 'attached': 'Attached to rock',
+            'dug': 'Found while digging', 'fill': 'Loose or imported soil / gravel', 'attached': 'Attached to rock',
             'building': 'Near an old building or building debris'}
 FEATURES = {
     'transparent': 'Light passes through it', 'curved': 'Curved wall or rim',
@@ -18,6 +18,7 @@ FEATURES = {
     'layers': 'Layers or bands', 'shell': 'Shell-like ribs or spiral',
     'branch': 'A flat branching pattern', 'holes': 'Regular holes or worked edges',
     'rust': 'Rust or other corrosion', 'porous': 'Pores or a hollow interior',
+    'human': 'I know it is human, or this is a known burial ground',
 }
 FEATURE_QUESTIONS = {
     'transparent': 'Where does light pass through it: the whole object or only a thin edge?',
@@ -32,7 +33,35 @@ FEATURE_QUESTIONS = {
     'holes': 'Are openings regular and repeated? Describe their edges without testing or cleaning them.',
     'rust': 'What outline remains visible through the corrosion? Photograph it without scraping.',
     'porous': 'Are the openings similar or varied? Show an existing surface without breaking the object.',
+    'human': 'Who identified the remains as human, or which known burial ground is this? Note the source.',
 }
+# Dating clues quoted verbatim from the bundled, hash-checked NPS Yosemite pocket guide
+# (public domain). Each fragment selects one whole source sentence; nothing is paraphrased.
+NPS_DATING_CLUES = {
+    'glass': ('circular scar', 'amethyst or purple tint', 'Aqua-colored glass', 'Truly colorless glass',
+              'applied lip finishes', 'thin side mold seam', 'Many bubbles in the glass'),
+    'metal': ('Hole-in-cap cans', 'Cans made entirely by machine', 'soldered with lead', 'crimped or double-locking',
+              'Church-key opened', 'Pull-tab openings', 'Aluminum cans were introduced'),
+    'ceramic': ('Identifying marks on the bottoms', 'Victorian monochrome', 'vitreous or vitrified ironstone',
+                'Art Nouveau style', 'Naturalistic multi-color', 'Simple geometric designs'),
+}
+
+
+def dating_clues(material):
+    """Whole NPS sentences for a material, in the guide's order; empty if the guide is unavailable."""
+    from core import offline_references
+    article = offline_references.get(offline_references.REFERENCE)
+    if article is None or material not in NPS_DATING_CLUES:
+        return []
+    texts = []
+    for block in article['blocks']:
+        if block.get('type') == 'paragraph':
+            texts.append(block['text'])
+        elif block.get('type') == 'list':
+            texts.extend(item if isinstance(item, str) else item.get('text', '') for item in block.get('items', []))
+    return [text for text in texts if any(fragment in text for fragment in NPS_DATING_CLUES[material])]
+
+
 GUIDES = {
     'unknown': {
         'title': 'Start with what you can see', 'features': ['transparent','curved','mark','grain','layers','shell','branch','holes','porous'],
@@ -83,11 +112,13 @@ GUIDES = {
                       'Does the same structure continue into an existing edge?', 'What rock contains it, if that is known?'],
         'source': ('NPS fossil and look-alike guide','https://www.nps.gov/subjects/fossils/what-is-a-fossil.htm')},
     'bone': {
-        'title': 'Preserve the context and ask an expert', 'features': ['porous','curved','grain'],
-        'comparisons': ['A bone-like shape is an observation, not a species or age identification.',
+        'title': 'Bone or tooth: record and compare', 'features': ['porous','curved','grain','human'],
+        'comparisons': ['Most bone found in yards, gardens and fields is animal: food waste, butchered livestock or wildlife.',
+                        'A bone-like shape is an observation, not a species or age identification.',
                         'Rock and other materials may resemble bone; photos alone can be inconclusive.'],
-        'questions': ['Can you record it in place without touching or moving it?',
-                      'Can a qualified museum, archaeologist or local authority advise on the next step?'],
+        'questions': ['Are there saw marks, knife cuts or a cleanly cut end? Those usually point to butchered meat.',
+                      'Photograph it with a scale where it lay and note the depth before lifting it.',
+                      'A natural history museum, university or local archaeologist can often identify the animal from photos.'],
         'source': ('NPS bone recognition background','https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm')},
 }
 
@@ -117,11 +148,23 @@ def inspect_find(material, features, setting, size, notes, *, town_context=None,
         lines += [f"Public town context: **{_md(place['name'])}, {_md(place['state'])}**. "
                   'Included by you as broad context; this is not an exact find location or verified provenance.', '']
     if notes.strip(): lines += ['**Notes:** ' + _md(notes), '']
-    if material == 'bone':
-        lines += ['**Leave it in place.** If human remains are possible, stop disturbing the area and contact local authorities. This guide cannot distinguish human from animal remains.', '']
+    if 'human' in selected:
+        # Only on the user's explicit statement (owner rule, 29 Oct 2026), never inferred from a bone.
+        lines += ['**Human remains or a known burial ground.** Stop disturbing the area, leave the remains in place and contact local authorities '
+                  '(police or coroner, and the state or national heritage office). Reporting is a legal requirement in most places.', '']
+    if setting == 'dug':
+        lines += ['**Found while digging.** Note the depth, the soil layer it came from and anything found with it (brick, glass, charcoal, '
+                  'shell). That context is what dates and explains a find, and it is lost once the hole is backfilled.', '']
     if selected:
         lines += ['## Questions for the features you noticed', '',
                   *['- ' + FEATURE_QUESTIONS[feature] for feature in selected], '']
+    clues = dating_clues(material)
+    if clues:
+        lines += ['## Dating clues from the National Park Service', '',
+                  *['- ' + _md(clue) for clue in clues], '',
+                  'Quoted from the NPS *Pocket Guide for Identifying Artifacts in Yosemite National Park* (public domain), '
+                  'bundled offline. These are approximate ranges from park guidance, not universal rules or an identification '
+                  'of your object; the park\'s own collecting rules apply to Yosemite, not to your land.', '']
     lines += ['## Compare these possibilities', '', *['- ' + item for item in guide['comparisons']], '',
               '## Look for these details next', '', *['- ' + item for item in guide['questions']], '']
     if 'branch' in selected:
