@@ -101,7 +101,9 @@ def object_results(query,category,previous,next_clicks,era,collection,page, sect
         html.Strong(row['title']),
         html.Small(' · '.join(value for value in (row.get('date',''),row.get('material','') or row.get('object_type','')) if value)),
     ],id={'type':'library-object-open','index':row['id']},n_clicks=0,className='clovis-library-record') for row in rows]
-    if not cards:
+    if result.get('installed') is False:
+        cards=[html.P(['Smithsonian museum objects is an optional collection (0.11 GB download). Install it from ', html.Strong('Atlas → Manage offline collections'), '; it then works offline.'],className='atlas-help')]
+    elif not cards:
         cards=[html.P('No records match these filters. Try a shorter term or another group.',className='atlas-help')]
     stats=catalog_stats(collection)
     label=f"{result['total']:,} matching reference objects"

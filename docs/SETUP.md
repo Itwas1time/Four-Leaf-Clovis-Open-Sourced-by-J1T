@@ -33,8 +33,7 @@ python3 -m venv .venv
 .venv/bin/python -m atlas.gui.app
 ```
 
-Open `http://127.0.0.1:8050`; stop with Ctrl+C. Another loopback port is available
-with `archaeo serve --host 127.0.0.1 --port 8055`. Keep debug disabled and the
+Open `http://127.0.0.1:8050`; stop with Ctrl+C. Keep debug disabled and the
 server local. See [security](../SECURITY.md).
 
 ## Explore a town
@@ -192,20 +191,6 @@ Drawings accept 25 shapes and 5,000 total vertices, with review buffers from
 Optional collectors use private environment/configuration files based on
 `.env.example` or `tools/config.example.json`. Obtain source permissions and
 review sensitivity and redistribution rights before importing or sharing data.
-The experimental citizen API keeps at most 500 reports in memory. Photo
-classification is off by default; enabling it sends approved image bytes to
-the configured model provider and requires consent. Rounded displays do not
-guarantee anonymity.
-
-## Separate experimental frontend
-
-The MapLibre frontend is separate from the maintained Dash planner and contains
-no bundled site demo. Its Node dependencies and build command are retained:
-
-```sh
-npm ci --ignore-scripts --prefix atlas/frontend
-npm run build --prefix atlas/frontend
-```
 
 Keep local servers on loopback; this edition has no authentication or multi-user
 access controls. Publishing this repository does not deploy an internet app.

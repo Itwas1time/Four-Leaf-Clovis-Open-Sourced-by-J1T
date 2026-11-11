@@ -38,8 +38,8 @@ def library():
         ], className="clovis-library-filters clovis-atlas-filters"),
         html.P('Press Enter to search. Choose a result to read its evidence and source.', className='atlas-help'),
         html.Details([
-            html.Summary('Prepare offline search before fieldwork'),
-            html.P('Preparing checks installed collections in the background. The first all-source search can otherwise take longer. You can keep using Clovis while preparation runs.', className='atlas-help'),
+            html.Summary('Check installed collections'),
+            html.P('Clovis prepares installed collections by itself when it starts. Check again after installing a collection, or before going offline. You can keep using Clovis while the check runs.', className='atlas-help'),
             html.Button('Prepare all sources', id='atlas-prepare', n_clicks=0, className='atlas-secondary-button'),
             html.P(id='atlas-prepare-running', role='status', className='atlas-help'),
             html.P(id='atlas-prepare-status', role='status', className='atlas-help'),

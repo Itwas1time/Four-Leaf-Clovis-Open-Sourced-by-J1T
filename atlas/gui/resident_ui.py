@@ -20,6 +20,17 @@ def controls():
         dcc.Dropdown(id="resident-place", options=[], placeholder="Choose a state first",
                      className="atlas-filter-dropdown", disabled=True),
         html.P("Type to search. For rural places, choose a nearby town.", className="atlas-help"),
+        html.Div([
+            html.Div("Or start from where you are", className="atlas-small-label"),
+            html.Div([
+                html.Button("Use my location", id="my-spot-locate", n_clicks=0, className="atlas-secondary-button"),
+                html.Button("Pick on the map", id="my-spot-pick", n_clicks=0, className="atlas-secondary-button"),
+                html.Button("Clear", id="my-spot-clear", n_clicks=0, className="atlas-secondary-button",
+                            style={"display": "none"}),
+            ], className="clovis-my-spot-buttons"),
+            html.P("Your exact spot stays on this computer. Cemetery and old-map answers then describe your spot, "
+                   "not the town centre.", id="my-spot-status", role="status", className="atlas-help"),
+        ], className="clovis-my-spot"),
         html.Button(["Explore this town", html.Span(" →", **{"aria-hidden": "true"})], id="resident-build", n_clicks=0,
                     disabled=True, className="atlas-primary-button"),
         html.P("Includes online rock maps at the public town point.", id="resident-lookup-note", className="atlas-help"),
@@ -58,6 +69,9 @@ def report_panel():
             html.P("Explore a town to start a source-linked record. Saved notes stay in your browser."),
         ], id="resident-empty-state", className="atlas-empty-state"),
         html.Div(id='resident-evidence-overview', className='clovis-evidence-overview'),
+        html.Button('Print a one-page summary', id='town-sheet-print', n_clicks=0, disabled=True,
+                    className='atlas-secondary-button', title='Who lived here, cemeteries, old maps and the law on one page. Use your browser to save it as PDF.'),
+        dcc.Store(id='town-sheet'), dcc.Store(id='town-sheet-printed'),
         html.Section(id='resident-nearby', className='clovis-nearby', **{'aria-live': 'polite'}),
         dcc.Interval(id='resident-nearby-poll', interval=3000, disabled=True),
         html.Div([

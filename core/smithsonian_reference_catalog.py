@@ -21,6 +21,27 @@ PAGE_SIZE = 24
 MAX_QUERY_LENGTH = 120
 MAX_QUERY_TERMS = 8
 SOURCE_KEY = "si"
+PACK = "smithsonian-museum-objects"
+
+
+def _data_dir() -> Path:
+    """Where this shelf's files are: bundled beside the app (private tree, older installs) or the
+    verified optional collection ``smithsonian-museum-objects`` (installed from Atlas > Manage offline collections).
+    Returns the bundled folder when neither is present, so callers simply find no files."""
+    bundled = DATA_DIR.resolve()
+    if (bundled / LOOKUP_PATH.name).is_file():
+        return bundled
+    try:
+        from core.data_packs import PackStore
+        index = PackStore().resolve_file(PACK, LOOKUP_PATH.name)
+    except (ValueError, OSError):
+        return bundled
+    return index.parent if index is not None else bundled
+
+
+def installed() -> bool:
+    """True when the shelf can be read (bundled or installed as an optional collection)."""
+    return (_data_dir() / LOOKUP_PATH.name).is_file()
 
 
 @lru_cache(maxsize=8)
@@ -37,7 +58,7 @@ def _inventory(directory: str) -> tuple[tuple[str, dict[str, str]], ...]:
 
 
 def _shard_paths() -> list[Path]:
-    directory = DATA_DIR.resolve()
+    directory = _data_dir()
     return [directory / name for name, _ in _inventory(str(directory))]
 
 
@@ -69,7 +90,7 @@ def _metadata(connection: sqlite3.Connection) -> dict[str, str]:
 def catalog_stats() -> dict[str, Any]:
     """Return source coverage, license, snapshot, and per-file hash details."""
     shard_summaries: list[dict[str, Any]] = []
-    for filename, meta in _inventory(str(DATA_DIR.resolve())):
+    for filename, meta in _inventory(str(_data_dir())):
         shard_summaries.append({
             "shard": meta.get("source_shard", Path(filename).stem.rsplit("_", 1)[-1]),
             "source_url": meta.get("source_url", ""),
@@ -207,13 +228,13 @@ def search_objects(
     """Search across all installed shards with a global, stable title order."""
     paths = _shard_paths()
     if not paths:
-        return {"rows": [], "total": 0, "page": 1, "pages": 1}
+        return {"rows": [], "total": 0, "page": 1, "pages": 1, "installed": installed()}
 
     expression = _safe_query_expression(query)
     safe_material = (material or "all").strip()[:80]
     where, params = _where_clause(expression, safe_material)
     total = 0
-    directory = str(DATA_DIR.resolve())
+    directory = str(_data_dir())
     inventory = dict(_inventory(directory))
     if not expression and safe_material.casefold() == "all":
         total = sum(int(meta.get("record_count", "0") or 0) for meta in inventory.values())
@@ -262,7 +283,7 @@ def get_object(record_id: str | int | None) -> dict[str, Any] | None:
         value = value[3:]
     if not value or len(value) > 120:
         return None
-    lookup_path = DATA_DIR.resolve() / LOOKUP_PATH.name
+    lookup_path = _data_dir() / LOOKUP_PATH.name
     shard: str | None = None
     if lookup_path.is_file():
         try:
@@ -273,7 +294,7 @@ def get_object(record_id: str | int | None) -> dict[str, Any] | None:
         except (OSError, sqlite3.Error):
             shard = None
     if shard is not None:
-        paths = [DATA_DIR.resolve() / f"smithsonian_objects_{shard}.sqlite"]
+        paths = [_data_dir() / f"smithsonian_objects_{shard}.sqlite"]
     else:
         # The route index is built beside the catalog. This fallback keeps the
         # reader useful for small temporary catalogs and interrupted builds.

@@ -55,6 +55,8 @@ configure_local_flask(server)
 from core.local_photo_routes import register_routes as register_local_photo_routes
 register_local_photo_routes(server)
 from core.workspace_routes import register_routes as register_workspace_routes
+from core.topo_overlay import register_routes as register_topo_overlay_routes
+register_topo_overlay_routes(server)
 register_workspace_routes(server)
 from core.dig_backup_uploads import register_routes as register_project_backup_routes
 register_project_backup_routes(server)
@@ -88,6 +90,14 @@ def _build_map() -> html.Div:
             ], value="offline", className="atlas-map-switch", inline=True),
             html.Small('Offline county outlines and public town points; no streets or property detail.', id='offline-context-note', className='atlas-offline-map-note'),
             html.Button('Show regional view',id='offline-regional-view',n_clicks=0,className='atlas-secondary-button clovis-regional-view'),
+            html.Div([
+                html.Label('Old maps over this place', htmlFor='topo-year', className='atlas-small-label'),
+                dcc.Dropdown(id='topo-year', options=[], placeholder='Choose a year', clearable=True,
+                             className='atlas-filter-dropdown clovis-topo-year'),
+                dcc.Slider(id='topo-opacity', min=0.2, max=1, step=0.05, value=0.85, marks=None,
+                           tooltip={'placement': 'bottom'}, className='clovis-topo-opacity'),
+                dcc.Loading(html.Small(id='topo-status', className='atlas-offline-map-note'), type='dot', color='#2d6a4f'),
+            ], id='topo-controls', className='clovis-topo-controls', style={'display': 'none'}),
             ], className="atlas-map-switch-wrap"),
             html.Div("The background map could not load. Try another map above; your town report still works.",
                      id="map-network-status", className="atlas-map-network-status", hidden=True, role="status"),
@@ -105,7 +115,9 @@ def _build_map() -> html.Div:
                     dl.LayerGroup(id='offline-local-context'),
                     make_tile_layer("offline"),
                     make_geology_layer(),
+                    dl.LayerGroup(id="topo-overlay-layer"),
                     dl.LayerGroup(id="resident-town-point"),
+                    dl.LayerGroup(id="my-spot-layer"),
                     dl.ScaleControl(position="bottomleft"),
                     dl.FeatureGroup(
                         [
@@ -192,6 +204,8 @@ app.layout = html.Div(
 
 import atlas.gui.callbacks  # noqa: E402,F401
 import atlas.gui.resident_callbacks  # noqa: E402,F401
+import atlas.gui.my_spot_callbacks  # noqa: E402,F401
+import atlas.gui.topo_overlay_callbacks  # noqa: E402,F401
 import atlas.gui.inspection_callbacks  # noqa: E402,F401
 import atlas.gui.fieldbook_callbacks  # noqa: E402,F401
 import atlas.gui.expert_callbacks  # noqa: E402,F401

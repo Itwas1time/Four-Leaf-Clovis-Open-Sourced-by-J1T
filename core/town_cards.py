@@ -20,17 +20,25 @@ def who_lived_here(state):
             'note': entry['card_note'], 'href': '/reference/local/' + article['id'], 'link': entry['link_label'] + ' →'}
 
 
-def burial_grounds(place):
-    """Named cemeteries near the public town point, with the limits stated."""
+def _point(place, spot):
+    """Coordinates and wording: the person's own spot when given, else the public town point."""
+    if spot:
+        return spot['lat'], spot['lon'], 'your spot'
+    return place['latitude'], place['longitude'], 'the town point'
+
+
+def burial_grounds(place, spot=None):
+    """Named cemeteries near the person's spot (or the public town point), with the limits stated."""
     try:
-        rows, total = known_cemeteries.nearby(place['latitude'], place['longitude'])
+        lat, lon, where = _point(place, spot)
+        rows, total = known_cemeteries.nearby(lat, lon)
     except (OSError, sqlite3.Error, ValueError, KeyError, TypeError):  # never break the town screen
         return None
     if not total:
-        return {'title': 'Known cemeteries nearby', 'text': 'GNIS names no cemetery within 8 km of the town point.',
+        return {'title': 'Known cemeteries nearby', 'text': f'GNIS names no cemetery within 8 km of {where}.',
                 'items': [], 'note': 'Unmarked, family and Native burials are often unrecorded.'}
     return {'title': f'{total} known cemeteries within 8 km',
-            'text': 'Nearest to the town point (not your yard):',
+            'text': 'Nearest to your spot:' if spot else 'Nearest to the town point (not your yard):',
             'items': [f"{row['name']} · {row['distance_km']:.1f} km" for row in rows[:3]],
             'note': 'USGS GNIS, 2021. Unmarked, family and Native burials are often unrecorded.'}
 
@@ -56,18 +64,44 @@ def law_summary(state):
             'href': SHPO_DIRECTORY}
 
 
-def old_topo_maps(place):
-    """USGS historical topographic sheets covering the town point (index offline, images online)."""
+def old_topo_maps(place, spot=None):
+    """USGS historical topographic sheets covering the spot or town point (index offline, images online)."""
     from core import historical_topos
     try:
-        found = historical_topos.summary(place['latitude'], place['longitude'])
+        lat, lon, where = _point(place, spot)
+        found = historical_topos.summary(lat, lon)
     except (OSError, sqlite3.Error, ValueError, KeyError, TypeError):
         return None
     if not found['total']:
         return None
     span = f"{found['earliest']}–{found['latest']}" if found['earliest'] else 'undated'
     return {'title': f"{found['total']} old USGS topographic maps · {span}",
-            'text': 'Sheets that cover the town point, oldest first:',
+            'text': f'Sheets that cover {where}, oldest first:',
             'items': [f"{sheet['date'] or 'Undated'} · {sheet['name']} (1:{sheet['scale']:,})" for sheet in found['oldest']],
             'note': 'USGS Historical Topographic Map Collection (public domain). The list is offline; the map images open online.',
             'href': found['oldest'][0]['pdf_url']}
+
+
+def one_page(place, state, spot=None, today=None):
+    """A printable one-page summary of the same answers shown on screen (title, plain text)."""
+    from datetime import date
+    from core import my_spot
+    title = f"{place['name']}, {place['state']}: what is known about this place"
+    where = (f"Your spot: {my_spot.describe(spot)}" if spot
+             else f"Public town point {place['latitude']:.4f}, {place['longitude']:.4f} (not your yard)")
+    lines = [f"Printed from Clovis on {(today or date.today()).isoformat()}. {where}.", ""]
+    for card in (who_lived_here(state), burial_grounds(place, spot), old_topo_maps(place, spot), law_summary(state)):
+        if not card:
+            continue
+        lines.append(card['title'].upper())
+        if card.get('text'):
+            lines.append(card['text'])
+        lines += [f"  - {item}" for item in card.get('items', [])]
+        if card.get('note'):
+            lines.append(card['note'])
+        if str(card.get('href', '')).startswith('https://'):  # in-app links mean nothing on paper
+            lines.append(f"Source: {card['href']}")
+        lines.append("")
+    lines += ["Clovis explains; it does not identify finds or choose where to dig. Rules are information, not legal",
+              "advice: follow the links for the current official text. Missing records never mean nothing is there."]
+    return title, "\n".join(lines)

@@ -1,16 +1,12 @@
 # Security policy
 
-Run the maintained planner on `127.0.0.1` with debug disabled. The FastAPI map
-demo and citizen report API are experimental local tools. They provide no
-account system, institutional access controls, or reviewed public deployment.
+Run Clovis on `127.0.0.1` with debug disabled. It is a single-user local app:
+there is no account system, institutional access control or reviewed public
+deployment. (The former FastAPI map demo and citizen report API were removed on
+11 November 2026.)
 
-Servers enforce local hosts and origins, a 2 MB request limit, strict JSON,
-and extra candidate/geometry bounds. The citizen API limits submissions by
-connection address and reporter ID and stores at most 500 reports. Classifier
-access is disabled by default and restricted to relative PNG/JPEG references
-inside a server-approved photo directory, with a 5 MB image limit. Enabling it
-sends approved image bytes to the configured provider; obtain consent first.
-DOCX ingestion bounds XML size and rejects entity declarations.
+The server enforces local hosts and origins, a 2 MB request limit, strict JSON
+with finite numbers and valid Unicode, and extra candidate/geometry bounds.
 
 The resident workflow accepts a public Census place code and fixed history
 choices, with no address or arbitrary URL input. An explicit online option

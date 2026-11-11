@@ -22,6 +22,27 @@ PAGE_SIZE = 24
 MAX_QUERY_LENGTH = 120
 MAX_QUERY_TERMS = 8
 SOURCE_KEY = "paleo"
+PACK = "smithsonian-fossil-specimens"
+
+
+def _data_dir() -> Path:
+    """Where this shelf's files are: bundled beside the app (private tree, older installs) or the
+    verified optional collection ``smithsonian-fossil-specimens`` (installed from Atlas > Manage offline collections).
+    Returns the bundled folder when neither is present, so callers simply find no files."""
+    bundled = DATA_DIR.resolve()
+    if (bundled / LOOKUP_PATH.name).is_file():
+        return bundled
+    try:
+        from core.data_packs import PackStore
+        index = PackStore().resolve_file(PACK, LOOKUP_PATH.name)
+    except (ValueError, OSError):
+        return bundled
+    return index.parent if index is not None else bundled
+
+
+def installed() -> bool:
+    """True when the shelf can be read (bundled or installed as an optional collection)."""
+    return (_data_dir() / LOOKUP_PATH.name).is_file()
 
 
 @lru_cache(maxsize=1024)
@@ -72,7 +93,7 @@ def _inventory(directory: str) -> tuple[tuple[str, dict[str, str]], ...]:
 
 
 def _shard_paths() -> list[Path]:
-    directory = DATA_DIR.resolve()
+    directory = _data_dir()
     return [directory / name for name, _ in _inventory(str(directory))]
 
 
@@ -81,7 +102,7 @@ def available() -> bool:
 
 
 def _index_metadata() -> dict[str, str]:
-    path = DATA_DIR.resolve() / LOOKUP_PATH.name
+    path = _data_dir() / LOOKUP_PATH.name
     if not path.is_file():
         return {}
     try:
@@ -93,7 +114,7 @@ def _index_metadata() -> dict[str, str]:
 
 def catalog_stats() -> dict[str, Any]:
     """Return record coverage, source snapshot hashes, and field coverage."""
-    index_path = DATA_DIR.resolve() / LOOKUP_PATH.name
+    index_path = _data_dir() / LOOKUP_PATH.name
     if not index_path.is_file():
         return {
             "distinct_records": 0, "distinct_taxon_names": 0, "taxonomy_groups": 0,
@@ -272,11 +293,11 @@ def search_fossils(query: str = "", group: str = "all", page: int = 1) -> dict[s
     """
     paths = _shard_paths()
     if not paths:
-        return {"rows": [], "total": 0, "page": 1, "pages": 1}
+        return {"rows": [], "total": 0, "page": 1, "pages": 1, "installed": installed()}
     expression = _safe_query_expression(query)
     safe_group = (group or "all").strip()[:100]
     where, params = _where_clause(expression, safe_group)
-    directory = str(DATA_DIR.resolve())
+    directory = str(_data_dir())
     inventory = dict(_inventory(directory))
     if not expression and safe_group.casefold() == "all":
         total = sum(int(meta.get("record_count", "0") or 0) for meta in inventory.values())
@@ -305,7 +326,7 @@ def search_fossils(query: str = "", group: str = "all", page: int = 1) -> dict[s
 
 def get_fossil(record_id: str | int | None) -> dict[str, Any] | None:
     """Return one record by its stable ``paleo:<EDAN record_ID>`` identifier."""
-    index_path = DATA_DIR.resolve() / LOOKUP_PATH.name
+    index_path = _data_dir() / LOOKUP_PATH.name
     if record_id is None or not index_path.is_file():
         return None
     value = str(record_id).strip()
@@ -326,7 +347,7 @@ def get_fossil(record_id: str | int | None) -> dict[str, Any] | None:
     filename = str(route["filename"])
     if not re.fullmatch(rf"fossil_references_{RUNTIME_TAG}_[0-9a-f]{{2}}\.sqlite", filename):
         return None
-    path = DATA_DIR.resolve() / filename
+    path = _data_dir() / filename
     try:
         with closing(_connect(path)) as connection:
             row = connection.execute("SELECT * FROM records WHERE source_id=?", (value,)).fetchone()
@@ -353,7 +374,7 @@ def _taxon_paths(index_path: Path) -> list[Path]:
     for name in names:
         if not re.fullmatch(rf"fossil_references_taxa_{RUNTIME_TAG}_[0-9]{{2}}\.sqlite", name):
             continue
-        path = DATA_DIR.resolve() / name
+        path = _data_dir() / name
         if path.is_file():
             paths.append(path)
     return paths
@@ -379,12 +400,12 @@ def search_taxa(query: str = "", group: str = "all", page: int = 1) -> dict[str,
     Sample record IDs route directly to ``get_fossil`` for actual specimen
     details. A name with different source hierarchies remains separate.
     """
-    index_path = DATA_DIR.resolve() / LOOKUP_PATH.name
+    index_path = _data_dir() / LOOKUP_PATH.name
     if not index_path.is_file():
-        return {"rows": [], "total": 0, "page": 1, "pages": 1}
+        return {"rows": [], "total": 0, "page": 1, "pages": 1, "installed": installed()}
     paths = _taxon_paths(index_path)
     if not paths:
-        return {"rows": [], "total": 0, "page": 1, "pages": 1}
+        return {"rows": [], "total": 0, "page": 1, "pages": 1, "installed": installed()}
     expression = _safe_query_expression(query)
     clauses: list[str] = []
     params: list[Any] = []
@@ -402,7 +423,7 @@ def search_taxa(query: str = "", group: str = "all", page: int = 1) -> dict[str,
                 total += int(connection.execute("SELECT COUNT(*) FROM taxa t" + where, params).fetchone()[0])  # nosec B608 # Fixed SQL clauses and placeholders; values use bound parameters.
         requested_page = max(1, int(page or 1))
     except (TypeError, ValueError, OverflowError, OSError, sqlite3.Error):
-        return {"rows": [], "total": 0, "page": 1, "pages": 1}
+        return {"rows": [], "total": 0, "page": 1, "pages": 1, "installed": installed()}
     pages = max(1, (total + PAGE_SIZE - 1) // PAGE_SIZE)
     current_page = min(requested_page, pages)
     streams = [_stream_taxa(path, where, params) for path in paths]

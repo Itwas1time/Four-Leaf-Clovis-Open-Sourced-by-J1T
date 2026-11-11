@@ -25,7 +25,8 @@ the example does not assert a fossil or object exists.
 No address, browser location or sign-in is needed.
 
 The header has four destinations: **Explore**, **Inspect a find**, **Fieldbook**
-and **Research**. Explore follows a simple path: choose a place, follow a clue,
+and **Plan fieldwork** (published fieldwork leads, study areas and research briefs;
+to read published evidence, use **Research a topic** on Home or the Atlas). Explore follows a simple path: choose a place, follow a clue,
 keep a record. **Options & land-use context** reveals the optional history and
 online setting. **Statewide background and sources** offers every state's
 reviewed learning context. Result actions appear after you build current

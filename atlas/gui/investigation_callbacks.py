@@ -1,6 +1,7 @@
 """Connect in-app evidence tools to guided observations and the existing fieldbook."""
 from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
 from atlas.gui.workspace_activation import when_opened
+from core import my_spot
 from core.evidence_board import evidence_board, note_contexts as geological_note_contexts
 from core.fieldbook import EMPTY_BOOK, validate_book
 from atlas.gui.reading_merge import merge_entries
@@ -32,6 +33,8 @@ def open_workbench_tool(clicks, buttons):
         return 'inspect', no_update
     if value == 'notebook':
         return 'notebook', no_update
+    if value == 'research':
+        return 'research', no_update
     return ('resident', value) if value in ('map','archive','missions','library') else (no_update, no_update)
 
 
@@ -77,8 +80,9 @@ def show_example(saved,state,geoid,mode):
 
 @when_opened(('map', 'archive', 'missions'), Output('resident-evidence-overview','children'),
           Input('resident-report-store','data'), Input('resident-state','value'), Input('resident-place','value'),
-          Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'))
-def report_overview(token,state,geoid,history,online,mode):
+          Input('resident-history','value'), Input('resident-online','value'), Input('workflow-mode','value'),
+          Input('my-spot','data'))
+def report_overview(token,state,geoid,history,online,mode,spot=None):
     report = current_report(token,state,geoid,history,online)
     place=get_place(geoid,state)
     if place is None:
@@ -87,10 +91,11 @@ def report_overview(token,state,geoid,history,online,mode):
     knowledge=knowledge if isinstance(knowledge,dict) else knowledge_for_place(place)
     stats=knowledge['maps']
     regional=knowledge['regional_maps']
+    spot=my_spot.for_place(spot,place)  # yard-level answers when the person's spot belongs to this town
     children=[answer_card(card,label) for card,label in (
         (town_cards.who_lived_here(state),None),  # each region names its own source link
-        (town_cards.burial_grounds(place),None),
-        (town_cards.old_topo_maps(place),'Open the oldest map (online) →'),
+        (town_cards.burial_grounds(place,spot),None),
+        (town_cards.old_topo_maps(place,spot),'Open the oldest map (online) →'),
         (town_cards.law_summary(state),'Read the official text →'),
     ) if card]
     offline_units=knowledge.get('usgs_units',[])

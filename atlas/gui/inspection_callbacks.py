@@ -54,6 +54,16 @@ def render_find(material, features, setting, size, notes, town_context, state, g
     dating = [html.H3('How old might it be?'), html.Ul([html.Li(clue) for clue in clues]),
               html.P('National Park Service guidance (public domain): approximate ranges, not an identification. '
                      'All clues are in the full notes.', className='atlas-help')] if clues else []
+    readings = report.get('guide_clues') or []
+    if readings:
+        if not dating:
+            dating = [html.H3('How old might it be?')]
+        for reading in readings:
+            dating += [html.H4(reading['title']), html.Ul([html.Li([fact['text'], ' ', html.Small([
+                html.A(source['name'], href=source['url'], target='_blank', rel='noopener noreferrer')
+                for source in fact['sources'][:1]])]) for fact in reading['facts']])]
+        dating.append(html.P('From Clovis object guides: each fact links its source. Approximate ranges, not an '
+                             'identification.', className='atlas-help'))
     law = [answer_card(town_cards.law_summary(state), 'Read the official text →')] if state else [
         html.P('Choose a town to see what the law asks where you are.', className='atlas-help')]
     questions = dating + law + [html.H3('What to look at next'), html.Div([

@@ -38,7 +38,9 @@ def results(query,view,previous,next_clicks,page, section="fossils"):
         title=row['taxon_name'] if grouped else row['title']
         subtitle=f"{row['specimen_count']:,} cataloged specimens · {row.get('taxon_group','')}" if grouped else text(row.get('geological_age')) or row.get('specimen_number','')
         cards.append(html.Button([html.Strong(title),html.Small(subtitle)],id={'type':'library-fossil-open','index':sample[0]},n_clicks=0,className='clovis-library-record'))
-    if not cards:
+    if found.get('installed') is False:
+        cards=[html.P(['Smithsonian fossil specimens is an optional collection (0.22 GB download). Install it from ', html.Strong('Atlas → Manage offline collections'), '; it then works offline.'],className='atlas-help')]
+    elif not cards:
         cards=[html.P('No matching references. Try a scientific name, broader classification, or Specimen records for ages and formations.',className='atlas-help')]
     summary=stats()
     source=f"{summary['distinct_records']:,} Smithsonian fossil specimens · {summary['distinct_taxon_names']:,} recorded taxon names · CC0 metadata · Snapshot {summary.get('snapshot_date','')}"

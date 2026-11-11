@@ -38,7 +38,7 @@ def build_header() -> html.Header:
                 {"label": "Explore", "value": "resident"},
                 {"label": "Inspect a find", "value": "inspect"},
                 {"label": "Fieldbook", "value": "notebook"},
-                {"label": "Research", "value": "research"},
+                {"label": "Plan fieldwork", "value": "research"},
             ], value="home", className="atlas-workflow-mode atlas-primary-nav"),
             html.Div([
                 html.Span(id="header-region", children="No town selected"),
@@ -401,6 +401,9 @@ def build_stores() -> html.Div:
     return html.Div(
         [
             dcc.Store(id="aoi-store"),
+            # The person's exact spot: browser storage only (core/my_spot.py).
+            dcc.Store(id="my-spot", storage_type="local"),
+            dcc.Store(id="my-spot-picking", data=False),
             dcc.Store(id="analysis-store"),
             dcc.Store(id="candidate-results-store"),
             dcc.Store(id="candidate-file-store"),

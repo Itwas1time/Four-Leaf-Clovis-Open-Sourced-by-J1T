@@ -18,6 +18,9 @@ CATEGORIES = (
     ("buttons", "Buttons"),
     ("hardware", "Hardware"),
     ("stone", "Stone"),
+    ("pipes", "Clay pipes"),
+    ("toys", "Marbles and toys"),
+    ("building", "Bricks and building materials"),
 )
 
 # Source IDs are stable within this corpus and are surfaced with the URL on
@@ -175,6 +178,67 @@ _SOURCE_CATALOG = {
     "USMINT_TIMELINE": {
         "name": "U.S. Mint: Timeline of the Mint",
         "url": "https://www.usmint.gov/learn/history/timeline",
+    },
+    # Clay pipes, marbles and bricks (reviewed 11 Nov 2026).
+    "UVA_FLOWERDEW_PIPES": {
+        "name": 'University of Virginia Library: Layers of the Past (Flowerdew Hundred), White Ball Clay Pipes',
+        "url": 'https://explore.lib.virginia.edu/exhibits/show/layersofthepast/multiplenarratives/imported_pipes',
+    },
+    "UMW_MCMILLAN_2016": {
+        "name": 'McMillan 2016, An Evaluation of Tobacco Pipe Stem Dating Formulas, Northeast Historical Archaeology 45 (abstract)',
+        "url": 'https://scholar.umw.edu/historic_preservation/2',
+    },
+    "ECU_MCMILLAN_2010": {
+        "name": 'McMillan 2010, East Carolina University M.A. thesis on tobacco pipe stem dating (abstract)',
+        "url": 'https://thescholarship.ecu.edu/handle/10342/2903',
+    },
+    "DAACS_PIPE_MANUAL": {
+        "name": 'DAACS Cataloging Manual: Tobacco Pipes (Monticello / Digital Archaeological Archive of Comparative Slavery)',
+        "url": 'https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf',
+    },
+    "NPS_FOPU_PIPES": {
+        "name": 'NPS Fort Pulaski National Monument: Smoking Pipes',
+        "url": 'https://home.nps.gov/fopu/learn/historyculture/pipes.htm',
+    },
+    "NPS_LOST_TOSSED": {
+        "name": 'NPS: Lost, Tossed, and Found',
+        "url": 'https://www.nps.gov/articles/lost-tossed-and-found.htm',
+    },
+    "NPS_FOVA_MARBLES": {
+        "name": 'NPS Fort Vancouver: Marbles at Fort Vancouver',
+        "url": 'https://www.nps.gov/articles/fovamarbles.htm',
+    },
+    "NPS_GOGA_FINDS": {
+        "name": 'NPS Golden Gate NRA: Archeological Finds at Golden Gate National Recreation Area',
+        "url": 'https://home.nps.gov/goga/learn/historyculture/archeological-finds-at-golden-gate-national-recreation-area.htm',
+    },
+    "PARKLAND_GUIDE": {
+        "name": 'Stelle, Parkland College: An Archaeological Guide to Historic Artifacts of Central Illinois',
+        "url": 'https://virtual.parkland.edu/lstelle1/len/archguide/documents/arcguide.htm',
+    },
+    "WV_ENCY_MARBLES": {
+        "name": 'e-WV (West Virginia Humanities Council): Marbles, by Scot E. Long',
+        "url": 'https://www.wvencyclopedia.org/entries/1444',
+    },
+    "ALAMO_MARBLE": {
+        "name": 'The Alamo (Alamo Trust, Archaeology): Artifact Spotlight, Glass Marble',
+        "url": 'https://www.thealamo.org/support/preservation/updates/glass-marble',
+    },
+    "ND_ROTMAN_2010": {
+        "name": 'Rotman, Univ. of Notre Dame technical report, 2010 field season, Ch. 10 (Gallagher Homestead, Beaver Island, Michigan)',
+        "url": 'https://sites.nd.edu/irishstories/files/2012/07/2010-C-10.pdf',
+    },
+    "HISTORIC_CHARLESTON_BRICK": {
+        "name": 'Historic Charleston Foundation: How to Date... Historic Building Materials (2026)',
+        "url": 'https://www.historiccharleston.org/news/how-to-date-historic-building-materials',
+    },
+    "NPS_KITTY_BRICK": {
+        "name": 'NPS Fort Vancouver: Artifact Spotlight, Kitty Brick',
+        "url": 'https://www.nps.gov/articles/000/artifact-spotlight-kitty-brick.htm',
+    },
+    "HAVERSTRAW_BRICK": {
+        "name": 'Haverstraw Brick Museum: History of Bricks',
+        "url": 'https://www.haverstrawbrickmuseum.org/about-bricks',
     },
 }
 
@@ -999,7 +1063,219 @@ _GUIDES = (
         ),
         ("Are flake scars patterned and overlapping, or is the surface naturally fractured?", "Is the object still in place with associated material or a visible layer?"),
         ("Photograph in place with scale if permitted; note orientation, nearby materials, surface/stratigraphic context, and uncertainty."),
-    ),)
+    ),
+    # Clay pipes, marbles and bricks: each fact keeps the quoted source snippet it rests on (11 Nov 2026).
+    # ------------------------------------------------------------------ PIPES
+    _guide(
+        "clay-pipe-stem-bore-dating",
+        "Clay pipe stem bore dating (and its limits)",
+        "Archaeologists have dated sites by the hole through white clay pipe stems, but the method is built for imported English-style pipes from the 1600s and 1700s and works on large samples.",
+        "pipes",
+        (
+            # [UVA_FLOWERDEW_PIPES] "From 1620 to 1800, the bore of a European pipe shrank 1/64 of an inch roughly every 30 to 40 years." -- https://explore.lib.virginia.edu/exhibits/show/layersofthepast/multiplenarratives/imported_pipes
+            # [DAACS_PIPE_MANUAL] "Enter the size of the largest drill bit that fits through the pipe stem." -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            ("Between about 1620 and 1800 the hole (bore) running through European white clay pipe stems got narrower, roughly one sixty-fourth of an inch every 30 to 40 years; archaeologists measure it by finding the largest drill bit, in 64ths of an inch, that slides through.", ("UVA_FLOWERDEW_PIPES", "DAACS_PIPE_MANUAL")),
+            # [UVA_FLOWERDEW_PIPES] "By tallying the pipe bore diameter frequencies on a site, archaeologists can calculate a series of date ranges" -- https://explore.lib.virginia.edu/exhibits/show/layersofthepast/multiplenarratives/imported_pipes
+            # [UVA_FLOWERDEW_PIPES] "By the 19th and 20th centuries, the distinctive white kaolin pipe had largely been replaced" -- https://explore.lib.virginia.edu/exhibits/show/layersofthepast/multiplenarratives/imported_pipes
+            ("The method is described as a tally of bore sizes across many stems at a site, giving an approximate age and occupation span; it is not a stand-alone date for one fragment, and by the 1800s and 1900s white clay pipes were largely replaced by other pipe types.", ("UVA_FLOWERDEW_PIPES",)),
+            # [UMW_MCMILLAN_2016] "imported white, ball-clay, tobacco-pipe stems" ... "17th- and 18th-century colonial sites" -- https://scholar.umw.edu/historic_preservation/2
+            # [UMW_MCMILLAN_2016] "to the exclusion of the other methods, may be problematic" -- https://scholar.umw.edu/historic_preservation/2
+            # [ECU_MCMILLAN_2010] "all three formula dating methods work better in Maryland and Virginia than in North and South Carolina" -- https://thescholarship.ecu.edu/handle/10342/2903
+            ("Published bore-dating formulas were designed for imported white ball-clay stems on 17th- and 18th-century colonial sites; a test on sites in Maryland, Virginia and the Carolinas found the formulas disagree, that relying on the best-known one alone may be problematic, and that all of them worked better in Maryland and Virginia than in the Carolinas.", ("UMW_MCMILLAN_2016", "ECU_MCMILLAN_2010")),
+        ),
+        (
+            "Is the stem a smooth white clay stem, and can you slide a drill bit or pin through the hole (note which size fits and which does not)?",
+            "How many stems have you found in the same spot? The method is described as a tally across many stems, not a reading from one.",
+        ),
+        ("Record the largest drill-bit size (in 64ths of an inch) that fits, stem length, whether any stamp or glaze is present, and how many stems came from the same spot; do not force a bit through a fragile stem."),
+    ),
+    _guide(
+        "clay-pipe-bowls-heels-and-marks",
+        "Clay pipe bowls, heels and maker marks",
+        "Bowl shape, the foot under the bowl, and any stamped or molded marks can point to a rough period or maker, but they do not by themselves date when a pipe was dropped.",
+        "pipes",
+        (
+            # [DAACS_PIPE_MANUAL] "4-8. c. 1610-1640. In this period the two main types of the seventeenth century develop; flat bases and spurs. Milling usual." -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            # [DAACS_PIPE_MANUAL] "25. c. 1700-70. Common standard southeastern type for the eighteenth century." -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            # [DAACS_PIPE_MANUAL] "29. c. 1840-80. Forward drooping bowl, small spur." -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            ("A bowl-form chart reproduced in the DAACS manual (from a study of London pipes) shows flat-based and spurred bowls, usually with a milled rim, in the early 1600s; a lip-parallel-to-stem form with no milling common in the southeastern US c. 1700-1770; and a forward-drooping bowl with a small spur c. 1840-1880. These are London types, so use them as a loose guide only.", ("DAACS_PIPE_MANUAL",)),
+            # [NPS_FOPU_PIPES] "Makers' marks are logos with people's names, places, or letters that identify company names or where a pipe was made." -- https://home.nps.gov/fopu/learn/historyculture/pipes.htm
+            # [NPS_FOPU_PIPES] "Makers' marks can help date the pipe and therefore any surrounding artifact in a level." -- https://home.nps.gov/fopu/learn/historyculture/pipes.htm
+            # [NPS_FOPU_PIPES] "The "Bowstead" pipe was made in Scotland, and the "Gouda" pipe is Dutch." -- https://home.nps.gov/fopu/learn/historyculture/pipes.htm
+            # [DAACS_PIPE_MANUAL] "20-22. c. 1680-1710. Long bowls some molded initials on sides of base." -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            ("Marks can be stamped or molded on the bowl, the heel or spur (sometimes as initials on either side of it) or on the stem; NPS at Fort Pulaski notes they name people, places or companies and can help date a pipe, and the site also produced a 'Bowstead' pipe made in Scotland and a 'Gouda' pipe that is Dutch.", ("NPS_FOPU_PIPES", "DAACS_PIPE_MANUAL")),
+            # [DAACS_PIPE_MANUAL] "Although often stamped Dublin these were made at several centers in Britain" -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            ("A mark naming a place is not always the place of manufacture: the DAACS bowl chart notes that Irish-type bowls after 1840 were often stamped Dublin but were made at several centers in Britain.", ("DAACS_PIPE_MANUAL",)),
+        ),
+        (
+            "Does the bowl have a flat base, a pointed spur, or no foot at all, and is the rim milled (a fine rope-like edge) or plain?",
+            "Is there any letter, name, symbol or place stamped or molded on the bowl, heel, spur or stem?",
+        ),
+        ("Photograph the bowl from the side and underneath with a scale, and transcribe any marks exactly, noting where each sits (side of heel, under the bowl, on the stem)."),
+    ),
+    _guide(
+        "clay-pipes-local-and-reed-stem",
+        "Local, red-clay and reed-stem pipes",
+        "Not every clay pipe is a mass-made white imported pipe; darker, hand-made or reed-stem pipes can be local products and fall outside stem-bore dating.",
+        "pipes",
+        (
+            # [NPS_FOPU_PIPES] "These pipes typically have a replaceable reed stem, rather than an integrated ceramic stem." -- https://home.nps.gov/fopu/learn/historyculture/pipes.htm
+            # [NPS_FOPU_PIPES] "There were three main manufacturing areas for these pipes: North Carolina, Virginia, and Ohio." -- https://home.nps.gov/fopu/learn/historyculture/pipes.htm
+            ("At Fort Pulaski NPS found a few red-clay ('redware') pipes, some with molded faces; these usually took a separate reed stem rather than an attached clay stem, and the page names North Carolina, Virginia and Ohio as main areas of manufacture.", ("NPS_FOPU_PIPES",)),
+            # [DAACS_PIPE_MANUAL] "Distinguishing imported pipes from locally-made pipes is often quite difficult." -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            # [DAACS_PIPE_MANUAL] "Inclusions are usually only seen in locally-made pipes." -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            # [NPS_LOST_TOSSED] "A hand-made, reed-stem clay tobacco pipe suggests local manufacture by African-Americans." -- https://www.nps.gov/articles/lost-tossed-and-found.htm
+            ("DAACS treats a finely made, molded white pipe as imported ball clay and calls telling imported from local pipes often quite difficult; visible grit in the clay is usually seen only in locally made pipes, and NPS reads a hand-made reed-stem pipe at one southern site as a sign of local manufacture (a site-specific interpretation).", ("DAACS_PIPE_MANUAL", "NPS_LOST_TOSSED")),
+            # [DAACS_PIPE_MANUAL] "Metric Bore Diameter: Do not record" (listed under the reed/stub stem pipe cataloging example) -- https://www.daacs.org/wp-content/uploads/2020/04/DAACSTobaccoPipeManual.pdf
+            # [UMW_MCMILLAN_2016] "imported white, ball-clay, tobacco-pipe stems" -- https://scholar.umw.edu/historic_preservation/2
+            ("The DAACS manual tells cataloguers not to record bore diameter for reed or stub-stem pipes, and the published bore-dating formulas were built and tested on imported white ball-clay stems.", ("DAACS_PIPE_MANUAL", "UMW_MCMILLAN_2016")),
+        ),
+        (
+            "Is the clay white and fine, or darker (orange, brown, grey) and gritty?",
+            "Does the bowl end in a plain socket or hole where a separate reed or wooden stem could have been fitted?",
+        ),
+        ("Record clay color, visible grit, any glaze, any molded face or decoration, and whether the stem end is a socket; photograph a broken edge to show the clay."),
+    ),
+    # ---------------------------------------------------------------- MARBLES
+    _guide(
+        "marble-materials",
+        "Marble materials: clay, china, glass and more",
+        "Marbles were made from several materials, and what a marble is made of is one of the clues used to date it, along with how it was made.",
+        "toys",
+        (
+            # [NPS_GOGA_FINDS] "marbles have also been crafted from clay, metal, ivory, plastic, and agate" -- https://home.nps.gov/goga/learn/historyculture/archeological-finds-at-golden-gate-national-recreation-area.htm
+            # [NPS_GOGA_FINDS] "Similar to glass shards, marbles can be dated by analyzing the materials and manufacturing methods used." -- same URL
+            ("NPS notes that glass is the usual marble material in recent times but marbles have also been made of clay, metal, ivory, plastic and agate, and that marbles are dated by looking at their materials and how they were made.", ("NPS_GOGA_FINDS",)),
+            # [NPS_FOVA_MARBLES] "The earliest marbles in the Fort Vancouver National Historic Site museum collection are clay, small undecorated tan or orange spheres." -- https://www.nps.gov/articles/fovamarbles.htm
+            # [NPS_FOVA_MARBLES] "Though still unglazed ceramic, they are larger and feature hand-painted decoration." -- https://www.nps.gov/articles/fovamarbles.htm
+            # [NPS_FOVA_MARBLES] "A perfect chronology of marble designs has not yet been created" -- https://www.nps.gov/articles/fovamarbles.htm
+            ("At Fort Vancouver (a Pacific Northwest fur-trade fort) the earliest marbles were small, plain tan or orange clay spheres, and marbles imported from Germany after 1840 were larger unglazed ceramic with hand-painted decoration; NPS adds that a full chronology of marble designs has not yet been created, so painted designs give only rough dating.", ("NPS_FOVA_MARBLES",)),
+            # [PARKLAND_GUIDE] "are readily identified by their use of an internal glass ball or marble as a stopper." (follows "Codd style bottles ( 1 , 2 )") -- https://virtual.parkland.edu/lstelle1/len/archguide/documents/arcguide.htm
+            # [PARKLAND_GUIDE] "Codd/Internal glass marble ( 1 ) 1872 - 1895" and "Roorbach/Internal ceramic marble 1885 - 1895" (bottle-closure date table) -- same URL
+            # [PARKLAND_GUIDE] "Many of the glass marbles so frequently recovered archaeologically from domestic sites were likely so secured." -- same URL
+            ("A plain glass or ceramic ball can be a bottle stopper rather than a toy: a central Illinois guide dates Codd-style bottles (glass-ball stopper) to about 1872-1895 and Roorbach-style bottles (ceramic-ball stopper) to about 1885-1895, and suggests many glass marbles found on domestic sites came from such bottles.", ("PARKLAND_GUIDE",)),
+        ),
+        (
+            "What is it made of: glazed or unglazed clay, painted china, swirled or clear glass, or stone?",
+            "Is there a bottle neck, a glass fragment with a rubber-seat groove, or bottle glass nearby that might explain a plain ball?",
+        ),
+        ("Record diameter, material, color and any painted or swirled decoration; photograph the whole surface and note anything found beside it, especially bottle glass."),
+    ),
+    _guide(
+        "handmade-vs-machine-made-marbles",
+        "Handmade vs machine-made glass marbles",
+        "A rough pontil scar can point to a handmade glass marble, but its absence proves little and sources disagree about when machine-made marbles began.",
+        "toys",
+        (
+            # [WV_ENCY_MARBLES] "Before Martin Christensen invented the marble-making machine in 1905, all glass marbles were handmade." -- https://www.wvencyclopedia.org/entries/1444
+            # [WV_ENCY_MARBLES] "Akro Agate was founded in Ohio in 1910 and moved to Clarksburg in 1914." -- https://www.wvencyclopedia.org/entries/1444
+            ("The West Virginia Encyclopedia says all glass marbles were handmade until Martin Christensen invented a marble-making machine in 1905, and gives Akro Agate, a major machine marble firm, as founded in Ohio in 1910, and moved to Clarksburg, West Virginia in 1914.", ("WV_ENCY_MARBLES",)),
+            # [ALAMO_MARBLE] "If there was a pontil scar, this would indicate the marble was handmade." -- https://www.thealamo.org/support/preservation/updates/glass-marble
+            # [ALAMO_MARBLE] "It is difficult to assign an specific date to this marble due to the damage that may have removed evidence of a potential pontil scar." -- same URL (23 words)
+            ("The Alamo's archaeologists treat a pontil scar (the rough mark where a handmade marble was broken from its rod) as evidence of handmade manufacture, but say a damaged marble with no visible scar is difficult to date.", ("ALAMO_MARBLE",)),
+            # [ALAMO_MARBLE] "Machine manufacturing of glass marbles began in 1850 as well, although the handmade versions were more sought after." -- https://www.thealamo.org/support/preservation/updates/glass-marble
+            # [ALAMO_MARBLE] "It appears that the machine-made versions did not become more popular until after WWII." -- same URL
+            # [WV_ENCY_MARBLES] "Before Martin Christensen invented the marble-making machine in 1905, all glass marbles were handmade." -- https://www.wvencyclopedia.org/entries/1444
+            ("Sources disagree on when machine-made glass marbles began: the Alamo page gives 1850, the West Virginia Encyclopedia gives an invention date of 1905, and the Alamo page says machine-made marbles only became more popular after World War II, so a start date for machine-made marbles is unsettled and should not be used alone to date a find.", ("ALAMO_MARBLE", "WV_ENCY_MARBLES")),
+        ),
+        (
+            "At the poles of the glass marble, is there a rough, torn or ground scar, a smooth spot, or nothing visible?",
+            "Is any of the surface chipped or worn enough that a scar could have been lost?",
+        ),
+        ("Photograph the marble from several sides, including each pole, with a scale; note chips, wear, color and swirl pattern, and the depth and soil layer it came from."),
+    ),
+    _guide(
+        "marbles-and-context",
+        "What a marble can and cannot tell you",
+        "A marble suggests children, but it can be lost in any era and soil moved by later work can mix periods.",
+        "toys",
+        (
+            # [NPS_GOGA_FINDS] "Marbles on Earth, often signify the presence of children." -- https://home.nps.gov/goga/learn/historyculture/archeological-finds-at-golden-gate-national-recreation-area.htm
+            ("NPS Golden Gate notes that marbles often signify that children were present, which is a clue about who used a space, not about the date.", ("NPS_GOGA_FINDS",)),
+            # [ALAMO_MARBLE] "The soils that were replaced contained artifacts that dated to all periods of occupation." -- https://www.thealamo.org/support/preservation/updates/glass-marble
+            ("At the Alamo, a glass marble from a trench that had been dug open and refilled for repair could not be dated from the soil, because the replaced soil held artifacts from every period of occupation; disturbed ground weakens any marble-based date.", ("ALAMO_MARBLE",)),
+            # [NPS_FOVA_MARBLES] "we assume most of the marbles were the playthings of army officers' children" -- https://www.nps.gov/articles/fovamarbles.htm
+            ("Fort Vancouver archaeologists inferred who owned the painted ceramic marbles from their post-1846 date and the places they were found, and describe that as an assumption, not proof.", ("NPS_FOVA_MARBLES",)),
+        ),
+        (
+            "Was the soil around it undisturbed, or does it look dug, filled or mixed (rubble, modern trash, mixed colors)?",
+            "Were other small toys or household items found within a hand's width of it?",
+        ),
+        ("Record depth, soil color and texture around the marble, any sign the ground was disturbed, and what else was within a few inches."),
+    ),
+    # ----------------------------------------------------------------- BRICKS
+    _guide(
+        "handmade-brick-features",
+        "Handmade brick: what to look for",
+        "Early bricks were shaped by hand in open molds and often carry irregularities that later machine-made bricks lack, though local dates vary.",
+        "building",
+        (
+            # [PARKLAND_GUIDE] "Using surface clays and an open, five sided mold, the clay was poured and struck off by hand." -- https://virtual.parkland.edu/lstelle1/len/archguide/documents/arcguide.htm
+            # [PARKLAND_GUIDE] "The striking operation left linear striations on one side." -- same URL
+            # [PARKLAND_GUIDE] "Hand struck was the earliest, dating from 1830 to 1860." -- same URL
+            ("A central Illinois guide describes hand-struck brick as made in an open five-sided mold with the surplus struck off by hand, leaving straight striations on one face, and dates it there to 1830-1860; that date range is local, not national.", ("PARKLAND_GUIDE",)),
+            # [PARKLAND_GUIDE] "Poorly controlled firing in "clamps" rendered light, porous bodies of yellow and orange." -- same URL
+            # [PARKLAND_GUIDE] "Those stacked furthest from the fire were often soft enough to be scratched with a finger nail." -- same URL
+            # [ND_ROTMAN_2010] "Handmade or early machine-made bricks often have a glaze resulting from the sand in the clay turning to glass in the kiln." -- https://sites.nd.edu/irishstories/files/2012/07/2010-C-10.pdf
+            ("Early bricks fired in poorly controlled stacks could come out light, porous and orange or yellow, soft enough in places to scratch with a fingernail, and some show a glassy surface where sand fused in the kiln.", ("PARKLAND_GUIDE", "ND_ROTMAN_2010")),
+            # [HISTORIC_CHARLESTON_BRICK] "these bricks are slightly irregular in shape, smaller in size, and often have black spots from the flame when the brick was fired." -- https://www.historiccharleston.org/news/how-to-date-historic-building-materials
+            # [HISTORIC_CHARLESTON_BRICK] "these bricks often still hold the fingerprints from the hands of those that shaped each individual brick" -- same URL
+            ("In Charleston, hand-molded local brick is described as slightly irregular, smaller, often spotted black where flame touched it, and sometimes still bearing the fingerprints of the people who shaped it.", ("HISTORIC_CHARLESTON_BRICK",)),
+        ),
+        (
+            "Are the faces and edges uneven, with one face showing straight scrape lines or a glassy patch?",
+            "Is the brick soft and porous enough to scratch, or hard, dense and very regular?",
+        ),
+        ("Record length, width and thickness (inches or mm), color, surface texture, any fingerprints, scrape lines or glaze, and photograph all six faces beside a scale."),
+    ),
+    _guide(
+        "machine-made-brick-features",
+        "Pressed and machine-made brick",
+        "Machine-made bricks tend to be denser and more uniform, and often show marks left by the machine rather than by hand.",
+        "building",
+        (
+            # [PARKLAND_GUIDE] "Pressed brick was available after 1860." -- https://virtual.parkland.edu/lstelle1/len/archguide/documents/arcguide.htm
+            # [PARKLAND_GUIDE] "the clay was pressed in a mold that created six, smooth sides." -- same URL
+            # [PARKLAND_GUIDE] "Production ranged from 1870 to 1920." (extruded brick section) -- same URL
+            # [PARKLAND_GUIDE] "will display linear striations from passage through the nozzle of the extrusion device" -- same URL
+            ("A central Illinois guide places pressed brick (six smooth faces, better uniformity) after 1860, and extruded brick (straight striations from the machine nozzle and cutting marks on the ends) at about 1870-1920; these are local ranges and the guide calls extruded brick uncommon there.", ("PARKLAND_GUIDE",)),
+            # [ND_ROTMAN_2010] "The later machine-made bricks have a harder, more consistent paste and are uniform in shape." -- https://sites.nd.edu/irishstories/files/2012/07/2010-C-10.pdf
+            # [ND_ROTMAN_2010] "no research has been conducted into the local history of brick making facilities near the project area" (their date guess is a rule of thumb) -- same URL
+            ("A Michigan excavation report describes later machine-made brick as harder, more consistent and uniform and often marked by the machine, but its handmade-before-machine date split (about first half versus second half of the 1800s) is an assumption stated without local brickmaking research.", ("ND_ROTMAN_2010",)),
+            # [HISTORIC_CHARLESTON_BRICK] "Portland cement has been manufactured in the US since the 1871 and was widely used by the 1880s." -- https://www.historiccharleston.org/news/how-to-date-historic-building-materials
+            # [HISTORIC_CHARLESTON_BRICK] "standardized bricks and portland cement mortar, it was likely constructed after the 1890s" -- same URL
+            ("For standing walls, Historic Charleston Foundation treats standardized brick together with Portland cement mortar as a sign of construction after about the 1890s; hard Portland mortar clinging to a loose brick fragment is therefore a later-period clue, not an exact date.", ("HISTORIC_CHARLESTON_BRICK",)),
+        ),
+        (
+            "Are all six faces smooth and sharp-edged, or is there a patterned surface with straight lines running the length of the brick?",
+            "Is there hard gray cement mortar stuck to it, or crumbly sandy lime mortar?",
+        ),
+        ("Record dimensions, color, density (dull thud or ring when tapped), any machine striations, and describe mortar still attached without scraping it off."),
+    ),
+    _guide(
+        "brick-frogs-marks-and-limits",
+        "Brick frogs, maker marks and what appearance cannot tell you",
+        "A stamp in the sunken face (the frog) can name a maker, but a brick's look does not prove where it was made or when it was used.",
+        "building",
+        (
+            # [HAVERSTRAW_BRICK] "The indented center Face of a Brick is called the "FROG"." -- https://www.haverstrawbrickmuseum.org/about-bricks
+            # [HAVERSTRAW_BRICK] "Brick factories imprinted their logos onto the FROG" -- same URL
+            ("The sunken center of a brick face is called the frog, and brick factories often pressed their logo into it, which is why collectors and historians look there for a maker.", ("HAVERSTRAW_BRICK",)),
+            # [PARKLAND_GUIDE] "By the 1890's, proprietary marks were being employed." -- https://virtual.parkland.edu/lstelle1/len/archguide/documents/arcguide.htm
+            # [PARKLAND_GUIDE] "An example of a regional manufacturer using a molded name mark is the Danville Block Company." -- same URL
+            ("A central Illinois guide notes that proprietary marks were in use by the 1890s, for example a molded company name on paving brick, so an unmarked brick is not necessarily old and a marked one is not necessarily rare.", ("PARKLAND_GUIDE",)),
+            # [NPS_KITTY_BRICK] "bricks were not manufactured in the region until decades later. Instead, bricks were typically shipped from overseas" -- https://www.nps.gov/articles/000/artifact-spotlight-kitty-brick.htm
+            # [NPS_KITTY_BRICK] "great levels of variation in composition, color, size, and manufacturing imperfections" -- same URL
+            # [NPS_KITTY_BRICK] "The brick likely hitched a ride on an English ship's ballast to the Pacific Northwest sometime in the early 19 th century." -- same URL
+            ("NPS Fort Vancouver found that a single brick can vary widely in composition, color, size and imperfections, that bricks there were at first shipped from overseas (some as ship ballast), and that an expert's guess of a brick's origin from its look needed chemical clay analysis to confirm; so in some places a brick may have traveled far or been reused.", ("NPS_KITTY_BRICK",)),
+        ),
+        (
+            "Does the sunken face carry letters, a name, a symbol or a place, and is the stamp clear enough to photograph?",
+            "Are other bricks, mortar or foundation stones nearby that might show whether this brick was reused?",
+        ),
+        ("Photograph the stamped face straight on with a raking light and a scale, transcribe every letter and symbol exactly, and note where in the yard it was found."),
+    ),
+)
 _CATEGORY_NAMES = dict(CATEGORIES)
 _GUIDE_BY_ID = {guide["id"]: guide for guide in _GUIDES}
 

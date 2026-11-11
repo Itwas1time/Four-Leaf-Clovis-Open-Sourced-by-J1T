@@ -200,15 +200,21 @@ def show_state_context(state, token):
 
 @callback(Output("main-map", "viewport", allow_duplicate=True),
           Input("workflow-mode", "value"), Input("resident-place", "value"),
-          Input("resident-state", "value"), State("selected-lead-store", "data"),
+          Input("resident-state", "value"), State("selected-lead-store", "data"), State("my-spot", "data"),
           prevent_initial_call=True)
-def navigate_workflow(mode, geoid, state, lead_id):
+def navigate_workflow(mode, geoid, state, lead_id, spot=None):
     if mode in ('inspect','notebook'): return no_update
     if mode == "research":
         lead = LEADS_BY_ID.get(lead_id) if isinstance(lead_id, str) else None
         return {"center": lead["center"], "zoom": lead["zoom"], "transition": "setView"} if lead else no_update
     place = get_place(geoid, state)
-    return {"center": [place["latitude"], place["longitude"]], "zoom": 9, "transition": "setView"} if place else no_update
+    if place is None:
+        return no_update
+    from core import my_spot
+    spot = my_spot.for_place(spot, place)  # the person's own spot, when it belongs to this town
+    if spot:
+        return {"center": [spot["lat"], spot["lon"]], "zoom": 15, "transition": "setView"}
+    return {"center": [place["latitude"], place["longitude"]], "zoom": 9, "transition": "setView"}
 
 
 @callback(Output("resident-town-point", "children"),

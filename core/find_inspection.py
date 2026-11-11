@@ -22,6 +22,8 @@ FEATURES = {
     'aqua': 'Pale blue-green (aqua) tint', 'amethyst': 'Purple or amethyst tint',
     'bubbles': 'Many small bubbles in the glass', 'pontil': 'A round scar on the base',
     'can': 'Part of a tin can', 'decorated': 'Painted, printed or raised decoration',
+    'nail': 'A nail or spike', 'button': 'A button',
+    'pipe': 'A clay tobacco pipe (bowl or stem)', 'marble': 'A marble or small ball', 'brick': 'A brick or brick piece',
 }
 FEATURE_QUESTIONS = {
     'transparent': 'Where does light pass through it: the whole object or only a thin edge?',
@@ -43,6 +45,20 @@ FEATURE_QUESTIONS = {
     'pontil': 'Is the base scar rough or smooth, and is anything embossed on the base?',
     'can': 'Is the side seam soldered or folded, and how was the can opened? Photograph the lid and seam.',
     'decorated': 'Is the decoration painted on, printed in fine lines or dots, or raised? Photograph any mark on the base.',
+    'nail': 'Is the shank square or round in section, and is the head hammered, sheared or stamped? Look along all four sides.',
+    'button': 'Does it have sewing holes or a shank on the back, and is anything written on the back? Measure the diameter.',
+    'pipe': 'Is it a stem or a bowl? For a stem, which is the largest pin or drill bit that slides through the hole?',
+    'marble': 'What is it made of, and is there a rough scar at either pole? Is bottle glass nearby?',
+    'brick': 'Are the faces uneven with scrape lines, or smooth and sharp? Is there a stamp in a sunken face?',
+}
+# Reviewed Object-guide readings (core/object_material_guides.py) for common finds whose dating is
+# about how they were made. Facts are Clovis's own words, each with its own cited sources.
+GUIDE_FEATURES = {
+    'nail': ('hardware-wrought-nails', 'hardware-cut-nails', 'hardware-type-b-cut-nails', 'hardware-wire-nails'),
+    'button': ('button-shanks-and-backmarks', 'button-sew-through', 'button-material-and-form'),
+    'pipe': ('clay-pipe-stem-bore-dating', 'clay-pipe-bowls-heels-and-marks', 'clay-pipes-local-and-reed-stem'),
+    'marble': ('marble-materials', 'handmade-vs-machine-made-marbles', 'marbles-and-context'),
+    'brick': ('handmade-brick-features', 'machine-made-brick-features', 'brick-frogs-marks-and-limits'),
 }
 # Dating clues quoted verbatim from the bundled, hash-checked NPS Yosemite pocket guide
 # (public domain). Each fragment selects one whole source sentence; nothing is paraphrased.
@@ -64,6 +80,18 @@ CLUE_FEATURES = {
     'metal': {'can': NPS_DATING_CLUES['metal'], 'seam': ('soldered with lead', 'crimped or double-locking')},
     'ceramic': {'decorated': NPS_DATING_CLUES['ceramic'][1:], 'mark': ('Identifying marks on the bottoms',)},
 }
+
+
+def guide_clues(features):
+    """Object-guide readings (title, facts with sources) for selected object types such as nails and buttons."""
+    from core.object_material_guides import get_guide
+    found = []
+    for feature in features:
+        for identifier in GUIDE_FEATURES.get(feature, ()):
+            guide = get_guide(identifier)
+            if guide:
+                found.append({'title': guide['title'], 'summary': guide['summary'], 'facts': guide['facts']})
+    return found
 
 
 def matched_clues(material, features):
@@ -97,7 +125,7 @@ GUIDES = {
                       'Are markings part of the object, or a coating on its surface?'],
         'source': ('NPS recognition examples','https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm')},
     'glass': {
-        'title': 'Compare glass form and manufacturing clues', 'features': ['transparent','curved','seam','mark','holes','aqua','amethyst','bubbles','pontil'],
+        'title': 'Compare glass form and manufacturing clues', 'features': ['transparent','curved','seam','mark','holes','aqua','amethyst','bubbles','pontil','button','marble'],
         'comparisons': ['Container fragment: look for a curved wall, base, neck or rim.',
                         'Flat glass: photograph the edges and thickness; shape alone does not establish its original use.',
                         'Natural glass or another shiny material: an irregular fragment needs expert comparison.'],
@@ -105,7 +133,7 @@ GUIDES = {
                       'Which part is present: body, rim, neck, base, or only a fragment?'],
         'source': ('SHA / BLM historic bottle identification','https://secure-sha.org/bottle/')},
     'ceramic': {
-        'title': 'Compare the body, surface and shape', 'features': ['curved','mark','glaze','grain','holes','decorated'],
+        'title': 'Compare the body, surface and shape', 'features': ['curved','mark','glaze','grain','holes','decorated','button','pipe','marble','brick'],
         'comparisons': ['Vessel or dish fragment: look for a rim, foot, handle or decoration.',
                         'Brick or other building material: record the body and any regular faces or holes.',
                         'Natural rock resembling pottery: photograph an existing edge and surface; avoid breaking it to check.'],
@@ -113,7 +141,7 @@ GUIDES = {
                       'Can the shape be described without guessing a date?'],
         'source': ('NPS ceramic recognition examples','https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm')},
     'metal': {
-        'title': 'Compare the original shape and construction', 'features': ['curved','seam','mark','holes','rust','can'],
+        'title': 'Compare the original shape and construction', 'features': ['curved','seam','mark','holes','rust','can','nail','button'],
         'comparisons': ['Building hardware or fastener: record head, shaft and holes.',
                         'Container or sheet metal: record seams, joins and openings.',
                         'Unidentified corroded object: corrosion can hide the original shape.'],
@@ -137,7 +165,7 @@ GUIDES = {
                       'Does the same structure continue into an existing edge?', 'What rock contains it, if that is known?'],
         'source': ('NPS fossil and look-alike guide','https://www.nps.gov/subjects/fossils/what-is-a-fossil.htm')},
     'bone': {
-        'title': 'Bone or tooth: record and compare', 'features': ['porous','curved','grain','human'],
+        'title': 'Bone or tooth: record and compare', 'features': ['porous','curved','grain','human','button'],
         'comparisons': ['Most bone found in yards, gardens and fields is animal: food waste, butchered livestock or wildlife.',
                         'A bone-like shape is an observation, not a species or age identification.',
                         'Rock and other materials may resemble bone; photos alone can be inconclusive.'],
@@ -205,4 +233,4 @@ def inspect_find(material, features, setting, size, notes, *, town_context=None,
               '**Still unknown:** exact identity, age, provenance, ownership and collection rights. Record an expert opinion separately from these observations.', '']
     return {'material':material,'features':selected,'setting':setting,'size':size,'notes':notes,
             'place': f"{place['name']}, {place['state']}" if place else '',
-            'markdown':'\n'.join(lines),'title':guide['title'],'dating_clues':matched_clues(material,selected)}
+            'markdown':'\n'.join(lines),'title':guide['title'],'dating_clues':matched_clues(material,selected),'guide_clues':guide_clues(selected)}

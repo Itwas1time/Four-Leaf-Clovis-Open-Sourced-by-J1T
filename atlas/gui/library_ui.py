@@ -21,7 +21,11 @@ def workspace():
     return html.Section([
         html.P('Explore published places, objects, assemblages and fossils. Search once, read the evidence and follow its source.', className='atlas-help'),
         html.Div([html.Button('Atlas search', id='atlas-return', n_clicks=0, className='atlas-secondary-button'),
-                  html.Button('Manage offline collections', id='atlas-manage-packs', n_clicks=0, className='atlas-secondary-button')],
+                  html.Button('Manage offline collections', id='atlas-manage-packs', n_clicks=0, className='atlas-secondary-button'),
+                  # The planner (fieldwork leads, study areas, briefs) is a separate job from reading evidence.
+                  html.Button('Plan fieldwork →', n_clicks=0,
+                              id={'type': 'workbench-action', 'target': 'research', 'key': 'atlas-plan'},
+                              className='atlas-secondary-button')],
                  className='clovis-atlas-toolbar'),
         html.Details([html.Summary('Specialist searches'),
             dcc.Dropdown(id='library-section', value='atlas', clearable=False,
