@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "id": "nps-canyonlands-native-americans",
+  "title": "American Indians",
+  "publisher": "National Park Service · Canyonlands National Park",
+  "source_url": "https://www.nps.gov/cany/learn/historyculture/nativeamericans.htm",
+  "source_updated": "2025-04-18",
+  "receipt": {
+    "url": "https://www.nps.gov/cany/learn/historyculture/nativeamericans.htm",
+    "status": 200,
+    "retrieved_utc": "2026-11-11T18:15:24.863986+00:00",
+    "bytes": 56991,
+    "sha256": "07ef33f1ea46c57f595d8039f7741d7e32cc88e07efa6e449c4467cc692164b2",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "policy_receipt": {
+    "url": "https://www.nps.gov/aboutus/disclaimer.htm",
+    "status": 200,
+    "retrieved_utc": "2026-11-11T18:15:26.098254+00:00",
+    "bytes": 38448,
+    "sha256": "1b6f7d2f45ef3da7c942cb9591d48121fa0047974e9cc48a2584750eb1f466c3",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "attribution": "National Park Service, Canyonlands National Park. No claim to original U.S. Government works.",
+  "rights_basis": "NPS ownership policy: NPS-created text is generally public domain unless otherwise indicated. Photographs, maps and artwork carry their own credits and are not reproduced.",
+  "scope": "Written about Canyonlands in southeast Utah; not a statewide sequence. Approximate, and not a history of any particular property.",
+  "content_note": "Complete article text, headings, lists and image descriptions. Images are not bundled. Site navigation and branding are excluded.",
+  "component_count": 3,
+  "visible_text_sha256": "26aac7476e387c8ee6ef5a2ab00b2dbc5fff2e332dca77c2d708eb1c141e3bf5",
+  "original_visible_text": "Ancestral Puebloan structure NPS/Neal Herbert Enduring Connections to the Land Canyonlands has been home to people for over 10,000 years. Traditions and ways of life developed and changed as cultures interacted with each other and the landscape. People moved and migrated. They communicated stories and passed on knowledge. Canyonlands is a living, dynamic cultural landscape that many still call home today. Hunting and Gathering From about 8,000 BCE to 500 BCE, extended family groups roamed nomadically throughout the southwest. Dependent on game and wild plants for their survival, they made “seasonal rounds” throughout their territory seeking what resources allowed them to thrive. Some evidence remains of these hunter-gatherers, including the extraordinary images they made on rocks and canyon walls. Their pictographs (rock paintings) and petroglyphs (rock peckings), like those found in Horseshoe Canyon, can be seen throughout the park. Farming and Sedantism Roughly two thousand years ago, some hunter-gatherers acquired domesticated plants through trade networks. This led to a farming culture and more sedentary lifestyle. They grew maize (corn), beans, squash, and supplemented their diet with small game, and seasonal nuts and seeds. Archeologists call two groups of these early farmers the Fremont-era people, located around central Utah, and the ancestral Puebloans, located primarily farther south. Though the two groups’ territories overlapped, they retained distinct cultural diﬀerences. Over time, clan-based villages grew into larger communities of hundreds of people. By 1200 CE, people living in Canyonlands were thriving. The land provided everything needed for living: farming, gathering, sport, ceremony, and medicine. The many structures and artifacts that are still visible today, like in Salt Creek Canyon, testify to this deep indigenous heritage. Rock markings at Peekaboo in the Needles. NPS Photo/Neal Herbert Climate Change and Migration Around 1300 CE, many ancestral Puebloans migrated south into what is now Arizona and New Mexico. Modern day Native Americans who descended from these people share stories recounting this pilgrimage as something they were destined to do. Archeologists suggest that a drought from 1276 to 1299 also played a role in this migration, as it made farming diﬃcult. While most descendants live farther south now, this region still holds importance as their ancestral homeland. Some sites, such as Cave Spring in The Needles, retain sacred signiﬁcance, and park staﬀ attempt to manage these sites in accordance with tribal traditions and knowledge. In contrast, the Fremont-era cultures appears to have adapted to the changing climate by returning to hunting and gathering. Local Ute and Paiute cultures, in part, developed from Fremont-era and ancestral Puebloan societies, as well as through immigration from the north. Many Ute believe they are descendants of the Fremont-era farmers, and other Tribes living in the area also maintain that they have always been here. The Navajo, or Diné, immigrated to the four corners area from the north around 1300 CE or so. By the late 1500s, the Navajo and Ute had adopted the use of horses from Spanish settlers, changing their lifeways. Petroglyphs of horses illustrate this cultural shift.",
+  "original_text_leaves": [
+    "Ancestral Puebloan structure",
+    "NPS/Neal Herbert",
+    "Enduring Connections to the Land",
+    "Canyonlands has been home to people for over 10,000 years. Traditions and ways of life developed and changed as cultures interacted with each other and the landscape. People moved and migrated. They communicated stories and passed on knowledge. Canyonlands is a living, dynamic cultural landscape that",
+    "many still call home today",
+    ".",
+    "Hunting and Gathering",
+    "From about 8,000 BCE to 500 BCE, extended family groups roamed nomadically throughout the southwest. Dependent on game and wild plants for their survival, they made “seasonal rounds” throughout their territory seeking what resources allowed them to thrive. Some evidence remains of these hunter-gatherers, including the extraordinary images they made on rocks and canyon walls. Their pictographs (rock paintings) and petroglyphs (rock peckings), like those found in Horseshoe Canyon, can be seen throughout the park.",
+    "Farming and Sedantism",
+    "Roughly two thousand years ago, some hunter-gatherers acquired domesticated plants through trade networks. This led to a farming culture and more sedentary lifestyle. They grew maize (corn), beans, squash, and supplemented their diet with small game, and seasonal nuts and seeds. Archeologists call two groups of these early farmers the Fremont-era people, located around central Utah, and the ancestral Puebloans, located primarily farther south. Though the two groups’ territories overlapped, they retained distinct cultural diﬀerences. Over time, clan-based villages grew into larger communities of hundreds of people.",
+    "By 1200 CE, people living in Canyonlands were thriving. The land provided everything needed for living: farming, gathering, sport, ceremony, and medicine. The many structures and artifacts that are still visible today, like in Salt Creek Canyon, testify to this deep indigenous heritage.",
+    "Rock markings at Peekaboo in the Needles.",
+    "NPS Photo/Neal Herbert",
+    "Climate Change and Migration",
+    "Around 1300 CE, many ancestral Puebloans migrated south into what is now Arizona and New Mexico. Modern day Native Americans who descended from these people share stories recounting this pilgrimage as something they were destined to do. Archeologists suggest that a drought from 1276 to 1299 also played a role in this migration, as it made farming diﬃcult. While most descendants live farther south now, this region still holds importance as their ancestral homeland. Some sites, such as Cave Spring in The Needles, retain sacred signiﬁcance, and park staﬀ attempt to manage these sites in accordance with tribal traditions and knowledge.",
+    "In contrast, the Fremont-era cultures appears to have adapted to the changing climate by returning to hunting and gathering. Local Ute and Paiute cultures, in part, developed from Fremont-era and ancestral Puebloan societies, as well as through immigration from the north. Many Ute believe they are descendants of the Fremont-era farmers, and other Tribes living in the area also maintain that they have always been here. The Navajo, or Diné, immigrated to the four corners area from the north around 1300 CE or so. By the late 1500s, the Navajo and Ute had adopted the use of horses from Spanish settlers, changing their lifeways. Petroglyphs of horses illustrate this cultural shift."
+  ],
+  "blocks": [
+    {
+      "type": "figure-description",
+      "alt": "Ancestral Puebloan Granary",
+      "caption": "Ancestral Puebloan structure NPS/Neal Herbert",
+      "source_image_url": "https://www.nps.gov/cany/learn/historyculture/images/9144427312_6ec39095c2_o.jpg?maxwidth=1300&maxheight=1300&autorotate=false&format=webp",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Enduring Connections to the Land"
+    },
+    {
+      "type": "paragraph",
+      "text": "Canyonlands has been home to people for over 10,000 years. Traditions and ways of life developed and changed as cultures interacted with each other and the landscape. People moved and migrated. They communicated stories and passed on knowledge. Canyonlands is a living, dynamic cultural landscape that many still call home today."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Hunting and Gathering"
+    },
+    {
+      "type": "paragraph",
+      "text": "From about 8,000 BCE to 500 BCE, extended family groups roamed nomadically throughout the southwest. Dependent on game and wild plants for their survival, they made “seasonal rounds” throughout their territory seeking what resources allowed them to thrive. Some evidence remains of these hunter-gatherers, including the extraordinary images they made on rocks and canyon walls. Their pictographs (rock paintings) and petroglyphs (rock peckings), like those found in Horseshoe Canyon, can be seen throughout the park."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Farming and Sedantism"
+    },
+    {
+      "type": "paragraph",
+      "text": "Roughly two thousand years ago, some hunter-gatherers acquired domesticated plants through trade networks. This led to a farming culture and more sedentary lifestyle. They grew maize (corn), beans, squash, and supplemented their diet with small game, and seasonal nuts and seeds. Archeologists call two groups of these early farmers the Fremont-era people, located around central Utah, and the ancestral Puebloans, located primarily farther south. Though the two groups’ territories overlapped, they retained distinct cultural diﬀerences. Over time, clan-based villages grew into larger communities of hundreds of people. By 1200 CE, people living in Canyonlands were thriving. The land provided everything needed for living: farming, gathering, sport, ceremony, and medicine. The many structures and artifacts that are still visible today, like in Salt Creek Canyon, testify to this deep indigenous heritage."
+    },
+    {
+      "type": "figure-description",
+      "alt": "Outline of hands on a sandstone wall",
+      "caption": "Rock markings at Peekaboo in the Needles. NPS Photo/Neal Herbert",
+      "source_image_url": "https://www.nps.gov/cany/learn/historyculture/images/9734383597_3518061598_o.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Climate Change and Migration"
+    },
+    {
+      "type": "paragraph",
+      "text": "Around 1300 CE, many ancestral Puebloans migrated south into what is now Arizona and New Mexico. Modern day Native Americans who descended from these people share stories recounting this pilgrimage as something they were destined to do. Archeologists suggest that a drought from 1276 to 1299 also played a role in this migration, as it made farming diﬃcult. While most descendants live farther south now, this region still holds importance as their ancestral homeland. Some sites, such as Cave Spring in The Needles, retain sacred signiﬁcance, and park staﬀ attempt to manage these sites in accordance with tribal traditions and knowledge. In contrast, the Fremont-era cultures appears to have adapted to the changing climate by returning to hunting and gathering. Local Ute and Paiute cultures, in part, developed from Fremont-era and ancestral Puebloan societies, as well as through immigration from the north. Many Ute believe they are descendants of the Fremont-era farmers, and other Tribes living in the area also maintain that they have always been here. The Navajo, or Diné, immigrated to the four corners area from the north around 1300 CE or so. By the late 1500s, the Navajo and Ute had adopted the use of horses from Spanish settlers, changing their lifeways. Petroglyphs of horses illustrate this cultural shift."
+    }
+  ],
+  "original_links": [
+    {
+      "text": "many still call home today",
+      "href_original": "/cany/learn/historyculture/index.htm",
+      "url": "https://www.nps.gov/cany/learn/historyculture/index.htm"
+    }
+  ],
+  "excavation_events_added": 0
+}

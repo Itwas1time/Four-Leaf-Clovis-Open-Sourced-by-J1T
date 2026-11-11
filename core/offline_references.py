@@ -99,6 +99,46 @@ REFERENCES = {
         'asset':'local-reference-nps-chaco-history-culture-20260115-84651398.json',
         'sha256':'84651398964e71fd0fc7f1a26e74616f5aaa86681db46bc5ef0a835c6348ff91',
         'download_name':'clovis-nps-chaco-history-culture.txt'},
+    'nps-chesapeake-deep-history': {
+        'source_url':'https://www.nps.gov/articles/000/deep-history.htm',
+        'asset':'local-reference-nps-chesapeake-deep-history-20231214-49098fa2.json',
+        'sha256':'49098fa2e5aa80d7b7173e76b6fb083a7e062aa177327e623a3b3e63f392a804',
+        'download_name':'clovis-nps-chesapeake-deep-history.txt'},
+    'nps-moccasin-bend': {
+        'source_url':'https://www.nps.gov/chch/learn/historyculture/moccasin-bend-national-archeological-district.htm',
+        'asset':'local-reference-nps-moccasin-bend-20240331-95b8249c.json',
+        'sha256':'95b8249cee683d6c7012c40c882ee2d32d97035f2a373ed7004a5ac29ec1b12a',
+        'download_name':'clovis-nps-moccasin-bend.txt'},
+    'nps-russell-cave-prehistoric-cultures': {
+        'source_url':'https://www.nps.gov/ruca/learn/historyculture/prehistoric-cultures.htm',
+        'asset':'local-reference-nps-russell-cave-prehistoric-cultures-20150414-b1209942.json',
+        'sha256':'b1209942efdb82e55c94ab778f06899e0b1f935b9347b56bea500c69018134cf',
+        'download_name':'clovis-nps-russell-cave-prehistoric-cultures.txt'},
+    'nps-russell-cave-paleo-indian': {
+        'source_url':'https://www.nps.gov/ruca/learn/historyculture/paleo-indian-culture.htm',
+        'asset':'local-reference-nps-russell-cave-paleo-indian-20250513-0118410b.json',
+        'sha256':'0118410bde126e302be2485d049fe4f877c700d7b8067bafc056cfc0924962ce',
+        'download_name':'clovis-nps-russell-cave-paleo-indian.txt'},
+    'nps-new-england-archeological-periods': {
+        'source_url':'https://www.nps.gov/articles/000/archeological-time-periods.htm',
+        'asset':'local-reference-nps-new-england-archeological-periods-20210813-8cd7c25f.json',
+        'sha256':'8cd7c25f3b59f6ae1ba08483fd5124e635db962882a074fdaed0bd4d9732b796',
+        'download_name':'clovis-nps-new-england-archeological-periods.txt'},
+    'nps-olympic-peoples': {
+        'source_url':'https://www.nps.gov/olym/learn/the-people-of-the-olympic-peninsula.htm',
+        'asset':'local-reference-nps-olympic-peoples-20250722-d9d73f05.json',
+        'sha256':'d9d73f05505c6e81602273c8ffbc34c0864c185dd3f8e1b7362a39d3f659f8bb',
+        'download_name':'clovis-nps-olympic-peoples.txt'},
+    'nps-canyonlands-native-americans': {
+        'source_url':'https://www.nps.gov/cany/learn/historyculture/nativeamericans.htm',
+        'asset':'local-reference-nps-canyonlands-native-americans-20250418-ca797969.json',
+        'sha256':'ca797969178f5349646503553492843684e450b3f0b9fda31af6b037dfab766e',
+        'download_name':'clovis-nps-canyonlands-native-americans.txt'},
+    'nps-buffalo-river-people': {
+        'source_url':'https://www.nps.gov/buff/learn/historyculture/people.htm',
+        'asset':'local-reference-nps-buffalo-river-people-20201104-50f4666a.json',
+        'sha256':'50f4666a678f01d0ef104e07a24b1a3ab83d84c59fc963208b23e823beed071d',
+        'download_name':'clovis-nps-buffalo-river-people.txt'},
 }
 TIMELINE = 'nps-native-american-cultures-timeline'
 # Bundled file per reference; tests replace an entry to simulate a damaged or missing edition.

@@ -383,6 +383,205 @@ _LAWS["FEDERAL"] = {
 }
 
 
+# Wisconsin and Maryland: read verbatim on the official code sites on 2026-11-11 (same review as Ohio).
+_LAWS["WI"].update({
+    "state_law": "Wisconsin's burial sites preservation law protects any place where human remains are buried (Wis. Stat. 157.70), and its archaeological permit law covers sites owned by the state or by a political subdivision (Wis. Stat. 44.47).",
+    "source_url": "https://docs.legis.wisconsin.gov/statutes/statutes/157/iii/70?view=section",
+    "digger_rules": [
+        {"topic": "Your own private land",
+         "rule": "Wisconsin's archaeological permit law bars anyone other than the state archaeologist and individuals licensed by the director from doing field archaeology (surveying, digging, sampling, excavating or removing objects) on any state site or any site owned by a political subdivision. For a site on privately owned land, the statute says anyone wishing to dig or excavate there is strongly encouraged to secure a permit, and an application must include the owner's written consent; it does not make a permit mandatory on private land. You still need the landowner's permission, and the rules below still apply.",
+         "citation": "Wis. Stat. 44.47(1), (2), (4) (2023-24 Statutes, updated through 2025 Wis. Act 247; published 4 Nov 2026)", "url": "https://docs.legis.wisconsin.gov/statutes/statutes/44/ii/47?view=section",
+         "verify": ["No person other than the state archaeologist and individuals licensed", "is strongly encouraged to secure a permit under this section", "applicant for a permit must submit the written consent of the owner"]},
+        {"topic": "Mounds, earthworks and burial places",
+         "rule": "A burial site is any place where human remains are buried, and the statute treats Indian mounds as a surface indication of a burial. Except through the procedures the statute sets out, no person may intentionally cause or permit the disturbance of a burial site, or of land next to a burial site that the Wisconsin Historical Society has recorded in its catalog; \"disturb\" includes defacing, mutilating, injuring, exposing, removing, destroying, desecrating or molesting. Cataloged burial sites need a permit from the director of the historical society. Normal agricultural or silvicultural practices that do not disturb the human remains or the surface characteristics of a burial site are not prohibited. Penalties are forfeitures: intentionally disturbing an uncataloged burial site without the director's authorization, $500 to $2,000 ($1,000 to $10,000 if the site is dedicated); disturbing a cataloged site without a permit, $1,000 to $10,000. Disturbing a burial site for commercial gain can bring a fine of up to twice the gross value gained or loss caused, or up to one year in the county jail, or both.",
+         "citation": "Wis. Stat. 157.70(1), (2c), (2r), (5), (10) (last amended 2017; 2023-24 Statutes published 4 Nov 2026)", "url": "https://docs.legis.wisconsin.gov/statutes/statutes/157/iii/70?view=section",
+         "verify": ["means any place where human remains are buried", "defacing, mutilating, injuring, exposing, removing, destroying, desecrating or molesting", "may intentionally cause or permit the disturbance of a burial site", "normal agricultural or silvicultural practices which do not disturb the human remains", "nor more than $2,000 if the burial site is not dedicated"]},
+        {"topic": "If you find human remains",
+         "rule": "Unless the death-reporting section (s. 979.01) applies, a person must immediately notify the director of the Wisconsin Historical Society if they know or have reasonable grounds to believe that a burial site, or the cataloged land next to a cataloged burial site, is being disturbed or may be disturbed contrary to the statute. The director must publicize a toll-free telephone service for reporting a discovery or disturbance of a burial site. Failing to report the disturbance of a burial site carries a forfeiture of $100 to $1,000. Separately, a person with knowledge of a death in unexplained, unusual or suspicious circumstances (among other listed situations) must immediately report it to the sheriff, police chief, or the medical examiner or coroner of the county; failing to do so is punishable by a fine of up to $1,000 or up to 90 days in jail.",
+         "citation": "Wis. Stat. 157.70(2)(d), (3), (10)(a); Wis. Stat. 979.01(1), (2) (2023-24 Statutes, published 4 Nov 2026)", "url": "https://docs.legis.wisconsin.gov/statutes/statutes/157/iii/70?view=section",
+         "verify": ["a person shall immediately notify the director if the person knows", "report a discovery or disturbance of a burial site", "shall forfeit not less than $100 nor more than $1,000"],
+         "also_verify": [{"url": "https://docs.legis.wisconsin.gov/statutes/statutes/979/01?view=section",
+                          "verify": ["immediately report the death to the sheriff, police chief, or medical examiner", "All deaths in which there are unexplained, unusual or suspicious circumstances", "fined not more than $1,000 or imprisoned not more than 90 days"]}]},
+        {"topic": "Before you dig: buried utilities",
+         "rule": "An excavator must give the one-call system (call 811) advance notice not less than 3 working days before nonemergency excavation starts; working days are days other than Saturday, Sunday and legal holidays. A repeat notice is required if the marks are destroyed or covered, if digging does not start within 10 days of the scheduled start date, or if it is interrupted for more than 10 days. The statute's only stated exemption from the notice duty is for digging connected with a burial in a cemetery. Its forfeiture provisions do not apply to violations that result from a residential property owner or tenant excavating on property they own or lease, or from excavation during agricultural activity, unless the excavation is by or for a person in the business of excavating for the public.",
+         "citation": "Wis. Stat. 182.0175(1)(d), (2)(am), (2)(c), (3)(bc), (3g) (2023-24 Statutes, published 4 Nov 2026)", "url": "https://docs.legis.wisconsin.gov/statutes/statutes/182/0175?view=section",
+         "verify": ["not less than 3 working days before the start of nonemergency excavation", "means days other than Saturday, Sunday and legal holidays", "excavation does not start within 10 days of the scheduled start date", "residential property owner or tenant whose violation of this section results"]},
+    ],
+    "checked_on": "2026-11-11",
+    "verification_status": "Wisconsin statutes read verbatim on docs.legis.wisconsin.gov on 2026-11-11; not legal advice",
+})
+
+_LAWS["MD"].update({
+    "state_law": "Maryland's archaeological permit law covers terrestrial archaeological sites on land the State owns or controls (State Finance & Procurement 5A-342); separate Criminal Law sections protect burial sites and human remains (Criminal Law 10-402, 10-404).",
+    "source_url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gsf&section=5A-342&enactments=false",
+    "digger_rules": [
+        {"topic": "Your own private land",
+         "rule": "Without a permit, a person may not excavate, remove, destroy, injure, deface or disturb a terrestrial archaeological site on land that the State owns or controls. The Maryland Historical Trust may issue the permit to a person it finds qualified, and an excavation may be conducted only to benefit a reputable museum, an institution of higher education or another recognized scientific or historical institution or organization. That permit law covers State land, not ordinary private land; you still need the landowner's permission, and the rules below still apply.",
+         "citation": "Md. Code, State Finance & Procurement 5A-342 (as published on mgaleg.maryland.gov, 11 Nov 2026)", "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gsf&section=5A-342&enactments=false",
+         "verify": ["excavate, remove, destroy, injure, deface, or disturb a terrestrial archaeological site", "on land that the State owns or controls", "only to benefit a reputable museum, an institution of higher education"]},
+        {"topic": "Mounds, earthworks and burial places",
+         "rule": "A person may not remove or attempt to remove human remains from a burial site, except with the written authorization of the State's Attorney for the county for the purposes the section lists (such as learning the cause of death, reburial, or medical or scientific study) or as another part of the section allows. A burial site is a natural or prepared physical location, whether below, on or above the surface of the earth, where human remains or associated funerary objects are deposited as part of a death ceremony of a culture, religion or group. A violation is a misdemeanor punishable by up to 5 years in prison, a fine of up to $10,000, or both. Separately, in a cemetery it is a misdemeanor to willfully destroy, damage, deface or remove an associated funerary object, a structure or fence placed there, or any other part of the cemetery grounds (up to 5 years or $10,000), or to willfully destroy, damage or remove a tree, plant or shrub there, other than normal maintenance (up to 2 years or $500).",
+         "citation": "Md. Code, Criminal Law 10-401, 10-402, 10-404 (as published on mgaleg.maryland.gov, 11 Nov 2026)", "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcr&section=10-402&enactments=false",
+         "verify": ["not remove or attempt to remove human remains from a burial site", "authorize in writing the removal of human remains from a burial site", "imprisonment not exceeding 5 years or a fine not exceeding $10,000"],
+         "also_verify": [{"url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcr&section=10-401&enactments=false",
+                          "verify": ["natural or prepared physical location, whether originally located below, on, or above", "a part of a death ceremony of a culture, religion, or group"]},
+                         {"url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcr&section=10-404&enactments=false",
+                          "verify": ["destroy, damage, or remove a tree, plant, or shrub in a cemetery", "imprisonment not exceeding 5 years or a fine not exceeding $10,000", "imprisonment not exceeding 2 years or a fine not exceeding $500"]}]},
+        {"topic": "Before you dig: buried utilities",
+         "rule": "Before excavation or demolition, a person must initiate a ticket request with the one-call system (a toll-free number or an online ticket request) and choose a start work date not sooner than 3 business days and not later than 12 business days after the ticket is initiated; a business day is a calendar day other than a Saturday, Sunday or legal holiday. The ticket is valid for 12 business days after the selected start work date. The utility subtitle does not apply to an excavation not more than 6 inches deep (or to demolition) by an owner or lessee of a private residence when it is done entirely on the land where that residence is located and without machinery.",
+         "citation": "Md. Code, Public Utilities 12-101, 12-103, 12-124 (as published on mgaleg.maryland.gov, 11 Nov 2026)", "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gpu&section=12-124&enactments=false",
+         "verify": ["not sooner than 3 business days after the ticket is initiated", "not later than 12 business days after the ticket is initiated", "valid for 12 business days after the selected start work date"],
+         "also_verify": [{"url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gpu&section=12-103&enactments=false",
+                          "verify": ["an excavation not more than 6 inches in depth or demolition", "entirely on the land on which the private residence of the owner", "without the use of machinery"]},
+                         {"url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gpu&section=12-101&enactments=false",
+                          "verify": ["a calendar day other than a Saturday, Sunday, or legal holiday"]}]},
+    ],
+    "checked_on": "2026-11-11",
+    "verification_status": "Maryland statutes read verbatim on mgaleg.maryland.gov on 2026-11-11; not legal advice",
+})
+
+
+# Illinois, Michigan, Massachusetts and New Jersey: read verbatim on the official code sites on 2026-11-11.
+_LAWS["IL"].update({
+    "state_law": "Illinois's Archaeological and Paleontological Resources Protection Act reserves archaeological and paleontological resources on public lands to the State and requires a Department of Natural Resources permit to explore, excavate, possess or collect the resources it protects (20 ILCS 3435), and the Human Remains Protection Act protects unregistered graves (20 ILCS 3440).",
+    "source_url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034350K1.htm",
+    "digger_rules": [
+        {"topic": "Your own private land",
+         "rule": "Illinois reserves to itself the exclusive right to regulate, explore, excavate or survey archaeological and paleontological resources found upon or within any public lands. It is unlawful to knowingly explore, excavate, possess or collect the archaeological or paleontological resources protected by the Act without a permit from the Department of Natural Resources. A violation not involving human remains is a Class A misdemeanor with a fine of up to $5,000 (a later violation, or any violation involving human remains, is a Class 4 felony). The related Human Remains Protection Act says it is not intended to interfere with the normal enjoyment of private property owners, farmers, or those engaged in the development, mining or improvement of real property. You still need the landowner's permission, and the rules below still apply.",
+         "citation": "20 ILCS 3435/1, 3435/3, 3435/5 (P.A. 103-446, eff. 4 Aug 2023; P.A. 103-616, eff. 1 Jul 2024)", "url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034350K1.htm",
+         "verify": ["all archaeological and paleontological resources found upon or within any public lands", "exclusive right and privilege of regulating, exploring, excavating or surveying"],
+         "also_verify": [
+             {"url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034350K3.htm",
+              "verify": ["explore, excavate, possess, or collect any of the archaeological or paleontological resources", "such person obtains a permit issued by the Department of Natural Resources"]},
+             {"url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034350K5.htm",
+              "verify": ["not involving the disturbance of human remains is a Class A misdemeanor", "subject to a fine not in excess of", "any subsequent violation is a Class 4 felony"]},
+             {"url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034400K2.htm",
+              "verify": ["interfere with the normal enjoyment of private property owners", "those engaged in the development, mining or improvement of real property"]},
+         ]},
+        {"topic": "Mounds, earthworks and burial places",
+         "rule": "It is unlawful to knowingly or recklessly disturb, or knowingly or recklessly allow the disturbance of, human remains, unregistered graves, grave markers or grave artifacts from land that is now part of Illinois and protected by the Act, unless a Department of Natural Resources permit authorizes it; a violation is a Class 4 felony. \"Disturb\" includes excavating, removing, exposing, probing and defacing. An \"unregistered grave\" is any grave or location where a human body has been buried or deposited, that is over 100 years old and is not in a cemetery registered with or licensed by the State; a mound associated with an unregistered grave is a \"grave marker\". The Act lists exceptions, such as coroner and medical examiner staff, licensed funeral directors and cemetery personnel acting on a request, permit or court order.",
+         "citation": "20 ILCS 3440/1, 3440/4 (P.A. 103-446, eff. 4 Aug 2023)", "url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034400K4.htm",
+         "verify": ["knowingly or recklessly allow the disturbance of human remains", "A violation of this Section is a Class 4 felony"],
+         "also_verify": [
+             {"url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034400K1.htm",
+              "verify": ["includes excavating, removing, exposing, probing, defacing", "is over 100 years old", "item of human manufacture that is associated with an unregistered grave"]},
+         ]},
+        {"topic": "If you find human remains",
+         "rule": "Anyone who encounters human remains subject to the Act must promptly notify the coroner and must notify the Department of Natural Resources within 48 hours of the encounter. Knowingly failing to report is a Class C misdemeanor, unless the person has reasonable cause to believe the coroner and the Department were already notified. \"Encounter\" means coming upon human remains, grave artifacts, grave markers or unregistered graves at a location where such viewing was not expected.",
+         "citation": "20 ILCS 3440/3 (P.A. 103-446, eff. 4 Aug 2023)", "url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034400K3.htm",
+         "verify": ["promptly notify the coroner and shall notify the Department", "within 48 hours of the encounter", "is guilty of a Class C misdemeanor"],
+         "also_verify": [
+             {"url": "https://www.ilga.gov/documents/legislation/ilcs/documents/002034400K1.htm",
+              "verify": ["to come upon human remains, grave artifacts, grave markers, or unregistered graves", "at a location where such viewing was not expected or anticipated"]},
+         ]},
+        {"topic": "Before you dig: buried utilities",
+         "rule": "Every excavator who engages in nonemergency excavation or demolition must give notice through JULIE (call 811) not less than 2 days but no more than 10 days before the excavation starts, and must pre-mark the area. A \"day\" does not include Saturdays, Sundays, holidays recognized by JULIE, or the day of the notice, and a normal notice is valid for 25 days. JULIE's system covers facilities outside the City of Chicago. A residential property owner who fails to comply and damages facilities while excavating on the residential property is not subject to a penalty under the Act, but is liable for the damage caused to the utility owners or operators.",
+         "citation": "220 ILCS 50/2, 50/4, 50/8 (P.A. 103-614, eff. 1 Jan 2025)", "url": "https://www.ilga.gov/documents/legislation/ilcs/documents/022000500K4.htm",
+         "verify": ["Every excavator who engages in nonemergency excavation or demolition shall", "not less than 2 days but no more than 10 days"],
+         "also_verify": [
+             {"url": "https://www.ilga.gov/documents/legislation/ilcs/documents/022000500K2.htm",
+              "verify": ["Saturdays, Sundays, and the day of the actual notice", "on a normal notice request is valid for 25 days", "owned or operated outside the city limits of the City of Chicago"]},
+             {"url": "https://www.ilga.gov/documents/legislation/ilcs/documents/022000500K8.htm",
+              "verify": ["shall not be subject to a penalty under this Act", "but shall be liable for the damage caused to the underground"]},
+         ]},
+    ],
+    "checked_on": "2026-11-11",
+    "verification_status": "Illinois statutes read verbatim on ilga.gov on 2026-11-11; not legal advice",
+})
+_LAWS["MI"].update({
+    "state_law": "Michigan reserves aboriginal records and antiquities, including mounds, earthworks and burial sites, on state-owned land to the state and requires a permit from the Department of Natural Resources to explore or excavate them there (MCL 324.76102, 324.76105); digging up or removing a buried human body or its remains without lawful authority is a felony (MCL 750.160).",
+    "source_url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-324-76105",
+    "digger_rules": [
+        {"topic": "Your own private land",
+         "rule": "Michigan's permit rule for exploring or excavating an aboriginal remain applies to lands owned by the state: a person may not do so there except as authorized by a permit issued by the Department of Natural Resources, with the written approval of the Department of History, Arts, and Libraries, and the permit is issued without charge. Separately, without the consent of the land owner, a person may not remove relics or records of antiquity, such as human or other bones, shells, stone, bone or copper implements, or pottery, from the premises where they were discovered. The state's reserved right covers antiquities, including mounds, earthworks, forts and burial and village sites, found on land owned or controlled by the state. You still need the landowner's permission, and the rules below still apply.",
+         "citation": "MCL 324.76102, 324.76105, 324.76106 (1995 Act 58, as amended 2001 and 2004)", "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-324-76105",
+         "verify": ["shall not explore or excavate an aboriginal remain covered by this part", "except as authorized by a permit issued by the department"],
+         "also_verify": [
+             {"url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-324-76106",
+              "verify": ["Without the consent of the land owner, a person shall not remove", "relics or records of antiquity such as human or other bones"]},
+             {"url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-324-76102",
+              "verify": ["including mounds, earthworks, forts, burial and village sites", "lands owned by or under the control of the state"]},
+         ]},
+        {"topic": "Mounds, earthworks and burial places",
+         "rule": "A person who, without lawful authority, wilfully digs up, disinters, removes or conveys away a human body or its remains from the place where it is interred or deposited, or knowingly aids in doing so, is guilty of a felony punishable by up to 10 years in prison or a fine of up to $5,000. The same applies to mutilating, defacing, removing or carrying away part of a dead body (other than in proper embalming or postmortem work). The section does not prohibit representatives of established scientific institutions or societies from removing the remains of prehistoric persons for scientific purposes, with the written consent of the owner of the land.",
+         "citation": "MCL 750.160 (Act 328 of 1931, as amended 1974)", "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-750-160",
+         "verify": ["wilfully dig up, disinter, remove, or convey away a human body", "punishable by imprisonment for not more than 10 years", "remains of prehistoric persons by representatives of established scientific institutions"]},
+        {"topic": "Before you dig: buried utilities",
+         "rule": "An excavator must give a dig notice to the MISS DIG notification system (call 811) at least 72 hours, but not more than 14 calendar days, before the start of any blasting or excavation; nonbusiness days are excluded in counting the 72 hours. A ticket is valid for 21 days from the start date on it (180 days if the notice says the work will not be finished within 21 days). The Act defines \"excavation\" as moving, removing or otherwise displacing earth, rock or other material below existing surface grade with power tools or power equipment, and lists activities that are not excavation, such as replacing a fence post or sign post in its existing location. Facility owners and operators may not charge excavators a fee for marking facilities.",
+         "citation": "MCL 460.723, 460.724, 460.725 (2013 Act 174, eff. 1 Apr 2014)", "url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-460-725",
+         "verify": ["at least 72 hours, but not more than 14 calendar days", "All hours of nonbusiness days are excluded in counting the 72-hour period", "A ticket is valid for 21 days from the start date"],
+         "also_verify": [
+             {"url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-460-723",
+              "verify": ["below existing surface grade with power tools or power equipment", "Replacing a fence post, sign post, or guardrail in its existing location"]},
+             {"url": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-460-724",
+              "verify": ["shall not charge a fee to excavators for marking facilities", "do not include the physical marking of facilities"]},
+         ]},
+    ],
+    "checked_on": "2026-11-11",
+    "verification_status": "Michigan statutes read verbatim on legislature.mi.gov on 2026-11-11; no finder-duty statute for human remains was found on that site, so that topic is omitted; not legal advice",
+})
+_LAWS["MA"].update({
+    "state_law": "Massachusetts requires a permit from the state archeologist to conduct field investigations on land owned or controlled by the Commonwealth, its agencies or political subdivisions, and on historic or archeological landmarks (M.G.L. c. 9, s. 27C); graves are protected by M.G.L. c. 272, ss. 71 and 73, and finders of unmarked human remains have a reporting duty under M.G.L. c. 38, s. 6.",
+    "source_url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleII/Chapter9/Section27C",
+    "digger_rules": [
+        {"topic": "Your own private land",
+         "rule": "Massachusetts's archeological permit rule says no person, corporation, agency or authority may conduct field investigation activities on any land owned or controlled by the Commonwealth, its agencies or political subdivisions, or on any historic or archeological landmarks, or on lands restricted under section 31 of chapter 184, without first securing a permit from the state archeologist. Conducting field investigations on such land without a permit, or appropriating, defacing, destroying or altering a site, specimen or landmark outside permitted activities, is a misdemeanor punishable by a fine of up to $500 or up to six months in jail, or both. The text names those categories of land, not ordinary private land; you still need the landowner's permission, and the rules below still apply.",
+         "citation": "M.G.L. c. 9, s. 27C", "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleII/Chapter9/Section27C",
+         "verify": ["shall conduct field investigation activities on any land owned or controlled", "without first securing a permit from the state archeologist", "punished by a fine of not more than five hundred dollars", "imprisonment for not more than six months"]},
+        {"topic": "Mounds, earthworks and burial places",
+         "rule": "Anyone who, without lawful authorization from the proper authorities, wilfully digs up, disinters, removes or conveys away a human body or its remains, or knowingly aids in it, may be punished by up to three years in state prison or up to two and one-half years in jail, or by a fine of up to $4,000. Separately, wilfully destroying, mutilating, defacing, injuring or removing a tomb, monument, gravestone or other memorial of the dead, or wantonly or maliciously disturbing the contents of a tomb or a grave, is punishable by up to five years in state prison or up to two and one-half years in jail and a fine of up to $5,000, plus restitution.",
+         "citation": "M.G.L. c. 272, ss. 71, 73", "url": "https://malegislature.gov/Laws/GeneralLaws/PartIV/TitleI/Chapter272/Section71",
+         "verify": ["wilfully digs up, disinters, removes or conveys away a human body", "imprisonment in the state prison for not more than three years"],
+         "also_verify": [
+             {"url": "https://malegislature.gov/Laws/GeneralLaws/PartIV/TitleI/Chapter272/Section73",
+              "verify": ["wantonly or maliciously disturbs the contents of a tomb or a grave", "imprisonment in the state prison for not more than five years"]},
+         ]},
+        {"topic": "If you find human remains",
+         "rule": "A person who discovers unmarked human remains, or who knowingly causes human remains to be disturbed through construction or agricultural activity, has a duty to immediately notify the office of the chief medical examiner. If the office determines the remains are suspected of being 100 years old or more, it notifies the state archeologist. Chapter 9, section 27C adds that a person who discovers an unmarked human burial or skeletal remains suspected of being 100 years or more old must immediately cease any activity, including construction and agricultural activity, that would deface, alter, destroy or impair the site until the state archeologist has completed a site evaluation and the disposition of the remains has been agreed.",
+         "citation": "M.G.L. c. 38, s. 6; c. 9, s. 27C", "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVI/Chapter38/Section6",
+         "verify": ["who discovers unmarked human remains, or who knowingly causes human remains", "disturbed through construction or agricultural activity", "to immediately notify the office of the chief medical examiner", "shall immediately notify the state archaeologist"],
+         "also_verify": [
+             {"url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleII/Chapter9/Section27C",
+              "verify": ["including but not limited to, construction and agricultural activity", "such time as the state archeologist has completed a site evaluation"]},
+         ]},
+        {"topic": "Before you dig: buried utilities",
+         "rule": "An excavator installing a new facility or an addition to an existing facility, or relaying or repairing an existing facility, may not (except in an emergency) make an excavation in any public or private way, company right-of-way or easement, or publicly or privately owned land unless, at least 72 hours (not counting Saturdays, Sundays and legal holidays) and not more than 30 days beforehand, the excavator has premarked not more than 500 feet of the proposed excavation and given initial notice to the underground plant damage prevention system (the system defined in section 76D of chapter 164). The statute defines \"excavation\" as an operation for the purpose of movement or removal of earth, rock or the materials in the ground, including digging.",
+         "citation": "M.G.L. c. 82, ss. 40, 40A", "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter82/Section40A",
+         "verify": ["installing a new facility or an addition to an existing facility", "at least 72 hours, exclusive of Saturdays, Sundays and legal holidays", "but not more than 30 days before the proposed excavation", "premarked not more than 500 feet of the proposed excavation"],
+         "also_verify": [
+             {"url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter82/Section40",
+              "verify": ["movement or removal of earth, rock or the materials in the ground", "digging, blasting, augering, backfilling, test boring, drilling"]},
+         ]},
+    ],
+    "checked_on": "2026-11-11",
+    "verification_status": "Massachusetts General Laws read verbatim on malegislature.gov on 2026-11-11; not legal advice",
+})
+_LAWS["NJ"].update({
+    "state_law": "New Jersey's Register of Historic Places statute requires the Commissioner of Environmental Protection's written authorization before the State, a county, a municipality or their agencies undertake a project that would encroach upon, damage or destroy a registered site (N.J.S.A. 13:1B-15.131), and unlawfully disturbing human remains is a second-degree crime (N.J.S.A. 2C:22-1).",
+    "source_url": "https://lis.njleg.state.nj.us/nxt/gateway.dll?xhitlist_vq=13%3A1B-15.131&f=xhitlist&xhitlist_q=%5BRank+100%5D%5BDomain:+13%3A1B-15.131%5D13%3A1B-15.131&xhitlist_x=advanced&xhitlist_s=relevance-weight&xhitlist_mh=99999&xhitlist_d=&xhitlist_hc=%5BXML%5D%5BKwic,5000%5D&xhitlist_xsl=xhitlist.xsl&xhitlist_vpc=first&xhitlist_vps=20&xhitlist_sel=title%3Bpath%3Brelevance-weight%3Bcontent-type%3Bhome-title%3Bitem-bookmark%3Btitle-path%3Bhit-context&vid=Publish:10.1048/Enu",
+    "digger_rules": [
+        {"topic": "Your own private land",
+         "rule": "New Jersey's statute protecting sites in the Register of Historic Places says the State, a county, a municipality or an agency or instrumentality of any of them shall not undertake any project that will encroach upon, damage or destroy any area, site, structure or object included in the Register without application to, and the prior written authorization or consent of, the Commissioner of Environmental Protection. By its words it applies to those government projects, not to ordinary private land; you still need the landowner's permission, and the rules below still apply.",
+         "citation": "N.J.S.A. 13:1B-15.131 (L.1970, c.268, eff. 4 Nov 1970)", "url": "https://lis.njleg.state.nj.us/nxt/gateway.dll?xhitlist_vq=13%3A1B-15.131&f=xhitlist&xhitlist_q=%5BRank+100%5D%5BDomain:+13%3A1B-15.131%5D13%3A1B-15.131&xhitlist_x=advanced&xhitlist_s=relevance-weight&xhitlist_mh=99999&xhitlist_d=&xhitlist_hc=%5BXML%5D%5BKwic,5000%5D&xhitlist_xsl=xhitlist.xsl&xhitlist_vpc=first&xhitlist_vps=20&xhitlist_sel=title%3Bpath%3Brelevance-weight%3Bcontent-type%3Bhome-title%3Bitem-bookmark%3Btitle-path%3Bhit-context&vid=Publish:10.1048/Enu",
+         "verify": ["shall not undertake any project which will encroach upon", "structure or object included in the Register of Historic Places", "prior written authorization or consent of"]},
+        {"topic": "Mounds, earthworks and burial places",
+         "rule": "A person commits a second-degree crime if he unlawfully disturbs, moves or conceals human remains, or unlawfully desecrates, damages or destroys human remains. Purposely or knowingly failing to dispose of human remains in a manner required by law is a third-degree crime. \"Human remains\" means the body of a deceased person, but not cremated remains. The section does not apply to acts performed in accordance with law (including the State Medical Examiner Act and the New Jersey Cemetery Act), criminal investigations or court orders, and does not criminalize good-faith interment or disinterment.",
+         "citation": "N.J.S.A. 2C:22-1 (L.2002, c.127)", "url": "https://lis.njleg.state.nj.us/nxt/gateway.dll?xhitlist_vq=2C%3A22-1&f=xhitlist&xhitlist_q=%5BRank+100%5D%5BDomain:+2C%3A22-1%5D2C%3A22-1&xhitlist_x=advanced&xhitlist_s=relevance-weight&xhitlist_mh=99999&xhitlist_d=&xhitlist_hc=%5BXML%5D%5BKwic,5000%5D&xhitlist_xsl=xhitlist.xsl&xhitlist_vpc=first&xhitlist_vps=20&xhitlist_sel=title%3Bpath%3Brelevance-weight%3Bcontent-type%3Bhome-title%3Bitem-bookmark%3Btitle-path%3Bhit-context&vid=Publish:10.1048/Enu",
+         "verify": ["A person commits a crime of the second degree if he", "Unlawfully disturbs, moves or conceals human remains", "means the body of a deceased person or the dismembered part", "criminalize any good faith action involving interment or disinterment"]},
+        {"topic": "Before you dig: buried utilities",
+         "rule": "An excavator must notify the One-Call Damage Prevention System (call 811) not less than three business days and not more than 10 business days before the excavation or demolition begins; a notice stays valid for 45 business days if the excavator maintains the marks. A business day is any day other than Saturday, Sunday or a nationally or State recognized holiday. The law defines excavation broadly (earth moved by any tools, equipment or explosive, including tree and root removal and fence post driving) but says it does not include routine residential property or right-of-way maintenance or landscaping activities performed with non-mechanized equipment, or tilling soil for agricultural purposes to a depth of 18 inches or less.",
+         "citation": "N.J.S.A. 48:2-75, 48:2-82 (L.1994, c.118, as amended 2005, c.22)", "url": "https://lis.njleg.state.nj.us/nxt/gateway.dll?xhitlist_vq=48%3A2-82&f=xhitlist&xhitlist_q=%5BRank+100%5D%5BDomain:+48%3A2-82%5D48%3A2-82&xhitlist_x=advanced&xhitlist_s=relevance-weight&xhitlist_mh=99999&xhitlist_d=&xhitlist_hc=%5BXML%5D%5BKwic,5000%5D&xhitlist_xsl=xhitlist.xsl&xhitlist_vpc=first&xhitlist_vps=20&xhitlist_sel=title%3Bpath%3Brelevance-weight%3Bcontent-type%3Bhome-title%3Bitem-bookmark%3Btitle-path%3Bhit-context&vid=Publish:10.1048/Enu",
+         "verify": ["three business days and not more than 10 business days", "shall remain valid for 45 business days from the notification"],
+         "also_verify": [
+             {"url": "https://lis.njleg.state.nj.us/nxt/gateway.dll?xhitlist_vq=48%3A2-75&f=xhitlist&xhitlist_q=%5BRank+100%5D%5BDomain:+48%3A2-75%5D48%3A2-75&xhitlist_x=advanced&xhitlist_s=relevance-weight&xhitlist_mh=99999&xhitlist_d=&xhitlist_hc=%5BXML%5D%5BKwic,5000%5D&xhitlist_xsl=xhitlist.xsl&xhitlist_vpc=first&xhitlist_vps=20&xhitlist_sel=title%3Bpath%3Brelevance-weight%3Bcontent-type%3Bhome-title%3Bitem-bookmark%3Btitle-path%3Bhit-context&vid=Publish:10.1048/Enu",
+              "verify": ["other than Saturday, Sunday, or a nationally or State recognized holiday", "routine residential property or right-of-way maintenance", "landscaping activities performed with non-mechanized equipment", "agricultural purposes to a depth of 18 inches or less"]},
+         ]},
+    ],
+    "checked_on": "2026-11-11",
+    "verification_status": "New Jersey statutes read verbatim on lis.njleg.state.nj.us on 2026-11-11 (official search-result pages, the only static-text access); not legal advice",
+})
+
+
 def get_archaeology_laws() -> dict:
     """Return independent reference entries keyed by state code, DC, and FEDERAL.
 

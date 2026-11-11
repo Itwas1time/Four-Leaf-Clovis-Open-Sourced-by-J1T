@@ -308,6 +308,138 @@ REGIONS = {
 }
 
 
+# 11 Nov 2026: eight more regions from captured NPS editions (quotes re-checked at display time).
+def _region(reference, periods, covers, intro, park, area, rest):
+    return {
+        'reference': reference, 'periods': periods, 'covers': covers, 'intro': intro, 'source_label': park,
+        'link_label': 'Read the full page offline',
+        'lead_in': 'The National Park Service describes these periods and peoples:',
+        'card_note': f'NPS page about {area} only. Its dates are approximate; it does not describe {rest}, '
+                     'which Clovis has not yet covered.',
+        'report_note': f'It describes {area} only, with approximate dates; Clovis has not yet reviewed a source '
+                       f'for {rest}.',
+    }
+
+
+CHESAPEAKE = 'nps-chesapeake-deep-history'
+_chesapeake_periods = [
+    ('Paleoindian (15,000 to 10,000 years ago)', CHESAPEAKE,
+     ('Small groups of hunter-fisher-gatherers traveled frequently in search of the game they hunted and sites where they could mine stone.',)),
+    ('Archaic (10,000 to 3,200 years ago)', CHESAPEAKE,
+     ('People were not yet farmers, but rather skilled hunters, fishers, and foragers.',
+      'Warmer weather meant more food, and therefore the ability to support a larger population.')),
+    ('Woodland (3,200 to 400 years ago)', CHESAPEAKE,
+     ('The Woodland Period is marked by the adoption of agriculture in the Chesapeake.',
+      'By 3,200 years ago, fired clay pottery also appears in the archeological record.',
+      'Complex political systems arose by the end of the Woodland Period, for example, the tributary system of the Powhatan peoples.')),
+]
+MOCCASIN = 'nps-moccasin-bend'
+RUSSELL, RUSSELL_PALEO = 'nps-russell-cave-prehistoric-cultures', 'nps-russell-cave-paleo-indian'
+NEW_ENGLAND = 'nps-new-england-archeological-periods'
+OLYMPIC = 'nps-olympic-peoples'
+CANYONLANDS = 'nps-canyonlands-native-americans'
+BUFFALO = 'nps-buffalo-river-people'
+
+NEW_REGIONS = {
+    'MD': _region(CHESAPEAKE, _chesapeake_periods, 'Chesapeake Bay region (tidewater Maryland) only',
+                  'Human habitation of the Chesapeake Bay region dates to before the Bay itself was fully formed.',
+                  'Captain John Smith Chesapeake National Historic Trail', 'the Chesapeake Bay region',
+                  'western Maryland'),
+    'VA': _region(CHESAPEAKE, _chesapeake_periods, 'Chesapeake Bay region (tidewater Virginia) only',
+                  'Human habitation of the Chesapeake Bay region dates to before the Bay itself was fully formed.',
+                  'Captain John Smith Chesapeake National Historic Trail', 'the Chesapeake Bay region',
+                  "Virginia's Piedmont, Blue Ridge and southwest"),
+    'TN': _region(MOCCASIN, [
+        ('Paleo-Indian (10,000–8000 B.C.)', MOCCASIN,
+         ('The Paleo-Indian Period (10,000 B.C.- 8000 B.C.) witnessed the first human inhabitants on Moccasin Bend.',)),
+        ('Archaic (8000–700 B.C.)', MOCCASIN,
+         ('The Archaic Period (8000 B.C.-700 B.C.) saw the development of stone tools.',)),
+        ('Woodland (700 B.C.–A.D. 1000)', MOCCASIN,
+         ('The Woodland Period (700 B.C.-1000 A.D.) is possibly the best represented on Moccasin Bend.',
+          'This period is notable for the introduction of ceramic pottery and the beginnings of agriculture.')),
+        ('Mississippian (A.D. 900–1650)', MOCCASIN,
+         ('The Mississippian Period (900 A.D. -1650A.D.) marked the time when the native people began building large mound complexes, farming larger tracts of land and having a strong socio-political structure based on kinship ties.',)),
+        ('Cherokee removal (1838–39)', MOCCASIN,
+         ('In 1838-39, Cherokees in the area were rounded up and placed in various deportation camps to await removal to Oklahoma.',)),
+    ], 'Moccasin Bend, Chattanooga (southeast Tennessee) only',
+        'Moccasin Bend is one of the most unique units found in the entire National Park Service system, spanning 12,000 years of continuous human habitation.',
+        'Chickamauga and Chattanooga National Military Park', 'Moccasin Bend at Chattanooga',
+        'the rest of Tennessee'),
+    'AL': _region(RUSSELL, [
+        ('Paleo-Indian (about 12,000 years ago)', RUSSELL_PALEO,
+         ('Roughly 12,000 years ago, Russell Cave was inhabited by people whom we now call the Paleo-Indians.',)),
+        ('Archaic (7000 to 500 B.C.)', RUSSELL,
+         ('In the Archaic era the basic foundation for American Indian culture was laid, persisting in some areas until European contact.',)),
+        ('Woodland (500 B.C. to A.D. 1000)', RUSSELL,
+         ('In Woodland times in the Southeast, settled village life grew more important as agriculture and trade with people to the north allowed more time for refinement of political and ceremonial life.',)),
+        ('Mississippian (A.D. 1000 to 1600)', RUSSELL,
+         ('The Woodland period civilizations that took root in the Mississippi and Tennessee River Valleys flowered in the Mississippian period.',
+          'Large towns and ceremonial complexes with huge temple mounds were made possible by the refinement of corn agriculture.')),
+    ], 'Russell Cave (northeast Alabama) only',
+        'Roughly 12,000 years ago, Russell Cave was inhabited by people whom we now call the Paleo-Indians.',
+        'Russell Cave National Monument', 'Russell Cave and the Tennessee River valley of northeast Alabama',
+        'the rest of Alabama'),
+    'MA': _region(NEW_ENGLAND, [
+        ('Paleo Indian (about 12,000 to 9,000 years ago)', NEW_ENGLAND,
+         ('About 12,000 to 9,000 years before present (BP) is the earliest period for which we have archeological evidence of occupation of New England, which archeologists call the Paleo Indian period.',)),
+        ('Archaic (about 9,000 to 2,500 years ago)', NEW_ENGLAND,
+         ('From about 9,000 to 2,500 years BP was what archeologists refer to as the Archaic period.',)),
+        ('Woodland (2,500 years ago to the 1400s)', NEW_ENGLAND,
+         ('The Woodland period in New England began about 2,500 years BP and ended during the 15th century.',
+          'Archeologists characterize the Woodland period by the production and use of ceramics, the cultivation of maize, as well as the use of bow and arrow hunting technology.')),
+        ('Pawtucket, and Native history today', NEW_ENGLAND,
+         ('The Native Americans that occupied the Saugus Iron Works National Historic Site area before the arrival of colonizers are the Pawtucket.',
+          'Native American history does not end with the arrival of the European colonizers in the 17th-century, and it continues today.')),
+    ], 'New England framework, written for Saugus (north of Boston)',
+        'About 12,000 to 9,000 years before present (BP) is the earliest period for which we have archeological evidence of occupation of New England, which archeologists call the Paleo Indian period.',
+        'Saugus Iron Works National Historic Site', 'New England as seen from Saugus, north of Boston',
+        'other Massachusetts homelands such as the Wampanoag and Nipmuc'),
+    'WA': _region(OLYMPIC, [
+        ('More than 13,000 years ago', OLYMPIC,
+         ('Over 13,000 years ago, vast continental glaciers were in retreat leaving behind rounded hills and marshy meadows.',
+          'It is the earliest evidence of human presence in this region and proof that residents at the time were hunters.')),
+        ('10,000 to 3,000 years ago', OLYMPIC,
+         ('From 3,000 to 10,000 years ago they hunted deer and elk and gathered plants to survive.',)),
+        ('Maritime cultures (from about 3,000 years ago)', OLYMPIC,
+         ('By about 3,000 years ago, as the human population increased, early inhabitants shifted their focus to lowland rivers and lakes.',
+          'Fishing, hunting sea mammals and gathering shellfish formed the foundation of rich and complex maritime cultures for which the Pacific Northwest is known.')),
+        ('Area tribes today', OLYMPIC,
+         ("Eight tribes have traditional associations to lands now in Olympic National Park: Hoh, Jamestown S'Klallam, Lower Elwha Klallam, Makah, Port Gamble S'Klallam, Quileute, Quinault and Skokomish.",)),
+    ], 'Olympic Peninsula (northwest Washington) only',
+        'Over 13,000 years ago, vast continental glaciers were in retreat leaving behind rounded hills and marshy meadows.',
+        'Olympic National Park', 'the Olympic Peninsula',
+        'Puget Sound, the Cascades or eastern Washington'),
+    'UT': _region(CANYONLANDS, [
+        ('Hunting and gathering (8,000 to 500 BCE)', CANYONLANDS,
+         ('From about 8,000 BCE to 500 BCE, extended family groups roamed nomadically throughout the southwest.',)),
+        ('Early farmers: Fremont-era and ancestral Puebloan', CANYONLANDS,
+         ('Roughly two thousand years ago, some hunter-gatherers acquired domesticated plants through trade networks.',
+          'Archeologists call two groups of these early farmers the Fremont-era people, located around central Utah, and the ancestral Puebloans, located primarily farther south.')),
+        ('Migration (around 1300 CE)', CANYONLANDS,
+         ('Around 1300 CE, many ancestral Puebloans migrated south into what is now Arizona and New Mexico.',)),
+        ('Ute and Paiute', CANYONLANDS,
+         ('Local Ute and Paiute cultures, in part, developed from Fremont-era and ancestral Puebloan societies, as well as through immigration from the north.',)),
+    ], 'Canyonlands (southeast Utah) only',
+        'Canyonlands has been home to people for over 10,000 years.',
+        'Canyonlands National Park', 'Canyonlands in southeast Utah',
+        'the Wasatch Front, the Great Basin or southwest Utah'),
+    'AR': _region(BUFFALO, [
+        ('Paleoindian (10,000 to 8,000 BC)', BUFFALO,
+         ('The Paleoindian Period is considered the earliest confirmed period of human occupation in the Ozarks.',)),
+        ('Archaic (7,000 to 500 BC)', BUFFALO,
+         ('The Archaic period is defined by increasing diversity in tool types and a change in subsistence practices.',)),
+        ('Woodland (500 BC to AD 900)', BUFFALO,
+         ('The Woodland Period is defined by the presence of the first pottery, but otherwise is largely a continuation of trends already seen during the Archaic.',)),
+        ('Mississippian (AD 900 to 1541)', BUFFALO,
+         ('The Mississippian Period had limited impact on the Ozarks region.',)),
+    ], 'Ozarks (northern Arkansas) only',
+        'The Paleoindian Period is considered the earliest confirmed period of human occupation in the Ozarks.',
+        'Buffalo National River', 'the Ozark region as seen from the Buffalo River',
+        'the Arkansas Delta, Little Rock or the Ouachitas'),
+}
+REGIONS.update(NEW_REGIONS)
+
+
 def summary(state):
     """(entry, article, [(period heading, its first paragraph)]) for a reviewed state, else None.
 
@@ -332,6 +464,8 @@ def summary(state):
 
 
 def _quoted(article, sentences):
-    """True when every sentence is still, word for word, in a paragraph of the checked edition."""
-    paragraphs = [block['text'] for block in article['blocks'] if block['type'] == 'paragraph'] if article else []
+    """True when every sentence is still, word for word, in a paragraph or list item of the checked edition."""
+    paragraphs = [text for block in (article['blocks'] if article else ())
+                  for text in ([block['text']] if block['type'] == 'paragraph' else
+                               block.get('items', []) if block['type'] == 'list' else [])]
     return all(any(sentence in text for text in paragraphs) for sentence in sentences)

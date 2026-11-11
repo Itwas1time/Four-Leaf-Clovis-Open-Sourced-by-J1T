@@ -1,5 +1,5 @@
 """Observation callbacks use bounded photo references, never raw image bodies."""
-from dash import Input, Output, State, callback, html, no_update
+from dash import ALL, Input, Output, State, callback, callback_context, html, no_update
 from atlas.gui.workspace_activation import when_opened
 from atlas.gui.answer_card_ui import answer_card
 from core import town_cards
@@ -17,10 +17,27 @@ def find_town_option(state, geoid):
          'Use Change town in the header to choose broad context, then return here. No town is required.')
 
 
-@when_opened('inspect', Output('find-features','options'), Output('find-features','value'), Input('find-material','value'))
-def feature_choices(material):
+@when_opened('inspect', Output('find-features','options'), Output('find-features','value'), Input('find-material','value'),
+             Input('find-preset','data'))
+def feature_choices(material, preset=None):
     guide = GUIDES.get(material) if isinstance(material,str) else None
-    return ([{'label':FEATURES[f],'value':f} for f in guide['features']] if guide else []), []
+    if not guide:
+        return [], []
+    ticked = [preset['feature']] if isinstance(preset, dict) and preset.get('material') == material and preset.get('feature') in guide['features'] else []
+    return [{'label':FEATURES[f],'value':f} for f in guide['features']], ticked
+
+
+@callback(Output('workflow-mode','value',allow_duplicate=True), Output('find-material','value',allow_duplicate=True),
+          Output('find-preset','data'),
+          Input({'type':'find-preset','material':ALL,'feature':ALL},'n_clicks'), prevent_initial_call=True)
+def open_find_preset(clicks):
+    """'What you might find' buttons open Inspect a find with that material (and feature) ready."""
+    target = callback_context.triggered_id
+    if not isinstance(target, dict) or not any(isinstance(c, int) and c > 0 for c in (clicks or [])):
+        return no_update, no_update, no_update
+    if target.get('material') not in GUIDES:
+        return no_update, no_update, no_update
+    return 'inspect', target['material'], {'material': target['material'], 'feature': target.get('feature') or None}
 
 
 @when_opened('inspect', Output('find-care','children'), Input('find-material','value'))

@@ -92,7 +92,8 @@ def report_overview(token,state,geoid,history,online,mode,spot=None):
     stats=knowledge['maps']
     regional=knowledge['regional_maps']
     spot=my_spot.for_place(spot,place)  # yard-level answers when the person's spot belongs to this town
-    children=[answer_card(card,label) for card,label in (
+    from atlas.gui.answer_card_ui import find_here_card
+    children=[find_here_card(town_cards.find_here(place,state))]+[answer_card(card,label) for card,label in (
         (town_cards.who_lived_here(state),None),  # each region names its own source link
         (town_cards.burial_grounds(place,spot),None),
         (town_cards.old_topo_maps(place,spot),'Open the oldest map (online) →'),

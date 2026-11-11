@@ -403,3 +403,7 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--clovis-green);
     .atlas-map-switch { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
     .atlas-map-switch .dash-options-list-option { justify-content:center; text-align:center; }
 }
+/* What you might find: compact, wrapping one-tap chips (11 Nov 2026) */
+.clovis-find-here .clovis-find-kinds { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 10px; }
+.clovis-find-here .clovis-find-kind { width:auto; min-height:30px; padding:4px 10px; font-size:12px; margin:0; }
+.clovis-find-here .clovis-find-here-label { margin:10px 0 2px; font-size:13px; }

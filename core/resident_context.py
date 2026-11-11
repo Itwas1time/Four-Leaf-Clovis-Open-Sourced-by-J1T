@@ -179,7 +179,9 @@ def _law_lines(state):
     elif reference.get("source_url", "").startswith("https://") and reference.get("source_url") != SHPO_DIRECTORY:
         lines += [f"{_md(reference['state_law'])} [Official text]({reference['source_url']})", ""]
     else:
-        lines += [f"Clovis has not yet reviewed {_md(name)}'s archaeology, burial and digging laws. Your State Historic "
+        lines += ["**Before you dig.** Call 811, the free national call-before-you-dig number; it connects you to your "
+                  "state's one-call center so buried utility lines are marked first. [call811.com](https://call811.com/)", "",
+                  f"Clovis has not yet read {_md(name)}'s own archaeology, burial and digging statutes. Your State Historic "
                   f"Preservation Office can tell you what applies; find it in the [official directory]({SHPO_DIRECTORY}).", ""]
     lines += ["On federal or tribal land, federal law also applies: " + "; ".join(
         f"[{_md(row['name'])}]({row['source_url']})" for row in federal["key_regulations"]) + ".", ""]

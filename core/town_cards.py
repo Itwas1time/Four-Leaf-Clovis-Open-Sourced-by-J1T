@@ -59,9 +59,15 @@ def law_summary(state):
                 'items': [f"{rule['topic']} ({citation_label(rule['citation'])})" for rule in rules],
                 'note': f"Read on the official code {reference['checked_on']}; information, not legal advice.",
                 'href': rules[0]['url']}
+    # Not yet read state by state: what applies everywhere, and where the state's own rules are kept.
     return {'title': f'The law where you are · {name}',
-            'items': [], 'note': f'Clovis has not yet reviewed {name} law. Your State Historic Preservation Office can tell you what applies.',
-            'href': SHPO_DIRECTORY}
+            'items': ["Before you dig: call 811, the free national call-before-you-dig number for your state's one-call center",
+                      'Federal and tribal land: digging up archaeological objects needs a federal permit (ARPA)',
+                      'Native American graves on federal or tribal land are protected by NAGPRA',
+                      f'Private land, burials and reporting finds in {name}: ask the State Historic Preservation Office'],
+            'note': f"Clovis has not yet read {name}'s own statutes, so they are not summarized here. Sources: call811.com; "
+                    'NPS pages on ARPA and NAGPRA. Information, not legal advice.',
+            'href': SHPO_DIRECTORY, 'link': f'Find the {name} office →'}
 
 
 def old_topo_maps(place, spot=None):
@@ -105,3 +111,49 @@ def one_page(place, state, spot=None, today=None):
     lines += ["Clovis explains; it does not identify finds or choose where to dig. Rules are information, not legal",
               "advice: follow the links for the current official text. Missing records never mean nothing is there."]
     return title, "\n".join(lines)
+
+
+# What turns up in yards, as one-tap starting points into Inspect a find: (label, material, feature).
+FIND_KINDS = {
+    'homes': (('Bottle or window glass', 'glass', None), ('Nails', 'metal', 'nail'), ('Dish or crock pieces', 'ceramic', 'decorated'),
+              ('Clay pipe stems', 'ceramic', 'pipe'), ('Marbles', 'ceramic', 'marble'), ('Buttons', 'metal', 'button'),
+              ('Brick', 'ceramic', 'brick'), ('Tin cans', 'metal', 'can')),
+    'earlier': (('Worked stone: flakes, tools, points', 'rock', None), ('Pottery pieces', 'ceramic', None)),
+    'fossils': (('A possible fossil', 'fossil', None),),
+}
+
+
+def find_here(place, state):
+    """What people commonly find in the ground here, from the place's own dated maps and the state's fossils."""
+    from core import historical_topos
+    from core.state_fossil_library import state_reading
+    from core.town_knowledge import knowledge_for_place
+    years = []
+    try:
+        sanborn = knowledge_for_place(place)['maps']
+        if str(sanborn.get('earliest', '')).isdigit():
+            years.append((int(sanborn['earliest']), 'Sanborn fire-insurance maps'))
+    except (OSError, sqlite3.Error, ValueError, KeyError, TypeError):
+        pass
+    try:
+        topo = historical_topos.summary(place['latitude'], place['longitude'])
+        if topo.get('earliest'):
+            years.append((int(topo['earliest']), 'USGS topographic maps'))
+    except (OSError, sqlite3.Error, ValueError, KeyError, TypeError):
+        pass
+    since, source = min(years) if years else (None, None)
+    homes = (f"Homes, farms and streets have been mapped here since {since} ({source}). Their everyday "
+             "leftovers are what most often turns up in yards and gardens:" if since else
+             "Where people have lived and built in the last two centuries, their everyday leftovers are what "
+             "most often turns up in yards and gardens:")
+    groups = [{'label': 'From homes and farms', 'text': homes, 'kinds': FIND_KINDS['homes']},
+              {'label': 'From earlier peoples', 'text': 'Indigenous peoples lived here long before. Stone flakes '
+               'from toolmaking are their commonest trace; tools, points and pottery pieces also turn up.',
+               'kinds': FIND_KINDS['earlier']}]
+    reading = state_reading(state)
+    if reading and reading.get('facts'):
+        fact = reading['facts'][0]
+        groups.append({'label': 'Fossils in ' + reading['name'], 'text': fact['text'],
+                       'source': fact['sources'][0] if fact.get('sources') else None, 'kinds': FIND_KINDS['fossils']})
+    return {'title': 'What you might find in the ground here', 'groups': groups,
+            'note': 'Typical finds, not a forecast for your yard. Tap one to see how to look at it and roughly date it.'}

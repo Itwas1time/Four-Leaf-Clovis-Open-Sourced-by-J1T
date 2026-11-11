@@ -404,6 +404,7 @@ def build_stores() -> html.Div:
             # The person's exact spot: browser storage only (core/my_spot.py).
             dcc.Store(id="my-spot", storage_type="local"),
             dcc.Store(id="my-spot-picking", data=False),
+            dcc.Store(id="find-preset"),
             dcc.Store(id="analysis-store"),
             dcc.Store(id="candidate-results-store"),
             dcc.Store(id="candidate-file-store"),

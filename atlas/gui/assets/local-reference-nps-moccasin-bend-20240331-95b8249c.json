@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "id": "nps-moccasin-bend",
+  "title": "Moccasin Bend National Archeological District",
+  "publisher": "National Park Service · Chickamauga and Chattanooga National Military Park",
+  "source_url": "https://www.nps.gov/chch/learn/historyculture/moccasin-bend-national-archeological-district.htm",
+  "source_updated": "2024-03-31",
+  "receipt": {
+    "url": "https://www.nps.gov/chch/learn/historyculture/moccasin-bend-national-archeological-district.htm",
+    "status": 200,
+    "retrieved_utc": "2026-11-11T18:15:21.821915+00:00",
+    "bytes": 41449,
+    "sha256": "6e0863d4169e4e2287336b4b043acf09e0729aed0d9e49044da492627ce95b1c",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "policy_receipt": {
+    "url": "https://www.nps.gov/aboutus/disclaimer.htm",
+    "status": 200,
+    "retrieved_utc": "2026-11-11T18:15:22.044159+00:00",
+    "bytes": 38448,
+    "sha256": "1b6f7d2f45ef3da7c942cb9591d48121fa0047974e9cc48a2584750eb1f466c3",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "attribution": "National Park Service, Chickamauga and Chattanooga National Military Park. No claim to original U.S. Government works.",
+  "rights_basis": "NPS ownership policy: NPS-created text is generally public domain unless otherwise indicated. Photographs, maps and artwork carry their own credits and are not reproduced.",
+  "scope": "Written about Moccasin Bend at Chattanooga in the Tennessee River valley; not a statewide sequence. Approximate, and not a history of any particular property.",
+  "content_note": "Complete article text, headings, lists and image descriptions. Images are not bundled. Site navigation and branding are excluded.",
+  "component_count": 2,
+  "visible_text_sha256": "fe317e725d65413ba83879efb49444d05ca9494916ecbbc4c036349f894ac3f8",
+  "original_visible_text": "Moccasin Bend National Archeological District (Photo Taken From Point Park) Friends of Moccasin Bend National Park Moccasin Bend National Archeological District Moccasin Bend is one of the most unique units found in the entire National Park Service system, spanning 12,000 years of continuous human habitation. The Paleo-Indian Period (10,000 B.C.- 8000 B.C.) witnessed the first human inhabitants on Moccasin Bend. These nomadic tribes moved into the area due to the rich resources located in the valley. The Archaic Period (8000 B.C.-700 B.C.) saw the development of stone tools. The various uses of these tools assisted in the establishment of permanent villages on Moccasin Bend. The Woodland Period (700 B.C.-1000 A.D.) is possibly the best represented on Moccasin Bend. Archeological excavations have uncovered approximately twenty village sites on the bend. This period is notable for the introduction of ceramic pottery and the beginnings of agriculture. The Mississippian Period (900 A.D. -1650A.D.) marked the time when the native people began building large mound complexes, farming larger tracts of land and having a strong socio-political structure based on kinship ties. During the Mississippian Period, Spaniards under the charge of Hernando de Soto (1540) or Tristan de Luna (1560) possibly made contact with inhabitants of Hampton Place, a village located on the bend. In 1838-39, Cherokees in the area were rounded up and placed in various deportation camps to await removal to Oklahoma. One of these camps was located at Ross's Landing, near Chattanooga. Several groups of Cherokees that left Ross's Landing traveled by water to Oklahoma and passed around the bend, while at least one group marched overland across the neck of Moccasin Bend. The Native American Removal to the West became known as the Trail of Tears. During the 1830s-1850s, the Brown's Ferry Federal Road was an active route on the antebellum slave trade, and numerous people were enslaved on farms on Moccasin Bend. During the siege and battles that took place in the area in the fall and winter of 1863, Union artillery entrenched on the bend and periodically exchanged fire with Confederate batteries on Lookout Mountain. This peninsula was also used as part of the Union army's main supply line, known as the Cracker Line. NPS and Partners at the Gateway Site in 2014 NPS There are three areas for visitors to access Moccasin Bend National Archeological District. The \"Gateway Site,\" is a grassy meadow located along Hamm Road. The site is an open green space that overlooks the Tennessee River, and can be reached by taking the Manufacturers Road exit off of Highway 27 and turning left. Then turn left onto Hamm Road, and the Gateway Site will be on your left. Additionally there are two developed trails on Moccasin Bend - The Brown's Ferry Federal Road and the Blue Blazes Trail.",
+  "original_text_leaves": [
+    "Moccasin Bend National Archeological District (Photo Taken From Point Park)",
+    "Friends of Moccasin Bend National Park",
+    "Moccasin Bend National Archeological District",
+    "Moccasin Bend is one of the most unique units found in the entire National Park Service system, spanning 12,000 years of continuous human habitation.",
+    "The Paleo-Indian Period (10,000 B.C.- 8000 B.C.) witnessed the first human inhabitants on Moccasin Bend. These nomadic tribes moved into the area due to the rich resources located in the valley.",
+    "The Archaic Period (8000 B.C.-700 B.C.) saw the development of stone tools. The various uses of these tools assisted in the establishment of permanent villages on Moccasin Bend.",
+    "The Woodland Period (700 B.C.-1000 A.D.) is possibly the best represented on Moccasin Bend. Archeological excavations have uncovered approximately twenty village sites on the bend. This period is notable for the introduction of ceramic pottery and the beginnings of agriculture.",
+    "The Mississippian Period (900 A.D. -1650A.D.) marked the time when the native people began building large mound complexes, farming larger tracts of land and having a strong socio-political structure based on kinship ties.",
+    "During the Mississippian Period, Spaniards under the charge of Hernando de Soto (1540) or Tristan de Luna (1560) possibly made contact with inhabitants of Hampton Place, a village located on the bend.",
+    "In 1838-39, Cherokees in the area were rounded up and placed in various deportation camps to await removal to Oklahoma. One of these camps was located at Ross's Landing, near Chattanooga. Several groups of Cherokees that left Ross's Landing traveled by water to Oklahoma and passed around the bend, while at least one group marched overland across the neck of Moccasin Bend. The Native American Removal to the West became known as the",
+    "Trail of Tears",
+    ".",
+    "During the 1830s-1850s, the Brown's Ferry Federal Road was an",
+    "active route on the antebellum slave trade",
+    ", and numerous people were enslaved on farms on Moccasin Bend.",
+    "During the siege and battles that took place in the area in the fall and winter of 1863, Union artillery entrenched on the bend and periodically exchanged fire with Confederate batteries on Lookout Mountain. This peninsula was also used as part of the Union army's main supply line, known as the Cracker Line.",
+    "NPS and Partners at the Gateway Site in 2014",
+    "NPS",
+    "There are three areas for visitors to access Moccasin Bend National Archeological District. The \"Gateway Site,\" is a grassy meadow located along Hamm Road. The site is an open green space that overlooks the Tennessee River, and can be reached by taking the Manufacturers Road exit off of Highway 27 and turning left. Then turn left onto Hamm Road, and the Gateway Site will be on your left. Additionally there are two developed trails on Moccasin Bend - The",
+    "Brown's Ferry Federal Road",
+    "and the",
+    "Blue Blazes Trail",
+    "."
+  ],
+  "blocks": [
+    {
+      "type": "figure-description",
+      "alt": "Moccasin Bend",
+      "caption": "Moccasin Bend National Archeological District (Photo Taken From Point Park) Friends of Moccasin Bend National Park",
+      "source_image_url": "https://www.nps.gov/chch/learn/historyculture/images/ptpkview.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "paragraph",
+      "text": "Moccasin Bend National Archeological District"
+    },
+    {
+      "type": "paragraph",
+      "text": "Moccasin Bend is one of the most unique units found in the entire National Park Service system, spanning 12,000 years of continuous human habitation."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The Paleo-Indian Period (10,000 B.C.- 8000 B.C.) witnessed the first human inhabitants on Moccasin Bend. These nomadic tribes moved into the area due to the rich resources located in the valley.",
+        "The Archaic Period (8000 B.C.-700 B.C.) saw the development of stone tools. The various uses of these tools assisted in the establishment of permanent villages on Moccasin Bend.",
+        "The Woodland Period (700 B.C.-1000 A.D.) is possibly the best represented on Moccasin Bend. Archeological excavations have uncovered approximately twenty village sites on the bend. This period is notable for the introduction of ceramic pottery and the beginnings of agriculture.",
+        "The Mississippian Period (900 A.D. -1650A.D.) marked the time when the native people began building large mound complexes, farming larger tracts of land and having a strong socio-political structure based on kinship ties.",
+        "During the Mississippian Period, Spaniards under the charge of Hernando de Soto (1540) or Tristan de Luna (1560) possibly made contact with inhabitants of Hampton Place, a village located on the bend.",
+        "In 1838-39, Cherokees in the area were rounded up and placed in various deportation camps to await removal to Oklahoma. One of these camps was located at Ross's Landing, near Chattanooga. Several groups of Cherokees that left Ross's Landing traveled by water to Oklahoma and passed around the bend, while at least one group marched overland across the neck of Moccasin Bend. The Native American Removal to the West became known as the Trail of Tears.",
+        "During the 1830s-1850s, the Brown's Ferry Federal Road was an active route on the antebellum slave trade, and numerous people were enslaved on farms on Moccasin Bend.",
+        "During the siege and battles that took place in the area in the fall and winter of 1863, Union artillery entrenched on the bend and periodically exchanged fire with Confederate batteries on Lookout Mountain. This peninsula was also used as part of the Union army's main supply line, known as the Cracker Line."
+      ]
+    },
+    {
+      "type": "figure-description",
+      "alt": "Park staff and partners at Moccasin Bend National Archeological District",
+      "caption": "NPS and Partners at the Gateway Site in 2014 NPS",
+      "source_image_url": "https://www.nps.gov/chch/learn/historyculture/images/Moccasin-Bend_Hamm-Road-gateway-site_November2014-dedication_1_1.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "paragraph",
+      "text": "There are three areas for visitors to access Moccasin Bend National Archeological District. The \"Gateway Site,\" is a grassy meadow located along Hamm Road. The site is an open green space that overlooks the Tennessee River, and can be reached by taking the Manufacturers Road exit off of Highway 27 and turning left. Then turn left onto Hamm Road, and the Gateway Site will be on your left. Additionally there are two developed trails on Moccasin Bend - The Brown's Ferry Federal Road and the Blue Blazes Trail."
+    }
+  ],
+  "original_links": [
+    {
+      "text": "Trail of Tears",
+      "href_original": "https://www.nps.gov/trte/index.htm",
+      "url": "https://www.nps.gov/trte/index.htm"
+    },
+    {
+      "text": "active route on the antebellum slave trade",
+      "href_original": "/articles/mobeslavery.htm",
+      "url": "https://www.nps.gov/articles/mobeslavery.htm"
+    },
+    {
+      "text": "Brown's Ferry Federal Road",
+      "href_original": "/chch/learn/historyculture/brownsferryroad.htm",
+      "url": "https://www.nps.gov/chch/learn/historyculture/brownsferryroad.htm"
+    },
+    {
+      "text": "Blue Blazes Trail",
+      "href_original": "/chch/learn/historyculture/blue-blazes-trail.htm",
+      "url": "https://www.nps.gov/chch/learn/historyculture/blue-blazes-trail.htm"
+    }
+  ],
+  "excavation_events_added": 0
+}

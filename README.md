@@ -12,16 +12,16 @@ Want to go deeper? Read full archaeological studies and original data tables off
 It runs on your own computer. No account, no subscription, no internet needed once installed.
 Your notes and photos never leave your computer unless you export them.
 
-![Clovis home screen: What is around me, I found something, Research a topic](https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.37.0/clovis-home.png)
+![Clovis home screen: What is around me, I found something, Research a topic](https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.38.0/clovis-home.png)
 
 ## Download
 
-- **Windows:** download [Clovis-0.37.0-windows-x64.zip](https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.37.0/Clovis-0.37.0-windows-x64.zip),
+- **Windows:** download [Clovis-0.38.0-windows-x64.zip](https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.38.0/Clovis-0.38.0-windows-x64.zip),
   extract it, and double-click **Start Clovis**. Nothing else to install.
 - **macOS or Linux** (needs Python 3.11 or newer):
   ```sh
   python3 -m venv ~/clovis
-  ~/clovis/bin/pip install https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.37.0/archaeo_scan-0.37.0-py3-none-any.whl
+  ~/clovis/bin/pip install https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.38.0/archaeo_scan-0.38.0-py3-none-any.whl
   ~/clovis/bin/python -m atlas.gui.app
   ```
 
@@ -32,12 +32,14 @@ a `Clovis Local` folder in your home folder, not in the app.
 
 **What is around me.** Choose any of 32,363 US towns and Census places, or press **Use my location**
 (your spot stays on your computer). You get:
+- *What you might find in the ground here*: the bottle glass, nails, dish pieces, pipe stems, marbles,
+  buttons, brick, worked stone and fossils that commonly turn up, each one tap from how to date it;
 - *Your place through time*: lay old USGS topographic maps (as early as the 1880s) over your spot and
   slide between today and then. Each sheet is fetched once and then works offline;
-- *Who lived here before you*, quoted from National Park Service histories (11 regions so far);
+- *Who lived here before you*, quoted from National Park Service histories (19 states so far);
 - *Known cemeteries* nearest your spot, from the USGS place-name index;
-- *The law where you are*: permit, reporting and burial rules read from the official state code
-  (verified for 11 states so far; other states link to their State Historic Preservation Office);
+- *The law where you are*: permit, reporting and burial rules read from the official state code for
+  17 states so far; every other state gets the rules that apply nationwide and its state office;
 - 50,578 Sanborn fire-insurance atlas records, local rock and fossil context, and newspapers;
 - a one-page summary to print or save as PDF.
 

@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "id": "nps-new-england-archeological-periods",
+  "title": "New England Archeological Time Periods",
+  "publisher": "National Park Service · Saugus Iron Works National Historic Site",
+  "source_url": "https://www.nps.gov/articles/000/archeological-time-periods.htm",
+  "source_updated": "2021-08-13",
+  "receipt": {
+    "url": "https://www.nps.gov/articles/000/archeological-time-periods.htm",
+    "status": 200,
+    "retrieved_utc": "2026-11-11T18:15:23.426653+00:00",
+    "bytes": 39504,
+    "sha256": "c69dd5b818a732f193ef646d160ee1d5424278c8b458402631b2d0dad4704de4",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "policy_receipt": {
+    "url": "https://www.nps.gov/aboutus/disclaimer.htm",
+    "status": 200,
+    "retrieved_utc": "2026-11-11T18:15:23.709816+00:00",
+    "bytes": 38448,
+    "sha256": "1b6f7d2f45ef3da7c942cb9591d48121fa0047974e9cc48a2584750eb1f466c3",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "attribution": "National Park Service, Saugus Iron Works National Historic Site. No claim to original U.S. Government works.",
+  "rights_basis": "NPS ownership policy: NPS-created text is generally public domain unless otherwise indicated. Photographs, maps and artwork carry their own credits and are not reproduced.",
+  "scope": "A New England framework written for Saugus, north of Boston; not a history of any one town. Approximate, and not a history of any particular property.",
+  "content_note": "Complete article text, headings, lists and image descriptions. Images are not bundled. Site navigation and branding are excluded.",
+  "component_count": 5,
+  "visible_text_sha256": "d7becf014cd581cf013d38d46febfa5ba659a6a81cfa730edafb8167b54f1f70",
+  "original_visible_text": "NPS Graphic Native American tribal histories define their own pasts using various chronologies specific to individual experiences and belief systems. This is in stark contrast to archeologists and historians, who have imposed the following time periods on Indigenous history in order to compare changes in patterns of settlement, land usage, and tool technology. Each of the time periods described below span thousands of years, and are traditionally divided into stages defined as Early, Middle, Late, and Transitional. For a better understanding of archeological time periods read How do Archaeologists Talk About Time. Paleo Indian Period About 12,000 to 9,000 years before present (BP) is the earliest period for which we have archeological evidence of occupation of New England, which archeologists call the Paleo Indian period. During the Paleo Indian period, temperatures were colder and large animals, such as giant beavers, mastodons, and the wooly mammoth lived here. Some of these large species were likely hunted by the Paleo Indians in New England; however, there is very little evidence proving this. It is more likely that New England Paleo Indians were hunting caribou or other average sized fauna alongside gathering fruits and nuts. No archeological evidence has been found at Saugus Iron Works to suggest that the site was occupied during the Paleo Indian period. Although, there are other sites in the region where Paleo Indian artifacts have been found suggesting that Indigenous people did occupy the region north of Boston during this period. Two examples of Neville Variant type projectile points, which date to the Middle Archaic period, about 8,000-6,000 years Before Present (BP). NPS Museum Collections, SAIR 4221 and 4247. NPS Photo / Claire Norton Archaic Period From about 9,000 to 2,500 years BP was what archeologists refer to as the Archaic period. Further environmental change occurred over the course of several millennia with temperatures continuing to warm and the environment drying, ushering in new species of trees and foliage. There was also population growth that occurred during this period with archeological evidence suggesting that there was a presence of larger settlements and more diversification among the Indigenous groups. Artifacts in the Native American collections at Saugus Iron Works suggest that the site was used during the Archaic period. A Levanna type projectile point characteristic of the Middle to Late Woodland period in the Northeastern United States (700-1350 CE). It is made of Saugus Rhyolite, or Saugus “Jasper”, a fine grained reddish pink stone found locally in Saugus, MA. NPS Museum Collections, SAIR 9655. NPS Photo / Claire Norton Woodland Period The Woodland period in New England began about 2,500 years BP and ended during the 15th century. Many archeologists define the end of the Woodland period by the arrival of permanent colonies, such as Plymouth, in the early 17th century. However, Native Americans in the region began to feel the effects of colonization, particularly disease, over a century before the establishment of the colonies. Archeologists characterize the Woodland period by the production and use of ceramics, the cultivation of maize, as well as the use of bow and arrow hunting technology. There is evidence that suggests that many of the hallmarks of the Woodland period had already been adopted by Native Americans during the latter part of the Archaic period, showing how change occurred fluidly over time. In this period, farming became a common practice but groups in coastal areas also utilized marine food resources such as fish and shellfish. Similarly to the Archaic period, there is archeological evidence to suggest that Saugus Iron Works was utilized during the Woodland period. Colonial Period to Present The Native Americans that occupied the Saugus Iron Works National Historic Site area before the arrival of colonizers are the Pawtucket. Native American history does not end with the arrival of the European colonizers in the 17th-century, and it continues today. After the establishment of the Iron Works in the mid-17th century, there is documentary evidence to suggest that there were Indigenous people interacting with the workers at the Iron Works. In 1651, two Indigenous men were paid 3 pounds and 18 shillings in exchange for supply 39 cords of wood to the Iron Works. Although, this evidence is somewhat limited and it is not backed up by the archeological evidence, it is possible that trade and other exchanges were happening between Native Americans and the iron workers.",
+  "original_text_leaves": [
+    "NPS Graphic",
+    "Native American tribal histories define their own pasts using various chronologies specific to individual experiences and belief systems. This is in stark contrast to archeologists and historians, who have imposed the following time periods on Indigenous history in order to compare changes in patterns of settlement, land usage, and tool technology. Each of the time periods described below span thousands of years, and are traditionally divided into stages defined as Early, Middle, Late, and Transitional. For a better understanding of archeological time periods read",
+    "How do Archaeologists Talk About Time",
+    ".",
+    "Paleo Indian Period",
+    "About 12,000 to 9,000 years before present (BP) is the earliest period for which we have archeological evidence of occupation of New England, which archeologists call the Paleo Indian period. During the Paleo Indian period, temperatures were colder and large animals, such as giant beavers, mastodons, and the wooly mammoth lived here. Some of these large species were likely hunted by the Paleo Indians in New England; however, there is very little evidence proving this. It is more likely that New England Paleo Indians were hunting caribou or other average sized fauna alongside gathering fruits and nuts.",
+    "No archeological evidence has been found at Saugus Iron Works to suggest that the site was occupied during the Paleo Indian period. Although, there are other sites in the region where Paleo Indian artifacts have been found suggesting that Indigenous people did occupy the region north of Boston during this period.",
+    "Two examples of Neville Variant type projectile points, which date to the Middle Archaic period, about 8,000-6,000 years Before Present (BP). NPS Museum Collections, SAIR 4221 and 4247.",
+    "NPS Photo / Claire Norton",
+    "Archaic Period",
+    "From about 9,000 to 2,500 years BP was what archeologists refer to as the Archaic period. Further environmental change occurred over the course of several millennia with temperatures continuing to warm and the environment drying, ushering in new species of trees and foliage. There was also population growth that occurred during this period with archeological evidence suggesting that there was a presence of larger settlements and more diversification among the Indigenous groups. Artifacts in the Native American collections at Saugus Iron Works suggest that the site was used during the Archaic period.",
+    "A Levanna type projectile point characteristic of the Middle to Late Woodland period in the Northeastern United States (700-1350 CE). It is made of Saugus Rhyolite, or Saugus “Jasper”, a fine grained reddish pink stone found locally in Saugus, MA. NPS Museum Collections, SAIR 9655.",
+    "NPS Photo / Claire Norton",
+    "Woodland Period",
+    "The Woodland period in New England began about 2,500 years BP and ended during the 15th century. Many archeologists define the end of the Woodland period by the arrival of permanent colonies, such as Plymouth, in the early 17th century. However, Native Americans in the region began to feel the effects of colonization, particularly disease, over a century before the establishment of the colonies.",
+    "Archeologists characterize the Woodland period by the production and use of ceramics, the cultivation of maize, as well as the use of bow and arrow hunting technology. There is evidence that suggests that many of the hallmarks of the Woodland period had already been adopted by Native Americans during the latter part of the Archaic period, showing how change occurred fluidly over time. In this period, farming became a common practice but groups in coastal areas also utilized marine food resources such as fish and shellfish. Similarly to the Archaic period, there is archeological evidence to suggest that Saugus Iron Works was utilized during the Woodland period.",
+    "Colonial Period to Present",
+    "The Native Americans that occupied the Saugus Iron Works National Historic Site area before the arrival of colonizers are the Pawtucket. Native American history does not end with the arrival of the European colonizers in the 17th-century, and it continues today. After the establishment of the Iron Works in the mid-17th century, there is documentary evidence to suggest that there were Indigenous people interacting with the workers at the Iron Works. In 1651, two Indigenous men were paid 3 pounds and 18 shillings in exchange for supply 39 cords of wood to the Iron Works. Although, this evidence is somewhat limited and it is not backed up by the archeological evidence, it is possible that trade and other exchanges were happening between Native Americans and the iron workers."
+  ],
+  "blocks": [
+    {
+      "type": "figure-description",
+      "alt": "Radiocarbon years before present spanning the Paleo Indian, Archaic, Woodland, and Colonial periods.",
+      "caption": "NPS Graphic",
+      "source_image_url": "https://www.nps.gov/articles/000/images/Thakkar_Elizabeth_RadiocarbonTimeline.jpg?maxwidth=1300&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "paragraph",
+      "text": "Native American tribal histories define their own pasts using various chronologies specific to individual experiences and belief systems. This is in stark contrast to archeologists and historians, who have imposed the following time periods on Indigenous history in order to compare changes in patterns of settlement, land usage, and tool technology. Each of the time periods described below span thousands of years, and are traditionally divided into stages defined as Early, Middle, Late, and Transitional. For a better understanding of archeological time periods read How do Archaeologists Talk About Time."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paleo Indian Period"
+    },
+    {
+      "type": "paragraph",
+      "text": "About 12,000 to 9,000 years before present (BP) is the earliest period for which we have archeological evidence of occupation of New England, which archeologists call the Paleo Indian period. During the Paleo Indian period, temperatures were colder and large animals, such as giant beavers, mastodons, and the wooly mammoth lived here. Some of these large species were likely hunted by the Paleo Indians in New England; however, there is very little evidence proving this. It is more likely that New England Paleo Indians were hunting caribou or other average sized fauna alongside gathering fruits and nuts. No archeological evidence has been found at Saugus Iron Works to suggest that the site was occupied during the Paleo Indian period. Although, there are other sites in the region where Paleo Indian artifacts have been found suggesting that Indigenous people did occupy the region north of Boston during this period."
+    },
+    {
+      "type": "figure-description",
+      "alt": "Triangular blade shaped projectile points with slightly curved edges and a rounded, tapered stem.",
+      "caption": "Two examples of Neville Variant type projectile points, which date to the Middle Archaic period, about 8,000-6,000 years Before Present (BP). NPS Museum Collections, SAIR 4221 and 4247. NPS Photo / Claire Norton",
+      "source_image_url": "https://www.nps.gov/articles/000/images/Norton_Claire_SAIR_4221_4247_Points_001_2.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Archaic Period"
+    },
+    {
+      "type": "paragraph",
+      "text": "From about 9,000 to 2,500 years BP was what archeologists refer to as the Archaic period. Further environmental change occurred over the course of several millennia with temperatures continuing to warm and the environment drying, ushering in new species of trees and foliage. There was also population growth that occurred during this period with archeological evidence suggesting that there was a presence of larger settlements and more diversification among the Indigenous groups. Artifacts in the Native American collections at Saugus Iron Works suggest that the site was used during the Archaic period."
+    },
+    {
+      "type": "figure-description",
+      "alt": "A triangular shaped projectile point with concave shaped base.",
+      "caption": "A Levanna type projectile point characteristic of the Middle to Late Woodland period in the Northeastern United States (700-1350 CE). It is made of Saugus Rhyolite, or Saugus “Jasper”, a fine grained reddish pink stone found locally in Saugus, MA. NPS Museum Collections, SAIR 9655. NPS Photo / Claire Norton",
+      "source_image_url": "https://www.nps.gov/articles/000/images/Norton_Claire_SAIR_781_9655_Jasper_001_2.jpg?maxwidth=650&autorotate=false",
+      "image_included": false,
+      "image_rights": "Individual image reuse not established by this text edition."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Woodland Period"
+    },
+    {
+      "type": "paragraph",
+      "text": "The Woodland period in New England began about 2,500 years BP and ended during the 15th century. Many archeologists define the end of the Woodland period by the arrival of permanent colonies, such as Plymouth, in the early 17th century. However, Native Americans in the region began to feel the effects of colonization, particularly disease, over a century before the establishment of the colonies. Archeologists characterize the Woodland period by the production and use of ceramics, the cultivation of maize, as well as the use of bow and arrow hunting technology. There is evidence that suggests that many of the hallmarks of the Woodland period had already been adopted by Native Americans during the latter part of the Archaic period, showing how change occurred fluidly over time. In this period, farming became a common practice but groups in coastal areas also utilized marine food resources such as fish and shellfish. Similarly to the Archaic period, there is archeological evidence to suggest that Saugus Iron Works was utilized during the Woodland period."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Colonial Period to Present"
+    },
+    {
+      "type": "paragraph",
+      "text": "The Native Americans that occupied the Saugus Iron Works National Historic Site area before the arrival of colonizers are the Pawtucket. Native American history does not end with the arrival of the European colonizers in the 17th-century, and it continues today. After the establishment of the Iron Works in the mid-17th century, there is documentary evidence to suggest that there were Indigenous people interacting with the workers at the Iron Works. In 1651, two Indigenous men were paid 3 pounds and 18 shillings in exchange for supply 39 cords of wood to the Iron Works. Although, this evidence is somewhat limited and it is not backed up by the archeological evidence, it is possible that trade and other exchanges were happening between Native Americans and the iron workers."
+    }
+  ],
+  "original_links": [
+    {
+      "text": "How do Archaeologists Talk About Time",
+      "href_original": "https://www.nps.gov/articles/000/archaeological-time.htm",
+      "url": "https://www.nps.gov/articles/000/archaeological-time.htm"
+    }
+  ],
+  "excavation_events_added": 0
+}

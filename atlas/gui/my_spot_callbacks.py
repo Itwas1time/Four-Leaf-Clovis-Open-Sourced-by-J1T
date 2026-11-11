@@ -102,7 +102,7 @@ def spot_status(spot, state, geoid, mode=None):
 @callback(Output('main-map', 'viewport', allow_duplicate=True), Input('my-spot', 'data'), prevent_initial_call=True)
 def center_on_spot(spot):
     spot = my_spot.clean(spot)
-    return {'center': [spot['lat'], spot['lon']], 'zoom': 15, 'transition': 'flyTo'} if spot else no_update
+    return {'center': [spot['lat'], spot['lon']], 'zoom': 13, 'transition': 'flyTo'} if spot else no_update
 
 
 @callback(Output('my-spot-layer', 'children'),
@@ -164,3 +164,15 @@ clientside_callback(
     }""",
     Output('town-sheet-printed', 'data'), Input('town-sheet-print', 'n_clicks'), State('town-sheet', 'data'),
     prevent_initial_call=True)
+
+
+@callback(Output('my-spot-picking', 'data', allow_duplicate=True),
+          Output('my-spot-status', 'children', allow_duplicate=True),
+          Output('my-spot-pick', 'children', allow_duplicate=True),
+          Input({'type': 'workbench-action', 'target': 'map', 'key': 'start-roam'}, 'n_clicks'),
+          prevent_initial_call=True)
+def roam_picks_a_spot(clicks):
+    """"Just curious? Wander the map" starts ready to explore any spot you tap."""
+    if not clicks:
+        return no_update, no_update, no_update
+    return True, 'Tap anywhere on the map to see who lived there, nearby cemeteries and old maps of that spot.', 'Cancel picking'

@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "nps-olympic-peoples",
+  "title": "Ancient Peoples and Area Tribes",
+  "publisher": "National Park Service · Olympic National Park",
+  "source_url": "https://www.nps.gov/olym/learn/the-people-of-the-olympic-peninsula.htm",
+  "source_updated": "2025-07-22",
+  "receipt": {
+    "url": "https://www.nps.gov/olym/learn/the-people-of-the-olympic-peninsula.htm",
+    "status": 200,
+    "retrieved_utc": "2026-11-11T18:15:24.018186+00:00",
+    "bytes": 39473,
+    "sha256": "cbaa103ad81215026e7d061dbe9822ba292d7ca50bbca7dfa62aeecfa6430bef",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "policy_receipt": {
+    "url": "https://www.nps.gov/aboutus/disclaimer.htm",
+    "status": 200,
+    "retrieved_utc": "2026-11-11T18:15:24.364522+00:00",
+    "bytes": 38448,
+    "sha256": "1b6f7d2f45ef3da7c942cb9591d48121fa0047974e9cc48a2584750eb1f466c3",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  "attribution": "National Park Service, Olympic National Park. No claim to original U.S. Government works.",
+  "rights_basis": "NPS ownership policy: NPS-created text is generally public domain unless otherwise indicated. Photographs, maps and artwork carry their own credits and are not reproduced.",
+  "scope": "Written about the Olympic Peninsula of northwest Washington; not a statewide history. Approximate, and not a history of any particular property.",
+  "content_note": "Complete article text, headings, lists and image descriptions. Images are not bundled. Site navigation and branding are excluded.",
+  "component_count": 1,
+  "visible_text_sha256": "bb8be01bf82354004b436f09401a0263c94c37623496b28c1cebf707c9fbb014",
+  "original_visible_text": "A Sense of Place What if your highways were rivers and mountain ridges? What if your grocery store was the forest and ocean? What if your home overlooked a beautiful coastline complete with whales and sunsets? For the original residents of the Olympic Peninsula, the majestic landscape and wealth of resources supplied both physical and spiritual sustenance. Although the land and its ownership has changed, these essential connections have been maintained through generations. Today Olympic National Park protects the natural resources that engendered those connections as well as the cultural resources that reveal the rich history of the people who first called this rugged place home. The Earliest Residents Over 13,000 years ago, vast continental glaciers were in retreat leaving behind rounded hills and marshy meadows. There were no dense forests yet. Elk, bison, wolves and mastodons roamed the land, and humans roamed with them. In 1977, a farmer digging a pond just outside Olympic National Park unearthed remains of a mastodon, a huge elephant-like mammal that grazed Ice Age grasslands. Embedded in one of the mastodon's ribs was a broken piece of bone resembling a spear point. In 2011, scientific dating revealed that the spear point was 13,800 years old. It is the earliest evidence of human presence in this region and proof that residents at the time were hunters. The hunter and gatherer groups who followed early big game hunters also had a strong dependence on the land. From 3,000 to 10,000 years ago they hunted deer and elk and gathered plants to survive. Their stone tools, left across the peninsula, show that the rugged terrain did not deter them from exploring the entire Olympic ecosystem. By about 3,000 years ago, as the human population increased, early inhabitants shifted their focus to lowland rivers and lakes. Fishing, hunting sea mammals and gathering shellfish formed the foundation of rich and complex maritime cultures for which the Pacific Northwest is known. The forests also provided essentials such as food, fibers, medicine and shelter. Longhouses were crafted from graceful western red cedar trunks to protect families from the relentless rain, canoes to hunt seals and whales, baskets, clothing, tools and bentwood boxes for cooking and storage. Archaeological sites, like ones on the Hoko River and at Ozette, contained thousands of wood, shell and bone artifacts that helped modern tribes piece together more of their rich heritage. The skilled workmanship of the artifacts reveal the intimate connection between the artisans, the land and the sea. Imposing Change The last 200 years have been dynamic times for the Olympic Peninsula's original residents. At first contact with Euro-Americans, villages were spread throughout the area, their residents coexisting with the land and resources. People journeyed far and wide to pursue game and collect plants, conduct warfare, attend social gatherings and ceremonies and to interact with the spiritual realm. After the arrival of Europeans in the late 18th century, the lives of the area's indigenous people were forever changed. Exotic diseases wiped out entire villages. Long-standing social traditions were disrupted by new technologies and restrictions. Euro-American settlers competed for the abundant resources of the Olympic Peninsula. Salmon were fished from the streams, elk populations decimated and huge swaths of trees were harvested from the forests—the land and its ownership had changed. An Ancient Find In 1993, a Florida family was hiking in Olympic National Park when they discovered a piece of woven material at the edge of a snowfield near Hurricane Ridge. A warm summer had melted back the edge of a permanent snowbank, revealing this piece of cultural history. The woven piece turned out to be from a 2,900-year-old basket, a tangible link confirming the stories of mountain travel that have been passed from one generation to the next for millennia. Area Tribes Today Eight tribes have traditional associations to lands now in Olympic National Park: Hoh, Jamestown S'Klallam, Lower Elwha Klallam, Makah, Port Gamble S'Klallam, Quileute, Quinault and Skokomish. Today, these tribes are working to sustain their long traditions. The Makah have revived the custom of whaling, a tradition that dates back thousands of years according to archeological evidence. Coastal tribes continue their performance of a First Salmon ceremony to honor and give thanks to salmon returning from the sea. They are passing on the teachings of their elders to preserve language and traditional arts like basket weaving and carving. Court decisions have reaffirmed the right of area tribes to carry on their fishing practices. In 1974, a landmark court decision upheld tribal fishing rights retained under the 1855 treaties, including the protection of habitat. The protection and management of dwindling fish resources is a priority for the tribes as well as the park. The National Park Service also works with local tribes to protect not only the amazing natural resources of the area, but also cultural connections with park land and resources. Throughout the mountains, forests and coast lie the ancient footprints and stories that are an integral part of Olympic National Park.",
+  "original_text_leaves": [
+    "A Sense of Place",
+    "What if your highways were rivers and mountain ridges? What if your grocery store was the forest and ocean? What if your home overlooked a beautiful coastline complete with whales and sunsets? For the original residents of the Olympic Peninsula, the majestic landscape and wealth of resources supplied both physical and spiritual sustenance. Although the land and its ownership has changed, these essential connections have been maintained through generations. Today Olympic National Park protects the natural resources that engendered those connections as well as the cultural resources that reveal the rich history of the people who first called this rugged place home.",
+    "The Earliest Residents",
+    "Over 13,000 years ago, vast continental glaciers were in retreat leaving behind rounded hills and marshy meadows. There were no dense forests yet. Elk, bison, wolves and mastodons roamed the land, and humans roamed with them.",
+    "In 1977, a farmer digging a pond just outside Olympic National Park unearthed remains of a mastodon, a huge elephant-like mammal that grazed Ice Age grasslands. Embedded in one of the mastodon's ribs was a broken piece of bone resembling a spear point. In 2011, scientific dating revealed that the spear point was 13,800 years old. It is the earliest evidence of human presence in this region and proof that residents at the time were hunters.",
+    "The hunter and gatherer groups who followed early big game hunters also had a strong dependence on the land. From 3,000 to 10,000 years ago they hunted deer and elk and gathered plants to survive. Their stone tools, left across the peninsula, show that the rugged terrain did not deter them from exploring the entire Olympic ecosystem.",
+    "By about 3,000 years ago, as the human population increased, early inhabitants shifted their focus to lowland rivers and lakes. Fishing, hunting sea mammals and gathering shellfish formed the foundation of rich and complex maritime cultures for which the Pacific Northwest is known. The forests also provided essentials such as food, fibers, medicine and shelter. Longhouses were crafted from graceful western red cedar trunks to protect families from the relentless rain, canoes to hunt seals and whales, baskets, clothing, tools and bentwood boxes for cooking and storage. Archaeological sites, like ones on the Hoko River and at Ozette, contained thousands of wood, shell and bone artifacts that helped modern tribes piece together more of their rich heritage. The skilled workmanship of the artifacts reveal the intimate connection between the artisans, the land and the sea.",
+    "Imposing Change",
+    "The last 200 years have been dynamic times for the Olympic Peninsula's original residents. At first contact with Euro-Americans, villages were spread throughout the area, their residents coexisting with the land and resources. People journeyed far and wide to pursue game and collect plants, conduct warfare, attend social gatherings and ceremonies and to interact with the spiritual realm.",
+    "After the arrival of Europeans in the late 18th century, the lives of the area's indigenous people were forever changed. Exotic diseases wiped out entire villages. Long-standing social traditions were disrupted by new technologies and restrictions. Euro-American settlers competed for the abundant resources of the Olympic Peninsula. Salmon were fished from the streams, elk populations decimated and huge swaths of trees were harvested from the forests—the land and its ownership had changed.",
+    "An Ancient Find",
+    "In 1993, a Florida family was hiking in Olympic National Park when they discovered a piece of woven material at the edge of a snowfield near Hurricane Ridge. A warm summer had melted back the edge of a permanent snowbank, revealing this piece of cultural history. The woven piece turned out to be from a 2,900-year-old basket, a tangible link confirming the stories of mountain travel that have been passed from one generation to the next for millennia.",
+    "Area Tribes Today",
+    "Eight tribes have traditional associations to lands now in Olympic National Park: Hoh, Jamestown S'Klallam, Lower Elwha Klallam, Makah, Port Gamble S'Klallam, Quileute, Quinault and Skokomish. Today, these tribes are working to sustain their long traditions. The Makah have revived the custom of whaling, a tradition that dates back thousands of years according to archeological evidence. Coastal tribes continue their performance of a First Salmon ceremony to honor and give thanks to salmon returning from the sea. They are passing on the teachings of their elders to preserve language and traditional arts like basket weaving and carving.",
+    "Court decisions have reaffirmed the right of area tribes to carry on their fishing practices. In 1974, a landmark court decision upheld tribal fishing rights retained under the 1855 treaties, including the protection of habitat. The protection and management of dwindling fish resources is a priority for the tribes as well as the park. The National Park Service also works with local tribes to protect not only the amazing natural resources of the area, but also cultural connections with park land and resources. Throughout the mountains, forests and coast lie the ancient footprints and stories that are an integral part of Olympic National Park."
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "A Sense of Place"
+    },
+    {
+      "type": "paragraph",
+      "text": "What if your highways were rivers and mountain ridges? What if your grocery store was the forest and ocean? What if your home overlooked a beautiful coastline complete with whales and sunsets? For the original residents of the Olympic Peninsula, the majestic landscape and wealth of resources supplied both physical and spiritual sustenance. Although the land and its ownership has changed, these essential connections have been maintained through generations. Today Olympic National Park protects the natural resources that engendered those connections as well as the cultural resources that reveal the rich history of the people who first called this rugged place home."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "The Earliest Residents"
+    },
+    {
+      "type": "paragraph",
+      "text": "Over 13,000 years ago, vast continental glaciers were in retreat leaving behind rounded hills and marshy meadows. There were no dense forests yet. Elk, bison, wolves and mastodons roamed the land, and humans roamed with them. In 1977, a farmer digging a pond just outside Olympic National Park unearthed remains of a mastodon, a huge elephant-like mammal that grazed Ice Age grasslands. Embedded in one of the mastodon's ribs was a broken piece of bone resembling a spear point. In 2011, scientific dating revealed that the spear point was 13,800 years old. It is the earliest evidence of human presence in this region and proof that residents at the time were hunters. The hunter and gatherer groups who followed early big game hunters also had a strong dependence on the land. From 3,000 to 10,000 years ago they hunted deer and elk and gathered plants to survive. Their stone tools, left across the peninsula, show that the rugged terrain did not deter them from exploring the entire Olympic ecosystem. By about 3,000 years ago, as the human population increased, early inhabitants shifted their focus to lowland rivers and lakes. Fishing, hunting sea mammals and gathering shellfish formed the foundation of rich and complex maritime cultures for which the Pacific Northwest is known. The forests also provided essentials such as food, fibers, medicine and shelter. Longhouses were crafted from graceful western red cedar trunks to protect families from the relentless rain, canoes to hunt seals and whales, baskets, clothing, tools and bentwood boxes for cooking and storage. Archaeological sites, like ones on the Hoko River and at Ozette, contained thousands of wood, shell and bone artifacts that helped modern tribes piece together more of their rich heritage. The skilled workmanship of the artifacts reveal the intimate connection between the artisans, the land and the sea."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Imposing Change"
+    },
+    {
+      "type": "paragraph",
+      "text": "The last 200 years have been dynamic times for the Olympic Peninsula's original residents. At first contact with Euro-Americans, villages were spread throughout the area, their residents coexisting with the land and resources. People journeyed far and wide to pursue game and collect plants, conduct warfare, attend social gatherings and ceremonies and to interact with the spiritual realm. After the arrival of Europeans in the late 18th century, the lives of the area's indigenous people were forever changed. Exotic diseases wiped out entire villages. Long-standing social traditions were disrupted by new technologies and restrictions. Euro-American settlers competed for the abundant resources of the Olympic Peninsula. Salmon were fished from the streams, elk populations decimated and huge swaths of trees were harvested from the forests—the land and its ownership had changed."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "An Ancient Find"
+    },
+    {
+      "type": "paragraph",
+      "text": "In 1993, a Florida family was hiking in Olympic National Park when they discovered a piece of woven material at the edge of a snowfield near Hurricane Ridge. A warm summer had melted back the edge of a permanent snowbank, revealing this piece of cultural history. The woven piece turned out to be from a 2,900-year-old basket, a tangible link confirming the stories of mountain travel that have been passed from one generation to the next for millennia."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Area Tribes Today"
+    },
+    {
+      "type": "paragraph",
+      "text": "Eight tribes have traditional associations to lands now in Olympic National Park: Hoh, Jamestown S'Klallam, Lower Elwha Klallam, Makah, Port Gamble S'Klallam, Quileute, Quinault and Skokomish. Today, these tribes are working to sustain their long traditions. The Makah have revived the custom of whaling, a tradition that dates back thousands of years according to archeological evidence. Coastal tribes continue their performance of a First Salmon ceremony to honor and give thanks to salmon returning from the sea. They are passing on the teachings of their elders to preserve language and traditional arts like basket weaving and carving. Court decisions have reaffirmed the right of area tribes to carry on their fishing practices. In 1974, a landmark court decision upheld tribal fishing rights retained under the 1855 treaties, including the protection of habitat. The protection and management of dwindling fish resources is a priority for the tribes as well as the park. The National Park Service also works with local tribes to protect not only the amazing natural resources of the area, but also cultural connections with park land and resources. Throughout the mountains, forests and coast lie the ancient footprints and stories that are an integral part of Olympic National Park."
+    }
+  ],
+  "original_links": [],
+  "excavation_events_added": 0
+}

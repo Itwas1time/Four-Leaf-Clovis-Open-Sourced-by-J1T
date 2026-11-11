@@ -213,7 +213,7 @@ def navigate_workflow(mode, geoid, state, lead_id, spot=None):
     from core import my_spot
     spot = my_spot.for_place(spot, place)  # the person's own spot, when it belongs to this town
     if spot:
-        return {"center": [spot["lat"], spot["lon"]], "zoom": 15, "transition": "setView"}
+        return {"center": [spot["lat"], spot["lon"]], "zoom": 13, "transition": "setView"}
     return {"center": [place["latitude"], place["longitude"]], "zoom": 9, "transition": "setView"}
 
 

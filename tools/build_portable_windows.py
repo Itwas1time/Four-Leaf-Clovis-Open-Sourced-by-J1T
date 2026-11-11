@@ -27,7 +27,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 # python.org embeddable builds, pinned by version and SHA-256 (recorded on first verified download).
 EMBED_SHA256 = {
-    "3.13.14": None,
+    "3.13.14": "90b4e5b9898b72d744650524bff92377c367f44bd5fbd09e3148656c080ad907",
 }
 MAX_RELATIVE_PATH = 150  # leaves ~110 characters for wherever the person extracts the folder
 
