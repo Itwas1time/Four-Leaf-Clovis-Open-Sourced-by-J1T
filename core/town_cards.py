@@ -115,10 +115,10 @@ def one_page(place, state, spot=None, today=None):
 
 # What turns up in yards, as one-tap starting points into Inspect a find: (label, material, feature).
 FIND_KINDS = {
-    'homes': (('Bottle or window glass', 'glass', None), ('Nails', 'metal', 'nail'), ('Dish or crock pieces', 'ceramic', 'decorated'),
+    'homes': (('Bottle or window glass', 'glass', None), ('Nails', 'metal', 'nail'), ('Dish or crock pieces', 'ceramic', 'dish'),
               ('Clay pipe stems', 'ceramic', 'pipe'), ('Marbles', 'ceramic', 'marble'), ('Buttons', 'metal', 'button'),
               ('Brick', 'ceramic', 'brick'), ('Tin cans', 'metal', 'can')),
-    'earlier': (('Worked stone: flakes, tools, points', 'rock', None), ('Pottery pieces', 'ceramic', None)),
+    'earlier': (('Worked stone: flakes, tools, points', 'rock', 'worked'), ('Pottery pieces', 'ceramic', 'sherd')),
     'fossils': (('A possible fossil', 'fossil', None),),
 }
 

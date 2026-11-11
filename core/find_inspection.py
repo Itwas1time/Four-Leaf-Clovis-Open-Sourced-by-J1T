@@ -24,6 +24,8 @@ FEATURES = {
     'can': 'Part of a tin can', 'decorated': 'Painted, printed or raised decoration',
     'nail': 'A nail or spike', 'button': 'A button',
     'pipe': 'A clay tobacco pipe (bowl or stem)', 'marble': 'A marble or small ball', 'brick': 'A brick or brick piece',
+    'worked': 'Flaked or shaped by people (a flake, point or tool)', 'dish': 'A piece of a dish, plate, cup or crock',
+    'sherd': 'A broken piece of a pot or vessel',
 }
 FEATURE_QUESTIONS = {
     'transparent': 'Where does light pass through it: the whole object or only a thin edge?',
@@ -50,6 +52,9 @@ FEATURE_QUESTIONS = {
     'pipe': 'Is it a stem or a bowl? For a stem, which is the largest pin or drill bit that slides through the hole?',
     'marble': 'What is it made of, and is there a rough scar at either pole? Is bottle glass nearby?',
     'brick': 'Are the faces uneven with scrape lines, or smooth and sharp? Is there a stamp in a sunken face?',
+    'worked': 'Are there ripple marks, a sharp edge or a striking platform? Compare with a natural break before deciding.',
+    'dish': 'What colour is the body at a broken edge, and is the glaze clear, blue-tinged or printed? Look at the base for a mark.',
+    'sherd': 'Is it from a rim, a base or a body wall? Look at the broken edge for temper, colour and layers.',
 }
 # Reviewed Object-guide readings (core/object_material_guides.py) for common finds whose dating is
 # about how they were made. Facts are Clovis's own words, each with its own cited sources.
@@ -59,6 +64,10 @@ GUIDE_FEATURES = {
     'pipe': ('clay-pipe-stem-bore-dating', 'clay-pipe-bowls-heels-and-marks', 'clay-pipes-local-and-reed-stem'),
     'marble': ('marble-materials', 'handmade-vs-machine-made-marbles', 'marbles-and-context'),
     'brick': ('handmade-brick-features', 'machine-made-brick-features', 'brick-frogs-marks-and-limits'),
+    'worked': ('stone-flakes-debitage', 'stone-projectile-points', 'stone-ground-tools', 'stone-natural-breaks-and-context'),
+    'dish': ('ceramic-body-classes', 'ceramic-creamware-pearlware', 'ceramic-transfer-print', 'ceramic-ironstone',
+             'ceramic-stoneware-salt-glaze', 'ceramic-maker-marks'),
+    'sherd': ('ceramic-sherd-form', 'ceramic-body-classes', 'ceramic-coarse-earthenware'),
 }
 # Dating clues quoted verbatim from the bundled, hash-checked NPS Yosemite pocket guide
 # (public domain). Each fragment selects one whole source sentence; nothing is paraphrased.
@@ -133,7 +142,7 @@ GUIDES = {
                       'Which part is present: body, rim, neck, base, or only a fragment?'],
         'source': ('SHA / BLM historic bottle identification','https://secure-sha.org/bottle/')},
     'ceramic': {
-        'title': 'Compare the body, surface and shape', 'features': ['curved','mark','glaze','grain','holes','decorated','button','pipe','marble','brick'],
+        'title': 'Compare the body, surface and shape', 'features': ['dish','sherd','curved','mark','glaze','grain','holes','decorated','button','pipe','marble','brick'],
         'comparisons': ['Vessel or dish fragment: look for a rim, foot, handle or decoration.',
                         'Brick or other building material: record the body and any regular faces or holes.',
                         'Natural rock resembling pottery: photograph an existing edge and surface; avoid breaking it to check.'],
@@ -149,7 +158,7 @@ GUIDES = {
                       'Can you photograph it without scraping away the surface?'],
         'source': ('NPS metal recognition examples','https://www.nps.gov/yose/learn/historyculture/facelift-pocket-guide.htm')},
     'rock': {
-        'title': 'Describe rock texture before choosing a name', 'features': ['grain','layers','porous','branch','shell'],
+        'title': 'Describe rock texture before choosing a name', 'features': ['worked','grain','layers','porous','branch','shell'],
         'comparisons': ['Grains or crystals: photograph their size, arrangement and variety.',
                         'Layers or bands: show how they pass through the object.',
                         'Coatings or inclusions: show the boundary with the surrounding material.'],

@@ -12,16 +12,16 @@ Want to go deeper? Read full archaeological studies and original data tables off
 It runs on your own computer. No account, no subscription, no internet needed once installed.
 Your notes and photos never leave your computer unless you export them.
 
-![Clovis home screen: What is around me, I found something, Research a topic](https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.38.0/clovis-home.png)
+![Clovis home screen: What is around me, I found something, Research a topic](https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.39.0/clovis-home.png)
 
 ## Download
 
-- **Windows:** download [Clovis-0.38.0-windows-x64.zip](https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.38.0/Clovis-0.38.0-windows-x64.zip),
+- **Windows:** download [Clovis-0.39.0-windows-x64.zip](https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.39.0/Clovis-0.39.0-windows-x64.zip),
   extract it, and double-click **Start Clovis**. Nothing else to install.
 - **macOS or Linux** (needs Python 3.11 or newer):
   ```sh
   python3 -m venv ~/clovis
-  ~/clovis/bin/pip install https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.38.0/archaeo_scan-0.38.0-py3-none-any.whl
+  ~/clovis/bin/pip install https://github.com/Itwas1time/Four-Leaf-Clovis-Open-Sourced-by-J1T/releases/download/clovis-0.39.0/archaeo_scan-0.39.0-py3-none-any.whl
   ~/clovis/bin/python -m atlas.gui.app
   ```
 
@@ -39,7 +39,7 @@ a `Clovis Local` folder in your home folder, not in the app.
 - *Who lived here before you*, quoted from National Park Service histories (19 states so far);
 - *Known cemeteries* nearest your spot, from the USGS place-name index;
 - *The law where you are*: permit, reporting and burial rules read from the official state code for
-  17 states so far; every other state gets the rules that apply nationwide and its state office;
+  24 states so far; every other state gets the rules that apply nationwide and its state office;
 - 50,578 Sanborn fire-insurance atlas records, local rock and fossil context, and newspapers;
 - a one-page summary to print or save as PDF.
 
